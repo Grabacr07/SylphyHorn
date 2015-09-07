@@ -1,52 +1,63 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows.Threading;
-using WindowsDesktop;
 using Livet;
 using SylphyHorn.Interop;
+using VDMHelperCLR.Common;
+using WindowsDesktop;
 
 namespace SylphyHorn.Models
 {
 	public class HookService : IDisposable
 	{
 		private readonly GlobalKeyHook keyHook = new GlobalKeyHook();
+		private readonly IVdmHelper helper;
 
 		public HookService()
 		{
-			this.keyHook.Pressed += KeyHookOnPressed;
+			this.keyHook.Pressed += this.KeyHookOnPressed;
 			this.keyHook.Start();
+
+			var is64Bit = Marshal.SizeOf(typeof(IntPtr)) == 8;
+			var asm = Assembly.Load(is64Bit ? @"VDMHelperCLR64.dll" : @"VDMHelperCLR32.dll");
+			var type = asm.GetType("VDMHelperCLR.VdmHelper");
+			this.helper = (IVdmHelper)Activator.CreateInstance(type);
+			this.helper.Init();
 		}
 
-		private static void KeyHookOnPressed(object sender, ShortcutKey shortcutKey)
+		private void KeyHookOnPressed(object sender, ShortcutKey shortcutKey)
 		{
 			if (ShortcutSettings.OpenDesktopSelector.Value != null) { }
 
-			if (ShortcutSettings.MoveLeft.Value != null
-				&& ShortcutSettings.MoveLeft.Value == shortcutKey)
+			if (ShortcutSettings.MoveLeft.Value != null &&
+				ShortcutSettings.MoveLeft.Value == shortcutKey)
 			{
-				InvokeOnUIDispatcher(() => MoveToLeft());
+				InvokeOnUIDispatcher(() => this.MoveToLeft());
 			}
 
-			if (ShortcutSettings.MoveLeftAndSwitch.Value != null
-				&& ShortcutSettings.MoveLeftAndSwitch.Value == shortcutKey)
+			if (ShortcutSettings.MoveLeftAndSwitch.Value != null &&
+				ShortcutSettings.MoveLeftAndSwitch.Value == shortcutKey)
 			{
-				InvokeOnUIDispatcher(() => MoveToLeft());
+				InvokeOnUIDispatcher(() => this.MoveToLeft());
 			}
 
-			if (ShortcutSettings.MoveRight.Value != null
-				&& ShortcutSettings.MoveRight.Value == shortcutKey)
+			if (ShortcutSettings.MoveRight.Value != null &&
+				ShortcutSettings.MoveRight.Value == shortcutKey)
 			{
-				InvokeOnUIDispatcher(() => MoveToRight());
+				InvokeOnUIDispatcher(() => this.MoveToRight());
 			}
 
-			if (ShortcutSettings.MoveRightAndSwitch.Value != null
-				&& ShortcutSettings.MoveRightAndSwitch.Value == shortcutKey)
+			if (ShortcutSettings.MoveRightAndSwitch.Value != null &&
+				ShortcutSettings.MoveRightAndSwitch.Value == shortcutKey)
 			{
-				InvokeOnUIDispatcher(() => MoveToRight()?.Switch());
+				InvokeOnUIDispatcher(() => this.MoveToRight()?.Switch());
 			}
 		}
 
-		private static VirtualDesktop MoveToLeft()
+		private VirtualDesktop MoveToLeft()
 		{
 			var hWnd = GetActiveWindow();
 			var current = VirtualDesktop.FromHwnd(hWnd);
@@ -63,7 +74,7 @@ namespace SylphyHorn.Models
 				}
 				if (left != null)
 				{
-					VirtualDesktopHelper.MoveToDesktop(hWnd, left);
+					this.helper.MoveWindowToDesktop(hWnd, left.Id);
 					return left;
 				}
 			}
@@ -71,7 +82,7 @@ namespace SylphyHorn.Models
 			return null;
 		}
 
-		private static VirtualDesktop MoveToRight()
+		private VirtualDesktop MoveToRight()
 		{
 			var hWnd = GetActiveWindow();
 			var current = VirtualDesktop.FromHwnd(hWnd);
@@ -88,7 +99,7 @@ namespace SylphyHorn.Models
 				}
 				if (right != null)
 				{
-					VirtualDesktopHelper.MoveToDesktop(hWnd, right);
+					this.helper.MoveWindowToDesktop(hWnd, right.Id);
 					return right;
 				}
 			}
@@ -111,6 +122,7 @@ namespace SylphyHorn.Models
 		public void Dispose()
 		{
 			this.keyHook.Stop();
+			this.helper?.Dispose();
 		}
 	}
 }

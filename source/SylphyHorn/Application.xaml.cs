@@ -37,12 +37,12 @@ namespace SylphyHorn
 				};
 
 				DispatcherHelper.UIDispatcher = this.Dispatcher;
-				this.MainWindow = new MainWindow();
+				this.MainWindow = new Views.MainWindow();
 				this.MainWindow.Show();
 
 				if (VirtualDesktop.IsSupported)
 				{
-					this.hookService = new HookService();
+					this.hookService = new HookService().AddTo(this);
 				}
 				else { }
 			}
