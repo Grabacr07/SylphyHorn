@@ -37,14 +37,21 @@ namespace SylphyHorn
 				};
 
 				DispatcherHelper.UIDispatcher = this.Dispatcher;
+
+#if DEBUG
 				this.MainWindow = new Views.MainWindow();
 				this.MainWindow.Show();
+				new Views.SettingsWindow { DataContext = new ViewModels.SettingsWindowViewModel(), }.Show();
+#endif
 
 				if (VirtualDesktop.IsSupported)
 				{
 					this.hookService = new HookService().AddTo(this);
 				}
-				else { }
+				else
+				{
+					MessageBox.Show("This applications is supported only Windows 10 (build 10240 or greater).", "Not supported", MessageBoxButton.OK, MessageBoxImage.Stop);
+				}
 			}
 #if !DEBUG
 			else

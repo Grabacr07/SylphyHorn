@@ -1,0 +1,99 @@
+﻿<metro:MetroWindow x:Class="SylphyHorn.Views.SettingsWindow"
+				   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+				   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+				   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+				   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+				   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				   xmlns:livet="http://schemas.livet-mvvm.net/2011/wpf"
+				   xmlns:metro="http://schemes.grabacr.net/winfx/2014/controls"
+				   xmlns:vm="clr-namespace:SylphyHorn.ViewModels"
+				   mc:Ignorable="d"
+				   d:DataContext="{d:DesignInstance vm:SettingsWindowViewModel}"
+				   Title="{Binding Title}"
+				   Width="640"
+				   Height="480"
+				   Background="{DynamicResource ThemeBrushKey}"
+				   Foreground="{DynamicResource ActiveForegroundBrushKey}"
+				   FontFamily="{DynamicResource DefaultFontFamilyKey}"
+				   SnapsToDevicePixels="True"
+				   TextOptions.TextFormattingMode="Display"
+				   UseLayoutRounding="True">
+
+	<i:Interaction.Behaviors>
+		<livet:WindowCloseCancelBehavior CloseCanceledCallbackMethodTarget="{Binding}"
+										 CloseCanceledCallbackMethodName="CloseCanceledCallback"
+										 CanClose="{Binding CanClose}" />
+	</i:Interaction.Behaviors>
+
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="ContentRendered">
+			<livet:LivetCallMethodAction MethodTarget="{Binding}"
+										 MethodName="Initialize" />
+		</i:EventTrigger>
+		<i:EventTrigger EventName="Closed">
+			<livet:DataContextDisposeAction />
+		</i:EventTrigger>
+
+		<livet:InteractionMessageTrigger Messenger="{Binding Messenger}"
+										 MessageKey="Window.WindowAction">
+			<livet:WindowInteractionMessageAction InvokeActionOnlyWhenWindowIsActive="False" />
+		</livet:InteractionMessageTrigger>
+		<livet:InteractionMessageTrigger Messenger="{Binding Messenger}"
+										 MessageKey="Window.Transition">
+			<livet:TransitionInteractionMessageAction InvokeActionOnlyWhenWindowIsActive="False"
+													  IsOwned="False" />
+		</livet:InteractionMessageTrigger>
+		<livet:InteractionMessageTrigger Messenger="{Binding Messenger}"
+										 MessageKey="Window.Transition.Child">
+			<livet:TransitionInteractionMessageAction InvokeActionOnlyWhenWindowIsActive="False"
+													  IsOwned="True" />
+		</livet:InteractionMessageTrigger>
+	</i:Interaction.Triggers>
+
+	<DockPanel>
+		<!-- #region Caption area -->
+		<DockPanel DockPanel.Dock="Top"
+				   metro:MetroWindow.IsCaptionBar="True">
+			<Border DockPanel.Dock="Bottom"
+					Height="8" />
+
+			<StackPanel DockPanel.Dock="Right"
+						Orientation="Horizontal"
+						HorizontalAlignment="Right"
+						VerticalAlignment="Top"
+						WindowChrome.IsHitTestVisibleInChrome="True">
+				<metro:SystemButtons />
+			</StackPanel>
+			<TextBlock Text="{Binding Title}"
+					   Style="{DynamicResource CaptionTextStyleKey}"
+					   Margin="12,8" />
+		</DockPanel>
+		<!-- #endregion -->
+
+		<TabControl Style="{DynamicResource VerticalTabControlStyleKey}">
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="General"
+							   Style="{StaticResource TabHeaderTextStyleKey}" />
+				</TabItem.Header>
+
+			</TabItem>
+			
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="Shortcut"
+							   Style="{StaticResource TabHeaderTextStyleKey}" />
+				</TabItem.Header>
+
+			</TabItem>
+			
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="Version"
+							   Style="{StaticResource TabHeaderTextStyleKey}" />
+				</TabItem.Header>
+
+			</TabItem>
+		</TabControl>
+	</DockPanel>
+</metro:MetroWindow>

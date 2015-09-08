@@ -39,8 +39,8 @@ namespace SylphyHorn.Models
 			}
 			else
 			{
-				this.Pressed?.Invoke(this, ShortcutKey.Create(key, this.pressedModifiers));
 				System.Diagnostics.Debug.WriteLine("KeyDown: " + this.pressedModifiers.Concat(EnumerableEx.Return(key)).JoinString(" + "));
+				this.Pressed?.Invoke(this, ShortcutKey.Create(key, this.pressedModifiers));
 			}
 		}
 

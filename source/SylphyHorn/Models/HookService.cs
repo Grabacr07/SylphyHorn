@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using Livet;
 using SylphyHorn.Interop;
@@ -21,8 +20,9 @@ namespace SylphyHorn.Models
 			this.keyHook.Pressed += this.KeyHookOnPressed;
 			this.keyHook.Start();
 
-			var is64Bit = Marshal.SizeOf(typeof(IntPtr)) == 8;
-			var asmPath = Path.GetFullPath(is64Bit ? @"VDMHelperCLR64.dll" : @"VDMHelperCLR32.dll");
+			var is64Bit = Environment.Is64BitProcess;
+			var current = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+			var asmPath = Path.Combine(current ?? Environment.CurrentDirectory, is64Bit ? @"VDMHelperCLR64.dll" : @"VDMHelperCLR32.dll");
 			var asm = Assembly.LoadFile(asmPath);
 			var type = asm.GetType("VDMHelperCLR.VdmHelper");
 			this.helper = (IVdmHelper)Activator.CreateInstance(type);
