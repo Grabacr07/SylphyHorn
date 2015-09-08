@@ -11,5 +11,12 @@ namespace SylphyHorn.Views
 		{
 			this.InitializeComponent();
 		}
+
+		protected override void OnClosed(EventArgs e)
+		{
+			base.OnClosed(e);
+
+			System.Windows.Application.Current.Shutdown();
+		}
 	}
 }
