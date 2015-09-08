@@ -205,7 +205,6 @@
   <ItemGroup>
     <None Include="..\..\assemblies\VDMHelperCLR.Common.dll">
       <Link>VDMHelperCLR.Common.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
