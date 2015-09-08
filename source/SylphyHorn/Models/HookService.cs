@@ -2,6 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Threading;
 using Livet;
 using SylphyHorn.Interop;
@@ -75,7 +77,14 @@ namespace SylphyHorn.Models
 				}
 				if (left != null)
 				{
-					this.helper.MoveWindowToDesktop(hWnd, left.Id);
+					if (IsCurrentProcess(hWnd))
+					{
+						VirtualDesktopHelper.MoveToDesktop(hWnd, left);
+					}
+					else
+					{
+						this.helper.MoveWindowToDesktop(hWnd, left.Id);
+					}
 					return left;
 				}
 			}
@@ -100,7 +109,14 @@ namespace SylphyHorn.Models
 				}
 				if (right != null)
 				{
-					this.helper.MoveWindowToDesktop(hWnd, right.Id);
+					if (IsCurrentProcess(hWnd))
+					{
+						VirtualDesktopHelper.MoveToDesktop(hWnd, right);
+					}
+					else
+					{
+						this.helper.MoveWindowToDesktop(hWnd, right.Id);
+					}
 					return right;
 				}
 			}
@@ -110,9 +126,19 @@ namespace SylphyHorn.Models
 
 		private static IntPtr GetActiveWindow()
 		{
-			var hwnd = NativeMethods.GetForegroundWindow();
+			var hWnd = NativeMethods.GetForegroundWindow();
 
-			return hwnd;
+			return hWnd;
+		}
+
+		private static bool IsCurrentProcess(IntPtr hWnd)
+		{
+			return System.Windows.Application.Current.Windows
+				.OfType<Window>()
+				.Select(x => PresentationSource.FromVisual(x) as HwndSource)
+				.Where(x => x != null)
+				.Select(x => x.Handle)
+				.Any(x => x == hWnd);
 		}
 
 		private static void InvokeOnUIDispatcher(Action action)
