@@ -3,8 +3,6 @@
 					xmlns:s="clr-namespace:System;assembly=mscorlib">
 
 	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="pack://application:,,,/SylphyHorn;component/Styles/Controls.TabControl.xaml" />
-		<ResourceDictionary Source="pack://application:,,,/SylphyHorn;component/Styles/Controls.Text.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 	
 </ResourceDictionary>

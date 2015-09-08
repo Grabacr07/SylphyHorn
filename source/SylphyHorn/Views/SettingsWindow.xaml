@@ -74,23 +74,23 @@
 			<TabItem>
 				<TabItem.Header>
 					<TextBlock Text="General"
-							   Style="{StaticResource TabHeaderTextStyleKey}" />
+							   Style="{DynamicResource VerticalTabHeaderTextStyleKey}" />
 				</TabItem.Header>
 
 			</TabItem>
-			
+
 			<TabItem>
 				<TabItem.Header>
 					<TextBlock Text="Shortcut"
-							   Style="{StaticResource TabHeaderTextStyleKey}" />
+							   Style="{DynamicResource VerticalTabHeaderTextStyleKey}" />
 				</TabItem.Header>
 
 			</TabItem>
-			
+
 			<TabItem>
 				<TabItem.Header>
 					<TextBlock Text="Version"
-							   Style="{StaticResource TabHeaderTextStyleKey}" />
+							   Style="{DynamicResource VerticalTabHeaderTextStyleKey}" />
 				</TabItem.Header>
 
 			</TabItem>
