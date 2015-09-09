@@ -64,6 +64,12 @@ namespace SylphyHorn
 			base.OnStartup(e);
 		}
 
+		protected override void OnExit(ExitEventArgs e)
+		{
+			base.OnExit(e);
+		
+			((IDisposable)this).Dispose();
+		}
 
 		private static void ReportException(object sender, Exception exception)
 		{
