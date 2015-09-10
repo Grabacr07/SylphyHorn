@@ -7,6 +7,8 @@
 				   xmlns:livet="http://schemas.livet-mvvm.net/2011/wpf"
 				   xmlns:metro="http://schemes.grabacr.net/winfx/2014/controls"
 				   xmlns:vm="clr-namespace:SylphyHorn.ViewModels"
+				   xmlns:controls="clr-namespace:SylphyHorn.Views.Controls"
+				   xmlns:models="clr-namespace:SylphyHorn.Models"
 				   mc:Ignorable="d"
 				   d:DataContext="{d:DesignInstance vm:SettingsWindowViewModel}"
 				   Title="{Binding Title}"
@@ -77,6 +79,10 @@
 							   Style="{DynamicResource VerticalTabHeaderTextStyleKey}" />
 				</TabItem.Header>
 
+				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+							  VerticalScrollBarVisibility="Auto">
+					<StackPanel Margin="8,0,8,8" />
+				</ScrollViewer>
 			</TabItem>
 
 			<TabItem>
@@ -85,6 +91,33 @@
 							   Style="{DynamicResource VerticalTabHeaderTextStyleKey}" />
 				</TabItem.Header>
 
+				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+							  VerticalScrollBarVisibility="Auto">
+					<StackPanel Margin="16,0,16,16">
+						<DockPanel>
+							<UniformGrid Columns="1">
+								<Panel.Resources>
+									<Style TargetType="{x:Type TextBlock}"
+										   BasedOn="{StaticResource DefaultTextStyleKey}">
+										<Setter Property="Margin"
+												Value="0,1,0,0" />
+									</Style>
+								</Panel.Resources>
+								<TextBlock Text="Move to left:" />
+								<TextBlock Text="Move to left (and switch):" />
+								<TextBlock Text="Move to right:" />
+								<TextBlock Text="Move to right (and switch):" />
+							</UniformGrid>
+							<Border Width="8" />
+							<UniformGrid Columns="1">
+								<controls:ShortcutKeyBox SerializableProperty="{Binding Source={x:Static models:ShortcutSettings.MoveLeft}}" />
+								<controls:ShortcutKeyBox SerializableProperty="{Binding Source={x:Static models:ShortcutSettings.MoveLeftAndSwitch}}" />
+								<controls:ShortcutKeyBox SerializableProperty="{Binding Source={x:Static models:ShortcutSettings.MoveRight}}" />
+								<controls:ShortcutKeyBox SerializableProperty="{Binding Source={x:Static models:ShortcutSettings.MoveRightAndSwitch}}" />
+							</UniformGrid>
+						</DockPanel>
+					</StackPanel>
+				</ScrollViewer>
 			</TabItem>
 
 			<TabItem>

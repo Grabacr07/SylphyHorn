@@ -140,13 +140,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\KeyHelper.cs" />
     <Compile Include="ViewModels\SettingsWindowViewModel.cs" />
+    <Compile Include="Views\Controls\ShortcutKeyBox.cs" />
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Styles\Controls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.ShortcutKeyBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Generic.xaml</DependentUpon>
     </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -172,7 +179,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\GlobalKeyHook.cs" />
+    <Compile Include="Models\ShortcutKeyDetector.cs" />
     <Compile Include="Models\ProductInfo.cs" />
     <Compile Include="Models\ShortcutKey.cs" />
     <Compile Include="Models\Settings.cs" />

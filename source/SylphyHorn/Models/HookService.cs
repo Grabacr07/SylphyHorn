@@ -15,15 +15,15 @@ namespace SylphyHorn.Models
 {
 	public class HookService : IDisposable
 	{
-		private static string ConsoleWindowClass = "ConsoleWindowClass";
+		private const string consoleWindowClass = "ConsoleWindowClass";
 
-		private readonly GlobalKeyHook keyHook = new GlobalKeyHook();
+		private readonly ShortcutKeyDetector detector = new ShortcutKeyDetector();
 		private readonly IVdmHelper helper;
 
 		public HookService()
 		{
-			this.keyHook.Pressed += this.KeyHookOnPressed;
-			this.keyHook.Start();
+			this.detector.Pressed += this.KeyHookOnPressed;
+			this.detector.Start();
 
 			var is64Bit = Environment.Is64BitProcess;
 			var current = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
@@ -154,7 +154,7 @@ namespace SylphyHorn.Models
 
 		private static bool IsActivatedConsoleWindow()
 		{
-			return GetActiveWindowClassName() == ConsoleWindowClass;
+			return GetActiveWindowClassName() == consoleWindowClass;
 		}
 
 		private static bool IsCurrentProcess(IntPtr hWnd)
@@ -174,7 +174,7 @@ namespace SylphyHorn.Models
 
 		public void Dispose()
 		{
-			this.keyHook.Stop();
+			this.detector.Stop();
 			this.helper?.Dispose();
 		}
 	}

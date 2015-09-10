@@ -1,21 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
+using MetroTrilithon.Linq;
 
 namespace SylphyHorn.Models
 {
+	/// <summary>
+	/// Represents a shortcut key ([modifer key(s)] + [key] style).
+	/// </summary>
 	public struct ShortcutKey
 	{
 		public Key Key { get; set; }
 		public Key[] Modifiers { get; set; }
 
-		[NonSerialized]
-		internal ICollection<Key> ModifiersInternal;
+		internal ICollection<Key> ModifiersInternal { get; }
 		
+		public ShortcutKey(Key key, params Key[] modifiers) : this()
+		{
+			this.Key = key;
+			this.Modifiers = modifiers;
+			this.ModifiersInternal = modifiers;
+		}
+
+		internal ShortcutKey(Key key, ICollection<Key> modifiers) : this()
+		{
+			this.Key = key;
+			this.ModifiersInternal = modifiers;
+		}
+
 		public bool Equals(ShortcutKey other)
 		{
-			return Equals(this.ModifiersInternal, other.ModifiersInternal) && this.Key == other.Key && Equals(this.Modifiers, other.Modifiers);
+			return this == other;
 		}
 
 		public override bool Equals(object obj)
@@ -29,14 +46,21 @@ namespace SylphyHorn.Models
 			unchecked
 			{
 				// ReSharper disable NonReadonlyMemberInGetHashCode
-				var hashCode = this.ModifiersInternal?.GetHashCode() ?? 0;
+				var hashCode = (this.ModifiersInternal ?? this.Modifiers)?.GetHashCode() ?? 0;
 				hashCode = (hashCode * 397) ^ (int)this.Key;
-				hashCode = (hashCode * 397) ^ (this.Modifiers?.GetHashCode() ?? 0);
 				return hashCode;
 				// ReSharper restore NonReadonlyMemberInGetHashCode
 			}
 		}
 
+		public override string ToString()
+		{
+			return (this.ModifiersInternal ?? this.Modifiers)
+				.OrderBy(x => x)
+				.Select(x => x + " + ")
+				.Concat(EnumerableEx.Return(this.Key == Key.None ? "" : this.Key.ToString()))
+				.JoinString("");
+		}
 
 		public static bool operator ==(ShortcutKey key1, ShortcutKey key2)
 		{
@@ -47,25 +71,6 @@ namespace SylphyHorn.Models
 		public static bool operator !=(ShortcutKey key1, ShortcutKey key2)
 		{
 			return !(key1 == key2);
-		}
-
-		public static ShortcutKey Create(Key key, params Key[] modifiers)
-		{
-			return new ShortcutKey
-			{
-				Key = key,
-				Modifiers = modifiers,
-				ModifiersInternal = modifiers,
-			};
-		}
-
-		internal static ShortcutKey Create(Key key, ICollection<Key> modifiers)
-		{
-			return new ShortcutKey
-			{
-				Key = key,
-				ModifiersInternal = modifiers,
-			};
 		}
 
 		private static bool Equals(ICollection<Key> keys1, ICollection<Key> keys2)
