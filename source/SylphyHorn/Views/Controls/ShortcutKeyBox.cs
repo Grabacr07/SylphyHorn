@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using MetroTrilithon.Serialization;
 using SylphyHorn.Models;
 
 namespace SylphyHorn.Views.Controls
@@ -22,45 +21,32 @@ namespace SylphyHorn.Views.Controls
 
 		private readonly HashSet<Key> pressedModifiers = new HashSet<Key>();
 		private Key pressedKey = Key.None;
-		private ShortcutKey? current;
 
+		
+		#region Current 依存関係プロパティ
 
-		#region SerializableProperty 依存関係プロパティ
-
-		public SerializableProperty<ShortcutKey?> SerializableProperty
+		public ShortcutKey? Current
 		{
-			get { return (SerializableProperty<ShortcutKey?>)this.GetValue(SerializablePropertyProperty); }
-			set { this.SetValue(SerializablePropertyProperty, value); }
+			get { return (ShortcutKey?)this.GetValue(CurrentProperty); }
+			set { this.SetValue(CurrentProperty, value); }
 		}
-		public static readonly DependencyProperty SerializablePropertyProperty =
-			DependencyProperty.Register(nameof(SerializableProperty), typeof(SerializableProperty<ShortcutKey?>), typeof(ShortcutKeyBox), new UIPropertyMetadata(null, SerializablePropertyChangedCallback));
+		public static readonly DependencyProperty CurrentProperty =
+			DependencyProperty.Register(nameof(Current), typeof(ShortcutKey?), typeof(ShortcutKeyBox), new UIPropertyMetadata(null, CurrentPropertyChangedCallback));
 
-		private static void SerializablePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs args)
+		private static void CurrentPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs args)
 		{
 			var instance = (ShortcutKeyBox)d;
-			var oldValue = (SerializableProperty<ShortcutKey?>)args.OldValue;
-			var newValue = (SerializableProperty<ShortcutKey?>)args.NewValue;
-
-			instance.current = newValue.Value;
 			instance.UpdateText();
 		}
 
 		#endregion
-		
 
+		
 		protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
 		{
 			base.OnGotKeyboardFocus(e);
-
-			if (this.SerializableProperty != null) this.current = this.SerializableProperty.Value;
+			
 			this.UpdateText();
-		}
-
-		protected override void OnLostKeyboardFocus(KeyboardFocusChangedEventArgs e)
-		{
-			base.OnLostKeyboardFocus(e);
-
-			if (this.SerializableProperty != null) this.SerializableProperty.Value = this.current;
 		}
 
 		protected override void OnPreviewKeyDown(KeyEventArgs e)
@@ -82,10 +68,10 @@ namespace SylphyHorn.Views.Controls
 					this.pressedKey = key;
 				}
 
-				this.current = this.pressedModifiers.Any() && this.pressedKey != Key.None
+				this.Current = this.pressedModifiers.Any() && this.pressedKey != Key.None
 					? new ShortcutKey(this.pressedKey, this.pressedModifiers.ToArray())
 					: (ShortcutKey?)null;
-				System.Diagnostics.Debug.WriteLine("Current: " + this.current);
+				System.Diagnostics.Debug.WriteLine("Current: " + this.Current);
 				
 				this.UpdateText();
 			}
@@ -114,7 +100,7 @@ namespace SylphyHorn.Views.Controls
 
 		private void UpdateText()
 		{
-			var text = (this.current ?? new ShortcutKey(this.pressedKey, this.pressedModifiers)).ToString();
+			var text = (this.Current ?? new ShortcutKey(this.pressedKey, this.pressedModifiers)).ToString();
 
 			this.Text = text;
 			this.CaretIndex = text.Length;

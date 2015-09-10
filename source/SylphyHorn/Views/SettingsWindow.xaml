@@ -110,10 +110,10 @@
 							</UniformGrid>
 							<Border Width="8" />
 							<UniformGrid Columns="1">
-								<controls:ShortcutKeyBox SerializableProperty="{Binding Source={x:Static models:ShortcutSettings.MoveLeft}}" />
-								<controls:ShortcutKeyBox SerializableProperty="{Binding Source={x:Static models:ShortcutSettings.MoveLeftAndSwitch}}" />
-								<controls:ShortcutKeyBox SerializableProperty="{Binding Source={x:Static models:ShortcutSettings.MoveRight}}" />
-								<controls:ShortcutKeyBox SerializableProperty="{Binding Source={x:Static models:ShortcutSettings.MoveRightAndSwitch}}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveLeft}, Path=Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveLeftAndSwitch}, Path=Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveRight}, Path=Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveRightAndSwitch}, Path=Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</DockPanel>
 					</StackPanel>
