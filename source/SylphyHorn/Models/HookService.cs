@@ -9,11 +9,14 @@ using Livet;
 using SylphyHorn.Interop;
 using VDMHelperCLR.Common;
 using WindowsDesktop;
+using System.Text;
 
 namespace SylphyHorn.Models
 {
 	public class HookService : IDisposable
 	{
+		private static string ConsoleWindowClass = "ConsoleWindowClass";
+
 		private readonly GlobalKeyHook keyHook = new GlobalKeyHook();
 		private readonly IVdmHelper helper;
 
@@ -64,6 +67,11 @@ namespace SylphyHorn.Models
 		{
 			var hWnd = GetActiveWindow();
 			var current = VirtualDesktop.FromHwnd(hWnd);
+			if (IsActivatedConsoleWindow())
+			{
+				System.Media.SystemSounds.Asterisk.Play();
+				return null;
+			}
 			if (current != null)
 			{
 				var left = current.GetLeft();
@@ -96,6 +104,11 @@ namespace SylphyHorn.Models
 		{
 			var hWnd = GetActiveWindow();
 			var current = VirtualDesktop.FromHwnd(hWnd);
+			if (IsActivatedConsoleWindow())
+			{
+				System.Media.SystemSounds.Asterisk.Play();
+				return null;
+			}
 			if (current != null)
 			{
 				var right = current.GetRight();
@@ -129,6 +142,19 @@ namespace SylphyHorn.Models
 			var hWnd = NativeMethods.GetForegroundWindow();
 
 			return hWnd;
+		}
+
+		private static string GetActiveWindowClassName()
+		{
+			var hWnd = GetActiveWindow();
+			var className = new StringBuilder(256);
+			NativeMethods.GetClassName(hWnd, className, className.Capacity);
+			return className.ToString();
+		}
+
+		private static bool IsActivatedConsoleWindow()
+		{
+			return GetActiveWindowClassName() == ConsoleWindowClass;
 		}
 
 		private static bool IsCurrentProcess(IntPtr hWnd)
