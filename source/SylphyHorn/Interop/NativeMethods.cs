@@ -14,5 +14,8 @@ namespace SylphyHorn.Interop
 
 		[DllImport("user32.dll")]
 		public static extern int GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
+
+		[DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+		public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 	}
 }
