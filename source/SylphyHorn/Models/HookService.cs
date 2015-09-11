@@ -10,6 +10,7 @@ using SylphyHorn.Interop;
 using VDMHelperCLR.Common;
 using WindowsDesktop;
 using System.Text;
+using MetroTrilithon.Lifetime;
 
 namespace SylphyHorn.Models
 {
@@ -32,6 +33,12 @@ namespace SylphyHorn.Models
 			var type = asm.GetType("VDMHelperCLR.VdmHelper");
 			this.helper = (IVdmHelper)Activator.CreateInstance(type);
 			this.helper.Init();
+		}
+
+		public IDisposable Suspend()
+		{
+			this.detector.Stop();
+			return Disposable.Create(this.detector.Start);
 		}
 
 		private void KeyHookOnPressed(object sender, ShortcutKey shortcutKey)

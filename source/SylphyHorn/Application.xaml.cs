@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Forms;
 using WindowsDesktop;
 using Livet;
 using MetroTrilithon.Lifetime;
 using StatefulModel;
 using SylphyHorn.Models;
+using SylphyHorn.ViewModels;
+using SylphyHorn.Views;
+using MessageBox = System.Windows.MessageBox;
 
 namespace SylphyHorn
 {
@@ -16,6 +21,7 @@ namespace SylphyHorn
 	{
 		private readonly CompositeDisposable compositeDisposable = new CompositeDisposable();
 		private HookService hookService;
+		private NotifyIcon notifyIcon;
 
 		static Application()
 		{
@@ -29,28 +35,24 @@ namespace SylphyHorn
 			if (appInstance.IsFirst)
 #endif
 			{
-				this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
-				this.DispatcherUnhandledException += (sender, args) =>
-				{
-					ReportException(sender, args.Exception);
-					args.Handled = true;
-				};
-
-				DispatcherHelper.UIDispatcher = this.Dispatcher;
-
-#if DEBUG
-				this.MainWindow = new Views.MainWindow();
-				this.MainWindow.Show();
-				new Views.SettingsWindow { DataContext = new ViewModels.SettingsWindowViewModel(), }.Show();
-#endif
-
 				if (VirtualDesktop.IsSupported)
 				{
+					this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+					this.DispatcherUnhandledException += (sender, args) =>
+					{
+						ReportException(sender, args.Exception);
+						args.Handled = true;
+					};
+
+					DispatcherHelper.UIDispatcher = this.Dispatcher;
+
+					this.InitializeNotifyIcon();
 					this.hookService = new HookService().AddTo(this);
 				}
 				else
 				{
 					MessageBox.Show("This applications is supported only Windows 10 (build 10240 or greater).", "Not supported", MessageBoxButton.OK, MessageBoxImage.Stop);
+					this.Shutdown();
 				}
 			}
 #if !DEBUG
@@ -102,6 +104,44 @@ ERROR, date = {0}, sender = {1},
 			// 救えるパターンがあるなら救いたいけど方法わからんもじゃ
 			Current.Shutdown();
 		}
+		
+
+		private void InitializeNotifyIcon()
+		{
+			const string iconUri = "pack://application:,,,/SylphyHorn;Component/Assets/app.ico";
+
+			Uri uri;
+			if (!Uri.TryCreate(iconUri, UriKind.Absolute, out uri)) return;
+
+			var streamResourceInfo = GetResourceStream(uri);
+			if (streamResourceInfo == null) return;
+
+			using (var stream = streamResourceInfo.Stream)
+			{
+				this.notifyIcon = new NotifyIcon
+				{
+					Text = ProductInfo.Title,
+					Icon = new Icon(stream, new System.Drawing.Size(16, 16)),
+					Visible = true,
+					ContextMenu = new ContextMenu(new[]
+					{
+						new MenuItem("&Settings", (sender, args) => this.OpenSettingsWindow()),
+						new MenuItem("E&xit", (sender, args) => this.Shutdown()),
+					}),
+				};
+				this.notifyIcon.AddTo(this);
+			}
+		}
+
+		private void OpenSettingsWindow()
+		{
+			using (this.hookService.Suspend())
+			{
+				var window = new SettingsWindow { DataContext = new SettingsWindowViewModel(), };
+				window.ShowDialog();
+			}
+		}
+
 
 		#region IDisposable members
 
