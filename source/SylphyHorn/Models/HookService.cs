@@ -76,7 +76,7 @@ namespace SylphyHorn.Models
 		private VirtualDesktop MoveToLeft()
 		{
 			var hWnd = NativeMethods.GetForegroundWindow();
-			if (NativeHelper.IsConsoleWindow(hWnd))
+			if (InteropHelper.IsConsoleWindow(hWnd))
 			{
 				System.Media.SystemSounds.Asterisk.Play();
 				return null;
@@ -96,7 +96,7 @@ namespace SylphyHorn.Models
 				}
 				if (left != null)
 				{
-					if (NativeHelper.IsCurrentProcess(hWnd))
+					if (InteropHelper.IsCurrentProcess(hWnd))
 					{
 						VirtualDesktopHelper.MoveToDesktop(hWnd, left);
 					}
@@ -114,7 +114,7 @@ namespace SylphyHorn.Models
 		private VirtualDesktop MoveToRight()
 		{
 			var hWnd = NativeMethods.GetForegroundWindow();
-			if (NativeHelper.IsConsoleWindow(hWnd))
+			if (InteropHelper.IsConsoleWindow(hWnd))
 			{
 				System.Media.SystemSounds.Asterisk.Play();
 				return null;
@@ -134,7 +134,7 @@ namespace SylphyHorn.Models
 				}
 				if (right != null)
 				{
-					if (NativeHelper.IsCurrentProcess(hWnd))
+					if (InteropHelper.IsCurrentProcess(hWnd))
 					{
 						VirtualDesktopHelper.MoveToDesktop(hWnd, right);
 					}
@@ -148,7 +148,6 @@ namespace SylphyHorn.Models
 
 			return null;
 		}
-		
 
 		public void Dispose()
 		{

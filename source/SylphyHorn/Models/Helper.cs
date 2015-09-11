@@ -29,7 +29,7 @@ namespace SylphyHorn.Models
 		}
 	}
 
-	internal static class NativeHelper
+	internal static class InteropHelper
 	{
 		private const string consoleWindowClass = "ConsoleWindowClass";
 
@@ -53,9 +53,9 @@ namespace SylphyHorn.Models
 
 	internal static class VisualHelper
 	{
-		public static void InvokeOnUIDispatcher(Action action)
+		public static void InvokeOnUIDispatcher(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
 		{
-			DispatcherHelper.UIDispatcher.BeginInvoke(action, DispatcherPriority.Normal);
+			DispatcherHelper.UIDispatcher.BeginInvoke(action, priority);
 		}
 	}
 }
