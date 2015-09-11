@@ -2,24 +2,18 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Threading;
-using Livet;
+using MetroTrilithon.Lifetime;
 using SylphyHorn.Interop;
 using VDMHelperCLR.Common;
 using WindowsDesktop;
-using System.Text;
-using MetroTrilithon.Lifetime;
 
 namespace SylphyHorn.Models
 {
 	public class HookService : IDisposable
 	{
-		private const string consoleWindowClass = "ConsoleWindowClass";
-
 		private readonly ShortcutKeyDetector detector = new ShortcutKeyDetector();
 		private readonly IVdmHelper helper;
+		private int suspendRequestCount;
 
 		public HookService()
 		{
@@ -37,8 +31,17 @@ namespace SylphyHorn.Models
 
 		public IDisposable Suspend()
 		{
+			this.suspendRequestCount++;
 			this.detector.Stop();
-			return Disposable.Create(this.detector.Start);
+
+			return Disposable.Create(() =>
+			{
+				this.suspendRequestCount--;
+				if (this.suspendRequestCount == 0)
+				{
+					this.detector.Start();
+				}
+			});
 		}
 
 		private void KeyHookOnPressed(object sender, ShortcutKey shortcutKey)
@@ -48,37 +51,38 @@ namespace SylphyHorn.Models
 			if (ShortcutSettings.MoveLeft.Value != null &&
 				ShortcutSettings.MoveLeft.Value == shortcutKey)
 			{
-				InvokeOnUIDispatcher(() => this.MoveToLeft());
+				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToLeft());
 			}
 
 			if (ShortcutSettings.MoveLeftAndSwitch.Value != null &&
 				ShortcutSettings.MoveLeftAndSwitch.Value == shortcutKey)
 			{
-				InvokeOnUIDispatcher(() => this.MoveToLeft()?.Switch());
+				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToLeft()?.Switch());
 			}
 
 			if (ShortcutSettings.MoveRight.Value != null &&
 				ShortcutSettings.MoveRight.Value == shortcutKey)
 			{
-				InvokeOnUIDispatcher(() => this.MoveToRight());
+				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToRight());
 			}
 
 			if (ShortcutSettings.MoveRightAndSwitch.Value != null &&
 				ShortcutSettings.MoveRightAndSwitch.Value == shortcutKey)
 			{
-				InvokeOnUIDispatcher(() => this.MoveToRight()?.Switch());
+				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToRight()?.Switch());
 			}
 		}
 
 		private VirtualDesktop MoveToLeft()
 		{
-			var hWnd = GetActiveWindow();
-			var current = VirtualDesktop.FromHwnd(hWnd);
-			if (IsActivatedConsoleWindow())
+			var hWnd = NativeMethods.GetForegroundWindow();
+			if (NativeHelper.IsConsoleWindow(hWnd))
 			{
 				System.Media.SystemSounds.Asterisk.Play();
 				return null;
 			}
+
+			var current = VirtualDesktop.FromHwnd(hWnd);
 			if (current != null)
 			{
 				var left = current.GetLeft();
@@ -92,7 +96,7 @@ namespace SylphyHorn.Models
 				}
 				if (left != null)
 				{
-					if (IsCurrentProcess(hWnd))
+					if (NativeHelper.IsCurrentProcess(hWnd))
 					{
 						VirtualDesktopHelper.MoveToDesktop(hWnd, left);
 					}
@@ -109,13 +113,14 @@ namespace SylphyHorn.Models
 
 		private VirtualDesktop MoveToRight()
 		{
-			var hWnd = GetActiveWindow();
-			var current = VirtualDesktop.FromHwnd(hWnd);
-			if (IsActivatedConsoleWindow())
+			var hWnd = NativeMethods.GetForegroundWindow();
+			if (NativeHelper.IsConsoleWindow(hWnd))
 			{
 				System.Media.SystemSounds.Asterisk.Play();
 				return null;
 			}
+
+			var current = VirtualDesktop.FromHwnd(hWnd);
 			if (current != null)
 			{
 				var right = current.GetRight();
@@ -129,7 +134,7 @@ namespace SylphyHorn.Models
 				}
 				if (right != null)
 				{
-					if (IsCurrentProcess(hWnd))
+					if (NativeHelper.IsCurrentProcess(hWnd))
 					{
 						VirtualDesktopHelper.MoveToDesktop(hWnd, right);
 					}
@@ -143,41 +148,7 @@ namespace SylphyHorn.Models
 
 			return null;
 		}
-
-		private static IntPtr GetActiveWindow()
-		{
-			var hWnd = NativeMethods.GetForegroundWindow();
-
-			return hWnd;
-		}
-
-		private static string GetActiveWindowClassName()
-		{
-			var hWnd = GetActiveWindow();
-			var className = new StringBuilder(256);
-			NativeMethods.GetClassName(hWnd, className, className.Capacity);
-			return className.ToString();
-		}
-
-		private static bool IsActivatedConsoleWindow()
-		{
-			return GetActiveWindowClassName() == consoleWindowClass;
-		}
-
-		private static bool IsCurrentProcess(IntPtr hWnd)
-		{
-			return System.Windows.Application.Current.Windows
-				.OfType<Window>()
-				.Select(x => PresentationSource.FromVisual(x) as HwndSource)
-				.Where(x => x != null)
-				.Select(x => x.Handle)
-				.Any(x => x == hWnd);
-		}
-
-		private static void InvokeOnUIDispatcher(Action action)
-		{
-			DispatcherHelper.UIDispatcher.BeginInvoke(action, DispatcherPriority.Normal);
-		}
+		
 
 		public void Dispose()
 		{

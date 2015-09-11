@@ -144,7 +144,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\KeyHelper.cs" />
+    <Compile Include="Models\Helper.cs" />
+    <Compile Include="Models\NotificationService.cs" />
     <Compile Include="ViewModels\SettingsWindowViewModel.cs" />
     <Compile Include="Views\Controls\ShortcutKeyBox.cs" />
     <Compile Include="Views\SettingsWindow.xaml.cs">

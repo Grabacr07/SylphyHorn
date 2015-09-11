@@ -48,10 +48,12 @@ namespace SylphyHorn
 
 					this.InitializeNotifyIcon();
 					this.hookService = new HookService().AddTo(this);
+
+					base.OnStartup(e);
 				}
 				else
 				{
-					MessageBox.Show("This applications is supported only Windows 10 (build 10240 or greater).", "Not supported", MessageBoxButton.OK, MessageBoxImage.Stop);
+					MessageBox.Show("This applications is supported only Windows 10 (build 10240).", "Not supported", MessageBoxButton.OK, MessageBoxImage.Stop);
 					this.Shutdown();
 				}
 			}
@@ -62,8 +64,6 @@ namespace SylphyHorn
 				this.Shutdown();
 			}
 #endif
-
-			base.OnStartup(e);
 		}
 
 		protected override void OnExit(ExitEventArgs e)
@@ -125,8 +125,8 @@ ERROR, date = {0}, sender = {1},
 					Visible = true,
 					ContextMenu = new ContextMenu(new[]
 					{
-						new MenuItem("&Settings", (sender, args) => this.OpenSettingsWindow()),
-						new MenuItem("E&xit", (sender, args) => this.Shutdown()),
+						new MenuItem("&Settings (S)", (sender, args) => this.OpenSettingsWindow()),
+						new MenuItem("E&xit (X)", (sender, args) => this.Shutdown()),
 					}),
 				};
 				this.notifyIcon.AddTo(this);
