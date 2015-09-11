@@ -148,6 +148,9 @@
     <Compile Include="Models\NotificationService.cs" />
     <Compile Include="ViewModels\SettingsWindowViewModel.cs" />
     <Compile Include="Views\Controls\ShortcutKeyBox.cs" />
+    <Compile Include="Views\NotificationWindow.xaml.cs">
+      <DependentUpon>NotificationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -164,20 +167,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="Application.xaml.cs">
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\HookService.cs" />
     <Compile Include="Interop\NativeMethods.cs" />
-    <Compile Include="Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="Views\NotificationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

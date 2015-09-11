@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using MetroTrilithon.Lifetime;
 using SylphyHorn.Interop;
 using VDMHelperCLR.Common;
@@ -20,12 +18,7 @@ namespace SylphyHorn.Models
 			this.detector.Pressed += this.KeyHookOnPressed;
 			this.detector.Start();
 
-			var is64Bit = Environment.Is64BitProcess;
-			var current = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-			var asmPath = Path.Combine(current ?? Environment.CurrentDirectory, is64Bit ? @"VDMHelperCLR64.dll" : @"VDMHelperCLR32.dll");
-			var asm = Assembly.LoadFile(asmPath);
-			var type = asm.GetType("VDMHelperCLR.VdmHelper");
-			this.helper = (IVdmHelper)Activator.CreateInstance(type);
+			this.helper = VdmHelperFactory.CreateInstance();
 			this.helper.Init();
 		}
 

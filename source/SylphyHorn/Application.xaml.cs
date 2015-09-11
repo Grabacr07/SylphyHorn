@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Forms;
 using WindowsDesktop;
 using Livet;
 using MetroTrilithon.Lifetime;
@@ -20,8 +18,9 @@ namespace SylphyHorn
 	sealed partial class Application : IDisposableHolder
 	{
 		private readonly CompositeDisposable compositeDisposable = new CompositeDisposable();
+		private System.Windows.Forms.NotifyIcon notifyIcon;
 		private HookService hookService;
-		private NotifyIcon notifyIcon;
+		private NotificationService notificationService;
 
 		static Application()
 		{
@@ -46,8 +45,9 @@ namespace SylphyHorn
 
 					DispatcherHelper.UIDispatcher = this.Dispatcher;
 
-					this.InitializeNotifyIcon();
+					this.ShowNotifyIcon();
 					this.hookService = new HookService().AddTo(this);
+					this.notificationService = new NotificationService().AddTo(this);
 
 					base.OnStartup(e);
 				}
@@ -94,6 +94,7 @@ ERROR, date = {0}, sender = {1},
 
 				Debug.WriteLine(message);
 				File.AppendAllText(path, message);
+				MessageBox.Show(message, "なんか落ちた");
 			}
 			catch (Exception ex)
 			{
@@ -106,7 +107,7 @@ ERROR, date = {0}, sender = {1},
 		}
 		
 
-		private void InitializeNotifyIcon()
+		private void ShowNotifyIcon()
 		{
 			const string iconUri = "pack://application:,,,/SylphyHorn;Component/Assets/app.ico";
 
@@ -118,22 +119,22 @@ ERROR, date = {0}, sender = {1},
 
 			using (var stream = streamResourceInfo.Stream)
 			{
-				this.notifyIcon = new NotifyIcon
+				this.notifyIcon = new System.Windows.Forms.NotifyIcon
 				{
 					Text = ProductInfo.Title,
-					Icon = new Icon(stream, new System.Drawing.Size(16, 16)),
+					Icon = new System.Drawing.Icon(stream, new System.Drawing.Size(16, 16)),
 					Visible = true,
-					ContextMenu = new ContextMenu(new[]
+					ContextMenu = new System.Windows.Forms.ContextMenu(new[]
 					{
-						new MenuItem("&Settings (S)", (sender, args) => this.OpenSettingsWindow()),
-						new MenuItem("E&xit (X)", (sender, args) => this.Shutdown()),
+						new System.Windows.Forms.MenuItem("&Settings (S)", (sender, args) => this.ShowSettings()),
+						new System.Windows.Forms.MenuItem("E&xit (X)", (sender, args) => this.Shutdown()),
 					}),
 				};
 				this.notifyIcon.AddTo(this);
 			}
 		}
 
-		private void OpenSettingsWindow()
+		private void ShowSettings()
 		{
 			using (this.hookService.Suspend())
 			{
