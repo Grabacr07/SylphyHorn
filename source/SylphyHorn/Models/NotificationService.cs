@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WindowsDesktop;
 using MetroTrilithon.Lifetime;
+using SylphyHorn.ViewModels;
 using SylphyHorn.Views;
 
 namespace SylphyHorn.Models
@@ -22,17 +23,26 @@ namespace SylphyHorn.Models
 		{
 			VisualHelper.InvokeOnUIDispatcher(() =>
 			{
+				var desktops = VirtualDesktop.GetDesktops();
+				var newIndex = Array.IndexOf(desktops, e.NewDesktop) + 1;
+
 				this.currentNotificationWindow?.Dispose();
-				this.currentNotificationWindow = ShowWindow();
+				this.currentNotificationWindow = ShowWindow(newIndex);
 			});
 		}
 
-		private static IDisposable ShowWindow()
+		private static IDisposable ShowWindow(int index)
 		{
+			var vmodel = new NotificationWindowViewModel
+			{
+				Title = ProductInfo.Title,
+				Header = "Virtual Desktop Switched",
+				Body = "Current Desktop: Desktop " + index,
+			};
 			var source = new CancellationTokenSource();
 			var window = new NotificationWindow
 			{
-				DataContext = null, // あとで
+				DataContext = vmodel,
 			};
 			window.Show();
 

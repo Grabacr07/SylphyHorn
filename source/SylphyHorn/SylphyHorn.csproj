@@ -146,6 +146,7 @@
     </ApplicationDefinition>
     <Compile Include="Models\Helper.cs" />
     <Compile Include="Models\NotificationService.cs" />
+    <Compile Include="ViewModels\NotificationWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingsWindowViewModel.cs" />
     <Compile Include="Views\Controls\ShortcutKeyBox.cs" />
     <Compile Include="Views\NotificationWindow.xaml.cs">

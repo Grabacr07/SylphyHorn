@@ -3,18 +3,67 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:local="clr-namespace:SylphyHorn.Views"
+		xmlns:vm="clr-namespace:SylphyHorn.ViewModels"
 		mc:Ignorable="d"
-		Title="NotificationWindow"
+		d:DataContext="{d:DesignInstance vm:NotificationWindowViewModel}"
+		Title="{Binding Title}"
 		Width="600"
-		Height="200"
+		Height="120"
 		ResizeMode="NoResize"
 		WindowStyle="None"
 		WindowStartupLocation="CenterScreen"
+		Topmost="True"
 		ShowInTaskbar="False"
 		AllowsTransparency="True"
 		SnapsToDevicePixels="True"
-		Background="Purple"
-		Opacity="0.8">
-	<Grid />
+		Background="Transparent"
+		Foreground="{DynamicResource ActiveForegroundBrushKey}">
+	<Window.Resources>
+		<Storyboard x:Key="FadeIn">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+										   Storyboard.TargetName="Background">
+				<EasingDoubleKeyFrame KeyTime="0"
+									  Value=".0" />
+				<EasingDoubleKeyFrame KeyTime="0:0:0.5"
+									  Value=".0" />
+				<EasingDoubleKeyFrame KeyTime="0:0:1.0"
+									  Value=".5" />
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+										   Storyboard.TargetName="Foreground">
+				<EasingDoubleKeyFrame KeyTime="0"
+									  Value=".0" />
+				<EasingDoubleKeyFrame KeyTime="0:0:0.5"
+									  Value=".0" />
+				<EasingDoubleKeyFrame KeyTime="0:0:0.5"
+									  Value="1.0" />
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+	</Window.Resources>
+	<Window.Triggers>
+		<EventTrigger RoutedEvent="FrameworkElement.Loaded">
+			<BeginStoryboard Storyboard="{StaticResource FadeIn}" />
+		</EventTrigger>
+	</Window.Triggers>
+
+	<Grid>
+		<Border x:Name="Background"
+				x:FieldModifier="private"
+				Background="{DynamicResource ThemeBrushKey}" />
+		<DockPanel x:Name="Foreground"
+				   x:FieldModifier="private"
+				   VerticalAlignment="Center"
+				   Margin="20,16">
+			<TextBlock DockPanel.Dock="Top"
+					   Text="{Binding Header}"
+					   Style="{DynamicResource CaptionTextStyleKey}"
+					   FontFamily="Segoe UI Light, Meiryo UI"
+					   FontSize="22" />
+			<TextBlock DockPanel.Dock="Top"
+					   Text="{Binding Body}"
+					   Style="{DynamicResource CaptionTextStyleKey}"
+					   FontFamily="Segoe UI Light, Meiryo UI"
+					   FontSize="42" />
+		</DockPanel>
+	</Grid>
 </Window>
