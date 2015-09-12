@@ -21,6 +21,8 @@ namespace SylphyHorn.Models
 
 		private void VirtualDesktopOnCurrentChanged(object sender, VirtualDesktopChangedEventArgs e)
 		{
+			if (!GeneralSettings.NotificationWhenSwitchedDesktop) return;
+
 			VisualHelper.InvokeOnUIDispatcher(() =>
 			{
 				var desktops = VirtualDesktop.GetDesktops();

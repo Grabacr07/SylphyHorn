@@ -64,6 +64,18 @@ namespace SylphyHorn.Models
 			{
 				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToRight()?.Switch());
 			}
+
+			if (ShortcutSettings.MoveNew.Value != null &&
+				ShortcutSettings.MoveNew.Value == shortcutKey)
+			{
+				VisualHelper.InvokeOnUIDispatcher(()=> this.MoveToNew());
+			}
+
+			if (ShortcutSettings.MoveNewAndSwitch.Value != null &&
+				ShortcutSettings.MoveNewAndSwitch.Value == shortcutKey)
+			{
+				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToNew()?.Switch());
+			}
 		}
 
 		private VirtualDesktop MoveToLeft()
@@ -137,6 +149,32 @@ namespace SylphyHorn.Models
 					}
 					return right;
 				}
+			}
+
+			return null;
+		}
+
+		private VirtualDesktop MoveToNew()
+		{
+			var hWnd = NativeMethods.GetForegroundWindow();
+			if (InteropHelper.IsConsoleWindow(hWnd))
+			{
+				System.Media.SystemSounds.Asterisk.Play();
+				return null;
+			}
+
+			var newone = VirtualDesktop.Create();
+			if (newone != null)
+			{
+				if (InteropHelper.IsCurrentProcess(hWnd))
+				{
+					VirtualDesktopHelper.MoveToDesktop(hWnd, newone);
+				}
+				else
+				{
+					this.helper.MoveWindowToDesktop(hWnd, newone.Id);
+				}
+				return newone;
 			}
 
 			return null;

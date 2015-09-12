@@ -23,6 +23,9 @@ namespace SylphyHorn.Models
 		public static SerializableProperty<bool> LoopDesktop { get; }
 			= new SerializableProperty<bool>(GetKey(), Providers.Local);
 
+		public static SerializableProperty<bool> NotificationWhenSwitchedDesktop { get; }
+			= new SerializableProperty<bool>(GetKey(), Providers.Local, true);
+
 		private static string GetKey([CallerMemberName] string caller = "")
 		{
 			return nameof(ShortcutSettings) + "." + caller;
@@ -46,6 +49,12 @@ namespace SylphyHorn.Models
 
 		public static SerializableProperty<ShortcutKey?> MoveRightAndSwitch { get; }
 			= new SerializableProperty<ShortcutKey?>(GetKey(), Providers.Local, new ShortcutKey(Key.Right, Key.LeftCtrl, Key.LeftAlt, Key.LWin));
+
+		public static SerializableProperty<ShortcutKey?> MoveNew { get; }
+			= new SerializableProperty<ShortcutKey?>(GetKey(), Providers.Local);
+
+		public static SerializableProperty<ShortcutKey?> MoveNewAndSwitch { get; }
+			= new SerializableProperty<ShortcutKey?>(GetKey(), Providers.Local, new ShortcutKey(Key.D, Key.LeftCtrl, Key.LeftAlt, Key.LWin));
 
 
 		private static string GetKey([CallerMemberName] string caller = "")

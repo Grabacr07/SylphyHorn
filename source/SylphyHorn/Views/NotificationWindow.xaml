@@ -21,7 +21,7 @@
 	<Window.Resources>
 		<Storyboard x:Key="FadeIn">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-										   Storyboard.TargetName="Background">
+										   Storyboard.TargetName="BackgroundElement">
 				<EasingDoubleKeyFrame KeyTime="0"
 									  Value=".0" />
 				<EasingDoubleKeyFrame KeyTime="0:0:0.5"
@@ -30,7 +30,7 @@
 									  Value=".7" />
 			</DoubleAnimationUsingKeyFrames>
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-										   Storyboard.TargetName="Foreground">
+										   Storyboard.TargetName="ForegroundElement">
 				<EasingDoubleKeyFrame KeyTime="0"
 									  Value=".0" />
 				<EasingDoubleKeyFrame KeyTime="0:0:0.5"
@@ -47,10 +47,10 @@
 	</Window.Triggers>
 
 	<Grid>
-		<Border x:Name="Background"
+		<Border x:Name="BackgroundElement"
 				x:FieldModifier="private"
 				Background="{DynamicResource ThemeBrushKey}" />
-		<DockPanel x:Name="Foreground"
+		<DockPanel x:Name="ForegroundElement"
 				   x:FieldModifier="private"
 				   VerticalAlignment="Center"
 				   Margin="20,16">

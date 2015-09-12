@@ -71,7 +71,6 @@ namespace SylphyHorn.Views.Controls
 				this.Current = this.pressedModifiers.Any() && this.pressedKey != Key.None
 					? new ShortcutKey(this.pressedKey, this.pressedModifiers.ToArray())
 					: (ShortcutKey?)null;
-				System.Diagnostics.Debug.WriteLine("Current: " + this.Current);
 				
 				this.UpdateText();
 			}

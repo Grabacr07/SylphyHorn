@@ -81,7 +81,22 @@
 
 				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
 							  VerticalScrollBarVisibility="Auto">
-					<StackPanel Margin="8,0,8,8" />
+					<StackPanel Margin="16,0,16,16">
+						<Panel.Resources>
+							<Style TargetType="{x:Type TextBlock}"
+								   BasedOn="{StaticResource DefaultTextStyleKey}">
+								<Setter Property="Margin"
+										Value="0,2" />
+							</Style>
+						</Panel.Resources>
+
+						<CheckBox IsChecked="{Binding Source={x:Static models:GeneralSettings.LoopDesktop}, Path=Value, Mode=TwoWay}">
+							<TextBlock Text="Loop virtual desktops." />
+						</CheckBox>
+						<CheckBox IsChecked="{Binding Source={x:Static models:GeneralSettings.NotificationWhenSwitchedDesktop}, Path=Value, Mode=TwoWay}">
+							<TextBlock Text="Display a notification when switched virtual desktop." />
+						</CheckBox>
+					</StackPanel>
 				</ScrollViewer>
 			</TabItem>
 
@@ -93,29 +108,55 @@
 
 				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
 							  VerticalScrollBarVisibility="Auto">
-					<StackPanel Margin="16,0,16,16">
-						<DockPanel>
+					<StackPanel Margin="16,0,16,16"
+								Grid.IsSharedSizeScope="True">
+						<Panel.Resources>
+							<Style TargetType="{x:Type TextBlock}"
+								   BasedOn="{StaticResource DefaultTextStyleKey}">
+								<Setter Property="Margin"
+										Value="0,1,0,0" />
+							</Style>
+						</Panel.Resources>
+
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"
+												  SharedSizeGroup="KeyHeader" />
+								<ColumnDefinition Width="8" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
 							<UniformGrid Columns="1">
-								<Panel.Resources>
-									<Style TargetType="{x:Type TextBlock}"
-										   BasedOn="{StaticResource DefaultTextStyleKey}">
-										<Setter Property="Margin"
-												Value="0,1,0,0" />
-									</Style>
-								</Panel.Resources>
 								<TextBlock Text="Move to left:" />
 								<TextBlock Text="Move to left (and switch):" />
 								<TextBlock Text="Move to right:" />
 								<TextBlock Text="Move to right (and switch):" />
 							</UniformGrid>
-							<Border Width="8" />
-							<UniformGrid Columns="1">
+							<UniformGrid Grid.Column="2"
+										 Columns="1">
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveLeft}, Path=Value, Mode=TwoWay}" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveLeftAndSwitch}, Path=Value, Mode=TwoWay}" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveRight}, Path=Value, Mode=TwoWay}" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveRightAndSwitch}, Path=Value, Mode=TwoWay}" />
 							</UniformGrid>
-						</DockPanel>
+						</Grid>
+						<Border Height="8" />
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"
+												  SharedSizeGroup="KeyHeader" />
+								<ColumnDefinition Width="8" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<UniformGrid Columns="1">
+								<TextBlock Text="Create and move to:" />
+								<TextBlock Text="Create and move to (and switch):" />
+							</UniformGrid>
+							<UniformGrid Grid.Column="2"
+										 Columns="1">
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveNew}, Path=Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveNewAndSwitch}, Path=Value, Mode=TwoWay}" />
+							</UniformGrid>
+						</Grid>
 					</StackPanel>
 				</ScrollViewer>
 			</TabItem>
