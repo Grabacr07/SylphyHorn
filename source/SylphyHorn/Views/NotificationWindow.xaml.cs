@@ -22,7 +22,7 @@ namespace SylphyHorn.Views
 			var hwndSource = PresentationSource.FromVisual(this) as HwndSource;
 			if (hwndSource != null)
 			{
-				var wsex = hwndSource.Handle.GetWindowLongEx() | WSEX.TOOLWINDOW | WSEX.NOACTIVATE;
+				var wsex = hwndSource.Handle.GetWindowLongEx() | WSEX.TOOLWINDOW | WSEX.NOACTIVATE | WSEX.TRANSPARENT;
 				hwndSource.Handle.SetWindowLongEx(wsex);
 			}
 

@@ -27,7 +27,7 @@
 				<EasingDoubleKeyFrame KeyTime="0:0:0.5"
 									  Value=".0" />
 				<EasingDoubleKeyFrame KeyTime="0:0:1.0"
-									  Value=".5" />
+									  Value=".75" />
 			</DoubleAnimationUsingKeyFrames>
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
 										   Storyboard.TargetName="Foreground">
