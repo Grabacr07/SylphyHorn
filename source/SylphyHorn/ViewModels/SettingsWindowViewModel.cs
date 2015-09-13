@@ -42,6 +42,7 @@ namespace SylphyHorn.ViewModels
 		public SettingsWindowViewModel()
 		{
 			this.Title = "Settings";
+			this._HasStartupLink = ShellLinkHelper.ExistsStartup();
 
 			Disposable.Create(Providers.Local.Save).AddTo(this);
 		}

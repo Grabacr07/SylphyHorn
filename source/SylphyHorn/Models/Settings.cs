@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using MetroRadiance;
 using MetroTrilithon.Serialization;
 
 namespace SylphyHorn.Models
@@ -26,6 +29,12 @@ namespace SylphyHorn.Models
 
 		public static SerializableProperty<bool> NotificationWhenSwitchedDesktop { get; }
 			= new SerializableProperty<bool>(GetKey(), Providers.Local, true);
+
+		public static SerializableProperty<Theme?> Theme { get; }
+			= new SerializableProperty<Theme?>(GetKey(), Providers.Local); 
+
+		public static SerializableProperty<Accent> AccentColor { get; }
+			= new SerializableProperty<Accent>(GetKey(), Providers.Local, Accent.Blue);
 
 		private static string GetKey([CallerMemberName] string caller = "")
 		{

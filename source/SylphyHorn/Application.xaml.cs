@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using WindowsDesktop;
 using Livet;
+using MetroRadiance;
 using MetroTrilithon.Lifetime;
 using StatefulModel;
 using SylphyHorn.Models;
@@ -44,6 +45,11 @@ namespace SylphyHorn
 					};
 
 					DispatcherHelper.UIDispatcher = this.Dispatcher;
+
+					ThemeService.Current.Initialize(
+						this,
+						GeneralSettings.Theme.Value ?? (VisualHelper.IsDarkTheme() ? Theme.Dark : Theme.Light), 
+						GeneralSettings.AccentColor);
 
 					this.ShowNotifyIcon();
 					this.hookService = new HookService().AddTo(this);
