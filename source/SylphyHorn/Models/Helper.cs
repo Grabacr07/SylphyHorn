@@ -63,6 +63,17 @@ namespace SylphyHorn.Models
 
 	internal static class ShellLinkHelper
 	{
+		private static string GetExecutingAssemblyFileNameWithoutExtension()
+		{
+			return Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
+		}
+
+		private static string GetStartupFileName(string name)
+		{
+			var dir = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+			return dir + "\\" + name + ".lnk";
+		}
+
 		public static bool CreateLink(string path)
 		{
 			var type = Type.GetTypeFromCLSID(new Guid("00021401-0000-0000-C000-000000000046"));
@@ -75,29 +86,34 @@ namespace SylphyHorn.Models
 
 		public static bool CreateStartup(string name)
 		{
-			var dir = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-			return CreateLink(dir + "\\" + name + ".lnk");
+			return CreateLink(GetStartupFileName(name));
 		}
 
 		public static bool CreateStartup()
 		{
-			var name = Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
-			return CreateStartup(name);
+			return CreateStartup(GetExecutingAssemblyFileNameWithoutExtension());
 		}
 
 		public static bool RemoveStartup(string name)
 		{
-			var dir = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-			var path = dir + "\\" + name + ".lnk";
-			if (!File.Exists(path)) return false;
-			File.Delete(path);
+			if (!ExistsStartup(name)) return false;
+			File.Delete(GetStartupFileName(name));
 			return true;
 		}
 
 		public static bool RemoveStartup()
 		{
-			var name = Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
-			return RemoveStartup(name);
+			return RemoveStartup(GetExecutingAssemblyFileNameWithoutExtension());
+		}
+
+		public static bool ExistsStartup(string name)
+		{
+			return !File.Exists(GetStartupFileName(name));
+		}
+
+		public static bool ExistsStartup()
+		{
+			return ExistsStartup(GetExecutingAssemblyFileNameWithoutExtension());
 		}
 	}
 }
