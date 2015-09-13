@@ -76,7 +76,7 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>assets\app.ico</ApplicationIcon>
+    <ApplicationIcon>assets\app.black.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Livet, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b0b1d3f711ef38cb, processorArchitecture=MSIL">
@@ -152,6 +152,7 @@
     <Compile Include="Views\NotificationWindow.xaml.cs">
       <DependentUpon>NotificationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TransparentWindow.cs" />
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -242,10 +243,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\app.ico" />
+    <Resource Include="assets\tasktray.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\tasktray.ico" />
+    <Resource Include="assets\app.black.ico" />
+    <Resource Include="assets\app.white.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

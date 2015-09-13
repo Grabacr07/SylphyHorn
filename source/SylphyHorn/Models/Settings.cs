@@ -33,8 +33,8 @@ namespace SylphyHorn.Models
 		public static SerializableProperty<Theme?> Theme { get; }
 			= new SerializableProperty<Theme?>(GetKey(), Providers.Local); 
 
-		public static SerializableProperty<Accent> AccentColor { get; }
-			= new SerializableProperty<Accent>(GetKey(), Providers.Local, Accent.Blue);
+		public static SerializableProperty<Accent?> AccentColor { get; }
+			= new SerializableProperty<Accent?>(GetKey(), Providers.Local);
 
 		private static string GetKey([CallerMemberName] string caller = "")
 		{

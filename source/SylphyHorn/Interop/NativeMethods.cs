@@ -20,5 +20,8 @@ namespace SylphyHorn.Interop
 
 		[DllImport("user32.dll", SetLastError = true)]
 		public static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
+
+		[DllImport("Dwmapi.dll")]
+		public static extern void DwmGetColorizationColor([Out] out int pcrColorization, [Out] out bool pfOpaqueBlend);
 	}
 }

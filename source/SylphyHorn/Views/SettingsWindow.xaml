@@ -12,6 +12,7 @@
 				   xmlns:models="clr-namespace:SylphyHorn.Models"
 				   mc:Ignorable="d"
 				   d:DataContext="{d:DesignInstance vm:SettingsWindowViewModel}"
+				   Icon="/SylphyHorn;component/assets/app.white.ico"
 				   Title="{Binding Title}"
 				   Width="640"
 				   Height="480"
@@ -153,7 +154,7 @@
 							  VerticalScrollBarVisibility="Auto">
 					<StackPanel Margin="16,0,16,16"
 								Grid.IsSharedSizeScope="True">
-						<TextBlock Text="Move to adjacent desktop"
+						<TextBlock Text="Move active window to adjacent desktop"
 								   Style="{DynamicResource HeaderStyleKey}"
 								   Margin="0,0,0,8" />
 						<Grid Margin="8,0,0,0">
@@ -179,7 +180,7 @@
 						</Grid>
 						<Border Height="8" />
 
-						<TextBlock Text="Move to created new desktop"
+						<TextBlock Text="Move active window to created new desktop"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<Grid Margin="8,0,0,0">
 							<Grid.ColumnDefinitions>

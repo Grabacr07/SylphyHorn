@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Threading;
 using Livet;
+using MetroRadiance;
 using Microsoft.Win32;
 using SylphyHorn.Interop;
 
@@ -55,12 +57,12 @@ namespace SylphyHorn.Models
 			return className.ToString() == consoleWindowClass;
 		}
 
-	    public static IntPtr GetForegroundWindowEx()
-	    {
-	        var hwnd = NativeMethods.GetForegroundWindow();
-	        var howner = NativeMethods.GetWindow(hwnd, 4 /* GW_OWNER */);
-	        return howner == IntPtr.Zero ? hwnd : howner;
-	    }
+		public static IntPtr GetForegroundWindowEx()
+		{
+			var hwnd = NativeMethods.GetForegroundWindow();
+			var howner = NativeMethods.GetWindow(hwnd, 4 /* GW_OWNER */);
+			return howner == IntPtr.Zero ? hwnd : howner;
+		}
 	}
 
 	internal static class VisualHelper
@@ -78,7 +80,39 @@ namespace SylphyHorn.Models
 			var value = Registry.GetValue(keyName, valueName, null);
 			return value as int? == 0;
 		}
+
+		public static int GetWindowsAccentColor()
+		{
+			int color;
+			bool opaque;
+
+			NativeMethods.DwmGetColorizationColor(out color, out opaque);
+
+			return color;
+		}
+
+		public static void ForceChangeTheme(long color)
+		{
+			ForceChangeTheme(Color.FromArgb((byte)(color >> 24), (byte)(color >> 16), (byte)(color >> 8), (byte)color));
+		}
+
+		public static void ForceChangeTheme(Color color)
+		{
+			color.A = byte.MaxValue;
+
+			var appAcent = typeof(ThemeService).GetField("appAccent", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(ThemeService.Current) as ResourceDictionary;
+			if (appAcent != null)
+			{
+				appAcent["AccentColorKey"] = color;
+				appAcent["AccentBrushKey"] = new SolidColorBrush(color);
+				appAcent["AccentActiveColorKey"] = color;
+				appAcent["AccentActiveBrushKey"] = new SolidColorBrush(color);
+				appAcent["AccentHighlightColorKey"] = color;
+				appAcent["AccentHighlightBrushKey"] = new SolidColorBrush(color);
+			}
+		}
 	}
+
 
 	internal static class ShellLinkHelper
 	{

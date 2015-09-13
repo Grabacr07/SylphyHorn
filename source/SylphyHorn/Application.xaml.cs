@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Interop;
 using WindowsDesktop;
 using Livet;
 using MetroRadiance;
@@ -20,6 +21,7 @@ namespace SylphyHorn
 	{
 		private readonly CompositeDisposable compositeDisposable = new CompositeDisposable();
 		private System.Windows.Forms.NotifyIcon notifyIcon;
+		private TransparentWindow transparentWindow;
 		private HookService hookService;
 		private NotificationService notificationService;
 
@@ -49,7 +51,15 @@ namespace SylphyHorn
 					ThemeService.Current.Initialize(
 						this,
 						GeneralSettings.Theme.Value ?? (VisualHelper.IsDarkTheme() ? Theme.Dark : Theme.Light), 
-						GeneralSettings.AccentColor);
+						GeneralSettings.AccentColor.Value ?? Accent.Blue);
+
+					this.transparentWindow = new TransparentWindow();
+					this.transparentWindow.Show();
+
+					if (GeneralSettings.AccentColor.Value == null)
+					{
+						VisualHelper.ForceChangeTheme(VisualHelper.GetWindowsAccentColor());
+					}
 
 					this.ShowNotifyIcon();
 					this.hookService = new HookService().AddTo(this);
