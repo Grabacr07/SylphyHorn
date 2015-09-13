@@ -42,7 +42,7 @@
 									  Value=".9" />
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
-		
+
 		<Storyboard x:Key="FadeOut">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
 										   Storyboard.TargetName="BackgroundElement">
@@ -95,12 +95,13 @@
 					   Style="{DynamicResource CaptionTextStyleKey}"
 					   Foreground="{DynamicResource AccentActiveBrushKey}"
 					   FontFamily="Segoe UI Light, Meiryo UI"
-					   FontSize="22" />
+					   FontSize="22"
+					   Margin="2,0,0,-8" />
 			<TextBlock DockPanel.Dock="Top"
 					   Text="{Binding Body}"
 					   Style="{DynamicResource CaptionTextStyleKey}"
 					   FontFamily="Segoe UI Light, Meiryo UI"
-					   FontSize="42" Margin="0,-8,0,0" />
+					   FontSize="42" />
 		</DockPanel>
 	</Grid>
 </Window>

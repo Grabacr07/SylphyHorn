@@ -6,6 +6,7 @@
 				   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 				   xmlns:livet="http://schemas.livet-mvvm.net/2011/wpf"
 				   xmlns:metro="http://schemes.grabacr.net/winfx/2014/controls"
+				   xmlns:metro2="http://schemes.grabacr.net/winfx/2015/personal/controls"
 				   xmlns:vm="clr-namespace:SylphyHorn.ViewModels"
 				   xmlns:controls="clr-namespace:SylphyHorn.Views.Controls"
 				   xmlns:models="clr-namespace:SylphyHorn.Models"
@@ -16,9 +17,8 @@
 				   Height="480"
 				   Background="{DynamicResource ThemeBrushKey}"
 				   Foreground="{DynamicResource ActiveForegroundBrushKey}"
-				   FontFamily="{DynamicResource DefaultFontFamilyKey}"
+				   FontFamily="Segoe UI, Meiryo UI"
 				   SnapsToDevicePixels="True"
-				   TextOptions.TextFormattingMode="Display"
 				   UseLayoutRounding="True">
 
 	<i:Interaction.Behaviors>
@@ -67,32 +67,47 @@
 				<metro:SystemButtons />
 			</StackPanel>
 			<TextBlock Text="{Binding Title}"
-					   Style="{DynamicResource CaptionTextStyleKey}"
+					   FontFamily="Segoe UI Light, Meiryo UI"
+					   FontSize="18"
 					   Margin="12,8" />
 		</DockPanel>
 		<!-- #endregion -->
 
 		<TabControl Style="{DynamicResource VerticalTabControlStyleKey}">
 			<TabControl.Resources>
-				<Style TargetType="{x:Type TextBlock}"
-					   BasedOn="{StaticResource DefaultTextStyleKey}">
+				<Style TargetType="{x:Type TextBlock}">
+					<Setter Property="Foreground"
+							Value="{DynamicResource ForegroundBrushKey}" />
+					<Setter Property="VerticalAlignment"
+							Value="Center" />
 					<Setter Property="Margin"
 							Value="0,2" />
 				</Style>
 				<Style x:Key="HeaderStyleKey"
-					   TargetType="{x:Type TextBlock}"
-					   BasedOn="{StaticResource HeaderTextStyleKey}">
+					   TargetType="{x:Type TextBlock}">
 					<Setter Property="Foreground"
 							Value="{DynamicResource AccentBrushKey}" />
+					<Setter Property="FontFamily"
+							Value="Segoe UI Light, Meiryo UI" />
+					<Setter Property="FontSize"
+							Value="18" />
 					<Setter Property="Margin"
 							Value="0,8" />
+				</Style>
+				<Style x:Key="TabitemStyleKey"
+					   TargetType="{x:Type TextBlock}"
+					   BasedOn="{StaticResource VerticalTabHeaderTextStyleKey}">
+					<Setter Property="FontFamily"
+							Value="Segoe UI Light, Meiryo UI" />
+					<Setter Property="FontSize"
+							Value="16" />
 				</Style>
 			</TabControl.Resources>
 
 			<TabItem>
 				<TabItem.Header>
 					<TextBlock Text="General"
-							   Style="{DynamicResource VerticalTabHeaderTextStyleKey}" />
+							   Style="{DynamicResource TabitemStyleKey}" />
 				</TabItem.Header>
 
 				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
@@ -131,7 +146,7 @@
 			<TabItem>
 				<TabItem.Header>
 					<TextBlock Text="Shortcut key"
-							   Style="{DynamicResource VerticalTabHeaderTextStyleKey}" />
+							   Style="{DynamicResource TabitemStyleKey}" />
 				</TabItem.Header>
 
 				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
@@ -192,9 +207,64 @@
 			<TabItem>
 				<TabItem.Header>
 					<TextBlock Text="Version"
-							   Style="{DynamicResource VerticalTabHeaderTextStyleKey}" />
+							   Style="{DynamicResource TabitemStyleKey}" />
 				</TabItem.Header>
 
+				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+							  VerticalScrollBarVisibility="Auto">
+					<StackPanel Margin="16,0,16,16"
+								Grid.IsSharedSizeScope="True">
+						<TextBlock Text="{x:Static models:ProductInfo.Title}"
+								   Foreground="{DynamicResource ActiveForegroundBrushKey}"
+								   FontFamily="Segoe UI Light, Meiryo UI"
+								   FontSize="32"
+								   Margin="0,-8,0,2" />
+						<TextBlock Foreground="{DynamicResource ActiveForegroundBrushKey}"
+								   FontFamily="Segoe UI Light, Meiryo UI"
+								   FontSize="20"
+								   Margin="1,6">
+							<Run Text="{x:Static models:ProductInfo.Description}" />
+							<LineBreak />
+							<Run Text="version" />
+							<Run Text="{x:Static models:ProductInfo.VersionString}" />
+						</TextBlock>
+
+						<TextBlock Foreground="{DynamicResource ForegroundBrushKey}"
+								   FontFamily="Segoe UI, Meiryo UI"
+								   Margin="2,6">
+							<Run Text="Source code:" />
+							<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn">
+								<Run Text="https://github.com/Grabacr07/SylphyHorn" />
+							</metro2:HyperlinkEx>
+
+							<LineBreak />
+
+							<Run Text="Developer:" />
+							<metro2:HyperlinkEx Uri="https://twitter.com/Grabacr07">
+								<Run Text="@Grabacr07" />
+							</metro2:HyperlinkEx>
+							<metro2:HyperlinkEx Uri="https://twitter.com/tmyt">
+								<Run Text="@tmyt" />
+							</metro2:HyperlinkEx>
+
+						</TextBlock>
+						<TextBlock Foreground="{DynamicResource ForegroundBrushKey}"
+								   FontFamily="Segoe UI, Meiryo UI"
+								   Margin="2,6">
+
+							<Run Text="{Binding Source={x:Static models:ProductInfo.Copyright}, Mode=OneWay}" />
+							<LineBreak />
+							<Run Text="{Binding Source={x:Static models:ProductInfo.Product}, Mode=OneWay}" />
+							<Run Text="is" />
+							<Run Text="OSS"
+								 ToolTip="Open Source Software" />
+							<Run Text="released under" />
+							<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn/blob/master/LICENSE">
+								<Run Text="The MIT License." />
+							</metro2:HyperlinkEx>
+						</TextBlock>
+					</StackPanel>
+				</ScrollViewer>
 			</TabItem>
 		</TabControl>
 	</DockPanel>
