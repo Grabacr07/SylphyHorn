@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interactivity;
@@ -46,10 +45,9 @@ namespace SylphyHorn.Views.Controls
 			base.OnAttached();
 			this.AssociatedObject.Closing += (sender, args) =>
 			{
-				if (this.Storyboard == null) return;
-				if (args.Cancel) return;
+				if (this.Storyboard == null || args.Cancel || this.canClose) return;
 
-				args.Cancel = !this.canClose;
+				args.Cancel = true;
 				this.Storyboard.Begin();
 			};
 		}
@@ -59,6 +57,5 @@ namespace SylphyHorn.Views.Controls
 			this.canClose = true;
 			this.AssociatedObject.Close();
 		}
-
 	}
 }
