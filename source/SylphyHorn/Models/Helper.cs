@@ -54,6 +54,13 @@ namespace SylphyHorn.Models
 			NativeMethods.GetClassName(hWnd, className, className.Capacity);
 			return className.ToString() == consoleWindowClass;
 		}
+
+	    public static IntPtr GetForegroundWindowEx()
+	    {
+	        var hwnd = NativeMethods.GetForegroundWindow();
+	        var howner = NativeMethods.GetWindow(hwnd, 4 /* GW_OWNER */);
+	        return howner == IntPtr.Zero ? hwnd : howner;
+	    }
 	}
 
 	internal static class VisualHelper

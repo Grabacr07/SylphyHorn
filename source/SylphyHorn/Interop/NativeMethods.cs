@@ -17,5 +17,8 @@ namespace SylphyHorn.Interop
 
 		[DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
 		public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+
+		[DllImport("user32.dll", SetLastError = true)]
+		public static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
 	}
 }

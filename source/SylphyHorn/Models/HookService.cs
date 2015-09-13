@@ -80,7 +80,7 @@ namespace SylphyHorn.Models
 
 		private VirtualDesktop MoveToLeft()
 		{
-			var hWnd = NativeMethods.GetForegroundWindow();
+			var hWnd = InteropHelper.GetForegroundWindowEx();
 			if (InteropHelper.IsConsoleWindow(hWnd))
 			{
 				System.Media.SystemSounds.Asterisk.Play();
@@ -118,7 +118,7 @@ namespace SylphyHorn.Models
 
 		private VirtualDesktop MoveToRight()
 		{
-			var hWnd = NativeMethods.GetForegroundWindow();
+			var hWnd = InteropHelper.GetForegroundWindowEx();
 			if (InteropHelper.IsConsoleWindow(hWnd))
 			{
 				System.Media.SystemSounds.Asterisk.Play();
