@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -56,6 +58,46 @@ namespace SylphyHorn.Models
 		public static void InvokeOnUIDispatcher(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
 		{
 			DispatcherHelper.UIDispatcher.BeginInvoke(action, priority);
+		}
+	}
+
+	internal static class ShellLinkHelper
+	{
+		public static bool CreateLink(string path)
+		{
+			var type = Type.GetTypeFromCLSID(new Guid("00021401-0000-0000-C000-000000000046"));
+			var psl = (IShellLink)Activator.CreateInstance(type);
+			psl.SetPath(Assembly.GetExecutingAssembly().Location);
+			var ppf = (IPersistFile)psl;
+			ppf.Save(path, false);
+			return true;
+		}
+
+		public static bool CreateStartup(string name)
+		{
+			var dir = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+			return CreateLink(dir + "\\" + name + ".lnk");
+		}
+
+		public static bool CreateStartup()
+		{
+			var name = Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
+			return CreateStartup(name);
+		}
+
+		public static bool RemoveStartup(string name)
+		{
+			var dir = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+			var path = dir + "\\" + name + ".lnk";
+			if (!File.Exists(path)) return false;
+			File.Delete(path);
+			return true;
+		}
+
+		public static bool RemoveStartup()
+		{
+			var name = Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
+			return RemoveStartup(name);
 		}
 	}
 }
