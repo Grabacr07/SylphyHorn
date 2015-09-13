@@ -246,8 +246,29 @@
 							<metro2:HyperlinkEx Uri="https://twitter.com/tmyt">
 								<Run Text="@tmyt" />
 							</metro2:HyperlinkEx>
-
 						</TextBlock>
+
+
+						<metro:BindableTextBlock TextSource="{Binding Libraries}"
+												 TextWrapping="Wrap"
+												 Margin="1,6">
+							<metro:BindableTextBlock.TextTemplates>
+								<DataTemplate DataType="{x:Type vm:HyperlinkViewModel}">
+									<metro:InlineHolder>
+										<metro2:HyperlinkEx Uri="{Binding Uri}">
+											<Run Text="{Binding Text, Mode=OneWay}" />
+										</metro2:HyperlinkEx>
+									</metro:InlineHolder>
+								</DataTemplate>
+								<DataTemplate DataType="{x:Type vm:BindableTextViewModel}">
+									<metro:InlineHolder>
+										<Run Text="{Binding Text, Mode=OneWay}"
+											 Foreground="{DynamicResource ActiveForegroundBrushKey}" />
+									</metro:InlineHolder>
+								</DataTemplate>
+							</metro:BindableTextBlock.TextTemplates>
+						</metro:BindableTextBlock>
+
 						<TextBlock Foreground="{DynamicResource ForegroundBrushKey}"
 								   FontFamily="Segoe UI, Meiryo UI"
 								   Margin="2,6">

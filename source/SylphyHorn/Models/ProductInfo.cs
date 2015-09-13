@@ -18,9 +18,13 @@ namespace SylphyHorn.Models
 		private static readonly Lazy<string> versionLazy = new Lazy<string>(() => $"{Version.ToString(3)}{(IsBetaRelease ? " β" : "")}{(Version.Revision == 0 ? "" : " rev." + Version.Revision)}");
 		private static readonly Lazy<IReadOnlyCollection<Library>> librariesLazy = new Lazy<IReadOnlyCollection<Library>>(() => new List<Library>
 		{
-			new Library("Livet", new Uri("http://ugaya40.hateblo.jp/entry/Livet")),
-			new Library("StatefulModel", new Uri("http://ugaya40.hateblo.jp/entry/StatefulModel")),
+			new Library("VirtualDesktop", new Uri("https://github.com/Grabacr07/VirtualDesktop")),
+			new Library("VDMHelper", new Uri("https://github.com/tmyt/VDMHelper")),
 			new Library("Open.WinKeyboardHook", new Uri("https://github.com/lontivero/Open.WinKeyboardHook")),
+			new Library("StatefulModel", new Uri("http://ugaya40.hateblo.jp/entry/StatefulModel")),
+			new Library("Livet", new Uri("http://ugaya40.hateblo.jp/entry/Livet")),
+			new Library("MetroRadiance", new Uri("https://github.com/Grabacr07/MetroRadiance")),
+			new Library("MetroTrilithon", new Uri("https://github.com/Grabacr07/MetroTrilithon")),
 		});
 
 
