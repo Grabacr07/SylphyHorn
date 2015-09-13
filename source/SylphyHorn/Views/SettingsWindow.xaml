@@ -103,7 +103,7 @@
 								   Margin="0,0,0,8" />
 						<StackPanel Margin="8,0,0,0">
 							<CheckBox IsChecked="{Binding Source={x:Static models:GeneralSettings.LoopDesktop}, Path=Value, Mode=TwoWay}">
-								<TextBlock Text="Loop virtual desktops." />
+								<TextBlock Text="Loop virtual desktops" />
 							</CheckBox>
 						</StackPanel>
 						<Border Height="8" />
@@ -112,7 +112,16 @@
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<StackPanel Margin="8,0,0,0">
 							<CheckBox IsChecked="{Binding Source={x:Static models:GeneralSettings.NotificationWhenSwitchedDesktop}, Path=Value, Mode=TwoWay}">
-								<TextBlock Text="Display a notification when switched virtual desktop." />
+								<TextBlock Text="Display a notification when switched virtual desktop" />
+							</CheckBox>
+						</StackPanel>
+						<Border Height="8" />
+
+						<TextBlock Text="Startup"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<StackPanel Margin="8,0,0,0">
+							<CheckBox IsChecked="{Binding HasStartupLink, Mode=TwoWay}">
+								<TextBlock Text="Automaticaly start at logon" />
 							</CheckBox>
 						</StackPanel>
 					</StackPanel>

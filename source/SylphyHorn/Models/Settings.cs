@@ -12,7 +12,8 @@ namespace SylphyHorn.Models
 		public static string LocalFilePath { get; } = Path.Combine(
 			Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
 			ProductInfo.Company,
-			ProductInfo.Title);
+			ProductInfo.Title,
+			"Settins.xaml");
 
 		public static ISerializationProvider Local { get; } = new FileSettingsProvider(LocalFilePath);
 	}
@@ -28,7 +29,7 @@ namespace SylphyHorn.Models
 
 		private static string GetKey([CallerMemberName] string caller = "")
 		{
-			return nameof(ShortcutSettings) + "." + caller;
+			return nameof(GeneralSettings) + "." + caller;
 		}
 	}
 

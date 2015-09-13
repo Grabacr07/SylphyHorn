@@ -33,6 +33,7 @@ namespace SylphyHorn.Models
 		public void Stop()
 		{
 			this.interceptor.StopCapturing();
+			this.pressedModifiers.Clear();
 		}
 
 		private void InterceptorOnKeyDown(object sender, System.Windows.Forms.KeyEventArgs args)
