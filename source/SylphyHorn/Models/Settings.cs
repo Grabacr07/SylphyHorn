@@ -16,7 +16,7 @@ namespace SylphyHorn.Models
 			Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
 			ProductInfo.Company,
 			ProductInfo.Title,
-			"Settins.xaml");
+			"Settings.xaml");
 
 		public static ISerializationProvider Local { get; } = new FileSettingsProvider(LocalFilePath);
 	}
