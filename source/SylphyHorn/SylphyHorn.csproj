@@ -138,6 +138,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interop\IPersist.cs" />
+    <Compile Include="Interop\IPersistFile.cs" />
+    <Compile Include="Interop\IShellLink.cs" />
+    <Compile Include="Interop\UnsafeNativeMethods.cs" />
     <Compile Include="Models\Helper.cs" />
     <Compile Include="Models\NotificationService.cs" />
     <Compile Include="ViewModels\NotificationWindowViewModel.cs" />
