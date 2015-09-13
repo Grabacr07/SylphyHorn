@@ -58,7 +58,7 @@ namespace SylphyHorn
 
 					if (GeneralSettings.AccentColor.Value == null)
 					{
-						VisualHelper.ForceChangeTheme(VisualHelper.GetWindowsAccentColor());
+						VisualHelper.ForceChangeAccent(VisualHelper.GetWindowsAccentColor());
 					}
 
 					this.ShowNotifyIcon();

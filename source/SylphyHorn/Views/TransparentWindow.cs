@@ -26,7 +26,7 @@ namespace SylphyHorn.Views
 		{
 			if (msg == (int)WM.DWMCOLORIZATIONCOLORCHANGED)
 			{
-				VisualHelper.ForceChangeTheme((long)wParam);
+				VisualHelper.ForceChangeAccent((long)wParam);
 			}
 
 			return base.WindowProc(hwnd, msg, wParam, lParam, ref handled);
@@ -35,7 +35,7 @@ namespace SylphyHorn.Views
 
 	public class RawWindow
 	{
-		protected HwndSource Source { get; private set; }
+		public HwndSource Source { get; private set; }
 
 		public IntPtr Handle => this.Source?.Handle ?? IntPtr.Zero;
 
@@ -44,7 +44,7 @@ namespace SylphyHorn.Views
 			this.Show(new HwndSourceParameters());
 		}
 
-		public void Show(HwndSourceParameters parameters)
+		protected void Show(HwndSourceParameters parameters)
 		{
 			this.Source = new HwndSource(parameters);
 			this.Source.AddHook(this.WindowProc);

@@ -91,24 +91,27 @@ namespace SylphyHorn.Models
 			return color;
 		}
 
-		public static void ForceChangeTheme(long color)
+		public static void ForceChangeAccent(long color)
 		{
-			ForceChangeTheme(Color.FromArgb((byte)(color >> 24), (byte)(color >> 16), (byte)(color >> 8), (byte)color));
+			ForceChangeAccent(Color.FromArgb((byte)(color >> 24), (byte)(color >> 16), (byte)(color >> 8), (byte)color));
 		}
 
-		public static void ForceChangeTheme(Color color)
+		private static FieldInfo appAccentField;
+
+		public static void ForceChangeAccent(Color color)
 		{
 			color.A = byte.MaxValue;
 
-			var appAcent = typeof(ThemeService).GetField("appAccent", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(ThemeService.Current) as ResourceDictionary;
-			if (appAcent != null)
+			var fieldInfo = appAccentField ?? (appAccentField = typeof(ThemeService).GetField("appAccent", BindingFlags.Instance | BindingFlags.NonPublic));
+			var appAccent = fieldInfo?.GetValue(ThemeService.Current) as ResourceDictionary;
+			if (appAccent != null)
 			{
-				appAcent["AccentColorKey"] = color;
-				appAcent["AccentBrushKey"] = new SolidColorBrush(color);
-				appAcent["AccentActiveColorKey"] = color;
-				appAcent["AccentActiveBrushKey"] = new SolidColorBrush(color);
-				appAcent["AccentHighlightColorKey"] = color;
-				appAcent["AccentHighlightBrushKey"] = new SolidColorBrush(color);
+				appAccent["AccentColorKey"] = color;
+				appAccent["AccentBrushKey"] = new SolidColorBrush(color);
+				appAccent["AccentActiveColorKey"] = color;
+				appAccent["AccentActiveBrushKey"] = new SolidColorBrush(color);
+				appAccent["AccentHighlightColorKey"] = color;
+				appAccent["AccentHighlightBrushKey"] = new SolidColorBrush(color);
 			}
 		}
 	}
