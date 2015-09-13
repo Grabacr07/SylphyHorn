@@ -100,7 +100,7 @@ ERROR, date = {0}, sender = {1},
 
 				Debug.WriteLine(message);
 				File.AppendAllText(path, message);
-				MessageBox.Show(message, "なんか落ちた");
+				MessageBox.Show(message, "Unexpected error occurred");
 			}
 			catch (Exception ex)
 			{
@@ -115,7 +115,7 @@ ERROR, date = {0}, sender = {1},
 
 		private void ShowNotifyIcon()
 		{
-			const string iconUri = "pack://application:,,,/SylphyHorn;Component/Assets/app.ico";
+			const string iconUri = "pack://application:,,,/SylphyHorn;Component/Assets/tasktray.ico";
 
 			Uri uri;
 			if (!Uri.TryCreate(iconUri, UriKind.Absolute, out uri)) return;
