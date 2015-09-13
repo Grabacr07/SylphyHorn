@@ -4,11 +4,14 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:vm="clr-namespace:SylphyHorn.ViewModels"
+		xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+		xmlns:livet="http://schemas.livet-mvvm.net/2011/wpf"
+		xmlns:controls="clr-namespace:SylphyHorn.Views.Controls"
 		mc:Ignorable="d"
 		d:DataContext="{d:DesignInstance vm:NotificationWindowViewModel}"
 		Title="{Binding Title}"
 		Width="600"
-		Height="120"
+		Height="100"
 		ResizeMode="NoResize"
 		WindowStyle="None"
 		WindowStartupLocation="CenterScreen"
@@ -26,7 +29,7 @@
 									  Value=".0" />
 				<EasingDoubleKeyFrame KeyTime="0:0:0.5"
 									  Value=".0" />
-				<EasingDoubleKeyFrame KeyTime="0:0:1.0"
+				<EasingDoubleKeyFrame KeyTime="0:0:0.8"
 									  Value=".7" />
 			</DoubleAnimationUsingKeyFrames>
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
@@ -35,8 +38,25 @@
 									  Value=".0" />
 				<EasingDoubleKeyFrame KeyTime="0:0:0.5"
 									  Value=".0" />
-				<EasingDoubleKeyFrame KeyTime="0:0:1.0"
-									  Value="1.0" />
+				<EasingDoubleKeyFrame KeyTime="0:0:0.8"
+									  Value=".9" />
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		
+		<Storyboard x:Key="FadeOut">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+										   Storyboard.TargetName="BackgroundElement">
+				<EasingDoubleKeyFrame KeyTime="0"
+									  Value=".7" />
+				<EasingDoubleKeyFrame KeyTime="0:0:0.2"
+									  Value=".0" />
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+										   Storyboard.TargetName="ForegroundElement">
+				<EasingDoubleKeyFrame KeyTime="0"
+									  Value=".9" />
+				<EasingDoubleKeyFrame KeyTime="0:0:0.2"
+									  Value=".0" />
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
 	</Window.Resources>
@@ -46,6 +66,22 @@
 		</EventTrigger>
 	</Window.Triggers>
 
+	<i:Interaction.Behaviors>
+		<livet:WindowCloseCancelBehavior CloseCanceledCallbackMethodTarget="{Binding}"
+										 CloseCanceledCallbackMethodName="CloseCanceledCallback"
+										 CanClose="{Binding CanClose}" />
+		<controls:ClosingStoryboardBehavior Storyboard="{StaticResource FadeOut}" />
+	</i:Interaction.Behaviors>
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="ContentRendered">
+			<livet:LivetCallMethodAction MethodTarget="{Binding}"
+										 MethodName="Initialize" />
+		</i:EventTrigger>
+		<i:EventTrigger EventName="Closed">
+			<livet:DataContextDisposeAction />
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
+
 	<Grid>
 		<Border x:Name="BackgroundElement"
 				x:FieldModifier="private"
@@ -53,17 +89,18 @@
 		<DockPanel x:Name="ForegroundElement"
 				   x:FieldModifier="private"
 				   VerticalAlignment="Center"
-				   Margin="20,16">
+				   Margin="16,12">
 			<TextBlock DockPanel.Dock="Top"
 					   Text="{Binding Header}"
 					   Style="{DynamicResource CaptionTextStyleKey}"
+					   Foreground="{DynamicResource AccentActiveBrushKey}"
 					   FontFamily="Segoe UI Light, Meiryo UI"
 					   FontSize="22" />
 			<TextBlock DockPanel.Dock="Top"
 					   Text="{Binding Body}"
 					   Style="{DynamicResource CaptionTextStyleKey}"
 					   FontFamily="Segoe UI Light, Meiryo UI"
-					   FontSize="42" />
+					   FontSize="42" Margin="0,-8,0,0" />
 		</DockPanel>
 	</Grid>
 </Window>
