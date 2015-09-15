@@ -48,7 +48,7 @@ namespace SylphyHorn.Models
 				args.Handled = true;
 			}
 
-			if (ShortcutSettings.MoveLeftAndSwitch.Value != null &&
+            if (ShortcutSettings.MoveLeftAndSwitch.Value != null &&
 				ShortcutSettings.MoveLeftAndSwitch.Value == args.ShortcutKey)
 			{
 				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToLeft()?.Switch());
@@ -82,9 +82,68 @@ namespace SylphyHorn.Models
 				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToNew()?.Switch());
 				args.Handled = true;
 			}
-		}
 
-		private VirtualDesktop MoveToLeft()
+            if (ShortcutSettings.SwitchToLeft.Value != null &&
+                ShortcutSettings.SwitchToLeft.Value == args.ShortcutKey)
+            {
+                if (GeneralSettings.OverrideOSDefaultKeyCombination)
+                {
+                    VisualHelper.InvokeOnUIDispatcher(() => this.PrepareSwitchToLeft()?.Switch());
+                    args.Handled = true;
+                }
+                else
+                {
+                    args.Handled = false;
+                }
+            }
+
+            if (ShortcutSettings.SwitchToRight.Value != null &&
+                ShortcutSettings.SwitchToRight.Value == args.ShortcutKey)
+            {
+                if (GeneralSettings.OverrideOSDefaultKeyCombination)
+                {
+                    VisualHelper.InvokeOnUIDispatcher(() => this.PrepareSwitchToRight()?.Switch());
+                    args.Handled = true;
+                }
+                else
+                {
+                    args.Handled = false;
+                }
+            }
+        }
+        private VirtualDesktop PrepareSwitchToLeft()
+        {
+            var current = VirtualDesktop.Current;
+            var desktops = VirtualDesktop.GetDesktops();
+
+            if (current.Id == desktops.First().Id && desktops.Length >= 2)
+            {
+                if (!GeneralSettings.LoopDesktop) return null;
+                return desktops.Last();
+            }
+            else
+            {
+                return current.GetLeft();
+            }
+        }
+
+        private VirtualDesktop PrepareSwitchToRight()
+        {
+            var current = VirtualDesktop.Current;
+            var desktops = VirtualDesktop.GetDesktops();
+
+            if (current.Id == desktops.Last().Id && desktops.Length >= 2)
+            {
+                if (!GeneralSettings.LoopDesktop) return null;
+                return desktops.First();
+            }
+            else
+            {
+                return current.GetRight();
+            }
+        }
+
+        private VirtualDesktop MoveToLeft()
 		{
 			var hWnd = InteropHelper.GetForegroundWindowEx();
 			if (InteropHelper.IsConsoleWindow(hWnd))

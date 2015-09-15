@@ -36,7 +36,10 @@ namespace SylphyHorn.Models
 		public static SerializableProperty<Accent?> AccentColor { get; }
 			= new SerializableProperty<Accent?>(GetKey(), Providers.Local);
 
-		private static string GetKey([CallerMemberName] string caller = "")
+        public static SerializableProperty<bool> OverrideOSDefaultKeyCombination { get; }
+            = new SerializableProperty<bool>(GetKey(), Providers.Local, false);
+
+        private static string GetKey([CallerMemberName] string caller = "")
 		{
 			return nameof(GeneralSettings) + "." + caller;
 		}
@@ -66,8 +69,14 @@ namespace SylphyHorn.Models
 		public static SerializableProperty<ShortcutKey?> MoveNewAndSwitch { get; }
 			= new SerializableProperty<ShortcutKey?>(GetKey(), Providers.Local, new ShortcutKey(Key.D, Key.LeftCtrl, Key.LeftAlt, Key.LWin));
 
+        public static SerializableProperty<ShortcutKey?> SwitchToLeft { get; }
+            = new SerializableProperty<ShortcutKey?>(GetKey(), Providers.Local, new ShortcutKey(Key.Left, Key.LeftCtrl, Key.LWin));
 
-		private static string GetKey([CallerMemberName] string caller = "")
+        public static SerializableProperty<ShortcutKey?> SwitchToRight { get; }
+            = new SerializableProperty<ShortcutKey?>(GetKey(), Providers.Local, new ShortcutKey(Key.Right, Key.LeftCtrl, Key.LWin));
+
+
+        private static string GetKey([CallerMemberName] string caller = "")
 		{
 			return nameof(ShortcutSettings) + "." + caller;
 		}
