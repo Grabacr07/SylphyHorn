@@ -17,7 +17,7 @@ namespace SylphyHorn.Models
 		/// <summary>
 		/// Occurs when detects a shortcut key.
 		/// </summary>
-		public event EventHandler<ShortcutKey> Pressed;
+		public event EventHandler<ShortcutKeyPressedEventArgs> Pressed;
 
 		public ShortcutKeyDetector()
 		{
@@ -45,7 +45,9 @@ namespace SylphyHorn.Models
 			}
 			else
 			{
-				this.Pressed?.Invoke(this, new ShortcutKey(key, this.pressedModifiers));
+				var pressedEventArgs = new ShortcutKeyPressedEventArgs(key, this.pressedModifiers);
+				this.Pressed?.Invoke(this, pressedEventArgs);
+				if (pressedEventArgs.Handled) args.SuppressKeyPress = true;
 			}
 		}
 

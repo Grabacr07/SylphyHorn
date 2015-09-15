@@ -37,44 +37,50 @@ namespace SylphyHorn.Models
 			});
 		}
 
-		private void KeyHookOnPressed(object sender, ShortcutKey shortcutKey)
+		private void KeyHookOnPressed(object sender, ShortcutKeyPressedEventArgs args)
 		{
 			if (ShortcutSettings.OpenDesktopSelector.Value != null) { }
 
 			if (ShortcutSettings.MoveLeft.Value != null &&
-				ShortcutSettings.MoveLeft.Value == shortcutKey)
+				ShortcutSettings.MoveLeft.Value == args.ShortcutKey)
 			{
 				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToLeft());
+				args.Handled = true;
 			}
 
 			if (ShortcutSettings.MoveLeftAndSwitch.Value != null &&
-				ShortcutSettings.MoveLeftAndSwitch.Value == shortcutKey)
+				ShortcutSettings.MoveLeftAndSwitch.Value == args.ShortcutKey)
 			{
 				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToLeft()?.Switch());
+				args.Handled = true;
 			}
 
 			if (ShortcutSettings.MoveRight.Value != null &&
-				ShortcutSettings.MoveRight.Value == shortcutKey)
+				ShortcutSettings.MoveRight.Value == args.ShortcutKey)
 			{
 				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToRight());
+				args.Handled = true;
 			}
 
 			if (ShortcutSettings.MoveRightAndSwitch.Value != null &&
-				ShortcutSettings.MoveRightAndSwitch.Value == shortcutKey)
+				ShortcutSettings.MoveRightAndSwitch.Value == args.ShortcutKey)
 			{
 				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToRight()?.Switch());
+				args.Handled = true;
 			}
 
 			if (ShortcutSettings.MoveNew.Value != null &&
-				ShortcutSettings.MoveNew.Value == shortcutKey)
+				ShortcutSettings.MoveNew.Value == args.ShortcutKey)
 			{
-				VisualHelper.InvokeOnUIDispatcher(()=> this.MoveToNew());
+				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToNew());
+				args.Handled = true;
 			}
 
 			if (ShortcutSettings.MoveNewAndSwitch.Value != null &&
-				ShortcutSettings.MoveNewAndSwitch.Value == shortcutKey)
+				ShortcutSettings.MoveNewAndSwitch.Value == args.ShortcutKey)
 			{
 				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToNew()?.Switch());
+				args.Handled = true;
 			}
 		}
 
