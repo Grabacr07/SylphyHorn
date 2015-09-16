@@ -87,12 +87,14 @@ namespace SylphyHorn.Models
 				ShortcutSettings.SwitchLeft.Value == args.ShortcutKey)
 			{
 				VisualHelper.InvokeOnUIDispatcher(() => this.GetLeftDesktop()?.Switch());
+				args.Handled = true;
 			}
 
 			if (ShortcutSettings.SwitchRight.Value != null &&
 				ShortcutSettings.SwitchRight.Value == args.ShortcutKey)
 			{
 				VisualHelper.InvokeOnUIDispatcher(() => this.GetRightDesktop()?.Switch());
+				args.Handled = true;
 			}
 		}
 
