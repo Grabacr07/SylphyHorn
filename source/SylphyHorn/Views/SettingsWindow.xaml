@@ -201,6 +201,30 @@
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveNewAndSwitch}, Path=Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
+
+						<TextBlock Text="Switch virtual desktop"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<Grid Margin="8,0,0,0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"
+												  SharedSizeGroup="KeyHeader" />
+								<ColumnDefinition Width="8" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<UniformGrid Columns="1">
+								<TextBlock Text="Switch to Right (Default)" />
+								<TextBlock Text="Switch to Left (Default)" />
+								<TextBlock Text="Switch to Right" />
+								<TextBlock Text="Switch to Left" />
+							</UniformGrid>
+							<UniformGrid Grid.Column="2"
+										 Columns="1">
+								<TextBlock Text="Ctrl + Win + &lt;- (provided by Windows)" />
+								<TextBlock Text="Ctrl + Win + -&gt; (provided by Windows)" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.SwitchLeft}, Path=Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.SwitchRight}, Path=Value, Mode=TwoWay}" />
+							</UniformGrid>
+						</Grid>
 					</StackPanel>
 				</ScrollViewer>
 			</TabItem>
