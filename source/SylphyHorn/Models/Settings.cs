@@ -66,6 +66,12 @@ namespace SylphyHorn.Models
 		public static SerializableProperty<ShortcutKey?> MoveNewAndSwitch { get; }
 			= new SerializableProperty<ShortcutKey?>(GetKey(), Providers.Local, new ShortcutKey(Key.D, Key.LeftCtrl, Key.LeftAlt, Key.LWin));
 
+		public static SerializableProperty<ShortcutKey?> SwitchLeft { get; }
+			= new SerializableProperty<ShortcutKey?>(GetKey(), Providers.Local);
+
+		public static SerializableProperty<ShortcutKey?> SwitchRight { get; }
+			= new SerializableProperty<ShortcutKey?>(GetKey(), Providers.Local);
+
 
 		private static string GetKey([CallerMemberName] string caller = "")
 		{

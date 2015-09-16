@@ -82,6 +82,18 @@ namespace SylphyHorn.Models
 				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToNew()?.Switch());
 				args.Handled = true;
 			}
+
+			if (ShortcutSettings.SwitchLeft.Value != null &&
+				ShortcutSettings.SwitchLeft.Value == args.ShortcutKey)
+			{
+				VisualHelper.InvokeOnUIDispatcher(() => this.GetLeftDesktop()?.Switch());
+			}
+
+			if (ShortcutSettings.SwitchRight.Value != null &&
+				ShortcutSettings.SwitchRight.Value == args.ShortcutKey)
+			{
+				VisualHelper.InvokeOnUIDispatcher(() => this.GetRightDesktop()?.Switch());
+			}
 		}
 
 		private VirtualDesktop MoveToLeft()
@@ -183,6 +195,38 @@ namespace SylphyHorn.Models
 				return newone;
 			}
 
+			return null;
+		}
+
+		private VirtualDesktop GetLeftDesktop()
+		{
+			var current = VirtualDesktop.Current;
+			if (current != null)
+			{
+				var left = current.GetLeft();
+				if (left == null && GeneralSettings.LoopDesktop)
+				{
+					var desktops = VirtualDesktop.GetDesktops();
+					if (desktops.Length >= 2) left = desktops.Last();
+				}
+				return left;
+			}
+			return null;
+		}
+
+		private VirtualDesktop GetRightDesktop()
+		{
+			var current = VirtualDesktop.Current;
+			if (current != null)
+			{
+				var right = current.GetRight();
+				if (right == null && GeneralSettings.LoopDesktop)
+				{
+					var desktops = VirtualDesktop.GetDesktops();
+					if (desktops.Length >= 2) right = desktops.First();
+				}
+				return right;
+			}
 			return null;
 		}
 
