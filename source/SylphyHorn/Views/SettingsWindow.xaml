@@ -121,7 +121,10 @@
 							<CheckBox IsChecked="{Binding Source={x:Static models:GeneralSettings.LoopDesktop}, Path=Value, Mode=TwoWay}">
 								<TextBlock Text="Loop virtual desktops" />
 							</CheckBox>
-						</StackPanel>
+                            <CheckBox IsChecked="{Binding Source={x:Static models:GeneralSettings.OverrideOSDefaultKeyCombination}, Path=Value, Mode=TwoWay}">
+                                <TextBlock Text="Override OS default key combination (Ctrl+Win+Left and Right)" />
+                            </CheckBox>
+                        </StackPanel>
 						<Border Height="8" />
 
 						<TextBlock Text="Notification"
