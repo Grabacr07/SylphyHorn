@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Media;
+using System.Threading.Tasks;
 using MetroTrilithon.Lifetime;
 using SylphyHorn.Interop;
 using VDMHelperCLR.Common;
@@ -48,7 +51,7 @@ namespace SylphyHorn.Models
 				args.Handled = true;
 			}
 
-            if (ShortcutSettings.MoveLeftAndSwitch.Value != null &&
+			if (ShortcutSettings.MoveLeftAndSwitch.Value != null &&
 				ShortcutSettings.MoveLeftAndSwitch.Value == args.ShortcutKey)
 			{
 				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToLeft()?.Switch());
@@ -83,102 +86,80 @@ namespace SylphyHorn.Models
 				args.Handled = true;
 			}
 
-            if (ShortcutSettings.SwitchToLeft.Value != null &&
-                ShortcutSettings.SwitchToLeft.Value == args.ShortcutKey)
-            {
-                if (GeneralSettings.OverrideOSDefaultKeyCombination)
-                {
-                    VisualHelper.InvokeOnUIDispatcher(() => this.PrepareSwitchToLeft()?.Switch());
-                    args.Handled = true;
-                }
-                else
-                {
-                    args.Handled = false;
-                }
-            }
+			if (ShortcutSettings.SwitchToLeft.Value != null &&
+				ShortcutSettings.SwitchToLeft.Value == args.ShortcutKey)
+			{
+				if (GeneralSettings.OverrideOSDefaultKeyCombination)
+				{
+					VisualHelper.InvokeOnUIDispatcher(() => PrepareSwitchToLeft()?.Switch());
+					args.Handled = true;
+				}
+			}
 
-            if (ShortcutSettings.SwitchToRight.Value != null &&
-                ShortcutSettings.SwitchToRight.Value == args.ShortcutKey)
-            {
-                if (GeneralSettings.OverrideOSDefaultKeyCombination)
-                {
-                    VisualHelper.InvokeOnUIDispatcher(() => this.PrepareSwitchToRight()?.Switch());
-                    args.Handled = true;
-                }
-                else
-                {
-                    args.Handled = false;
-                }
-            }
-        }
-        private VirtualDesktop PrepareSwitchToLeft()
-        {
-            var current = VirtualDesktop.Current;
-            var desktops = VirtualDesktop.GetDesktops();
+			if (ShortcutSettings.SwitchToRight.Value != null &&
+				ShortcutSettings.SwitchToRight.Value == args.ShortcutKey)
+			{
+				if (GeneralSettings.OverrideOSDefaultKeyCombination)
+				{
+					VisualHelper.InvokeOnUIDispatcher(() => PrepareSwitchToRight()?.Switch());
+					args.Handled = true;
+				}
+			}
+		}
 
-            if (current.Id == desktops.First().Id && desktops.Length >= 2)
-            {
-                if (!GeneralSettings.LoopDesktop) return null;
-                return desktops.Last();
-            }
-            else
-            {
-                return current.GetLeft();
-            }
-        }
+		private static VirtualDesktop PrepareSwitchToLeft()
+		{
+			var current = VirtualDesktop.Current;
+			var desktops = VirtualDesktop.GetDesktops();
 
-        private VirtualDesktop PrepareSwitchToRight()
-        {
-            var current = VirtualDesktop.Current;
-            var desktops = VirtualDesktop.GetDesktops();
+			return current.Id == desktops.First().Id && desktops.Length >= 2
+				? GeneralSettings.LoopDesktop ? desktops.Last() : null
+				: current.GetLeft();
+		}
 
-            if (current.Id == desktops.Last().Id && desktops.Length >= 2)
-            {
-                if (!GeneralSettings.LoopDesktop) return null;
-                return desktops.First();
-            }
-            else
-            {
-                return current.GetRight();
-            }
-        }
+		private static VirtualDesktop PrepareSwitchToRight()
+		{
+			var current = VirtualDesktop.Current;
+			var desktops = VirtualDesktop.GetDesktops();
 
-        private VirtualDesktop MoveToLeft()
+			return current.Id == desktops.Last().Id && desktops.Length >= 2
+				? GeneralSettings.LoopDesktop ? desktops.First() : null
+				: current.GetRight();
+		}
+
+		private VirtualDesktop MoveToLeft()
 		{
 			var hWnd = InteropHelper.GetForegroundWindowEx();
 			if (InteropHelper.IsConsoleWindow(hWnd))
 			{
-				System.Media.SystemSounds.Asterisk.Play();
+				SystemSounds.Asterisk.Play();
 				return null;
 			}
 
 			var current = VirtualDesktop.FromHwnd(hWnd);
-			if (current != null)
+			if (current == null) return null;
+
+			var left = current.GetLeft();
+			if (left == null)
 			{
-				var left = current.GetLeft();
-				if (left == null)
+				if (GeneralSettings.LoopDesktop)
 				{
-					if (GeneralSettings.LoopDesktop)
-					{
-						var desktops = VirtualDesktop.GetDesktops();
-						if (desktops.Length >= 2) left = desktops.Last();
-					}
-				}
-				if (left != null)
-				{
-					if (InteropHelper.IsCurrentProcess(hWnd))
-					{
-						VirtualDesktopHelper.MoveToDesktop(hWnd, left);
-					}
-					else
-					{
-						this.helper.MoveWindowToDesktop(hWnd, left.Id);
-					}
-					return left;
+					var desktops = VirtualDesktop.GetDesktops();
+					if (desktops.Length >= 2) left = desktops.Last();
 				}
 			}
+			if (left == null) return null;
 
-			return null;
+			if (InteropHelper.IsCurrentProcess(hWnd))
+			{
+				VirtualDesktopHelper.MoveToDesktop(hWnd, left);
+			}
+			else
+			{
+				this.helper.MoveWindowToDesktop(hWnd, left.Id);
+			}
+
+			return left;
 		}
 
 		private VirtualDesktop MoveToRight()
@@ -186,37 +167,34 @@ namespace SylphyHorn.Models
 			var hWnd = InteropHelper.GetForegroundWindowEx();
 			if (InteropHelper.IsConsoleWindow(hWnd))
 			{
-				System.Media.SystemSounds.Asterisk.Play();
+				SystemSounds.Asterisk.Play();
 				return null;
 			}
 
 			var current = VirtualDesktop.FromHwnd(hWnd);
-			if (current != null)
+			if (current == null) return null;
+
+			var right = current.GetRight();
+			if (right == null)
 			{
-				var right = current.GetRight();
-				if (right == null)
+				if (GeneralSettings.LoopDesktop)
 				{
-					if (GeneralSettings.LoopDesktop)
-					{
-						var desktops = VirtualDesktop.GetDesktops();
-						if (desktops.Length >= 2) right = desktops.First();
-					}
-				}
-				if (right != null)
-				{
-					if (InteropHelper.IsCurrentProcess(hWnd))
-					{
-						VirtualDesktopHelper.MoveToDesktop(hWnd, right);
-					}
-					else
-					{
-						this.helper.MoveWindowToDesktop(hWnd, right.Id);
-					}
-					return right;
+					var desktops = VirtualDesktop.GetDesktops();
+					if (desktops.Length >= 2) right = desktops.First();
 				}
 			}
+			if (right == null) return null;
 
-			return null;
+			if (InteropHelper.IsCurrentProcess(hWnd))
+			{
+				VirtualDesktopHelper.MoveToDesktop(hWnd, right);
+			}
+			else
+			{
+				this.helper.MoveWindowToDesktop(hWnd, right.Id);
+			}
+
+			return right;
 		}
 
 		private VirtualDesktop MoveToNew()
@@ -224,25 +202,23 @@ namespace SylphyHorn.Models
 			var hWnd = NativeMethods.GetForegroundWindow();
 			if (InteropHelper.IsConsoleWindow(hWnd))
 			{
-				System.Media.SystemSounds.Asterisk.Play();
+				SystemSounds.Asterisk.Play();
 				return null;
 			}
 
 			var newone = VirtualDesktop.Create();
-			if (newone != null)
+			if (newone == null) return null;
+
+			if (InteropHelper.IsCurrentProcess(hWnd))
 			{
-				if (InteropHelper.IsCurrentProcess(hWnd))
-				{
-					VirtualDesktopHelper.MoveToDesktop(hWnd, newone);
-				}
-				else
-				{
-					this.helper.MoveWindowToDesktop(hWnd, newone.Id);
-				}
-				return newone;
+				VirtualDesktopHelper.MoveToDesktop(hWnd, newone);
+			}
+			else
+			{
+				this.helper.MoveWindowToDesktop(hWnd, newone.Id);
 			}
 
-			return null;
+			return newone;
 		}
 
 		public void Dispose()
