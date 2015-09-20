@@ -144,13 +144,8 @@ namespace SylphyHorn.Models
 				}
 				if (left != null)
 				{
-					if (InteropHelper.IsCurrentProcess(hWnd))
-					{
-						VirtualDesktopHelper.MoveToDesktop(hWnd, left);
-						return left;
-					}
-
-					if (this.helper.MoveWindowToDesktop(hWnd, left.Id))
+					if (VirtualDesktopHelper.MoveToDesktop(hWnd, left)
+						|| this.helper.MoveWindowToDesktop(hWnd, left.Id))
 					{
 						return left;
 					}
@@ -178,13 +173,8 @@ namespace SylphyHorn.Models
 				}
 				if (right != null)
 				{
-					if (InteropHelper.IsCurrentProcess(hWnd))
-					{
-						VirtualDesktopHelper.MoveToDesktop(hWnd, right);
-						return right;
-					}
-
-					if (this.helper.MoveWindowToDesktop(hWnd, right.Id))
+					if (VirtualDesktopHelper.MoveToDesktop(hWnd, right)
+						|| this.helper.MoveWindowToDesktop(hWnd, right.Id))
 					{
 						return right;
 					}
@@ -201,13 +191,8 @@ namespace SylphyHorn.Models
 			var newone = VirtualDesktop.Create();
 			if (newone != null)
 			{
-				if (InteropHelper.IsCurrentProcess(hWnd))
-				{
-					VirtualDesktopHelper.MoveToDesktop(hWnd, newone);
-					return newone;
-				}
-
-				if (this.helper.MoveWindowToDesktop(hWnd, newone.Id))
+				if (VirtualDesktopHelper.MoveToDesktop(hWnd, newone)
+					|| this.helper.MoveWindowToDesktop(hWnd, newone.Id))
 				{
 					return newone;
 				}
