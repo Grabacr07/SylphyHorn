@@ -112,7 +112,7 @@ namespace SylphyHorn.Models
 			var current = VirtualDesktop.Current;
 			var desktops = VirtualDesktop.GetDesktops();
 
-			return current.Id == desktops.First().Id && desktops.Length >= 2
+			return desktops.Length >= 2 && current.Id == desktops.First().Id
 				? GeneralSettings.LoopDesktop ? desktops.Last() : null
 				: current.GetLeft();
 		}
@@ -122,7 +122,7 @@ namespace SylphyHorn.Models
 			var current = VirtualDesktop.Current;
 			var desktops = VirtualDesktop.GetDesktops();
 
-			return current.Id == desktops.Last().Id && desktops.Length >= 2
+			return desktops.Length >= 2 && current.Id == desktops.Last().Id
 				? GeneralSettings.LoopDesktop ? desktops.First() : null
 				: current.GetRight();
 		}
@@ -130,95 +130,91 @@ namespace SylphyHorn.Models
 		private VirtualDesktop MoveToLeft()
 		{
 			var hWnd = InteropHelper.GetForegroundWindowEx();
-			if (InteropHelper.IsConsoleWindow(hWnd))
-			{
-				SystemSounds.Asterisk.Play();
-				return null;
-			}
-
 			var current = VirtualDesktop.FromHwnd(hWnd);
-			if (current == null) return null;
-
-			var left = current.GetLeft();
-			if (left == null)
+			if (current != null)
 			{
-				if (GeneralSettings.LoopDesktop)
+				var left = current.GetLeft();
+				if (left == null)
 				{
-					var desktops = VirtualDesktop.GetDesktops();
-					if (desktops.Length >= 2) left = desktops.Last();
+					if (GeneralSettings.LoopDesktop)
+					{
+						var desktops = VirtualDesktop.GetDesktops();
+						if (desktops.Length >= 2) left = desktops.Last();
+					}
+				}
+				if (left != null)
+				{
+					if (InteropHelper.IsCurrentProcess(hWnd))
+					{
+						VirtualDesktopHelper.MoveToDesktop(hWnd, left);
+						return left;
+					}
+
+					if (this.helper.MoveWindowToDesktop(hWnd, left.Id))
+					{
+						return left;
+					}
 				}
 			}
-			if (left == null) return null;
 
-			if (InteropHelper.IsCurrentProcess(hWnd))
-			{
-				VirtualDesktopHelper.MoveToDesktop(hWnd, left);
-			}
-			else
-			{
-				this.helper.MoveWindowToDesktop(hWnd, left.Id);
-			}
-
-			return left;
+			SystemSounds.Asterisk.Play();
+			return null;
 		}
 
 		private VirtualDesktop MoveToRight()
 		{
 			var hWnd = InteropHelper.GetForegroundWindowEx();
-			if (InteropHelper.IsConsoleWindow(hWnd))
-			{
-				SystemSounds.Asterisk.Play();
-				return null;
-			}
-
 			var current = VirtualDesktop.FromHwnd(hWnd);
-			if (current == null) return null;
-
-			var right = current.GetRight();
-			if (right == null)
+			if (current != null)
 			{
-				if (GeneralSettings.LoopDesktop)
+				var right = current.GetRight();
+				if (right == null)
 				{
-					var desktops = VirtualDesktop.GetDesktops();
-					if (desktops.Length >= 2) right = desktops.First();
+					if (GeneralSettings.LoopDesktop)
+					{
+						var desktops = VirtualDesktop.GetDesktops();
+						if (desktops.Length >= 2) right = desktops.First();
+					}
+				}
+				if (right != null)
+				{
+					if (InteropHelper.IsCurrentProcess(hWnd))
+					{
+						VirtualDesktopHelper.MoveToDesktop(hWnd, right);
+						return right;
+					}
+
+					if (this.helper.MoveWindowToDesktop(hWnd, right.Id))
+					{
+						return right;
+					}
 				}
 			}
-			if (right == null) return null;
 
-			if (InteropHelper.IsCurrentProcess(hWnd))
-			{
-				VirtualDesktopHelper.MoveToDesktop(hWnd, right);
-			}
-			else
-			{
-				this.helper.MoveWindowToDesktop(hWnd, right.Id);
-			}
-
-			return right;
+			SystemSounds.Asterisk.Play();
+			return null;
 		}
 
 		private VirtualDesktop MoveToNew()
 		{
 			var hWnd = NativeMethods.GetForegroundWindow();
-			if (InteropHelper.IsConsoleWindow(hWnd))
-			{
-				SystemSounds.Asterisk.Play();
-				return null;
-			}
-
 			var newone = VirtualDesktop.Create();
-			if (newone == null) return null;
-
-			if (InteropHelper.IsCurrentProcess(hWnd))
+			if (newone != null)
 			{
-				VirtualDesktopHelper.MoveToDesktop(hWnd, newone);
-			}
-			else
-			{
-				this.helper.MoveWindowToDesktop(hWnd, newone.Id);
+				if (InteropHelper.IsCurrentProcess(hWnd))
+				{
+					VirtualDesktopHelper.MoveToDesktop(hWnd, newone);
+					return newone;
+				}
+
+				if (this.helper.MoveWindowToDesktop(hWnd, newone.Id))
+				{
+					return newone;
+				}
 			}
 
-			return newone;
+			SystemSounds.Asterisk.Play();
+			return null;
 		}
 
 		public void Dispose()
