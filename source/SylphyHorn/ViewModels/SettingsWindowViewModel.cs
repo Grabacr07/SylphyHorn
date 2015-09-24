@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Livet;
-using MetroTrilithon.Lifetime;
 using MetroTrilithon.Mvvm;
-using SylphyHorn.Models;
+using SylphyHorn.Properties;
+using SylphyHorn.Services;
 
 namespace SylphyHorn.ViewModels
 {
@@ -56,7 +56,7 @@ namespace SylphyHorn.ViewModels
 				});
 			this._HasStartupLink = ShellLinkHelper.ExistsStartup();
 
-			Disposable.Create(Providers.Local.Save).AddTo(this);
+			//Disposable.Create(Providers.Local.Save).AddTo(this);
 		}
 	}
 

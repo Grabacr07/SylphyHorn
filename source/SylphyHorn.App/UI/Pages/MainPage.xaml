@@ -1,0 +1,254 @@
+﻿<Page x:Class="SylphyHorn.UI.Pages.MainPage"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  xmlns:i="using:Microsoft.Xaml.Interactivity"
+	  xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+	  xmlns:controls="using:SylphyHorn.UI.Controls"
+	  xmlns:serialization="using:SylphyHorn.Serialization"
+	  xmlns:bindings="using:SylphyHorn.UI.Bindings"
+	  mc:Ignorable="d"
+	  d:DataContext="{d:DesignInstance bindings:MainPageViewModel}">
+
+	<Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<Grid>
+			<Pivot>
+				<Pivot.Resources>
+					<Style TargetType="PivotHeaderItem">
+						<Setter Property="Height"
+								Value="Auto" />
+					</Style>
+
+					<Style TargetType="PivotItem">
+						<Setter Property="Margin"
+								Value="0" />
+					</Style>
+
+					<Style TargetType="controls:ShortcutKeyBox">
+						<Setter Property="Margin"
+								Value="4" />
+					</Style>
+
+					<Style TargetType="TextBlock">
+						<Setter Property="Foreground"
+								Value="{ThemeResource ApplicationForegroundThemeBrush}" />
+						<Setter Property="VerticalAlignment"
+								Value="Center" />
+						<Setter Property="Margin"
+								Value="0,2" />
+					</Style>
+				</Pivot.Resources>
+
+				<Pivot.RightHeader>
+					<StackPanel Orientation="Horizontal">
+						<AppBarButton Icon="Download"
+									  Label="Get SylphyHorn Engine"
+									  Width="136"
+									  VerticalAlignment="Stretch">
+							<i:Interaction.Behaviors>
+								<ic:EventTriggerBehavior EventName="Click">
+									<ic:CallMethodAction TargetObject="{Binding}"
+														 MethodName="GetEngine" />
+								</ic:EventTriggerBehavior>
+							</i:Interaction.Behaviors>
+						</AppBarButton>
+						<!--<AppBarButton Icon="Help"
+									  Label="Help"
+									  VerticalAlignment="Stretch" />-->
+					</StackPanel>
+				</Pivot.RightHeader>
+
+				<PivotItem>
+					<PivotItem.Header>
+						<StackPanel Orientation="Horizontal">
+							<Viewbox Width="22"
+									 Margin="20,2,0,0">
+								<SymbolIcon Symbol="Setting" />
+							</Viewbox>
+							<TextBlock Text="General"
+									   Style="{StaticResource HeaderStyleKey}" />
+						</StackPanel>
+					</PivotItem.Header>
+
+					<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+								  VerticalScrollBarVisibility="Auto">
+						<StackPanel Margin="16">
+							<TextBlock Text="Desktop switching"
+									   Style="{StaticResource CategoryStyleKey}" />
+							<StackPanel Margin="24,0,0,16">
+								<CheckBox IsChecked="{Binding GeneralSettings.LoopDesktop.Value, Mode=TwoWay}">
+									<TextBlock Text="Loop virtual desktops" />
+								</CheckBox>
+								<CheckBox IsChecked="{Binding GeneralSettings.OverrideWindowsDefaultKeyCombination.Value, Mode=TwoWay}">
+									<TextBlock Text="Override OS default key combination (Ctrl+Win+Left and Right)" />
+								</CheckBox>
+							</StackPanel>
+							<Border Height="8" />
+
+							<TextBlock Text="Notification"
+									   Style="{StaticResource CategoryStyleKey}" />
+							<StackPanel Margin="24,0,0,16">
+								<CheckBox IsChecked="{Binding GeneralSettings.NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}">
+									<RichTextBlock IsTextSelectionEnabled="False">
+										<Paragraph>
+											<Run Text="Display a notification when switched virtual desktop" />
+											<LineBreak />
+											<Run Text="Time Duration for Notification Messages:" />
+											<InlineUIContainer>
+												<TextBox Text="{Binding NotificationDuration, Mode=TwoWay}"
+														 Width="100"
+														 Margin="8,12,8,-12"
+														 IsEnabled="{Binding GeneralSettings.NotificationWhenSwitchedDesktop.Value}" />
+											</InlineUIContainer>
+											<Run Text="ms" />
+										</Paragraph>
+									</RichTextBlock>
+								</CheckBox>
+							</StackPanel>
+							<Border Height="8" />
+						</StackPanel>
+					</ScrollViewer>
+				</PivotItem>
+
+				<PivotItem>
+					<PivotItem.Header>
+						<StackPanel Orientation="Horizontal">
+							<Viewbox Width="36"
+									 Margin="20,3,0,0">
+								<SymbolIcon Symbol="Keyboard" />
+							</Viewbox>
+							<TextBlock Text="Shortcut keys"
+									   Style="{StaticResource HeaderStyleKey}" />
+						</StackPanel>
+					</PivotItem.Header>
+
+					<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+								  VerticalScrollBarVisibility="Auto">
+						<StackPanel Margin="16">
+							<TextBlock Text="Move active window to adjacent desktop"
+									   Style="{StaticResource CategoryStyleKey}" />
+							<Grid Margin="24,0,0,16">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto"
+													  MinWidth="110" />
+									<ColumnDefinition Width="8" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<Grid.RowDefinitions>
+									<RowDefinition />
+									<RowDefinition />
+									<RowDefinition />
+									<RowDefinition />
+								</Grid.RowDefinitions>
+
+								<TextBlock Grid.Row="0"
+										   Grid.Column="0"
+										   Text="Left:" />
+								<TextBlock Grid.Row="1"
+										   Grid.Column="0"
+										   Text="Left (Switch):" />
+								<TextBlock Grid.Row="2"
+										   Grid.Column="0"
+										   Text="Right:" />
+								<TextBlock Grid.Row="3"
+										   Grid.Column="0"
+										   Text="Right (Switch):" />
+
+								<controls:ShortcutKeyBox Grid.Row="0"
+														 Grid.Column="2"
+														 Current="{Binding ShortcutKeySettings.MoveLeft.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Grid.Row="1"
+														 Grid.Column="2"
+														 Current="{Binding ShortcutKeySettings.MoveLeftAndSwitch.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Grid.Row="2"
+														 Grid.Column="2"
+														 Current="{Binding ShortcutKeySettings.MoveRight.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Grid.Row="3"
+														 Grid.Column="2"
+														 Current="{Binding ShortcutKeySettings.MoveRightAndSwitch.Value, Mode=TwoWay}" />
+							</Grid>
+							<Border Height="8" />
+
+							<TextBlock Text="Move active window to created new desktop"
+									   Style="{StaticResource CategoryStyleKey}" />
+							<Grid Margin="24,0,0,16">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto"
+													  MinWidth="110" />
+									<ColumnDefinition Width="8" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<Grid.RowDefinitions>
+									<RowDefinition />
+									<RowDefinition />
+									<RowDefinition />
+								</Grid.RowDefinitions>
+
+								<TextBlock Grid.Row="0"
+										   Grid.Column="0"
+										   Text="Create only:" />
+								<TextBlock Grid.Row="1"
+										   Grid.Column="0"
+										   Text="Move:" />
+								<TextBlock Grid.Row="2"
+										   Grid.Column="0"
+										   Text="Move (Switch):" />
+
+								<controls:ShortcutKeyBox Grid.Row="0"
+														 Grid.Column="2"
+														 IsReadOnly="True"
+														 Current="{Binding CreateNewShortcutKey}"
+														 Text="(provided by Windows)" />
+								<controls:ShortcutKeyBox Grid.Row="1"
+														 Grid.Column="2"
+														 Current="{Binding ShortcutKeySettings.MoveNew.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Grid.Row="2"
+														 Grid.Column="2"
+														 Current="{Binding ShortcutKeySettings.MoveNewAndSwitch.Value, Mode=TwoWay}" />
+							</Grid>
+							<Border Height="8" />
+
+							<TextBlock Text="Pin window to all desktops"
+									   Style="{StaticResource CategoryStyleKey}" />
+							<Grid Margin="24,0,0,16">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto"
+													  MinWidth="110" />
+									<ColumnDefinition Width="8" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<Grid.RowDefinitions>
+									<RowDefinition />
+									<RowDefinition />
+								</Grid.RowDefinitions>
+
+								<TextBlock Grid.Row="0"
+										   Grid.Column="0"
+										   Text="Pin window:" />
+								<TextBlock Grid.Row="1"
+										   Grid.Column="0"
+										   Text="Unpin window:" />
+
+								<controls:ShortcutKeyBox Grid.Row="0"
+														 Grid.Column="2"
+														 Current="{Binding ShortcutKeySettings.Pin.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Grid.Row="1"
+														 Grid.Column="2"
+														 Current="{Binding ShortcutKeySettings.Unpin.Value, Mode=TwoWay}" />
+							</Grid>
+
+						</StackPanel>
+					</ScrollViewer>
+				</PivotItem>
+			</Pivot>
+
+			<!--<Grid>
+				<Path Data="M0,0 L649.6,0 L649.6,100 L799.6,100 L799.6,0 L800,0 L800,600 L0,600 z"
+					  Fill="Black"
+					  Stretch="Fill"
+					  Opacity="0.5" />
+			</Grid>-->
+		</Grid>
+	</Border>
+</Page>

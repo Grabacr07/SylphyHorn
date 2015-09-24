@@ -7,9 +7,10 @@
 				   xmlns:livet="http://schemas.livet-mvvm.net/2011/wpf"
 				   xmlns:metro="http://schemes.grabacr.net/winfx/2014/controls"
 				   xmlns:metro2="http://schemes.grabacr.net/winfx/2015/personal/controls"
+				   xmlns:properties="clr-namespace:SylphyHorn.Properties"
 				   xmlns:vm="clr-namespace:SylphyHorn.ViewModels"
 				   xmlns:controls="clr-namespace:SylphyHorn.Views.Controls"
-				   xmlns:models="clr-namespace:SylphyHorn.Models"
+				   xmlns:serialization="clr-namespace:SylphyHorn.Serialization"
 				   mc:Ignorable="d"
 				   d:DataContext="{d:DesignInstance vm:SettingsWindowViewModel}"
 				   Icon="/SylphyHorn;component/assets/app.white.ico"
@@ -118,19 +119,19 @@
 								   Style="{DynamicResource HeaderStyleKey}"
 								   Margin="0,0,0,8" />
 						<StackPanel Margin="8,0,0,0">
-							<CheckBox IsChecked="{Binding Source={x:Static models:GeneralSettings.LoopDesktop}, Path=Value, Mode=TwoWay}">
+							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=LoopDesktop.Value, Mode=TwoWay}">
 								<TextBlock Text="Loop virtual desktops" />
 							</CheckBox>
-                            <CheckBox IsChecked="{Binding Source={x:Static models:GeneralSettings.OverrideOSDefaultKeyCombination}, Path=Value, Mode=TwoWay}">
-                                <TextBlock Text="Override OS default key combination (Ctrl+Win+Left and Right)" />
-                            </CheckBox>
-                        </StackPanel>
+							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=OverrideWindowsDefaultKeyCombination.Value, Mode=TwoWay}">
+								<TextBlock Text="Override OS default key combination (Ctrl+Win+Left and Right)" />
+							</CheckBox>
+						</StackPanel>
 						<Border Height="8" />
 
 						<TextBlock Text="Notification"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<StackPanel Margin="8,0,0,0">
-							<CheckBox IsChecked="{Binding Source={x:Static models:GeneralSettings.NotificationWhenSwitchedDesktop}, Path=Value, Mode=TwoWay}">
+							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}">
 								<TextBlock Text="Display a notification when switched virtual desktop" />
 							</CheckBox>
 						</StackPanel>
@@ -175,10 +176,10 @@
 							</UniformGrid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveLeft}, Path=Value, Mode=TwoWay}" />
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveLeftAndSwitch}, Path=Value, Mode=TwoWay}" />
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveRight}, Path=Value, Mode=TwoWay}" />
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveRightAndSwitch}, Path=Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveLeft.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveLeftAndSwitch.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveRight.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveRightAndSwitch.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
 						<Border Height="8" />
@@ -200,8 +201,8 @@
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
 								<TextBlock Text="Ctrl + Win + D (provided by Windows)" />
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveNew}, Path=Value, Mode=TwoWay}" />
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static models:ShortcutSettings.MoveNewAndSwitch}, Path=Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveNew.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveNewAndSwitch.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
 					</StackPanel>
@@ -218,7 +219,7 @@
 							  VerticalScrollBarVisibility="Auto">
 					<StackPanel Margin="16,0,16,16"
 								Grid.IsSharedSizeScope="True">
-						<TextBlock Text="{x:Static models:ProductInfo.Title}"
+						<TextBlock Text="{x:Static properties:ProductInfo.Title}"
 								   Foreground="{DynamicResource ActiveForegroundBrushKey}"
 								   FontFamily="Segoe UI Light, Meiryo UI"
 								   FontSize="32"
@@ -227,10 +228,10 @@
 								   FontFamily="Segoe UI Light, Meiryo UI"
 								   FontSize="20"
 								   Margin="1,6">
-							<Run Text="{x:Static models:ProductInfo.Description}" />
+							<Run Text="{x:Static properties:ProductInfo.Description}" />
 							<LineBreak />
 							<Run Text="version" />
-							<Run Text="{x:Static models:ProductInfo.VersionString}" />
+							<Run Text="{x:Static properties:ProductInfo.VersionString}" />
 						</TextBlock>
 
 						<TextBlock Foreground="{DynamicResource ForegroundBrushKey}"
@@ -277,9 +278,9 @@
 								   FontFamily="Segoe UI, Meiryo UI"
 								   Margin="2,6">
 
-							<Run Text="{Binding Source={x:Static models:ProductInfo.Copyright}, Mode=OneWay}" />
+							<Run Text="{Binding Source={x:Static properties:ProductInfo.Copyright}, Mode=OneWay}" />
 							<LineBreak />
-							<Run Text="{Binding Source={x:Static models:ProductInfo.Product}, Mode=OneWay}" />
+							<Run Text="{Binding Source={x:Static properties:ProductInfo.Product}, Mode=OneWay}" />
 							<Run Text="is" />
 							<Run Text="OSS"
 								 ToolTip="Open Source Software" />

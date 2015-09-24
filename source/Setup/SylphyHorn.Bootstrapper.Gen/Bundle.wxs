@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:bal="http://wixtoolset.org/schemas/v4/wxs/bal"
+     xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util">
+  <?define ProductName="SylphyHorn Engine" ?>
+  <?define ProductVersion="1.0.0" ?>
+  <?define ProductCode="*" ?>
+  <?define Manufacturer="grabacr.net" ?>
+  <?define UpgradeCode="85d1b40d-719c-4116-8118-a304e1a2b293" ?>
+
+  <?define SourceDir = "..\..\SylphyHorn\bin\Release" ?>
+  <?define MsiSource = "..\SylphyHorn.Installer\bin\Release\SylphyHorn.Installer.msi" ?>
+  <?define BootstrapperSource = "..\SylphyHorn.Bootstrapper.UI\bin\Release" ?>
+
+  <Bundle Name="$(var.ProductName)"
+          Version="$(var.ProductVersion)"
+          Manufacturer="$(var.Manufacturer)"
+          UpgradeCode="$(var.UpgradeCode)">
+    <BootstrapperApplicationRef Id="ManagedBootstrapperApplicationHost">
+      <Payload SourceFile="$(var.BootstrapperSource)\BootstrapperCore.config "/>
+      <Payload Name="BootstrapperCore.dll"
+               SourceFile="$(var.BootstrapperSource)\BootstrapperCore.dll" />
+      <Payload Name="Livet.dll"
+               SourceFile="$(var.BootstrapperSource)\Livet.dll" />
+      <Payload Name="MetroRadiance.Chrome.dll"
+               SourceFile="$(var.BootstrapperSource)\MetroRadiance.Chrome.dll" />
+      <Payload Name="MetroRadiance.Core.dll"
+               SourceFile="$(var.BootstrapperSource)\MetroRadiance.Core.dll" />
+      <Payload Name="MetroRadiance.dll"
+               SourceFile="$(var.BootstrapperSource)\MetroRadiance.dll" />
+      <Payload Name="MetroTrilithon.Desktop.dll"
+               SourceFile="$(var.BootstrapperSource)\MetroTrilithon.Desktop.dll" />
+      <Payload Name="MetroTrilithon.dll"
+               SourceFile="$(var.BootstrapperSource)\MetroTrilithon.dll" />
+      <Payload Name="Microsoft.Expression.Interactions.dll"
+               SourceFile="$(var.BootstrapperSource)\Microsoft.Expression.Interactions.dll" />
+      <Payload Name="StatefulModel.dll"
+               SourceFile="$(var.BootstrapperSource)\StatefulModel.dll" />
+      <Payload Name="SylphyHorn.Bootstrapper.UI.dll"
+               SourceFile="$(var.BootstrapperSource)\SylphyHorn.Bootstrapper.UI.dll" />
+      <Payload Name="System.Windows.Interactivity.dll"
+               SourceFile="$(var.BootstrapperSource)\System.Windows.Interactivity.dll" />
+      <Payload Name="ja-JP\SylphyHorn.Bootstrapper.UI.resources.dll"
+               SourceFile="$(var.BootstrapperSource)\ja-JP\SylphyHorn.Bootstrapper.UI.resources.dll" />
+    </BootstrapperApplicationRef>
+
+    <Chain>
+      <PackageGroupRef Id="NetFx46Web" />
+
+      <MsiPackage Id="SylphyHornMsiPackage"
+                  SourceFile="$(var.MsiSource)"
+                  Visible="no"
+                  DisplayInternalUI="no" 
+                  bal:PrereqPackage="yes" />
+      <!-- see also: http://wixtoolset.org/development/wips/4161-allow-more-than-one-mbaprereq/ -->
+    </Chain>
+  </Bundle>
+
+  <!--
+  <Fragment>
+    <WixVariable Id="WixMbaPrereqPackageId"
+                 Value="Netfx4Full" />
+    <WixVariable Id="WixMbaPrereqLicenseUrl"
+                 Value="NetfxLicense.rtf" />
+
+    <util:RegistrySearch Root="HKLM"
+                         Key="SOFTWARE\Microsoft\Net Framework Setup\NDP\v4\Full"
+                         Value="Version"
+                         Variable="Netfx4FullVersion" />
+    <util:RegistrySearch Root="HKLM"
+                         Key="SOFTWARE\Microsoft\Net Framework Setup\NDP\v4\Full"
+                         Value="Version"
+                         Variable="Netfx4x64FullVersion"
+                         Win64="yes" />
+
+    <PackageGroup Id="Netfx4Full">
+      <ExePackage Id="Netfx4Full"
+                  Cache="no"
+                  Compressed="no"
+                  PerMachine="yes"
+                  Permanent="yes"
+                  Vital="yes"
+                  SourceFile="dotNetFx40_Full_x86_x64.exe"
+                  DownloadUrl="http://go.microsoft.com/fwlink/?LinkId=164193"
+                  DetectCondition="Netfx4FullVersion AND (NOT VersionNT64 OR Netfx4x64FullVersion)" />
+    </PackageGroup>
+  </Fragment>
+  -->
+</Wix>
+

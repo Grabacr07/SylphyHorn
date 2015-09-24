@@ -10,7 +10,7 @@ namespace SylphyHorn.Views.Controls
 {
 	public class ClosingStoryboardBehavior : Behavior<Window>
 	{
-		private bool canClose;
+		private bool _canClose;
 
 		#region Storyboard 依存関係プロパティ
 
@@ -45,7 +45,7 @@ namespace SylphyHorn.Views.Controls
 			base.OnAttached();
 			this.AssociatedObject.Closing += (sender, args) =>
 			{
-				if (this.Storyboard == null || args.Cancel || this.canClose) return;
+				if (this.Storyboard == null || args.Cancel || this._canClose) return;
 
 				args.Cancel = true;
 				this.Storyboard.Begin();
@@ -54,7 +54,7 @@ namespace SylphyHorn.Views.Controls
 
 		private void HandleStorybarodCompleted(object sender, EventArgs args)
 		{
-			this.canClose = true;
+			this._canClose = true;
 			this.AssociatedObject.Close();
 		}
 	}
