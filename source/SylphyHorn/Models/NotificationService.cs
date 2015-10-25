@@ -17,7 +17,8 @@ namespace SylphyHorn.Models
 		public NotificationService()
 		{
 			VirtualDesktop.CurrentChanged += this.VirtualDesktopOnCurrentChanged;
-		}
+            StickyWindowsManager.ToggleStickyWindowEvent += this.ShowToggleStickyWindow;
+        }
 
 		private void VirtualDesktopOnCurrentChanged(object sender, VirtualDesktopChangedEventArgs e)
 		{
@@ -29,22 +30,38 @@ namespace SylphyHorn.Models
 				var newIndex = Array.IndexOf(desktops, e.NewDesktop) + 1;
 
 				this.currentNotificationWindow?.Dispose();
-				this.currentNotificationWindow = ShowWindow(newIndex);
+
+                var vmodel = new NotificationWindowViewModel
+                {
+                    Title = ProductInfo.Title,
+                    Header = "Virtual Desktop Switched",
+                    Body = "Current Desktop: Desktop " + newIndex,
+                };
+                this.currentNotificationWindow = ShowWindow(vmodel);
 			});
 		}
 
-		private static IDisposable ShowWindow(int index)
+
+        private void ShowToggleStickyWindow(object sender, string body)
+        {
+            this.currentNotificationWindow?.Dispose();
+
+            var vmodel = new NotificationWindowViewModel
+            {
+                Title = ProductInfo.Title,
+                Header = "Window Pin Toggled",
+                Body = body
+            };
+            this.currentNotificationWindow = ShowWindow(vmodel);
+        }
+
+		private static IDisposable ShowWindow(NotificationWindowViewModel vm)
 		{
-			var vmodel = new NotificationWindowViewModel
-			{
-				Title = ProductInfo.Title,
-				Header = "Virtual Desktop Switched",
-				Body = "Current Desktop: Desktop " + index,
-			};
+			
 			var source = new CancellationTokenSource();
 			var window = new NotificationWindow
 			{
-				DataContext = vmodel,
+				DataContext = vm,
 			};
 			window.Show();
 
