@@ -18,7 +18,7 @@ namespace SylphyHorn.Models
 
         private static StickyWindowsManager instanceStickyWindowsManager;
 
-        private static Guid LastDesktopId;
+        private static Guid lastDesktopId;
 
         #endregion
 
@@ -45,17 +45,7 @@ namespace SylphyHorn.Models
 
         #region Public Properties
 
-        public static StickyWindowsManager Instance
-        {
-            get
-            {
-                if (instanceStickyWindowsManager == null)
-                {
-                    instanceStickyWindowsManager = new StickyWindowsManager();
-                }
-                return instanceStickyWindowsManager;
-            }
-        }
+        public static StickyWindowsManager Instance => instanceStickyWindowsManager ?? (instanceStickyWindowsManager = new StickyWindowsManager());
 
         #endregion
 
@@ -137,7 +127,7 @@ namespace SylphyHorn.Models
 
         public void MoveSticky(Guid id)
         {
-            LastDesktopId = id;
+            lastDesktopId = id;
             var tasks = this.CreateMovingTask(id);
 
             this.currentMovingOperation?.Dispose();
@@ -147,21 +137,17 @@ namespace SylphyHorn.Models
         public void ToggleStickyWindow()
         {
             var hWnd = InteropHelper.GetForegroundWindowEx();
-            if (hWnd == null)
-            {
-                return;
-            }
             var title = InteropHelper.GetWindowText((int)hWnd);
 
             if (StickyWindows.Contains(hWnd))
             {
                 StickyWindows.Remove(hWnd);
-                ToggleStickyWindowEvent.Invoke(this, title + ": Is remove from pinned windows");
+                ToggleStickyWindowEvent?.Invoke(this, title + ": Is remove from pinned windows");
             }
             else
             {
                 StickyWindows.Add(hWnd);
-                ToggleStickyWindowEvent.Invoke(this, title + ": Is now pinned");
+                ToggleStickyWindowEvent?.Invoke(this, title + ": Is now pinned");
             }
 
             Console.WriteLine(StickyWindows.ToString());
@@ -181,7 +167,7 @@ namespace SylphyHorn.Models
                         var newIndex = Array.IndexOf(desktops, e.NewDesktop);
                         var newDesktopId = desktops[newIndex].Id;
 
-                        if (!GeneralSettings.OverrideOSDefaultKeyCombination || LastDesktopId == null || LastDesktopId != newDesktopId)
+                        if (!GeneralSettings.OverrideOSDefaultKeyCombination || lastDesktopId != newDesktopId)
                         {
                             this.MoveSticky(newDesktopId);
                         }
