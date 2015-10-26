@@ -79,8 +79,9 @@ namespace SylphyHorn.Models
 
         public static string GetWindowText(int hWnd)
         {
-            var windowText = new StringBuilder();
-            if (NativeMethods.GetWindowText(hWnd, windowText, 50) > 0) 
+            const int bufferSize = 256;
+            var windowText = new StringBuilder(bufferSize);
+            if (NativeMethods.GetWindowText(hWnd, windowText, bufferSize) > 0) 
             {
                 return windowText.ToString();
             }

@@ -47,12 +47,12 @@ namespace SylphyHorn.Models
             if (StickyWindows.Contains(hWnd))
             {
                 StickyWindows.Remove(hWnd);
-                ToggleStickyWindowEvent.Invoke(this, title + ": Is remove from Pins windows");
+                ToggleStickyWindowEvent.Invoke(this, title + ": Is remove from pinned windows");
             }
             else
             {
                 StickyWindows.Add(hWnd);
-                ToggleStickyWindowEvent.Invoke(this, title + ": Is now Pin");
+                ToggleStickyWindowEvent.Invoke(this, title + ": Is now pinned");
             }
 
             Console.WriteLine(StickyWindows.ToString());
@@ -85,8 +85,8 @@ namespace SylphyHorn.Models
         }
 
         /*
-        * This create multiple task that will ve executed in sequence order. This is needed to prevent a concurrent probleme that
-        * occur when we move multiple windows of a save process ( multiple chrome window for exemple )
+        * This create multiple task that will be executed in sequence order. This is needed to prevent a concurrent probleme that
+        * occur when we move multiple windows of a same process ( multiple chrome window for exemple )
         */
         public IEnumerable<Task> CreateMovingTask(Guid id)
         {
