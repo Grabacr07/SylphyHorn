@@ -23,5 +23,15 @@ namespace SylphyHorn.Interop
 
 		[DllImport("Dwmapi.dll")]
 		public static extern void DwmGetColorizationColor([Out] out int pcrColorization, [Out] out bool pfOpaqueBlend);
-	}
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern int OpenInputDesktop(int dwFlags, bool fInherit, int dwDesiredAccess);
+
+        [DllImport("user32.dll")]
+        public static extern int GetWindowText(int hWnd, StringBuilder text, int count);
+    }
 }

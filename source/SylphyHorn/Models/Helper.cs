@@ -14,6 +14,7 @@ using Livet;
 using MetroRadiance;
 using Microsoft.Win32;
 using SylphyHorn.Interop;
+using VDMHelperCLR.Common;
 
 namespace SylphyHorn.Models
 {
@@ -63,9 +64,54 @@ namespace SylphyHorn.Models
 			var howner = NativeMethods.GetWindow(hwnd, 4 /* GW_OWNER */);
 			return howner == IntPtr.Zero ? hwnd : howner;
 		}
-	}
 
-	internal static class VisualHelper
+        public static bool IsWindow(IntPtr hWnd)
+        {
+            return NativeMethods.IsWindow(hWnd);
+        }
+
+        public static int GetWindowThreadProcessId(IntPtr hWnd)
+        {
+            int processId = 0;
+            NativeMethods.GetWindowThreadProcessId(hWnd, out processId);
+            return processId;
+        }
+
+        public static string GetWindowText(int hWnd)
+        {
+            const int bufferSize = 256;
+            var windowText = new StringBuilder(bufferSize);
+            if (NativeMethods.GetWindowText(hWnd, windowText, bufferSize) > 0) 
+            {
+                return windowText.ToString();
+            }
+
+            return string.Empty;
+        }
+    }
+
+    /*
+    * The VDMHelper need to be a singleton or else it will create multiple instance of the process VDMHelper32.exe
+    * This can cause failure when moving window.
+    */
+    internal class VDMHelper
+    {
+        private static IVdmHelper instancehelper;
+        public static IVdmHelper helper
+        {
+            get
+            {
+                if (instancehelper == null)
+                {
+                    instancehelper = VdmHelperFactory.CreateInstance();
+                    helper.Init();
+                }
+                return instancehelper;
+            }
+        }
+    }
+
+    internal static class VisualHelper
 	{
 		public static void InvokeOnUIDispatcher(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
 		{

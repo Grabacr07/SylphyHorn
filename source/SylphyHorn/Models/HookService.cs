@@ -21,9 +21,8 @@ namespace SylphyHorn.Models
 			this.detector.Pressed += this.KeyHookOnPressed;
 			this.detector.Start();
 
-			this.helper = VdmHelperFactory.CreateInstance();
-			this.helper.Init();
-		}
+            this.helper = VDMHelper.helper;
+        }
 
 		public IDisposable Suspend()
 		{
@@ -47,14 +46,14 @@ namespace SylphyHorn.Models
 			if (ShortcutSettings.MoveLeft.Value != null &&
 				ShortcutSettings.MoveLeft.Value == args.ShortcutKey)
 			{
-				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToLeft());
+				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToLeft()?.MoveSticky());
 				args.Handled = true;
 			}
 
 			if (ShortcutSettings.MoveLeftAndSwitch.Value != null &&
 				ShortcutSettings.MoveLeftAndSwitch.Value == args.ShortcutKey)
 			{
-				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToLeft()?.Switch());
+				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToLeft()?.MoveSticky().Switch());
 				args.Handled = true;
 			}
 
@@ -68,7 +67,7 @@ namespace SylphyHorn.Models
 			if (ShortcutSettings.MoveRightAndSwitch.Value != null &&
 				ShortcutSettings.MoveRightAndSwitch.Value == args.ShortcutKey)
 			{
-				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToRight()?.Switch());
+				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToRight()?.MoveSticky().Switch());
 				args.Handled = true;
 			}
 
@@ -82,7 +81,7 @@ namespace SylphyHorn.Models
 			if (ShortcutSettings.MoveNewAndSwitch.Value != null &&
 				ShortcutSettings.MoveNewAndSwitch.Value == args.ShortcutKey)
 			{
-				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToNew()?.Switch());
+				VisualHelper.InvokeOnUIDispatcher(() => this.MoveToNew()?.MoveSticky().Switch());
 				args.Handled = true;
 			}
 
@@ -91,7 +90,7 @@ namespace SylphyHorn.Models
 			{
 				if (GeneralSettings.OverrideOSDefaultKeyCombination)
 				{
-					VisualHelper.InvokeOnUIDispatcher(() => PrepareSwitchToLeft()?.Switch());
+					VisualHelper.InvokeOnUIDispatcher(() => PrepareSwitchToLeft()?.MoveSticky().Switch());
 					args.Handled = true;
 				}
 			}
@@ -101,11 +100,17 @@ namespace SylphyHorn.Models
 			{
 				if (GeneralSettings.OverrideOSDefaultKeyCombination)
 				{
-					VisualHelper.InvokeOnUIDispatcher(() => PrepareSwitchToRight()?.Switch());
+					VisualHelper.InvokeOnUIDispatcher(() => PrepareSwitchToRight()?.MoveSticky().Switch());
 					args.Handled = true;
 				}
 			}
-		}
+
+            if (ShortcutSettings.PinWindows.Value != null &&
+                ShortcutSettings.PinWindows.Value == args.ShortcutKey)
+            {
+                VisualHelper.InvokeOnUIDispatcher(() => StickyWindowsManager.Instance.ToggleStickyWindow());
+            }
+        }
 
 		private static VirtualDesktop PrepareSwitchToLeft()
 		{
