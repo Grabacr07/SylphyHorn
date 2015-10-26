@@ -56,13 +56,11 @@ namespace SylphyHorn.Models
             }
 
             Console.WriteLine(StickyWindows.ToString());
-            Console.WriteLine("PRocess ID:" + InteropHelper.GetWindowThreadProcessId(hWnd));
+            Console.WriteLine("Process ID:" + InteropHelper.GetWindowThreadProcessId(hWnd));
         }
 
         private void VirtualDesktopOnCurrentChanged(object sender, VirtualDesktopChangedEventArgs e)
         {
-            if (!GeneralSettings.NotificationWhenSwitchedDesktop) return;
-
             VisualHelper.InvokeOnUIDispatcher(() =>
             {
                 var desktops = VirtualDesktop.GetDesktops();
@@ -75,8 +73,6 @@ namespace SylphyHorn.Models
                     MoveSticky(newDesktopId);
                 }
             });
-
-
         }
 
         public void MoveSticky(Guid id)

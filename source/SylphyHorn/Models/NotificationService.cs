@@ -74,6 +74,7 @@ namespace SylphyHorn.Models
 		public void Dispose()
 		{
 			VirtualDesktop.CurrentChanged -= this.VirtualDesktopOnCurrentChanged;
-		}
+            StickyWindowsManager.ToggleStickyWindowEvent -= this.ShowToggleStickyWindow;
+        }
 	}
 }
