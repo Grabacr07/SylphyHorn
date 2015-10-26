@@ -91,7 +91,7 @@ namespace SylphyHorn.Models
     }
 
     /*
-    * The VDMHelper need to be a singleton or else it will create multiple instance of the process VDMHelper32.Dll
+    * The VDMHelper need to be a singleton or else it will create multiple instance of the process VDMHelper32.exe
     * This can cause failure when moving window.
     */
     internal class VDMHelper
