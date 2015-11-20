@@ -30,7 +30,15 @@ namespace SylphyHorn.Models
 
 				this.currentNotificationWindow?.Dispose();
 				this.currentNotificationWindow = ShowWindow(newIndex);
-			});
+
+                // var imgDirectoryPath = @"D:\User\Pictures\vd-bg\";
+                var imgDirectoryPath = @"";
+                var bmpPath = imgDirectoryPath + newIndex.ToString() + ".bmp";
+                if (System.IO.File.Exists(bmpPath))
+                {
+                    WallpaperService.Set(bmpPath);
+                }
+            });
 		}
 
 		private static IDisposable ShowWindow(int index)
