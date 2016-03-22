@@ -37,5 +37,11 @@ namespace SylphyHorn.UI.Bindings
 				}
 			}
 		}
+
+		public void GetEngine()
+		{
+			var downloader = new EngineDownloader();
+			downloader.Launch();
+		}
 	}
 }
