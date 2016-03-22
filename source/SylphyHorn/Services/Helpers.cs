@@ -7,12 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Threading;
 using Livet;
 using MetroRadiance.Interop.Win32;
 using MetroTrilithon.Desktop;
-using Microsoft.Win32;
 using SylphyHorn.Interop;
 
 namespace SylphyHorn.Services

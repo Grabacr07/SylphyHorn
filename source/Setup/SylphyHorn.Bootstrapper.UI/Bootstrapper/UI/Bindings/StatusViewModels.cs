@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Livet;
 using SylphyHorn.Properties;
-using WixToolset.Bootstrapper;
 
 namespace SylphyHorn.Bootstrapper.UI.Bindings
 {
