@@ -56,6 +56,11 @@ namespace SylphyHorn.ViewModels
 				});
 			this._HasStartupLink = ShellLinkHelper.ExistsStartup();
 
+			// ToDo: 設定ダイアログがタコってるのであとで見直す
+			//       基本的には設定ダイアログは提供しない、ものの、起動オプションで表示できるようにはしたい
+			//       設定の保存は UWP 側でのみやる想定だけど、ダイアログには保存ボタンを置きたい
+			//       スタートアップへの登録と解除も設定ダイアログで提供したい
+
 			//Disposable.Create(Providers.Local.Save).AddTo(this);
 		}
 	}

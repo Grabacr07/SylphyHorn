@@ -14,7 +14,7 @@ namespace SylphyHorn.Services
 	public class PinService : IDisposable
 	{
 		private readonly object _sync = new object();
-		private readonly Dictionary<IntPtr, Tuple<ExternalWindow, WindowChrome>> _pinnedWindows = new Dictionary<IntPtr, Tuple<ExternalWindow, WindowChrome>>();
+		private readonly Dictionary<IntPtr, PinnedWindow> _pinnedWindows = new Dictionary<IntPtr, PinnedWindow>();
 		private readonly IVdmHelper _helper;
 
 		public PinService(IVdmHelper helper)
@@ -37,7 +37,7 @@ namespace SylphyHorn.Services
 				};
 				chrome.Attach(external);
 
-				this._pinnedWindows[hWnd] = Tuple.Create(external, chrome);
+				this._pinnedWindows[hWnd] = new PinnedWindow(external, chrome);
 			}
 		}
 
@@ -47,10 +47,7 @@ namespace SylphyHorn.Services
 			{
 				if (!this._pinnedWindows.ContainsKey(hWnd)) return;
 
-				var tuple = this._pinnedWindows[hWnd];
-				tuple.Item2.Detach();
-				tuple.Item1.Dispose();
-
+				this._pinnedWindows[hWnd].Dispose();
 				this._pinnedWindows.Remove(hWnd);
 			}
 		}
@@ -90,6 +87,24 @@ namespace SylphyHorn.Services
 		{
 			VirtualDesktop.CurrentChanged -= this.VirtualDesktopOnCurrentChanged;
 			this.UnregisterAll();
+		}
+
+		private struct PinnedWindow : IDisposable
+		{
+			private readonly ExternalWindow _window;
+			private readonly WindowChrome _chrome;
+
+			public PinnedWindow(ExternalWindow window, WindowChrome chrome)
+			{
+				this._window = window;
+				this._chrome = chrome;
+			}
+
+			public void Dispose()
+			{
+				this._chrome.Close();
+				this._window.Dispose();
+			}
 		}
 	}
 }

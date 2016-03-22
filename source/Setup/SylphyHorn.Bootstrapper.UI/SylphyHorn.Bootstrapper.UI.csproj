@@ -47,8 +47,8 @@
       <HintPath>..\..\packages\MetroRadiance.2.2.1\lib\net46\MetroRadiance.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MetroRadiance.Chrome, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MetroRadiance.Chrome.2.1.0\lib\net46\MetroRadiance.Chrome.dll</HintPath>
+    <Reference Include="MetroRadiance.Chrome, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MetroRadiance.Chrome.2.1.1\lib\net46\MetroRadiance.Chrome.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MetroRadiance.Core, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">

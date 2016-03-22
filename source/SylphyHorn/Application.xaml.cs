@@ -69,8 +69,6 @@ namespace SylphyHorn
 					this._interopService = new UwpInteropService(this._hookService, Settings.General).AddTo(this);
 					this._notificationService = new NotificationService().AddTo(this);
 
-					if (!ShellLinkHelper.ExistsStartup()) ShellLinkHelper.CreateStartup();
-
 					base.OnStartup(e);
 				}
 				else
