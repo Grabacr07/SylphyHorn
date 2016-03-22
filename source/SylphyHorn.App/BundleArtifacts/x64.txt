@@ -1,2 +1,0 @@
-MainPackage=D:\Repos\SylphyHorn\source\SylphyHorn.App\bin\x64\Release\SylphyHorn.App_1.1.1.0_x64.appx
-SymbolPackage=D:\Repos\SylphyHorn\source\SylphyHorn.App\AppPackages\SylphyHorn.App_1.1.1.0_Test\SylphyHorn.App_1.1.1.0_x64.appxsym
