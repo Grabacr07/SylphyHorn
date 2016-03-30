@@ -11,10 +11,12 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:KeyIcon">
 					<Grid MinWidth="40">
-						<Rectangle x:Name="PART_Border"
-								   RadiusX="3"
+						<Rectangle RadiusX="3"
 								   RadiusY="3"
-								   Fill="{TemplateBinding Background}"
+								   Fill="{ThemeResource SystemControlHighlightAccentBrush}"
+								   Opacity="0.15" />
+						<Rectangle RadiusX="3"
+								   RadiusY="3"
 								   Stroke="{TemplateBinding BorderBrush}"
 								   StrokeThickness="{TemplateBinding BorderThickness}" />
 						<StackPanel Orientation="Horizontal"

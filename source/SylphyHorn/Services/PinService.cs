@@ -36,6 +36,7 @@ namespace SylphyHorn.Services
 					Top = new PinMarker(),
 				};
 				chrome.Attach(external);
+				external.Closed += (sender, e) => this.Unregister(hWnd);
 
 				this._pinnedWindows[hWnd] = new PinnedWindow(external, chrome);
 			}
