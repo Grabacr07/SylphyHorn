@@ -1,27 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
+using SylphyHorn.Interop;
+using SylphyHorn.Serialization;
+using WindowsDesktop;
 
-namespace SylphyHorn.Models
+namespace SylphyHorn.Services
 {
-    public class WallpaperService
-    {
-        const int SPI_SETDESKWALLPAPER = 20;
-        const int SPIF_UPDATEINIFILE = 0x01;
-        const int SPIF_SENDWININICHANGE = 0x02;
+	public class WallpaperService : IDisposable
+	{
+		public static WallpaperService Current { get; } = new WallpaperService();
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+		private WallpaperService()
+		{
+			VirtualDesktop.CurrentChanged += VirtualDesktopOnCurrentChanged;
+		}
 
-        public static void Set(string path)
-        {
-            SystemParametersInfo(SPI_SETDESKWALLPAPER,
-                0,
-                path,
-                SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
-        }
-    }
+		private static void VirtualDesktopOnCurrentChanged(object sender, VirtualDesktopChangedEventArgs e)
+		{
+			VisualHelper.InvokeOnUIDispatcher(() =>
+			{
+				var desktops = VirtualDesktop.GetDesktops();
+				var newIndex = Array.IndexOf(desktops, e.NewDesktop) + 1;
+
+				var imgDirectoryPath = Settings.General.DesktopBackgroundFolderPath.Value ?? "";
+				var imgPath = Path.Combine(imgDirectoryPath, newIndex + ".bmp");
+				if (File.Exists(imgPath))
+				{
+					Set(imgPath);
+				}
+			});
+		}
+
+		public void Dispose()
+		{
+			VirtualDesktop.CurrentChanged -= VirtualDesktopOnCurrentChanged;
+		}
+
+		public static void Set(string path)
+		{
+			NativeMethods.SystemParametersInfo(
+				SystemParametersInfo.SPI_SETDESKWALLPAPER,
+				0,
+				path,
+				SystemParametersInfoFlag.SPIF_UPDATEINIFILE | SystemParametersInfoFlag.SPIF_SENDWININICHANGE);
+		}
+	}
 }

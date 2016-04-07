@@ -173,6 +173,7 @@
     <Compile Include="Annotations\DarkAttribute.cs" />
     <Compile Include="Annotations\ElementalAttribute.cs" />
     <Compile Include="Annotations\LightAttribute.cs" />
+    <Compile Include="Interop\SystemParametersInfo.cs" />
     <Compile Include="Services\Helpers.cs" />
     <Compile Include="Serialization\LocalSettingsProperty.cs" />
     <Compile Include="Serialization\LocalSettingsProvider.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="Services\PinService.cs" />
     <Compile Include="Services\ShortcutKeyPressedEventArgs.cs" />
     <Compile Include="Services\UwpInteropService.cs" />
+    <Compile Include="Services\WallpaperService.cs" />
     <Compile Include="ViewModels\NotificationWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingsWindowViewModel.cs" />
     <Compile Include="Views\Controls\ClosingStoryboardBehavior.cs" />

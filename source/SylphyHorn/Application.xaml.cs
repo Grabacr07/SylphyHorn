@@ -27,6 +27,7 @@ namespace SylphyHorn
 		private PinService _pinService;
 		private UwpInteropService _interopService;
 		private NotificationService _notificationService;
+		private WallpaperService _wallpaperService;
 
 		static Application()
 		{
@@ -68,6 +69,7 @@ namespace SylphyHorn
 					this._hookService.UnpinRequested += (sender, hWnd) => this._pinService.Unregister(hWnd);
 					this._interopService = new UwpInteropService(this._hookService, Settings.General).AddTo(this);
 					this._notificationService = new NotificationService().AddTo(this);
+					WallpaperService.Current.AddTo(this);
 
 					base.OnStartup(e);
 				}
