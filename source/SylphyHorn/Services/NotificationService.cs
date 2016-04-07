@@ -14,9 +14,11 @@ namespace SylphyHorn.Services
 {
 	public class NotificationService : IDisposable
 	{
+		public static NotificationService Instance { get; } = new NotificationService();
+
 		private readonly SerialDisposable _notificationWindow = new SerialDisposable();
 
-		public NotificationService()
+		private NotificationService()
 		{
 			VirtualDesktop.CurrentChanged += this.VirtualDesktopOnCurrentChanged;
 		}
@@ -31,14 +33,6 @@ namespace SylphyHorn.Services
 				var newIndex = Array.IndexOf(desktops, e.NewDesktop) + 1;
 
 				this._notificationWindow.Disposable = ShowWindow(newIndex);
-
-				// var imgDirectoryPath = @"D:\User\Pictures\vd-bg\";
-				var imgDirectoryPath = Settings.General.DesktopBackgroundFolderPath;
-				var bmpPath = imgDirectoryPath + newIndex.ToString() + ".bmp";
-				if (System.IO.File.Exists(bmpPath))
-				{
-					WallpaperService.Set(bmpPath);
-				}
 			});
 		}
 

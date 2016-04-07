@@ -11,7 +11,7 @@ namespace SylphyHorn.Services
 {
 	public class WallpaperService : IDisposable
 	{
-		public static WallpaperService Current { get; } = new WallpaperService();
+		public static WallpaperService Instance { get; } = new WallpaperService();
 
 		private WallpaperService()
 		{
