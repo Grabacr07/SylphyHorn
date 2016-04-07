@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+  <!--<?define ProductName="!(bind.assemblyName.SylphyHorn.exe)" ?>-->
+  <!--<?define ProductVersion="!(bind.assemblyVersion.SylphyHorn.exe)" ?>-->
+  <?define ProductName="SylphyHorn Engine" ?>
+  <?define ProductVersion="!(bind.fileVersion.SylphyHorn.exe)" ?>
+  <?define ProductCode="*" ?>
+  <?define Manufacturer="grabacr.net" ?>
+  <?define UpgradeCode="6d47ec2b-26ca-4a61-8a58-ae0f77714d7d" ?>
+  <?define SourceDir = "..\..\SylphyHorn\bin\Release" ?>
+
+  <Product Id="$(var.ProductCode)"
+           Name="$(var.ProductName)"
+           Language="1033"
+           Version="$(var.ProductVersion)"
+           Manufacturer="$(var.Manufacturer)"
+           UpgradeCode="$(var.UpgradeCode)">
+
+    <Package InstallerVersion="100"
+             Compressed="yes"
+             InstallScope="perUser" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate />
+    
+    <Feature Id="ProductFeature"
+             Title="SylphyHorn.Setup"
+             Level="1">
+      <ComponentGroupRef Id="SylphyHornComponents" />
+      <ComponentRef Id="AppData.InstallTargetFolder" />
+    </Feature>
+    
+    <Icon Id="ProductIcon"
+          SourceFile="$(var.SourceDir)\SylphyHorn.exe" />
+
+    <Directory Id="TARGETDIR"
+               Name="SourceDir">
+      <Directory Id="AppDataFolder">
+        <Directory Id="AppData.ManufacturerFolder"
+                   Name="$(var.Manufacturer)">
+          <Directory Id="INSTALLDIR"
+                     Name="$(var.ProductName)">
+            <Component Id="AppData.InstallTargetFolder"
+                       Guid="A98F754C-2D59-43EB-8A41-D0EA0FAD94D3">
+              <RemoveFolder Id='INSTALLDIR'
+                            Directory='INSTALLDIR'
+                            On='uninstall' />
+              <RemoveFolder Id='AppData.ManufacturerFolder'
+                            Directory='AppData.ManufacturerFolder'
+                            On='uninstall' />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="StartupFolder" />
+      <Directory Id="ProgramMenuFolder" />
+    </Directory>
+  </Product>
+
+  <Fragment>
+    <ComponentGroup Id="SylphyHornComponents"
+                    Directory="INSTALLDIR">  
+      <Component Id="ChromeHook.InjectDll32.exe"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="ChromeHook.InjectDll32.exe"
+              Name="ChromeHook.InjectDll32.exe"
+              Source="$(var.SourceDir)\ChromeHook.InjectDll32.exe"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="ChromeHook32.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="ChromeHook32.dll"
+              Name="ChromeHook32.dll"
+              Source="$(var.SourceDir)\ChromeHook32.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="ChromeHook64.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="ChromeHook64.dll"
+              Name="ChromeHook64.dll"
+              Source="$(var.SourceDir)\ChromeHook64.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="ChromeHookCLR32.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="ChromeHookCLR32.dll"
+              Name="ChromeHookCLR32.dll"
+              Source="$(var.SourceDir)\ChromeHookCLR32.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="ChromeHookCLR64.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="ChromeHookCLR64.dll"
+              Name="ChromeHookCLR64.dll"
+              Source="$(var.SourceDir)\ChromeHookCLR64.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="ChromeHookService.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="ChromeHookService.dll"
+              Name="ChromeHookService.dll"
+              Source="$(var.SourceDir)\ChromeHookService.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="InjectDll32.exe"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="InjectDll32.exe"
+              Name="InjectDll32.exe"
+              Source="$(var.SourceDir)\InjectDll32.exe"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="Livet.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="Livet.dll"
+              Name="Livet.dll"
+              Source="$(var.SourceDir)\Livet.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="MetroRadiance.Chrome.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="MetroRadiance.Chrome.dll"
+              Name="MetroRadiance.Chrome.dll"
+              Source="$(var.SourceDir)\MetroRadiance.Chrome.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="MetroRadiance.Chrome.Externals.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="MetroRadiance.Chrome.Externals.dll"
+              Name="MetroRadiance.Chrome.Externals.dll"
+              Source="$(var.SourceDir)\MetroRadiance.Chrome.Externals.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="MetroRadiance.Core.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="MetroRadiance.Core.dll"
+              Name="MetroRadiance.Core.dll"
+              Source="$(var.SourceDir)\MetroRadiance.Core.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="MetroRadiance.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="MetroRadiance.dll"
+              Name="MetroRadiance.dll"
+              Source="$(var.SourceDir)\MetroRadiance.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="MetroTrilithon.Desktop.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="MetroTrilithon.Desktop.dll"
+              Name="MetroTrilithon.Desktop.dll"
+              Source="$(var.SourceDir)\MetroTrilithon.Desktop.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="MetroTrilithon.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="MetroTrilithon.dll"
+              Name="MetroTrilithon.dll"
+              Source="$(var.SourceDir)\MetroTrilithon.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="Microsoft.Expression.Interactions.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="Microsoft.Expression.Interactions.dll"
+              Name="Microsoft.Expression.Interactions.dll"
+              Source="$(var.SourceDir)\Microsoft.Expression.Interactions.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="Open.WinKeyboardHook.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="Open.WinKeyboardHook.dll"
+              Name="Open.WinKeyboardHook.dll"
+              Source="$(var.SourceDir)\Open.WinKeyboardHook.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="StatefulModel.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="StatefulModel.dll"
+              Name="StatefulModel.dll"
+              Source="$(var.SourceDir)\StatefulModel.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="SylphyHorn.Core.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="SylphyHorn.Core.dll"
+              Name="SylphyHorn.Core.dll"
+              Source="$(var.SourceDir)\SylphyHorn.Core.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="SylphyHorn.exe"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="SylphyHorn.exe"
+              Name="SylphyHorn.exe"
+              Source="$(var.SourceDir)\SylphyHorn.exe"
+              KeyPath='yes'>
+          <Shortcut Id="SylphyHorn.exe.Startup"
+                    Name="$(var.ProductName)"
+                    Directory="StartupFolder"
+                    WorkingDirectory='INSTALLDIR'
+                    Icon="ProductIcon" />
+          <Shortcut Id="SylphyHorn.exe.ProgramMenu"
+                    Name="$(var.ProductName)"
+                    Directory="ProgramMenuFolder"
+                    WorkingDirectory='INSTALLDIR'
+                    Icon="ProductIcon" />
+        </File>
+      </Component>
+      <Component Id="System.Reactive.Core.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="System.Reactive.Core.dll"
+              Name="System.Reactive.Core.dll"
+              Source="$(var.SourceDir)\System.Reactive.Core.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="System.Reactive.Interfaces.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="System.Reactive.Interfaces.dll"
+              Name="System.Reactive.Interfaces.dll"
+              Source="$(var.SourceDir)\System.Reactive.Interfaces.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="System.Reactive.Linq.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="System.Reactive.Linq.dll"
+              Name="System.Reactive.Linq.dll"
+              Source="$(var.SourceDir)\System.Reactive.Linq.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="System.Reactive.PlatformServices.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="System.Reactive.PlatformServices.dll"
+              Name="System.Reactive.PlatformServices.dll"
+              Source="$(var.SourceDir)\System.Reactive.PlatformServices.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="System.Windows.Interactivity.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="System.Windows.Interactivity.dll"
+              Name="System.Windows.Interactivity.dll"
+              Source="$(var.SourceDir)\System.Windows.Interactivity.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="VDMHelper32.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="VDMHelper32.dll"
+              Name="VDMHelper32.dll"
+              Source="$(var.SourceDir)\VDMHelper32.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="VDMHelper64.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="VDMHelper64.dll"
+              Name="VDMHelper64.dll"
+              Source="$(var.SourceDir)\VDMHelper64.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="VDMHelperCLR.Common.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="VDMHelperCLR.Common.dll"
+              Name="VDMHelperCLR.Common.dll"
+              Source="$(var.SourceDir)\VDMHelperCLR.Common.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="VDMHelperCLR32.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="VDMHelperCLR32.dll"
+              Name="VDMHelperCLR32.dll"
+              Source="$(var.SourceDir)\VDMHelperCLR32.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="VDMHelperCLR64.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="VDMHelperCLR64.dll"
+              Name="VDMHelperCLR64.dll"
+              Source="$(var.SourceDir)\VDMHelperCLR64.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="VirtualDesktop.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="VirtualDesktop.dll"
+              Name="VirtualDesktop.dll"
+              Source="$(var.SourceDir)\VirtualDesktop.dll"
+              KeyPath='yes' />
+      </Component>
+      <Component Id="VirtualDesktop.WPF.dll"
+                 Guid="*"
+                 DiskId='1'>
+        <File Id="VirtualDesktop.WPF.dll"
+              Name="VirtualDesktop.WPF.dll"
+              Source="$(var.SourceDir)\VirtualDesktop.WPF.dll"
+              KeyPath='yes' />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using SylphyHorn.Models;
+using SylphyHorn.Services;
 
 namespace SylphyHorn.Views.Controls
 {
@@ -19,10 +19,10 @@ namespace SylphyHorn.Views.Controls
 		}
 
 
-		private readonly HashSet<Key> pressedModifiers = new HashSet<Key>();
-		private Key pressedKey = Key.None;
+		private readonly HashSet<Key> _pressedModifiers = new HashSet<Key>();
+		private Key _pressedKey = Key.None;
 
-		
+
 		#region Current 依存関係プロパティ
 
 		public ShortcutKey? Current
@@ -41,11 +41,11 @@ namespace SylphyHorn.Views.Controls
 
 		#endregion
 
-		
+
 		protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
 		{
 			base.OnGotKeyboardFocus(e);
-			
+
 			this.UpdateText();
 		}
 
@@ -56,22 +56,22 @@ namespace SylphyHorn.Views.Controls
 				var key = e.Key == Key.System ? e.SystemKey : e.Key;
 				if (key == Key.Back)
 				{
-					this.pressedModifiers.Clear();
-					this.pressedKey = Key.None;
+					this._pressedModifiers.Clear();
+					this._pressedKey = Key.None;
 				}
 				else if (key.IsModifyKey())
 				{
-					this.pressedModifiers.Add(key);
+					this._pressedModifiers.Add(key);
 				}
 				else
 				{
-					this.pressedKey = key;
+					this._pressedKey = key;
 				}
 
-				this.Current = this.pressedModifiers.Any() && this.pressedKey != Key.None
-					? new ShortcutKey(this.pressedKey, this.pressedModifiers.ToArray())
+				this.Current = this._pressedModifiers.Any() && this._pressedKey != Key.None
+					? new ShortcutKey(this._pressedKey.ToVirtualKey(), this._pressedModifiers.Select(x => x.ToVirtualKey()).ToArray())
 					: (ShortcutKey?)null;
-				
+
 				this.UpdateText();
 			}
 
@@ -86,10 +86,10 @@ namespace SylphyHorn.Views.Controls
 				var key = e.Key == Key.System ? e.SystemKey : e.Key;
 				if (key.IsModifyKey())
 				{
-					this.pressedModifiers.Remove(key);
+					this._pressedModifiers.Remove(key);
 				}
 
-				this.pressedKey = Key.None;
+				this._pressedKey = Key.None;
 				this.UpdateText();
 			}
 
@@ -99,7 +99,7 @@ namespace SylphyHorn.Views.Controls
 
 		private void UpdateText()
 		{
-			var text = (this.Current ?? new ShortcutKey(this.pressedKey, this.pressedModifiers)).ToString();
+			var text = (this.Current ?? new ShortcutKey(this._pressedKey.ToVirtualKey(), this._pressedModifiers.Select(x => x.ToVirtualKey()).ToArray())).ToString();
 
 			this.Text = text;
 			this.CaretIndex = text.Length;

@@ -4,26 +4,29 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Interop;
-using WindowsDesktop;
 using Livet;
-using MetroRadiance;
+using MetroRadiance.UI;
 using MetroTrilithon.Lifetime;
 using StatefulModel;
-using SylphyHorn.Models;
+using SylphyHorn.Properties;
+using SylphyHorn.Serialization;
+using SylphyHorn.Services;
 using SylphyHorn.ViewModels;
 using SylphyHorn.Views;
+using VDMHelperCLR.Common;
+using WindowsDesktop;
 using MessageBox = System.Windows.MessageBox;
 
 namespace SylphyHorn
 {
 	sealed partial class Application : IDisposableHolder
 	{
-		private readonly CompositeDisposable compositeDisposable = new CompositeDisposable();
-		private System.Windows.Forms.NotifyIcon notifyIcon;
-		private TransparentWindow transparentWindow;
-		private HookService hookService;
-		private NotificationService notificationService;
+		private readonly MultipleDisposable _compositeDisposable = new MultipleDisposable();
+		private System.Windows.Forms.NotifyIcon _notifyIcon;
+		private HookService _hookService;
+		private PinService _pinService;
+		private UwpInteropService _interopService;
+		private NotificationService _notificationService;
 
 		static Application()
 		{
@@ -48,22 +51,23 @@ namespace SylphyHorn
 
 					DispatcherHelper.UIDispatcher = this.Dispatcher;
 
-					ThemeService.Current.Initialize(
-						this,
-						GeneralSettings.Theme.Value ?? (VisualHelper.IsDarkTheme() ? Theme.Dark : Theme.Light), 
-						GeneralSettings.AccentColor.Value ?? Accent.Blue);
+					LocalSettingsProvider.Instance.LoadAsync().Wait();
+					LocalSettingsProvider.Instance.AddTo(this);
 
-					this.transparentWindow = new TransparentWindow();
-					this.transparentWindow.Show();
+					ThemeService.Current.Register(this, Theme.Windows, Accent.Windows);
 
-					if (GeneralSettings.AccentColor.Value == null)
-					{
-						VisualHelper.ForceChangeAccent(VisualHelper.GetWindowsAccentColor());
-					}
+					var s = e.Args.Select(x => x.ToLower()).Any(x => x == "-s");
+					this.ShowNotifyIcon(s);
 
-					this.ShowNotifyIcon();
-					this.hookService = new HookService().AddTo(this);
-					this.notificationService = new NotificationService().AddTo(this);
+					var helper = VdmHelperFactory.CreateInstance().AddTo(this);
+					helper.Init();
+
+					this._pinService = new PinService(helper).AddTo(this);
+					this._hookService = new HookService(helper).AddTo(this);
+					this._hookService.PinRequested += (sender, hWnd) => this._pinService.Register(hWnd);
+					this._hookService.UnpinRequested += (sender, hWnd) => this._pinService.Unregister(hWnd);
+					this._interopService = new UwpInteropService(this._hookService, Settings.General).AddTo(this);
+					this._notificationService = new NotificationService().AddTo(this);
 
 					base.OnStartup(e);
 				}
@@ -85,7 +89,7 @@ namespace SylphyHorn
 		protected override void OnExit(ExitEventArgs e)
 		{
 			base.OnExit(e);
-		
+
 			((IDisposable)this).Dispose();
 		}
 
@@ -121,9 +125,9 @@ ERROR, date = {0}, sender = {1},
 			// 救えるパターンがあるなら救いたいけど方法わからんもじゃ
 			Current.Shutdown();
 		}
-		
 
-		private void ShowNotifyIcon()
+
+		private void ShowNotifyIcon(bool canOpenSettings)
 		{
 			const string iconUri = "pack://application:,,,/SylphyHorn;Component/Assets/tasktray.ico";
 
@@ -135,24 +139,24 @@ ERROR, date = {0}, sender = {1},
 
 			using (var stream = streamResourceInfo.Stream)
 			{
-				this.notifyIcon = new System.Windows.Forms.NotifyIcon
+				var menus = new List<System.Windows.Forms.MenuItem>();
+				if (canOpenSettings) menus.Add(new System.Windows.Forms.MenuItem("&Settings (S)", (sender, args) => this.ShowSettings()));
+				menus.Add(new System.Windows.Forms.MenuItem("E&xit (X)", (sender, args) => this.Shutdown()));
+
+				this._notifyIcon = new System.Windows.Forms.NotifyIcon
 				{
 					Text = ProductInfo.Title,
 					Icon = new System.Drawing.Icon(stream, new System.Drawing.Size(16, 16)),
 					Visible = true,
-					ContextMenu = new System.Windows.Forms.ContextMenu(new[]
-					{
-						new System.Windows.Forms.MenuItem("&Settings (S)", (sender, args) => this.ShowSettings()),
-						new System.Windows.Forms.MenuItem("E&xit (X)", (sender, args) => this.Shutdown()),
-					}),
+					ContextMenu = new System.Windows.Forms.ContextMenu(menus.ToArray()),
 				};
-				this.notifyIcon.AddTo(this);
+				this._notifyIcon.AddTo(this);
 			}
 		}
 
 		private void ShowSettings()
 		{
-			using (this.hookService.Suspend())
+			using (this._hookService.Suspend())
 			{
 				var window = new SettingsWindow { DataContext = new SettingsWindowViewModel(), };
 				window.ShowDialog();
@@ -162,11 +166,11 @@ ERROR, date = {0}, sender = {1},
 
 		#region IDisposable members
 
-		ICollection<IDisposable> IDisposableHolder.CompositeDisposable => this.compositeDisposable;
+		ICollection<IDisposable> IDisposableHolder.CompositeDisposable => this._compositeDisposable;
 
 		void IDisposable.Dispose()
 		{
-			this.compositeDisposable.Dispose();
+			this._compositeDisposable.Dispose();
 		}
 
 		#endregion

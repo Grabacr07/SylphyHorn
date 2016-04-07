@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
-using MetroRadiance.Core.Win32;
+using MetroRadiance.Interop.Win32;
 
 namespace SylphyHorn.Views
 {
@@ -22,8 +22,9 @@ namespace SylphyHorn.Views
 			var hwndSource = PresentationSource.FromVisual(this) as HwndSource;
 			if (hwndSource != null)
 			{
-				var wsex = hwndSource.Handle.GetWindowLongEx() | WSEX.TOOLWINDOW | WSEX.NOACTIVATE | WSEX.TRANSPARENT;
-				hwndSource.Handle.SetWindowLongEx(wsex);
+				var style = User32.GetWindowLongEx(hwndSource.Handle);
+				style |= WindowExStyles.WS_EX_TOOLWINDOW | WindowExStyles.WS_EX_NOACTIVATE | WindowExStyles.WS_EX_TRANSPARENT;
+				User32.SetWindowLongEx(hwndSource.Handle, style);
 			}
 
 			base.OnSourceInitialized(e);

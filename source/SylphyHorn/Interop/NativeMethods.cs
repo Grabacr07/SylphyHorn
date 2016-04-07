@@ -10,9 +10,6 @@ namespace SylphyHorn.Interop
 	public static class NativeMethods
 	{
 		[DllImport("user32.dll")]
-		public static extern IntPtr GetForegroundWindow();
-
-		[DllImport("user32.dll")]
 		public static extern int GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
 
 		[DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
@@ -20,8 +17,5 @@ namespace SylphyHorn.Interop
 
 		[DllImport("user32.dll", SetLastError = true)]
 		public static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
-
-		[DllImport("Dwmapi.dll")]
-		public static extern void DwmGetColorizationColor([Out] out int pcrColorization, [Out] out bool pfOpaqueBlend);
 	}
 }

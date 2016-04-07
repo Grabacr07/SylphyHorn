@@ -1,0 +1,1 @@
+msiexec /i SylphyHorn.Setup.msi /l*v SylphyHorn.Installer.log

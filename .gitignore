@@ -143,12 +143,18 @@ publish/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/packages/repositories.config
 
+
 # Windows Azure Build Output
 csx/
 *.build.csdef
 
-# Windows Store app package directory
+# Windows Store / Universal Windows Platform app 
 AppPackages/
+BundleArtifacts/
+
+project.lock.json
+_pkginfo.txt
+*.appx
 
 # Others
 *.[Cc]ache
