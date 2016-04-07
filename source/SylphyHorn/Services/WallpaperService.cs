@@ -11,6 +11,8 @@ namespace SylphyHorn.Services
 {
 	public class WallpaperService : IDisposable
 	{
+		private static readonly string[] _supportedExtensions = { ".png", ".jpg", ".jpeg", ".bmp", };
+
 		public static WallpaperService Instance { get; } = new WallpaperService();
 
 		private WallpaperService()
@@ -25,11 +27,19 @@ namespace SylphyHorn.Services
 				var desktops = VirtualDesktop.GetDesktops();
 				var newIndex = Array.IndexOf(desktops, e.NewDesktop) + 1;
 
-				var imgDirectoryPath = Settings.General.DesktopBackgroundFolderPath.Value ?? "";
-				var imgPath = Path.Combine(imgDirectoryPath, newIndex + ".bmp");
-				if (File.Exists(imgPath))
+				var dirPath = Settings.General.DesktopBackgroundFolderPath.Value ?? "";
+				if (Directory.Exists(dirPath))
 				{
-					Set(imgPath);
+					foreach (var extension in _supportedExtensions)
+					{
+						var filePath = Path.Combine(dirPath, newIndex + extension);
+						var wallpaper = new FileInfo(filePath);
+						if (wallpaper.Exists)
+						{
+							Set(wallpaper.FullName);
+							break;
+						}
+					}
 				}
 			});
 		}
