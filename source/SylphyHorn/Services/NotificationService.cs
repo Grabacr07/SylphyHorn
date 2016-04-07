@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using WindowsDesktop;
 using MetroTrilithon.Lifetime;
 using SylphyHorn.Properties;
 using SylphyHorn.Serialization;
@@ -31,6 +32,14 @@ namespace SylphyHorn.Services
 				var newIndex = Array.IndexOf(desktops, e.NewDesktop) + 1;
 
 				this._notificationWindow.Disposable = ShowWindow(newIndex);
+
+				// var imgDirectoryPath = @"D:\User\Pictures\vd-bg\";
+				var imgDirectoryPath = Settings.General.DesktopBackgroundFolderPath;
+				var bmpPath = imgDirectoryPath + newIndex.ToString() + ".bmp";
+				if (System.IO.File.Exists(bmpPath))
+				{
+					WallpaperService.Set(bmpPath);
+				}
 			});
 		}
 
