@@ -33,14 +33,14 @@ namespace SylphyHorn.Services
 
 				this._notificationWindow.Disposable = ShowWindow(newIndex);
 
-                // var imgDirectoryPath = @"D:\User\Pictures\vd-bg\";
-                var imgDirectoryPath = @"";
-                var bmpPath = imgDirectoryPath + newIndex.ToString() + ".bmp";
-                if (System.IO.File.Exists(bmpPath))
-                {
-                    WallpaperService.Set(bmpPath);
-                }
-            });
+				// var imgDirectoryPath = @"D:\User\Pictures\vd-bg\";
+				var imgDirectoryPath = Settings.General.DesktopBackgroundFolderPath;
+				var bmpPath = imgDirectoryPath + newIndex.ToString() + ".bmp";
+				if (System.IO.File.Exists(bmpPath))
+				{
+					WallpaperService.Set(bmpPath);
+				}
+			});
 		}
 
 		private static IDisposable ShowWindow(int index)
