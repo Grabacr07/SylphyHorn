@@ -19,6 +19,7 @@ namespace SylphyHorn.Services
 
 		public event EventHandler<IntPtr> PinRequested;
 		public event EventHandler<IntPtr> UnpinRequested;
+		public event EventHandler<IntPtr> TogglePinRequested;
 
 		public HookService(IVdmHelper helper)
 		{
@@ -118,6 +119,13 @@ namespace SylphyHorn.Services
 			if (Settings.ShortcutKey.Unpin.ToShortcutKey() == args.ShortcutKey)
 			{
 				this.UnpinRequested?.Invoke(this, InteropHelper.GetForegroundWindowEx());
+				args.Handled = true;
+				return;
+			}
+
+			if (Settings.ShortcutKey.TogglePin.ToShortcutKey() == args.ShortcutKey)
+			{
+				this.TogglePinRequested?.Invoke(this, InteropHelper.GetForegroundWindowEx());
 				args.Handled = true;
 				return;
 			}

@@ -27,18 +27,10 @@ namespace SylphyHorn.Services
 		{
 			lock (this._sync)
 			{
-				if (this._pinnedWindows.ContainsKey(hWnd)) return;
-
-				var external = new ExternalWindow(hWnd);
-				var chrome = new WindowChrome
+				if (!this._pinnedWindows.ContainsKey(hWnd))
 				{
-					BorderThickness = new Thickness(4.0),
-					Top = new PinMarker(),
-				};
-				chrome.Attach(external);
-				external.Closed += (sender, e) => this.Unregister(hWnd);
-
-				this._pinnedWindows[hWnd] = new PinnedWindow(external, chrome);
+					this.RegisterCore(hWnd);
+				}
 			}
 		}
 
@@ -46,10 +38,10 @@ namespace SylphyHorn.Services
 		{
 			lock (this._sync)
 			{
-				if (!this._pinnedWindows.ContainsKey(hWnd)) return;
-
-				this._pinnedWindows[hWnd].Dispose();
-				this._pinnedWindows.Remove(hWnd);
+				if (this._pinnedWindows.ContainsKey(hWnd))
+				{
+					this.UnregisterCore(hWnd);
+				}
 			}
 		}
 
@@ -65,6 +57,41 @@ namespace SylphyHorn.Services
 			{
 				this.Unregister(hWnd);
 			}
+		}
+
+		public void ToggleRegister(IntPtr hWnd)
+		{
+			lock (this._sync)
+			{
+				if (this._pinnedWindows.ContainsKey(hWnd))
+				{
+					this.UnregisterCore(hWnd);
+				}
+				else
+				{
+					this.RegisterCore(hWnd);
+				}
+			}
+		}
+
+		private void RegisterCore(IntPtr hWnd)
+		{
+			var external = new ExternalWindow(hWnd);
+			var chrome = new WindowChrome
+			{
+				BorderThickness = new Thickness(4.0),
+				Top = new PinMarker(),
+			};
+			chrome.Attach(external);
+			external.Closed += (sender, e) => this.Unregister(hWnd);
+
+			this._pinnedWindows[hWnd] = new PinnedWindow(external, chrome);
+		}
+
+		private void UnregisterCore(IntPtr hWnd)
+		{
+			this._pinnedWindows[hWnd].Dispose();
+			this._pinnedWindows.Remove(hWnd);
 		}
 
 		private void VirtualDesktopOnCurrentChanged(object sender, VirtualDesktopChangedEventArgs e)

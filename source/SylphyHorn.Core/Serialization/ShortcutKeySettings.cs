@@ -31,9 +31,12 @@ namespace SylphyHorn.Serialization
 
 		public ShortcutkeyProperty SwitchToRight => this.Cache(key => new ShortcutkeyProperty(key, this._provider, SwitchToRightDefaultValue));
 
-		public ShortcutkeyProperty Pin => this.Cache(key => new ShortcutkeyProperty(key, this._provider, PinDefaultValue));
+		public ShortcutkeyProperty Pin => this.Cache(key => new ShortcutkeyProperty(key, this._provider));
 
-		public ShortcutkeyProperty Unpin => this.Cache(key => new ShortcutkeyProperty(key, this._provider, UnpinDefaultValue));
+		public ShortcutkeyProperty Unpin => this.Cache(key => new ShortcutkeyProperty(key, this._provider));
+
+		public ShortcutkeyProperty TogglePin => this.Cache(key => new ShortcutkeyProperty(key, this._provider, TogglePinDefaultValue));
+
 
 		#region default values
 
@@ -75,20 +78,11 @@ namespace SylphyHorn.Serialization
 				091, // Left Windows
 			};
 
-		private static int[] PinDefaultValue { get; } =
+		private static int[] TogglePinDefaultValue { get; } =
 			{
 				080, // P
 				162, // Left Ctrl
 				164, // Left Alt
-				091, // Left Windows
-			};
-
-		private static int[] UnpinDefaultValue { get; } =
-			{
-				080, // P
-				162, // Left Ctrl
-				164, // Left Alt
-				160, // Left Shift
 				091, // Left Windows
 			};
 

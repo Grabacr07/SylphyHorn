@@ -65,6 +65,7 @@ namespace SylphyHorn
 					this._hookService = new HookService(helper).AddTo(this);
 					this._hookService.PinRequested += (sender, hWnd) => this._pinService.Register(hWnd);
 					this._hookService.UnpinRequested += (sender, hWnd) => this._pinService.Unregister(hWnd);
+					this._hookService.TogglePinRequested += (sender, hWnd) => this._pinService.ToggleRegister(hWnd);
 					this._interopService = new UwpInteropService(this._hookService, Settings.General).AddTo(this);
 
 					NotificationService.Instance.AddTo(this);

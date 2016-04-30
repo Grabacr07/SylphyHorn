@@ -15,8 +15,8 @@
 				   d:DataContext="{d:DesignInstance vm:SettingsWindowViewModel}"
 				   Icon="/SylphyHorn;component/assets/app.white.ico"
 				   Title="{Binding Title}"
-				   Width="640"
-				   Height="480"
+				   Width="720"
+				   Height="540"
 				   Background="{DynamicResource ThemeBrushKey}"
 				   Foreground="{DynamicResource ActiveForegroundBrushKey}"
 				   FontFamily="Segoe UI, Meiryo UI"
@@ -219,11 +219,13 @@
 							<UniformGrid Columns="1">
 								<TextBlock Text="Pin window:" />
 								<TextBlock Text="Unpin window:" />
+								<TextBlock Text="Pin/Unpin toggle:" />
 							</UniformGrid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=Pin.Value, Mode=TwoWay}" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=Unpin.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=TogglePin.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
 					</StackPanel>
