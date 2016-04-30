@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Livet;
+using MetroTrilithon.Lifetime;
 using MetroTrilithon.Mvvm;
 using SylphyHorn.Properties;
+using SylphyHorn.Serialization;
 using SylphyHorn.Services;
 
 namespace SylphyHorn.ViewModels
 {
 	public class SettingsWindowViewModel : WindowViewModel
 	{
+		private readonly HookService _hookService;
+
 		#region HasStartupLink property
 
 		private bool _HasStartupLink;
@@ -42,9 +46,10 @@ namespace SylphyHorn.ViewModels
 
 		public IReadOnlyCollection<BindableTextViewModel> Libraries { get; }
 
-		public SettingsWindowViewModel()
+		public SettingsWindowViewModel(HookService hookService)
 		{
 			this.Title = "Settings";
+			this._hookService = hookService;
 
 			this.Libraries = ProductInfo.Libraries.Aggregate(
 				new List<BindableTextViewModel>(),
@@ -56,12 +61,15 @@ namespace SylphyHorn.ViewModels
 				});
 			this._HasStartupLink = ShellLinkHelper.ExistsStartup();
 
-			// ToDo: 設定ダイアログがタコってるのであとで見直す
-			//       基本的には設定ダイアログは提供しない、ものの、起動オプションで表示できるようにはしたい
-			//       設定の保存は UWP 側でのみやる想定だけど、ダイアログには保存ボタンを置きたい
-			//       スタートアップへの登録と解除も設定ダイアログで提供したい
+			Disposable.Create(() => LocalSettingsProvider.Instance.SaveAsync().Wait())
+				.AddTo(this);
+		}
 
-			//Disposable.Create(Providers.Local.Save).AddTo(this);
+		protected override void InitializeCore()
+		{
+			base.InitializeCore();
+			this._hookService.Suspend()
+				.AddTo(this);
 		}
 	}
 

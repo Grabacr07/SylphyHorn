@@ -159,7 +159,7 @@ ERROR, date = {0}, sender = {1},
 		{
 			using (this._hookService.Suspend())
 			{
-				var window = new SettingsWindow { DataContext = new SettingsWindowViewModel(), };
+				var window = new SettingsWindow { DataContext = new SettingsWindowViewModel(this._hookService), };
 				window.ShowDialog();
 			}
 		}

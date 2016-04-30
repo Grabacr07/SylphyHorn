@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using SylphyHorn.Serialization;
 using SylphyHorn.Services;
 
 namespace SylphyHorn.Views.Controls
@@ -22,16 +23,16 @@ namespace SylphyHorn.Views.Controls
 		private readonly HashSet<Key> _pressedModifiers = new HashSet<Key>();
 		private Key _pressedKey = Key.None;
 
-
 		#region Current 依存関係プロパティ
 
-		public ShortcutKey? Current
+		public int[] Current
 		{
-			get { return (ShortcutKey?)this.GetValue(CurrentProperty); }
+			get { return (int[])this.GetValue(CurrentProperty); }
 			set { this.SetValue(CurrentProperty, value); }
 		}
+
 		public static readonly DependencyProperty CurrentProperty =
-			DependencyProperty.Register(nameof(Current), typeof(ShortcutKey?), typeof(ShortcutKeyBox), new UIPropertyMetadata(null, CurrentPropertyChangedCallback));
+			DependencyProperty.Register(nameof(Current), typeof(int[]), typeof(ShortcutKeyBox), new UIPropertyMetadata(null, CurrentPropertyChangedCallback));
 
 		private static void CurrentPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs args)
 		{
@@ -39,8 +40,13 @@ namespace SylphyHorn.Views.Controls
 			instance.UpdateText();
 		}
 
-		#endregion
+		private ShortcutKey? CurrentAsKeys
+		{
+			get { return this.Current?.ToShortcutKey(); }
+			set { this.Current = value?.ToSerializable(); }
+		}
 
+		#endregion
 
 		protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
 		{
@@ -68,8 +74,8 @@ namespace SylphyHorn.Views.Controls
 					this._pressedKey = key;
 				}
 
-				this.Current = this._pressedModifiers.Any() && this._pressedKey != Key.None
-					? new ShortcutKey(this._pressedKey.ToVirtualKey(), this._pressedModifiers.Select(x => x.ToVirtualKey()).ToArray())
+				this.CurrentAsKeys = this._pressedModifiers.Any() && this._pressedKey != Key.None
+					? this.GetShortcutKey()
 					: (ShortcutKey?)null;
 
 				this.UpdateText();
@@ -99,10 +105,17 @@ namespace SylphyHorn.Views.Controls
 
 		private void UpdateText()
 		{
-			var text = (this.Current ?? new ShortcutKey(this._pressedKey.ToVirtualKey(), this._pressedModifiers.Select(x => x.ToVirtualKey()).ToArray())).ToString();
+			var text = (this.CurrentAsKeys ?? this.GetShortcutKey()).ToString();
 
 			this.Text = text;
 			this.CaretIndex = text.Length;
+		}
+
+		private ShortcutKey GetShortcutKey()
+		{
+			return new ShortcutKey(
+				this._pressedKey.ToVirtualKey(),
+				this._pressedModifiers.Select(x => x.ToVirtualKey()).ToArray());
 		}
 	}
 }

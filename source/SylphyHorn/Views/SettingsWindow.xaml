@@ -137,13 +137,13 @@
 						</StackPanel>
 						<Border Height="8" />
 
-						<TextBlock Text="Startup"
+						<!--<TextBlock Text="Startup"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<StackPanel Margin="8,0,0,0">
 							<CheckBox IsChecked="{Binding HasStartupLink, Mode=TwoWay}">
 								<TextBlock Text="Automaticaly start at logon" />
 							</CheckBox>
-						</StackPanel>
+						</StackPanel>-->
 					</StackPanel>
 				</ScrollViewer>
 			</TabItem>
@@ -203,6 +203,27 @@
 								<TextBlock Text="Ctrl + Win + D (provided by Windows)" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveNew.Value, Mode=TwoWay}" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveNewAndSwitch.Value, Mode=TwoWay}" />
+							</UniformGrid>
+						</Grid>
+						<Border Height="8" />
+
+						<TextBlock Text="Pin window to all desktops"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<Grid Margin="8,0,0,0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"
+												  SharedSizeGroup="KeyHeader" />
+								<ColumnDefinition Width="8" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<UniformGrid Columns="1">
+								<TextBlock Text="Pin window:" />
+								<TextBlock Text="Unpin window:" />
+							</UniformGrid>
+							<UniformGrid Grid.Column="2"
+										 Columns="1">
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=Pin.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=Unpin.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
 					</StackPanel>
