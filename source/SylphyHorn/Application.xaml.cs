@@ -23,9 +23,14 @@ namespace SylphyHorn
 	{
 		private readonly MultipleDisposable _compositeDisposable = new MultipleDisposable();
 		private System.Windows.Forms.NotifyIcon _notifyIcon;
-		private HookService _hookService;
-		private PinService _pinService;
-		private UwpInteropService _interopService;
+
+		internal IVdmHelper VdmHelper { get; private set; }
+
+		internal HookService HookService { get; private set; }
+
+		internal PinService PinService { get; private set; }
+
+		internal UwpInteropService InteropService { get; private set; }
 
 		static Application()
 		{
@@ -48,6 +53,10 @@ namespace SylphyHorn
 						args.Handled = true;
 					};
 
+					//var pinnedapps = WindowsDesktop.Interop.VirtualDesktopInteropHelper.GetVirtualDesktopPinnedApps();
+					//Debug.WriteLine($"IsPinnedWindow: {pinnedapps.IsPinnedWindow(MetroRadiance.Interop.Win32.User32.GetForegroundWindow())}");
+					//Debug.WriteLine($"IsPinnedApp   : {pinnedapps.IsPinnedApp(MetroRadiance.Interop.Win32.User32.GetForegroundWindow())}");
+
 					DispatcherHelper.UIDispatcher = this.Dispatcher;
 
 					LocalSettingsProvider.Instance.LoadAsync().Wait();
@@ -58,15 +67,12 @@ namespace SylphyHorn
 					var s = e.Args.Select(x => x.ToLower()).Any(x => x == "-s");
 					this.ShowNotifyIcon(s);
 
-					var helper = VdmHelperFactory.CreateInstance().AddTo(this);
-					helper.Init();
-
-					this._pinService = new PinService(helper).AddTo(this);
-					this._hookService = new HookService(helper).AddTo(this);
-					this._hookService.PinRequested += (sender, hWnd) => this._pinService.Register(hWnd);
-					this._hookService.UnpinRequested += (sender, hWnd) => this._pinService.Unregister(hWnd);
-					this._hookService.TogglePinRequested += (sender, hWnd) => this._pinService.ToggleRegister(hWnd);
-					this._interopService = new UwpInteropService(this._hookService, Settings.General).AddTo(this);
+					this.VdmHelper = VdmHelperFactory.CreateInstance().AddTo(this);
+					this.VdmHelper.Init();
+					this.PinService = new PinService(this.VdmHelper).AddTo(this);
+					this.HookService = new HookService(this.VdmHelper).AddTo(this);
+					this.InteropService = new UwpInteropService(this.HookService, Settings.General).AddTo(this);
+					this.RegisterActions();
 
 					NotificationService.Instance.AddTo(this);
 					WallpaperService.Instance.AddTo(this);
@@ -93,6 +99,61 @@ namespace SylphyHorn
 			base.OnExit(e);
 
 			((IDisposable)this).Dispose();
+		}
+
+		private void RegisterActions()
+		{
+			var settings = Settings.ShortcutKey;
+
+			this.HookService
+				.Register(settings.MoveLeft.ToShortcutKey(), hWnd => hWnd.MoveToLeft(this.VdmHelper))
+				.AddTo(this);
+
+			this.HookService
+				.Register(settings.MoveLeftAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToLeft(this.VdmHelper)?.Switch())
+				.AddTo(this);
+
+			this.HookService
+				.Register(settings.MoveRight.ToShortcutKey(), hWnd => hWnd.MoveToRight(this.VdmHelper))
+				.AddTo(this);
+
+			this.HookService
+				.Register(settings.MoveRightAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToRight(this.VdmHelper)?.Switch())
+				.AddTo(this);
+
+			this.HookService
+				.Register(settings.MoveNew.ToShortcutKey(), hWnd => hWnd.MoveToNew(this.VdmHelper))
+				.AddTo(this);
+
+			this.HookService
+				.Register(settings.MoveNewAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToNew(this.VdmHelper)?.Switch())
+				.AddTo(this);
+
+			this.HookService
+				.Register(
+					settings.SwitchToLeft.ToShortcutKey(),
+					_ => VirtualDesktopService.GetLeft()?.Switch(),
+					() => Settings.General.OverrideWindowsDefaultKeyCombination)
+				.AddTo(this);
+
+			this.HookService
+				.Register(
+					settings.SwitchToRight.ToShortcutKey(),
+					_ => VirtualDesktopService.GetRight()?.Switch(),
+					() => Settings.General.OverrideWindowsDefaultKeyCombination)
+				.AddTo(this);
+
+			this.HookService
+				.Register(settings.Pin.ToShortcutKey(), hWnd => this.PinService.Register(hWnd))
+				.AddTo(this);
+
+			this.HookService
+				.Register(settings.Unpin.ToShortcutKey(), hWnd => this.PinService.Unregister(hWnd))
+				.AddTo(this);
+
+			this.HookService
+				.Register(settings.TogglePin.ToShortcutKey(), hWnd => this.PinService.ToggleRegister(hWnd))
+				.AddTo(this);
 		}
 
 		private static void ReportException(object sender, Exception exception)
@@ -158,9 +219,9 @@ ERROR, date = {0}, sender = {1},
 
 		private void ShowSettings()
 		{
-			using (this._hookService.Suspend())
+			using (this.HookService.Suspend())
 			{
-				var window = new SettingsWindow { DataContext = new SettingsWindowViewModel(this._hookService), };
+				var window = new SettingsWindow { DataContext = new SettingsWindowViewModel(this.HookService), };
 				window.ShowDialog();
 			}
 		}
