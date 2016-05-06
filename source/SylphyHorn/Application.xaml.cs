@@ -7,6 +7,7 @@ using System.Windows;
 using Livet;
 using MetroRadiance.UI;
 using MetroTrilithon.Lifetime;
+using MetroTrilithon.Linq;
 using StatefulModel;
 using SylphyHorn.Properties;
 using SylphyHorn.Serialization;
@@ -21,6 +22,9 @@ namespace SylphyHorn
 {
 	sealed partial class Application : IDisposableHolder
 	{
+		private const string CanOpenSettingsArg = "-s";
+		private const string RestartedArg = "-restarted";
+
 		private readonly MultipleDisposable _compositeDisposable = new MultipleDisposable();
 		private System.Windows.Forms.NotifyIcon _notifyIcon;
 
@@ -32,6 +36,8 @@ namespace SylphyHorn
 
 		internal UwpInteropService InteropService { get; private set; }
 
+		internal static Dictionary<string, string> CommandLineArgs { get; private set; }
+
 		static Application()
 		{
 			AppDomain.CurrentDomain.UnhandledException += (sender, args) => ReportException(sender, args.ExceptionObject as Exception);
@@ -39,9 +45,15 @@ namespace SylphyHorn
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
+			// -Key (Value = null) or -Key=Value
+			CommandLineArgs = e.Args
+				.Select(x => x.Split(new[] { '=', }, 2))
+				.GroupBy(xs => xs[0], (k, ys) => ys.Last()) // 重複の場合は後ろの引数を優先
+				.ToDictionary(xs => xs[0], xs => xs.Length == 1 ? null : xs[1], StringComparer.OrdinalIgnoreCase);
+
 #if !DEBUG
 			var appInstance = new MetroTrilithon.Desktop.ApplicationInstance().AddTo(this);
-			if (appInstance.IsFirst)
+			if (appInstance.IsFirst || CommandLineArgs.ContainsKey(RestartedArg))
 #endif
 			{
 				if (VirtualDesktop.IsSupported)
@@ -64,8 +76,7 @@ namespace SylphyHorn
 
 					ThemeService.Current.Register(this, Theme.Windows, Accent.Windows);
 
-					var s = e.Args.Select(x => x.ToLower()).Any(x => x == "-s");
-					this.ShowNotifyIcon(s);
+					this.ShowNotifyIcon(CommandLineArgs.ContainsKey(CanOpenSettingsArg));
 
 					this.VdmHelper = VdmHelperFactory.CreateInstance().AddTo(this);
 					this.VdmHelper.Init();
@@ -184,8 +195,22 @@ ERROR, date = {0}, sender = {1},
 				Debug.WriteLine(ex);
 			}
 
-			// とりあえずもう終了させるしかないもじゃ
-			// 救えるパターンがあるなら救いたいけど方法わからんもじゃ
+			// 仕方ないので 3 回だけ再起動のチャンスを与えてやって、殺す
+			if (CommandLineArgs != null)
+			{
+				int restartNum;
+				if (!int.TryParse(CommandLineArgs.ContainsKey(RestartedArg) ? CommandLineArgs[RestartedArg] : null, out restartNum)) restartNum = 0;
+				if (restartNum < 3)
+				{
+					Process.Start(
+						Environment.GetCommandLineArgs()[0],
+						CommandLineArgs
+							.Where(x => x.Key != RestartedArg)
+							.Select(x => x.Value == null ? x.Key : $"{x.Key}={x.Value}")
+							.JoinString(" ") + $" {RestartedArg}={++restartNum}");
+				}
+			}
+			
 			Current.Shutdown();
 		}
 
