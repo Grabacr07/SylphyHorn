@@ -174,7 +174,8 @@ namespace SylphyHorn
 			const string messageFormat = @"
 ===========================================================
 ERROR, date = {0}, sender = {1},
-{2}
+args = {2}
+{3}
 ";
 			const string path = "error.log";
 
@@ -184,7 +185,11 @@ ERROR, date = {0}, sender = {1},
 
 			try
 			{
-				var message = string.Format(messageFormat, DateTimeOffset.Now, sender, exception);
+				var message = string.Format(messageFormat,
+					DateTimeOffset.Now,
+					sender,
+					Environment.GetCommandLineArgs().Skip(1).JoinString(" "),
+					exception);
 
 				Debug.WriteLine(message);
 				File.AppendAllText(path, message);
@@ -195,12 +200,12 @@ ERROR, date = {0}, sender = {1},
 				Debug.WriteLine(ex);
 			}
 
-			// 仕方ないので 3 回だけ再起動のチャンスを与えてやって、殺す
+			// 3 分以上生きてたら安定稼働と見做して、とりあえず再起動させる
 			if (CommandLineArgs != null)
 			{
 				int restartNum;
 				if (!int.TryParse(CommandLineArgs.ContainsKey(RestartedArg) ? CommandLineArgs[RestartedArg] : null, out restartNum)) restartNum = 0;
-				if (restartNum < 3)
+				if ((DateTime.Now - Process.GetCurrentProcess().StartTime).TotalMinutes > 3)
 				{
 					Process.Start(
 						Environment.GetCommandLineArgs()[0],
