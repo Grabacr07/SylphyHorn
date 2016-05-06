@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using Livet;
 using MetroRadiance.UI;
 using MetroTrilithon.Lifetime;
+using MetroTrilithon.Linq;
 using StatefulModel;
 using SylphyHorn.Properties;
 using SylphyHorn.Serialization;
@@ -16,7 +16,6 @@ using SylphyHorn.ViewModels;
 using SylphyHorn.Views;
 using VDMHelperCLR.Common;
 using WindowsDesktop;
-using MetroTrilithon.Linq;
 using MessageBox = System.Windows.MessageBox;
 
 namespace SylphyHorn
@@ -196,11 +195,9 @@ ERROR, date = {0}, sender = {1},
 				Debug.WriteLine(ex);
 			}
 
-			// とりあえずもう終了させるしかないもじゃ
-			// 救えるパターンがあるなら救いたいけど方法わからんもじゃ
+			// 仕方ないので 3 回だけ再起動のチャンスを与えてやって、殺す
 			if (CommandLineArgs != null)
 			{
-				// 仕方ないので、とりあえず 3 回までは再起動
 				int restartNum;
 				if (!int.TryParse(CommandLineArgs.ContainsKey(RestartedArg) ? CommandLineArgs[RestartedArg] : null, out restartNum)) restartNum = 0;
 				if (restartNum < 3)
