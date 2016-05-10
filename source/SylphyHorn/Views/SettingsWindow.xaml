@@ -132,8 +132,38 @@
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<StackPanel Margin="8,0,0,0">
 							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}">
-								<TextBlock Text="Display a notification when switched virtual desktop" />
+								<TextBlock>
+									<Run Text="Display a notification when switched virtual desktop" />
+								</TextBlock>
 							</CheckBox>
+							<TextBlock Margin="21,0,0,0">
+								<Run Text="Time Duration for Notification Messages:" />
+								<InlineUIContainer>
+									<TextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationDuration.Value, Mode=TwoWay}"
+											 Width="60"
+											 Margin="2,5,2,-4"
+											 IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}" />
+								</InlineUIContainer>
+								<Run Text="ms" />
+							</TextBlock>
+						</StackPanel>
+						<Border Height="8" />
+
+						<TextBlock Text="Background"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<StackPanel Margin="8,0,0,0">
+							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}">
+								<TextBlock Text="Change the background for each desktop." />
+							</CheckBox>
+							<TextBlock Margin="21,0,0,0">
+								<Run Text="Source image folder:" />
+								<InlineUIContainer>
+									<TextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopBackgroundFolderPath.Value, Mode=TwoWay}"
+											 Width="300"
+											 Margin="2,5,2,-4"
+											 IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}" />
+								</InlineUIContainer>
+							</TextBlock>
 						</StackPanel>
 						<Border Height="8" />
 

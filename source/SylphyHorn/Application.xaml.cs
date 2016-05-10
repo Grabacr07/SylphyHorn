@@ -144,14 +144,14 @@ namespace SylphyHorn
 				.Register(
 					settings.SwitchToLeft.ToShortcutKey(),
 					_ => VirtualDesktopService.GetLeft()?.Switch(),
-					() => Settings.General.OverrideWindowsDefaultKeyCombination)
+					() => Settings.General.OverrideWindowsDefaultKeyCombination || Settings.General.ChangeBackgroundEachDesktop)
 				.AddTo(this);
 
 			this.HookService
 				.Register(
 					settings.SwitchToRight.ToShortcutKey(),
 					_ => VirtualDesktopService.GetRight()?.Switch(),
-					() => Settings.General.OverrideWindowsDefaultKeyCombination)
+					() => Settings.General.OverrideWindowsDefaultKeyCombination || Settings.General.ChangeBackgroundEachDesktop)
 				.AddTo(this);
 
 			this.HookService
