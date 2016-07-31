@@ -48,23 +48,30 @@ namespace SylphyHorn.Serialization
 				file.Directory.Create();
 			}
 
-			this._notifier = new Subject<FileSystemEventArgs>();
-			this._notifier.Throttle(FileSystemHandlerThrottleDueTime)
-				.SelectMany(_ => this.LoadAsync().ToObservable())
-				.Subscribe(_ => this.OnReloaded());
-
-			this._targetFile = file;
-			this._watcher = new FileSystemWatcher(file.DirectoryName, file.Name)
+			try
 			{
-				NotifyFilter = NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.LastWrite,
-			};
-			this._watcher.Changed += this.HandleFileChanged;
-			this._watcher.Created += this.HandleFileChanged;
-			this._watcher.Deleted += this.HandleFileChanged;
-			this._watcher.Renamed += this.HandleFileChanged;
-			this._watcher.EnableRaisingEvents = true;
+				this._notifier = new Subject<FileSystemEventArgs>();
+				this._notifier.Throttle(FileSystemHandlerThrottleDueTime)
+					.SelectMany(_ => this.LoadAsync().ToObservable())
+					.Subscribe(_ => this.OnReloaded());
 
-			this.Available = true;
+				this._targetFile = file;
+				this._watcher = new FileSystemWatcher(file.DirectoryName, file.Name)
+				{
+					NotifyFilter = NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.LastWrite,
+				};
+				this._watcher.Changed += this.HandleFileChanged;
+				this._watcher.Created += this.HandleFileChanged;
+				this._watcher.Deleted += this.HandleFileChanged;
+				this._watcher.Renamed += this.HandleFileChanged;
+				this._watcher.EnableRaisingEvents = true;
+
+				this.Available = true;
+			}
+			catch (Exception)
+			{
+				this.Available = false;
+			}
 		}
 
 

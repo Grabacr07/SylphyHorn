@@ -28,8 +28,6 @@ namespace SylphyHorn
 
 		internal HookService HookService { get; private set; }
 
-		internal PinService PinService { get; private set; }
-
 		internal UwpInteropService InteropService { get; private set; }
 
 		static Application()
@@ -69,7 +67,6 @@ namespace SylphyHorn
 
 					this.VdmHelper = VdmHelperFactory.CreateInstance().AddTo(this);
 					this.VdmHelper.Init();
-					this.PinService = new PinService(this.VdmHelper).AddTo(this);
 					this.HookService = new HookService(this.VdmHelper).AddTo(this);
 					this.InteropService = new UwpInteropService(this.HookService, Settings.General).AddTo(this);
 					this.RegisterActions();
@@ -144,15 +141,15 @@ namespace SylphyHorn
 				.AddTo(this);
 
 			this.HookService
-				.Register(settings.Pin.ToShortcutKey(), hWnd => this.PinService.Register(hWnd))
+				.Register(settings.Pin.ToShortcutKey(), hWnd => hWnd.Pin())
 				.AddTo(this);
 
 			this.HookService
-				.Register(settings.Unpin.ToShortcutKey(), hWnd => this.PinService.Unregister(hWnd))
+				.Register(settings.Unpin.ToShortcutKey(), hWnd => hWnd.Unpin())
 				.AddTo(this);
 
 			this.HookService
-				.Register(settings.TogglePin.ToShortcutKey(), hWnd => this.PinService.ToggleRegister(hWnd))
+				.Register(settings.TogglePin.ToShortcutKey(), hWnd => hWnd.TogglePin())
 				.AddTo(this);
 		}
 

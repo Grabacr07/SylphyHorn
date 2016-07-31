@@ -182,7 +182,6 @@
     <Compile Include="Serialization\Settings.cs" />
     <Compile Include="Services\KeyHelper.cs" />
     <Compile Include="Services\NotificationService.cs" />
-    <Compile Include="Services\PinService.cs" />
     <Compile Include="Services\ShortcutKeyPressedEventArgs.cs" />
     <Compile Include="Services\UwpInteropService.cs" />
     <Compile Include="Services\VirtualDesktopService.cs" />

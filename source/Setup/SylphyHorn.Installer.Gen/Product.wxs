@@ -23,20 +23,21 @@
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate />
-    
+
     <Feature Id="ProductFeature"
              Title="SylphyHorn.Setup"
              Level="1">
       <ComponentGroupRef Id="SylphyHornComponents" />
       <ComponentRef Id="AppData.InstallTargetFolder" />
     </Feature>
-    
+
     <Icon Id="ProductIcon"
           SourceFile="$(var.SourceDir)\SylphyHorn.exe" />
 
     <Directory Id="TARGETDIR"
                Name="SourceDir">
-      <Directory Id="AppDataFolder">
+      <!--<Directory Id="AppDataFolder">-->
+      <Directory Id="ProgramFilesFolder">
         <Directory Id="AppData.ManufacturerFolder"
                    Name="$(var.Manufacturer)">
           <Directory Id="INSTALLDIR"
@@ -61,7 +62,7 @@
 
   <Fragment>
     <ComponentGroup Id="SylphyHornComponents"
-                    Directory="INSTALLDIR">  
+                    Directory="INSTALLDIR">
       <Component Id="ChromeHook.InjectDll32.exe"
                  Guid="*"
                  DiskId='1'>

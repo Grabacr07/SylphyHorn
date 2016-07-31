@@ -100,5 +100,20 @@ namespace SylphyHorn.Services
 			SystemSounds.Asterisk.Play();
 			return null;
 		}
+
+		public static void Pin(this IntPtr hWnd)
+		{
+			VirtualDesktopHelper.PinWindow(hWnd);
+		}
+
+		public static void Unpin(this IntPtr hWnd)
+		{
+			VirtualDesktopHelper.UnpinWindow(hWnd);
+		}
+
+		public static void TogglePin(this IntPtr hWnd)
+		{
+			VirtualDesktopHelper.TogglePinWindow(hWnd);
+		}
 	}
 }
