@@ -173,6 +173,7 @@
     <Compile Include="Annotations\DarkAttribute.cs" />
     <Compile Include="Annotations\ElementalAttribute.cs" />
     <Compile Include="Annotations\LightAttribute.cs" />
+    <Compile Include="ApplicationPreparation.cs" />
     <Compile Include="CommandLineArgsBase.cs" />
     <Compile Include="Interop\IconHelper.cs" />
     <Compile Include="UI\TaskTrayIcon.cs" />
