@@ -173,6 +173,9 @@
     <Compile Include="Annotations\DarkAttribute.cs" />
     <Compile Include="Annotations\ElementalAttribute.cs" />
     <Compile Include="Annotations\LightAttribute.cs" />
+    <Compile Include="CommandLineArgsBase.cs" />
+    <Compile Include="Interop\IconHelper.cs" />
+    <Compile Include="UI\TaskTrayIcon.cs" />
     <Compile Include="Interop\SystemParametersInfo.cs" />
     <Compile Include="Services\Helpers.cs" />
     <Compile Include="Serialization\LocalSettingsProperty.cs" />
@@ -186,17 +189,17 @@
     <Compile Include="Services\UwpInteropService.cs" />
     <Compile Include="Services\VirtualDesktopService.cs" />
     <Compile Include="Services\WallpaperService.cs" />
-    <Compile Include="ViewModels\NotificationWindowViewModel.cs" />
-    <Compile Include="ViewModels\SettingsWindowViewModel.cs" />
-    <Compile Include="Views\Controls\ClosingStoryboardBehavior.cs" />
-    <Compile Include="Views\Controls\ShortcutKeyBox.cs" />
-    <Compile Include="Views\PinMarker.xaml.cs">
+    <Compile Include="UI\Bindings\NotificationWindowViewModel.cs" />
+    <Compile Include="UI\Bindings\SettingsWindowViewModel.cs" />
+    <Compile Include="UI\Controls\ClosingStoryboardBehavior.cs" />
+    <Compile Include="UI\Controls\ShortcutKeyBox.cs" />
+    <Compile Include="UI\PinMarker.xaml.cs">
       <DependentUpon>PinMarker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NotificationWindow.xaml.cs">
+    <Compile Include="UI\NotificationWindow.xaml.cs">
       <DependentUpon>NotificationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsWindow.xaml.cs">
+    <Compile Include="UI\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Styles\Controls.xaml">
@@ -218,15 +221,15 @@
     </Compile>
     <Compile Include="Services\HookService.cs" />
     <Compile Include="Interop\NativeMethods.cs" />
-    <Page Include="Views\PinMarker.xaml">
+    <Page Include="UI\PinMarker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NotificationWindow.xaml">
+    <Page Include="UI\NotificationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingsWindow.xaml">
+    <Page Include="UI\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

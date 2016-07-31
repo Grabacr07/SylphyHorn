@@ -1,0 +1,350 @@
+﻿<metro:MetroWindow x:Class="SylphyHorn.UI.SettingsWindow"
+				   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+				   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+				   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+				   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+				   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				   xmlns:livet="http://schemas.livet-mvvm.net/2011/wpf"
+				   xmlns:metro="http://schemes.grabacr.net/winfx/2014/controls"
+				   xmlns:metro2="http://schemes.grabacr.net/winfx/2015/personal/controls"
+				   xmlns:properties="clr-namespace:SylphyHorn.Properties"
+				   xmlns:serialization="clr-namespace:SylphyHorn.Serialization"
+				   xmlns:bindings="clr-namespace:SylphyHorn.UI.Bindings"
+				   xmlns:controls="clr-namespace:SylphyHorn.UI.Controls"
+				   mc:Ignorable="d"
+				   d:DataContext="{d:DesignInstance bindings:SettingsWindowViewModel}"
+				   Icon="/SylphyHorn;component/assets/app.white.ico"
+				   Title="{Binding Title}"
+				   Width="720"
+				   Height="540"
+				   Background="{DynamicResource ThemeBrushKey}"
+				   Foreground="{DynamicResource ActiveForegroundBrushKey}"
+				   FontFamily="Segoe UI, Meiryo UI"
+				   SnapsToDevicePixels="True"
+				   UseLayoutRounding="True">
+
+	<i:Interaction.Behaviors>
+		<livet:WindowCloseCancelBehavior CloseCanceledCallbackMethodTarget="{Binding}"
+										 CloseCanceledCallbackMethodName="CloseCanceledCallback"
+										 CanClose="{Binding CanClose}" />
+	</i:Interaction.Behaviors>
+
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="ContentRendered">
+			<livet:LivetCallMethodAction MethodTarget="{Binding}"
+										 MethodName="Initialize" />
+		</i:EventTrigger>
+		<i:EventTrigger EventName="Closed">
+			<livet:DataContextDisposeAction />
+		</i:EventTrigger>
+
+		<livet:InteractionMessageTrigger Messenger="{Binding Messenger}"
+										 MessageKey="Window.WindowAction">
+			<livet:WindowInteractionMessageAction InvokeActionOnlyWhenWindowIsActive="False" />
+		</livet:InteractionMessageTrigger>
+		<livet:InteractionMessageTrigger Messenger="{Binding Messenger}"
+										 MessageKey="Window.Transition">
+			<livet:TransitionInteractionMessageAction InvokeActionOnlyWhenWindowIsActive="False"
+													  IsOwned="False" />
+		</livet:InteractionMessageTrigger>
+		<livet:InteractionMessageTrigger Messenger="{Binding Messenger}"
+										 MessageKey="Window.Transition.Child">
+			<livet:TransitionInteractionMessageAction InvokeActionOnlyWhenWindowIsActive="False"
+													  IsOwned="True" />
+		</livet:InteractionMessageTrigger>
+	</i:Interaction.Triggers>
+
+	<DockPanel>
+		<!-- #region Caption area -->
+		<DockPanel DockPanel.Dock="Top"
+				   metro:MetroWindow.IsCaptionBar="True">
+			<Border DockPanel.Dock="Bottom"
+					Height="8" />
+
+			<StackPanel DockPanel.Dock="Right"
+						Orientation="Horizontal"
+						HorizontalAlignment="Right"
+						VerticalAlignment="Top"
+						WindowChrome.IsHitTestVisibleInChrome="True">
+				<metro:SystemButtons />
+			</StackPanel>
+			<TextBlock Text="{Binding Title}"
+					   FontFamily="Segoe UI Light, Meiryo UI"
+					   FontSize="18"
+					   Margin="12,8" />
+		</DockPanel>
+		<!-- #endregion -->
+
+		<TabControl Style="{DynamicResource VerticalTabControlStyleKey}">
+			<TabControl.Resources>
+				<Style TargetType="{x:Type TextBlock}">
+					<Setter Property="Foreground"
+							Value="{DynamicResource ForegroundBrushKey}" />
+					<Setter Property="VerticalAlignment"
+							Value="Center" />
+					<Setter Property="Margin"
+							Value="0,2" />
+				</Style>
+				<Style x:Key="HeaderStyleKey"
+					   TargetType="{x:Type TextBlock}">
+					<Setter Property="Foreground"
+							Value="{DynamicResource AccentBrushKey}" />
+					<Setter Property="FontFamily"
+							Value="Segoe UI Light, Meiryo UI" />
+					<Setter Property="FontSize"
+							Value="18" />
+					<Setter Property="Margin"
+							Value="0,8" />
+				</Style>
+				<Style x:Key="TabitemStyleKey"
+					   TargetType="{x:Type TextBlock}"
+					   BasedOn="{StaticResource VerticalTabHeaderTextStyleKey}">
+					<Setter Property="FontFamily"
+							Value="Segoe UI Light, Meiryo UI" />
+					<Setter Property="FontSize"
+							Value="16" />
+				</Style>
+			</TabControl.Resources>
+
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="General"
+							   Style="{DynamicResource TabitemStyleKey}" />
+				</TabItem.Header>
+
+				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+							  VerticalScrollBarVisibility="Auto">
+					<StackPanel Margin="16,0,16,16">
+						<TextBlock Text="Desktop switching"
+								   Style="{DynamicResource HeaderStyleKey}"
+								   Margin="0,0,0,8" />
+						<StackPanel Margin="8,0,0,0">
+							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=LoopDesktop.Value, Mode=TwoWay}">
+								<TextBlock Text="Loop virtual desktops" />
+							</CheckBox>
+							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=OverrideWindowsDefaultKeyCombination.Value, Mode=TwoWay}">
+								<TextBlock Text="Override OS default key combination (Ctrl+Win+Left and Right)" />
+							</CheckBox>
+						</StackPanel>
+						<Border Height="8" />
+
+						<TextBlock Text="Notification"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<StackPanel Margin="8,0,0,0">
+							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}">
+								<TextBlock>
+									<Run Text="Display a notification when switched virtual desktop" />
+								</TextBlock>
+							</CheckBox>
+							<TextBlock Margin="21,0,0,0">
+								<Run Text="Time Duration for Notification Messages:" />
+								<InlineUIContainer>
+									<TextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationDuration.Value, Mode=TwoWay}"
+											 Width="60"
+											 Margin="2,5,2,-4"
+											 IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}" />
+								</InlineUIContainer>
+								<Run Text="ms" />
+							</TextBlock>
+						</StackPanel>
+						<Border Height="8" />
+
+						<TextBlock Text="Background"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<StackPanel Margin="8,0,0,0">
+							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}">
+								<TextBlock Text="Change the background for each desktop." />
+							</CheckBox>
+							<TextBlock Margin="21,0,0,0">
+								<Run Text="Source image folder:" />
+								<InlineUIContainer>
+									<TextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopBackgroundFolderPath.Value, Mode=TwoWay}"
+											 Width="300"
+											 Margin="2,5,2,-4"
+											 IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}" />
+								</InlineUIContainer>
+							</TextBlock>
+						</StackPanel>
+						<Border Height="8" />
+
+						<!--<TextBlock Text="Startup"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<StackPanel Margin="8,0,0,0">
+							<CheckBox IsChecked="{Binding HasStartupLink, Mode=TwoWay}">
+								<TextBlock Text="Automaticaly start at logon" />
+							</CheckBox>
+						</StackPanel>-->
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="Shortcut key"
+							   Style="{DynamicResource TabitemStyleKey}" />
+				</TabItem.Header>
+
+				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+							  VerticalScrollBarVisibility="Auto">
+					<StackPanel Margin="16,0,16,16"
+								Grid.IsSharedSizeScope="True">
+						<TextBlock Text="Move active window to adjacent desktop"
+								   Style="{DynamicResource HeaderStyleKey}"
+								   Margin="0,0,0,8" />
+						<Grid Margin="8,0,0,0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"
+												  SharedSizeGroup="KeyHeader" />
+								<ColumnDefinition Width="8" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<UniformGrid Columns="1">
+								<TextBlock Text="Left:" />
+								<TextBlock Text="Left (Switch):" />
+								<TextBlock Text="Right:" />
+								<TextBlock Text="Right (Switch):" />
+							</UniformGrid>
+							<UniformGrid Grid.Column="2"
+										 Columns="1">
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveLeft.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveLeftAndSwitch.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveRight.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveRightAndSwitch.Value, Mode=TwoWay}" />
+							</UniformGrid>
+						</Grid>
+						<Border Height="8" />
+
+						<TextBlock Text="Move active window to created new desktop"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<Grid Margin="8,0,0,0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"
+												  SharedSizeGroup="KeyHeader" />
+								<ColumnDefinition Width="8" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<UniformGrid Columns="1">
+								<TextBlock Text="Create only" />
+								<TextBlock Text="Move:" />
+								<TextBlock Text="Move (Switch):" />
+							</UniformGrid>
+							<UniformGrid Grid.Column="2"
+										 Columns="1">
+								<TextBlock Text="Ctrl + Win + D (provided by Windows)" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveNew.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveNewAndSwitch.Value, Mode=TwoWay}" />
+							</UniformGrid>
+						</Grid>
+						<Border Height="8" />
+
+						<TextBlock Text="Pin window to all desktops"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<Grid Margin="8,0,0,0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"
+												  SharedSizeGroup="KeyHeader" />
+								<ColumnDefinition Width="8" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<UniformGrid Columns="1">
+								<TextBlock Text="Pin window:" />
+								<TextBlock Text="Unpin window:" />
+								<TextBlock Text="Pin/Unpin toggle:" />
+							</UniformGrid>
+							<UniformGrid Grid.Column="2"
+										 Columns="1">
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=Pin.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=Unpin.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=TogglePin.Value, Mode=TwoWay}" />
+							</UniformGrid>
+						</Grid>
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="Version"
+							   Style="{DynamicResource TabitemStyleKey}" />
+				</TabItem.Header>
+
+				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+							  VerticalScrollBarVisibility="Auto">
+					<StackPanel Margin="16,0,16,16"
+								Grid.IsSharedSizeScope="True">
+						<TextBlock Text="{x:Static properties:ProductInfo.Title}"
+								   Foreground="{DynamicResource ActiveForegroundBrushKey}"
+								   FontFamily="Segoe UI Light, Meiryo UI"
+								   FontSize="32"
+								   Margin="0,-8,0,2" />
+						<TextBlock Foreground="{DynamicResource ActiveForegroundBrushKey}"
+								   FontFamily="Segoe UI Light, Meiryo UI"
+								   FontSize="20"
+								   Margin="1,6">
+							<Run Text="{x:Static properties:ProductInfo.Description}" />
+							<LineBreak />
+							<Run Text="version" />
+							<Run Text="{x:Static properties:ProductInfo.VersionString}" />
+						</TextBlock>
+
+						<TextBlock Foreground="{DynamicResource ForegroundBrushKey}"
+								   FontFamily="Segoe UI, Meiryo UI"
+								   Margin="2,6">
+							<Run Text="Source code:" />
+							<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn">
+								<Run Text="https://github.com/Grabacr07/SylphyHorn" />
+							</metro2:HyperlinkEx>
+
+							<LineBreak />
+
+							<Run Text="Developer:" />
+							<metro2:HyperlinkEx Uri="https://twitter.com/Grabacr07">
+								<Run Text="@Grabacr07" />
+							</metro2:HyperlinkEx>
+							<metro2:HyperlinkEx Uri="https://twitter.com/tmyt">
+								<Run Text="@tmyt" />
+							</metro2:HyperlinkEx>
+						</TextBlock>
+
+
+						<metro:BindableTextBlock TextSource="{Binding Libraries}"
+												 TextWrapping="Wrap"
+												 Margin="1,6">
+							<metro:BindableTextBlock.TextTemplates>
+								<DataTemplate DataType="{x:Type bindings:HyperlinkViewModel}">
+									<metro:InlineHolder>
+										<metro2:HyperlinkEx Uri="{Binding Uri}">
+											<Run Text="{Binding Text, Mode=OneWay}" />
+										</metro2:HyperlinkEx>
+									</metro:InlineHolder>
+								</DataTemplate>
+								<DataTemplate DataType="{x:Type bindings:BindableTextViewModel}">
+									<metro:InlineHolder>
+										<Run Text="{Binding Text, Mode=OneWay}"
+											 Foreground="{DynamicResource ActiveForegroundBrushKey}" />
+									</metro:InlineHolder>
+								</DataTemplate>
+							</metro:BindableTextBlock.TextTemplates>
+						</metro:BindableTextBlock>
+
+						<TextBlock Foreground="{DynamicResource ForegroundBrushKey}"
+								   FontFamily="Segoe UI, Meiryo UI"
+								   Margin="2,6">
+
+							<Run Text="{Binding Source={x:Static properties:ProductInfo.Copyright}, Mode=OneWay}" />
+							<LineBreak />
+							<Run Text="{Binding Source={x:Static properties:ProductInfo.Product}, Mode=OneWay}" />
+							<Run Text="is" />
+							<Run Text="OSS"
+								 ToolTip="Open Source Software" />
+							<Run Text="released under" />
+							<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn/blob/master/LICENSE">
+								<Run Text="The MIT License." />
+							</metro2:HyperlinkEx>
+						</TextBlock>
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
+		</TabControl>
+	</DockPanel>
+</metro:MetroWindow>

@@ -9,49 +9,44 @@ using MetroRadiance.UI;
 using MetroTrilithon.Lifetime;
 using MetroTrilithon.Linq;
 using StatefulModel;
-using SylphyHorn.Properties;
 using SylphyHorn.Serialization;
 using SylphyHorn.Services;
-using SylphyHorn.ViewModels;
-using SylphyHorn.Views;
 using VDMHelperCLR.Common;
 using WindowsDesktop;
+using SylphyHorn.Interop;
+using SylphyHorn.UI;
+using SylphyHorn.UI.Bindings;
 using MessageBox = System.Windows.MessageBox;
 
 namespace SylphyHorn
 {
 	sealed partial class Application : IDisposableHolder
 	{
-		private const string CanOpenSettingsArg = "-s";
-		private const string RestartedArg = "-restarted";
-
-		private readonly MultipleDisposable _compositeDisposable = new MultipleDisposable();
-		private System.Windows.Forms.NotifyIcon _notifyIcon;
-
-		internal IVdmHelper VdmHelper { get; private set; }
-
-		internal HookService HookService { get; private set; }
-
-		internal UwpInteropService InteropService { get; private set; }
-
-		internal static Dictionary<string, string> CommandLineArgs { get; private set; }
+		public static CommandLineArgs Args { get; private set; }
 
 		static Application()
 		{
 			AppDomain.CurrentDomain.UnhandledException += (sender, args) => ReportException(sender, args.ExceptionObject as Exception);
 		}
 
+		private readonly MultipleDisposable _compositeDisposable = new MultipleDisposable();
+
+		internal IVdmHelper VdmHelper { get; private set; }
+		internal HookService HookService { get; private set; }
+		internal UwpInteropService InteropService { get; private set; }
+
 		protected override void OnStartup(StartupEventArgs e)
 		{
-			// -Key (Value = null) or -Key=Value
-			CommandLineArgs = e.Args
-				.Select(x => x.Split(new[] { '=', }, 2))
-				.GroupBy(xs => xs[0], (k, ys) => ys.Last()) // 重複の場合は後ろの引数を優先
-				.ToDictionary(xs => xs[0], xs => xs.Length == 1 ? null : xs[1], StringComparer.OrdinalIgnoreCase);
+			Args = new CommandLineArgs(e.Args);
+
+			if (Args.Setup)
+			{
+				SetupShortcut();
+			}
 
 #if !DEBUG
 			var appInstance = new MetroTrilithon.Desktop.ApplicationInstance().AddTo(this);
-			if (appInstance.IsFirst || CommandLineArgs.ContainsKey(RestartedArg))
+			if (appInstance.IsFirst || Args.Restarted.HasValue)
 #endif
 			{
 				if (VirtualDesktop.IsSupported)
@@ -63,10 +58,6 @@ namespace SylphyHorn
 						args.Handled = true;
 					};
 
-					//var pinnedapps = WindowsDesktop.Interop.VirtualDesktopInteropHelper.GetVirtualDesktopPinnedApps();
-					//Debug.WriteLine($"IsPinnedWindow: {pinnedapps.IsPinnedWindow(MetroRadiance.Interop.Win32.User32.GetForegroundWindow())}");
-					//Debug.WriteLine($"IsPinnedApp   : {pinnedapps.IsPinnedApp(MetroRadiance.Interop.Win32.User32.GetForegroundWindow())}");
-
 					DispatcherHelper.UIDispatcher = this.Dispatcher;
 
 					LocalSettingsProvider.Instance.LoadAsync().Wait();
@@ -74,7 +65,7 @@ namespace SylphyHorn
 
 					ThemeService.Current.Register(this, Theme.Windows, Accent.Windows);
 
-					this.ShowNotifyIcon(CommandLineArgs.ContainsKey(CanOpenSettingsArg));
+					this.ShowTaskTrayIcon();
 
 					this.VdmHelper = VdmHelperFactory.CreateInstance().AddTo(this);
 					this.VdmHelper.Init();
@@ -108,6 +99,7 @@ namespace SylphyHorn
 
 			((IDisposable)this).Dispose();
 		}
+
 
 		private void RegisterActions()
 		{
@@ -164,6 +156,39 @@ namespace SylphyHorn
 				.AddTo(this);
 		}
 
+		private void ShowTaskTrayIcon()
+		{
+			const string iconUri = "pack://application:,,,/SylphyHorn;Component/Assets/tasktray.ico";
+
+			Uri uri;
+			if (!Uri.TryCreate(iconUri, UriKind.Absolute, out uri)) return;
+
+			var icon = IconHelper.GetIconFromResource(uri);
+			var menus = new[]
+			{
+				new TaskTrayIconItem("&Settings (S)", () => this.ShowSettings(), () => Args.CanSettings),
+				new TaskTrayIconItem("E&xit (X)", () => this.Shutdown()),
+			};
+
+			var taskTrayIcon = new TaskTrayIcon(icon, menus);
+			taskTrayIcon.Show();
+			taskTrayIcon.AddTo(this);
+		}
+
+		private void ShowSettings()
+		{
+			using (this.HookService.Suspend())
+			{
+				var window = new SettingsWindow { DataContext = new SettingsWindowViewModel(this.HookService), };
+				window.ShowDialog();
+			}
+		}
+
+		private static void SetupShortcut()
+		{
+
+		}
+
 		private static void ReportException(object sender, Exception exception)
 		{
 			#region const
@@ -177,8 +202,6 @@ args = {2}
 			const string path = "error.log";
 
 			#endregion
-
-			// ToDo: 例外ダイアログ
 
 			try
 			{
@@ -197,62 +220,29 @@ args = {2}
 				Debug.WriteLine(ex);
 			}
 
-			// 3 分以上生きてたら安定稼働と見做して、とりあえず再起動させる
-			if (CommandLineArgs != null)
+			if (Args != null)
 			{
-				int restartNum;
-				if (!int.TryParse(CommandLineArgs.ContainsKey(RestartedArg) ? CommandLineArgs[RestartedArg] : null, out restartNum)) restartNum = 0;
+
+				var restartNum = Args.Restarted ?? 0;
 				if ((DateTime.Now - Process.GetCurrentProcess().StartTime).TotalMinutes > 3)
 				{
+					// 3 分以上生きてたら安定稼働と見做して、とりあえず再起動させる
 					Process.Start(
 						Environment.GetCommandLineArgs()[0],
-						CommandLineArgs
-							.Where(x => x.Key != RestartedArg)
-							.Select(x => x.Value == null ? x.Key : $"{x.Key}={x.Value}")
-							.JoinString(" ") + $" {RestartedArg}={++restartNum}");
+						Args.Options
+							.Where(x => x.Key != Args.GetKey(nameof(CommandLineArgs.Restarted)))
+							.Concat(EnumerableEx.Return(Args.CreateOption(nameof(CommandLineArgs.Restarted), (restartNum + 1).ToString())))
+							.Select(x => x.ToString())
+							.JoinString(" "));
+				}
+				else
+				{
+					// ToDo: 例外ダイアログ
 				}
 			}
-			
+
 			Current.Shutdown();
 		}
-
-
-		private void ShowNotifyIcon(bool canOpenSettings)
-		{
-			const string iconUri = "pack://application:,,,/SylphyHorn;Component/Assets/tasktray.ico";
-
-			Uri uri;
-			if (!Uri.TryCreate(iconUri, UriKind.Absolute, out uri)) return;
-
-			var streamResourceInfo = GetResourceStream(uri);
-			if (streamResourceInfo == null) return;
-
-			using (var stream = streamResourceInfo.Stream)
-			{
-				var menus = new List<System.Windows.Forms.MenuItem>();
-				if (canOpenSettings) menus.Add(new System.Windows.Forms.MenuItem("&Settings (S)", (sender, args) => this.ShowSettings()));
-				menus.Add(new System.Windows.Forms.MenuItem("E&xit (X)", (sender, args) => this.Shutdown()));
-
-				this._notifyIcon = new System.Windows.Forms.NotifyIcon
-				{
-					Text = ProductInfo.Title,
-					Icon = new System.Drawing.Icon(stream, new System.Drawing.Size(16, 16)),
-					Visible = true,
-					ContextMenu = new System.Windows.Forms.ContextMenu(menus.ToArray()),
-				};
-				this._notifyIcon.AddTo(this);
-			}
-		}
-
-		private void ShowSettings()
-		{
-			using (this.HookService.Suspend())
-			{
-				var window = new SettingsWindow { DataContext = new SettingsWindowViewModel(this.HookService), };
-				window.ShowDialog();
-			}
-		}
-
 
 		#region IDisposable members
 

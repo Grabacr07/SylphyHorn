@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using MetroTrilithon.Lifetime;
 using SylphyHorn.Properties;
 using SylphyHorn.Serialization;
-using SylphyHorn.ViewModels;
-using SylphyHorn.Views;
 using WindowsDesktop;
+using SylphyHorn.UI;
+using SylphyHorn.UI.Bindings;
 
 namespace SylphyHorn.Services
 {
