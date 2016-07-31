@@ -77,7 +77,7 @@ namespace SylphyHorn.Serialization
 
 		protected override Task SaveAsyncCore(IDictionary<string, object> dic)
 		{
-			if (!this.Available || !this._targetFile.Exists)
+			if (!this.Available)
 			{
 				return Task.FromResult<IDictionary<string, object>>(null);
 			}

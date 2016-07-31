@@ -22,8 +22,11 @@ namespace SylphyHorn.Services
 
 		private static void VirtualDesktopOnCurrentChanged(object sender, VirtualDesktopChangedEventArgs e)
 		{
-			VisualHelper.InvokeOnUIDispatcher(() =>
+			Task.Run(() => 
+			//VisualHelper.InvokeOnUIDispatcher(() =>
 			{
+				if (!Settings.General.ChangeBackgroundEachDesktop) return;
+
 				var desktops = VirtualDesktop.GetDesktops();
 				var newIndex = Array.IndexOf(desktops, e.NewDesktop) + 1;
 
