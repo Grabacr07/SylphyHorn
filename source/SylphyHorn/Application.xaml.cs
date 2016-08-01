@@ -11,7 +11,6 @@ using MetroTrilithon.Linq;
 using StatefulModel;
 using SylphyHorn.Serialization;
 using SylphyHorn.Services;
-using VDMHelperCLR.Common;
 
 namespace SylphyHorn
 {
@@ -26,7 +25,6 @@ namespace SylphyHorn
 
 		private readonly MultipleDisposable _compositeDisposable = new MultipleDisposable();
 
-		internal IVdmHelper VdmHelper { get; private set; }
 		internal HookService HookService { get; private set; }
 		internal UwpInteropService InteropService { get; private set; }
 
@@ -60,9 +58,7 @@ namespace SylphyHorn
 
 					ThemeService.Current.Register(this, Theme.Windows, Accent.Windows);
 
-					this.VdmHelper = VdmHelperFactory.CreateInstance().AddTo(this);
-					this.VdmHelper.Init();
-					this.HookService = new HookService(this.VdmHelper).AddTo(this);
+					this.HookService = new HookService().AddTo(this);
 					this.InteropService = new UwpInteropService(this.HookService, Settings.General).AddTo(this);
 
 					var preparation = new ApplicationPreparation(this);
@@ -92,13 +88,11 @@ namespace SylphyHorn
 		protected override void OnExit(ExitEventArgs e)
 		{
 			base.OnExit(e);
-
 			((IDisposable)this).Dispose();
 		}
 
 		private static void SetupShortcut()
 		{
-
 		}
 
 		private static void ReportException(object sender, Exception exception)

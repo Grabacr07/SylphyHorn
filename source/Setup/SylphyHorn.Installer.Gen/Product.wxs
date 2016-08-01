@@ -266,46 +266,6 @@
               Source="$(var.SourceDir)\System.Windows.Interactivity.dll"
               KeyPath='yes' />
       </Component>
-      <Component Id="VDMHelper32.dll"
-                 Guid="*"
-                 DiskId='1'>
-        <File Id="VDMHelper32.dll"
-              Name="VDMHelper32.dll"
-              Source="$(var.SourceDir)\VDMHelper32.dll"
-              KeyPath='yes' />
-      </Component>
-      <Component Id="VDMHelper64.dll"
-                 Guid="*"
-                 DiskId='1'>
-        <File Id="VDMHelper64.dll"
-              Name="VDMHelper64.dll"
-              Source="$(var.SourceDir)\VDMHelper64.dll"
-              KeyPath='yes' />
-      </Component>
-      <Component Id="VDMHelperCLR.Common.dll"
-                 Guid="*"
-                 DiskId='1'>
-        <File Id="VDMHelperCLR.Common.dll"
-              Name="VDMHelperCLR.Common.dll"
-              Source="$(var.SourceDir)\VDMHelperCLR.Common.dll"
-              KeyPath='yes' />
-      </Component>
-      <Component Id="VDMHelperCLR32.dll"
-                 Guid="*"
-                 DiskId='1'>
-        <File Id="VDMHelperCLR32.dll"
-              Name="VDMHelperCLR32.dll"
-              Source="$(var.SourceDir)\VDMHelperCLR32.dll"
-              KeyPath='yes' />
-      </Component>
-      <Component Id="VDMHelperCLR64.dll"
-                 Guid="*"
-                 DiskId='1'>
-        <File Id="VDMHelperCLR64.dll"
-              Name="VDMHelperCLR64.dll"
-              Source="$(var.SourceDir)\VDMHelperCLR64.dll"
-              KeyPath='yes' />
-      </Component>
       <Component Id="VirtualDesktop.dll"
                  Guid="*"
                  DiskId='1'>

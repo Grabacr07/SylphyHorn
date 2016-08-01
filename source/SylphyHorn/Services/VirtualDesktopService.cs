@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Media;
-using WindowsDesktop;
 using SylphyHorn.Serialization;
-using VDMHelperCLR.Common;
+using WindowsDesktop;
 
 namespace SylphyHorn.Services
 {
@@ -29,7 +28,7 @@ namespace SylphyHorn.Services
 				: current.GetRight();
 		}
 
-		public static VirtualDesktop MoveToLeft(this IntPtr hWnd, IVdmHelper helper)
+		public static VirtualDesktop MoveToLeft(this IntPtr hWnd)
 		{
 			var current = VirtualDesktop.FromHwnd(hWnd);
 			if (current != null)
@@ -45,11 +44,8 @@ namespace SylphyHorn.Services
 				}
 				if (left != null)
 				{
-					if (VirtualDesktopHelper.MoveToDesktop(hWnd, left)
-						|| helper.MoveWindowToDesktop(hWnd, left.Id))
-					{
-						return left;
-					}
+					VirtualDesktopHelper.MoveToDesktop(hWnd, left);
+					return left;
 				}
 			}
 
@@ -57,7 +53,7 @@ namespace SylphyHorn.Services
 			return null;
 		}
 
-		public static VirtualDesktop MoveToRight(this IntPtr hWnd, IVdmHelper helper)
+		public static VirtualDesktop MoveToRight(this IntPtr hWnd)
 		{
 			var current = VirtualDesktop.FromHwnd(hWnd);
 			if (current != null)
@@ -73,11 +69,8 @@ namespace SylphyHorn.Services
 				}
 				if (right != null)
 				{
-					if (VirtualDesktopHelper.MoveToDesktop(hWnd, right)
-						|| helper.MoveWindowToDesktop(hWnd, right.Id))
-					{
-						return right;
-					}
+					VirtualDesktopHelper.MoveToDesktop(hWnd, right);
+					return right;
 				}
 			}
 
@@ -85,16 +78,13 @@ namespace SylphyHorn.Services
 			return null;
 		}
 
-		public static VirtualDesktop MoveToNew(this IntPtr hWnd, IVdmHelper helper)
+		public static VirtualDesktop MoveToNew(this IntPtr hWnd)
 		{
 			var newone = VirtualDesktop.Create();
 			if (newone != null)
 			{
-				if (VirtualDesktopHelper.MoveToDesktop(hWnd, newone)
-					|| helper.MoveWindowToDesktop(hWnd, newone.Id))
-				{
-					return newone;
-				}
+				VirtualDesktopHelper.MoveToDesktop(hWnd, newone);
+				return newone;
 			}
 
 			SystemSounds.Asterisk.Play();

@@ -24,27 +24,27 @@ namespace SylphyHorn
 			var settings = Settings.ShortcutKey;
 
 			this._application.HookService
-				.Register(settings.MoveLeft.ToShortcutKey(), hWnd => hWnd.MoveToLeft(this._application.VdmHelper))
+				.Register(settings.MoveLeft.ToShortcutKey(), hWnd => hWnd.MoveToLeft())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.MoveLeftAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToLeft(this._application.VdmHelper)?.Switch())
+				.Register(settings.MoveLeftAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToLeft()?.Switch())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.MoveRight.ToShortcutKey(), hWnd => hWnd.MoveToRight(this._application.VdmHelper))
+				.Register(settings.MoveRight.ToShortcutKey(), hWnd => hWnd.MoveToRight())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.MoveRightAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToRight(this._application.VdmHelper)?.Switch())
+				.Register(settings.MoveRightAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToRight()?.Switch())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.MoveNew.ToShortcutKey(), hWnd => hWnd.MoveToNew(this._application.VdmHelper))
+				.Register(settings.MoveNew.ToShortcutKey(), hWnd => hWnd.MoveToNew())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.MoveNewAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToNew(this._application.VdmHelper)?.Switch())
+				.Register(settings.MoveNewAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToNew()?.Switch())
 				.AddTo(this._application);
 
 			this._application.HookService

@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
@@ -17,7 +16,7 @@ namespace SylphyHorn.Services
 {
 	internal static class InteropHelper
 	{
-		private const string consoleWindowClass = "ConsoleWindowClass";
+		private const string _consoleWindowClass = "ConsoleWindowClass";
 
 		public static bool IsCurrentProcess(IntPtr hWnd)
 		{
@@ -33,7 +32,7 @@ namespace SylphyHorn.Services
 		{
 			var className = new StringBuilder(256);
 			NativeMethods.GetClassName(hWnd, className, className.Capacity);
-			return className.ToString() == consoleWindowClass;
+			return className.ToString() == _consoleWindowClass;
 		}
 
 		public static IntPtr GetForegroundWindowEx()

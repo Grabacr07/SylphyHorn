@@ -268,37 +268,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\assemblies\VDMHelperCLR32.dll">
-      <Link>VDMHelperCLR32.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\assemblies\VDMHelperCLR64.dll">
-      <Link>VDMHelperCLR64.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\assemblies\VDMHelper32.dll">
-      <Link>VDMHelper32.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\assemblies\VDMHelper64.dll">
-      <Link>VDMHelper64.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\assemblies\VDMHelperCLR.Common.dll">
-      <Link>VDMHelperCLR.Common.dll</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\assemblies\InjectDll32.exe">
-      <Link>InjectDll32.exe</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="assets\tasktray.ico" />
   </ItemGroup>
   <ItemGroup>

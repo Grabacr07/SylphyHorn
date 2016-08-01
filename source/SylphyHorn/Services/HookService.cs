@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MetroTrilithon.Lifetime;
-using VDMHelperCLR.Common;
 
 namespace SylphyHorn.Services
 {
@@ -11,14 +10,12 @@ namespace SylphyHorn.Services
 	{
 		private readonly ShortcutKeyDetector _detector = new ShortcutKeyDetector();
 		private readonly List<HookAction> _hookActions = new List<HookAction>();
-		private readonly IVdmHelper _helper;
 		private int _suspendRequestCount;
 
-		public HookService(IVdmHelper helper)
+		public HookService()
 		{
 			this._detector.Pressed += this.KeyHookOnPressed;
 			this._detector.Start();
-			this._helper = helper;
 		}
 
 		public IDisposable Suspend()
@@ -64,7 +61,6 @@ namespace SylphyHorn.Services
 		public void Dispose()
 		{
 			this._detector.Stop();
-			this._helper?.Dispose();
 		}
 
 		private class HookAction
