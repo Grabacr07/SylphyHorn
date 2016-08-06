@@ -93,32 +93,49 @@ namespace SylphyHorn.Services
 
 		public static void Pin(this IntPtr hWnd)
 		{
-			VirtualDesktopHelper.PinWindow(hWnd);
+			VirtualDesktop.PinWindow(hWnd);
 		}
 
 		public static void Unpin(this IntPtr hWnd)
 		{
-			VirtualDesktopHelper.UnpinWindow(hWnd);
+			VirtualDesktop.UnpinWindow(hWnd);
 		}
 
 		public static void TogglePin(this IntPtr hWnd)
 		{
-			VirtualDesktopHelper.TogglePinWindow(hWnd);
+			if (VirtualDesktop.IsPinnedWindow(hWnd))
+			{
+				VirtualDesktop.UnpinWindow(hWnd);
+			}
+			else
+			{
+				VirtualDesktop.PinWindow(hWnd);
+			}
 		}
 
 		public static void PinApp(this IntPtr hWnd)
 		{
-			VirtualDesktopHelper.PinApplication(hWnd);
+			var appId = ApplicationHelper.GetAppId(hWnd);
+			VirtualDesktop.PinApplication(appId);
 		}
 
 		public static void UnpinApp(this IntPtr hWnd)
 		{
-			VirtualDesktopHelper.UnpinApplication(hWnd);
+			var appId = ApplicationHelper.GetAppId(hWnd);
+			VirtualDesktop.UnpinApplication(appId);
 		}
 
 		public static void TogglePinApp(this IntPtr hWnd)
 		{
-			VirtualDesktopHelper.TogglePinApplication(hWnd);
+			var appId = ApplicationHelper.GetAppId(hWnd);
+			if (VirtualDesktop.IsPinnedApplication(appId))
+			{
+				VirtualDesktop.UnpinApplication(appId);
+			}
+			else
+			{
+				VirtualDesktop.PinApplication(appId);
+			}
 		}
 	}
 }
