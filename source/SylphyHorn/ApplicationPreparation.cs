@@ -72,6 +72,18 @@ namespace SylphyHorn
 			this._application.HookService
 				.Register(settings.TogglePin.ToShortcutKey(), hWnd => hWnd.TogglePin())
 				.AddTo(this._application);
+
+			this._application.HookService
+				.Register(settings.PinApp.ToShortcutKey(), hWnd => hWnd.PinApp())
+				.AddTo(this._application);
+
+			this._application.HookService
+				.Register(settings.UnpinApp.ToShortcutKey(), hWnd => hWnd.UnpinApp())
+				.AddTo(this._application);
+
+			this._application.HookService
+				.Register(settings.TogglePinApp.ToShortcutKey(), hWnd => hWnd.TogglePinApp())
+				.AddTo(this._application);
 		}
 
 

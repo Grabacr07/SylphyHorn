@@ -258,6 +258,29 @@
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=TogglePin.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
+						<Border Height="8" />
+
+						<TextBlock Text="Pin window from app to all desktops"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<Grid Margin="8,0,0,0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"
+												  SharedSizeGroup="KeyHeader" />
+								<ColumnDefinition Width="8" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<UniformGrid Columns="1">
+								<TextBlock Text="Pin app:" />
+								<TextBlock Text="Unpin app:" />
+								<TextBlock Text="Pin/Unpin app:" />
+							</UniformGrid>
+							<UniformGrid Grid.Column="2"
+										 Columns="1">
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=PinApp.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=UnpinApp.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=TogglePinApp.Value, Mode=TwoWay}" />
+							</UniformGrid>
+						</Grid>
 					</StackPanel>
 				</ScrollViewer>
 			</TabItem>

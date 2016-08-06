@@ -37,6 +37,11 @@ namespace SylphyHorn.Serialization
 
 		public ShortcutkeyProperty TogglePin => this.Cache(key => new ShortcutkeyProperty(key, this._provider, TogglePinDefaultValue));
 
+		public ShortcutkeyProperty PinApp => this.Cache(key => new ShortcutkeyProperty(key, this._provider));
+
+		public ShortcutkeyProperty UnpinApp => this.Cache(key => new ShortcutkeyProperty(key, this._provider));
+
+		public ShortcutkeyProperty TogglePinApp => this.Cache(key => new ShortcutkeyProperty(key, this._provider));
 
 		#region default values
 

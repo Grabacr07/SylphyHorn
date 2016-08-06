@@ -105,5 +105,20 @@ namespace SylphyHorn.Services
 		{
 			VirtualDesktopHelper.TogglePinWindow(hWnd);
 		}
+
+		public static void PinApp(this IntPtr hWnd)
+		{
+			VirtualDesktopHelper.PinApplication(hWnd);
+		}
+
+		public static void UnpinApp(this IntPtr hWnd)
+		{
+			VirtualDesktopHelper.UnpinApplication(hWnd);
+		}
+
+		public static void TogglePinApp(this IntPtr hWnd)
+		{
+			VirtualDesktopHelper.TogglePinApplication(hWnd);
+		}
 	}
 }
