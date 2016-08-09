@@ -68,6 +68,14 @@ namespace SylphyHorn
 					NotificationService.Instance.AddTo(this);
 					WallpaperService.Instance.AddTo(this);
 
+#if !DEBUG
+					appInstance.CommandLineArgsReceived += (sender, message) =>
+					{
+						var args = new CommandLineArgs(message.CommandLineArgs);
+						if (args.Setup) SetupShortcut();
+					};
+#endif
+
 					base.OnStartup(e);
 				}
 				else
