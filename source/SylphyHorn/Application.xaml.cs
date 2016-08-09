@@ -93,6 +93,11 @@ namespace SylphyHorn
 
 		private static void SetupShortcut()
 		{
+			var startup = new Startup();
+			if (!startup.IsExists)
+			{
+				startup.Create();
+			}
 		}
 
 		private static void ReportException(object sender, Exception exception)
