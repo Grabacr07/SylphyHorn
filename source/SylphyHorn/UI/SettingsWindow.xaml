@@ -167,13 +167,13 @@
 						</StackPanel>
 						<Border Height="8" />
 
-						<!--<TextBlock Text="Startup"
+						<TextBlock Text="Startup"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<StackPanel Margin="8,0,0,0">
 							<CheckBox IsChecked="{Binding HasStartupLink, Mode=TwoWay}">
 								<TextBlock Text="Automaticaly start at logon" />
 							</CheckBox>
-						</StackPanel>-->
+						</StackPanel>
 					</StackPanel>
 				</ScrollViewer>
 			</TabItem>
