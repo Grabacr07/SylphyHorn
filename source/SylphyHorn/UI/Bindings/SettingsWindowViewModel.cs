@@ -13,6 +13,7 @@ namespace SylphyHorn.UI.Bindings
 	public class SettingsWindowViewModel : WindowViewModel
 	{
 		private readonly HookService _hookService;
+		private readonly Startup _startup;
 
 		#region HasStartupLink property
 
@@ -25,17 +26,16 @@ namespace SylphyHorn.UI.Bindings
 			{
 				if (this._HasStartupLink != value)
 				{
-					this._HasStartupLink = value;
-
 					if (value)
 					{
-						ShellLinkHelper.CreateStartup();
+						this._startup.Create();
 					}
 					else
 					{
-						ShellLinkHelper.RemoveStartup();
+						this._startup.Remove();
 					}
 
+					this._HasStartupLink = this._startup.IsExists;
 					this.RaisePropertyChanged();
 				}
 			}
@@ -49,6 +49,7 @@ namespace SylphyHorn.UI.Bindings
 		{
 			this.Title = "Settings";
 			this._hookService = hookService;
+			this._startup = new Startup();
 
 			this.Libraries = ProductInfo.Libraries.Aggregate(
 				new List<BindableTextViewModel>(),
@@ -58,7 +59,7 @@ namespace SylphyHorn.UI.Bindings
 					list.Add(new HyperlinkViewModel { Text = lib.Name.Replace(' ', Convert.ToChar(160)), Uri = lib.Url });
 					return list;
 				});
-			this._HasStartupLink = ShellLinkHelper.ExistsStartup();
+			this._HasStartupLink = this._startup.IsExists;
 
 			Disposable.Create(() => LocalSettingsProvider.Instance.SaveAsync().Wait())
 				.AddTo(this);

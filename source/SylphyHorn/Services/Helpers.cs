@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using Livet;
 using MetroRadiance.Interop.Win32;
-using MetroTrilithon.Desktop;
 using SylphyHorn.Interop;
 
 namespace SylphyHorn.Services
@@ -48,53 +45,6 @@ namespace SylphyHorn.Services
 		public static void InvokeOnUIDispatcher(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
 		{
 			DispatcherHelper.UIDispatcher.BeginInvoke(action, priority);
-		}
-	}
-
-
-	internal static class ShellLinkHelper
-	{
-		private static string GetExecutingAssemblyFileNameWithoutExtension()
-		{
-			return Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
-		}
-
-		private static string GetStartupFileName(string name)
-		{
-			var dir = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-			return Path.Combine(dir, name + ".lnk");
-		}
-
-		public static void CreateStartup(string name)
-		{
-			ShellLink.Create(GetStartupFileName(name));
-		}
-
-		public static void CreateStartup()
-		{
-			CreateStartup(GetExecutingAssemblyFileNameWithoutExtension());
-		}
-
-		public static bool RemoveStartup(string name)
-		{
-			if (!ExistsStartup(name)) return false;
-			File.Delete(GetStartupFileName(name));
-			return true;
-		}
-
-		public static bool RemoveStartup()
-		{
-			return RemoveStartup(GetExecutingAssemblyFileNameWithoutExtension());
-		}
-
-		public static bool ExistsStartup(string name)
-		{
-			return File.Exists(GetStartupFileName(name));
-		}
-
-		public static bool ExistsStartup()
-		{
-			return ExistsStartup(GetExecutingAssemblyFileNameWithoutExtension());
 		}
 	}
 }

@@ -176,6 +176,7 @@
     <Compile Include="ApplicationPreparation.cs" />
     <Compile Include="CommandLineArgsBase.cs" />
     <Compile Include="Interop\IconHelper.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="UI\TaskTrayIcon.cs" />
     <Compile Include="Interop\SystemParametersInfo.cs" />
     <Compile Include="Services\Helpers.cs" />
