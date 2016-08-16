@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using MetroTrilithon.Lifetime;
 using SylphyHorn.Properties;
 using SylphyHorn.Serialization;
-using WindowsDesktop;
 using SylphyHorn.UI;
 using SylphyHorn.UI.Bindings;
+using WindowsDesktop;
 
 namespace SylphyHorn.Services
 {
@@ -21,6 +21,7 @@ namespace SylphyHorn.Services
 		private NotificationService()
 		{
 			VirtualDesktop.CurrentChanged += this.VirtualDesktopOnCurrentChanged;
+			VirtualDesktopService.WindowPinned += this.VirtualDesktopServiceOnWindowPinned;
 		}
 
 		private void VirtualDesktopOnCurrentChanged(object sender, VirtualDesktopChangedEventArgs e)
@@ -32,11 +33,19 @@ namespace SylphyHorn.Services
 				var desktops = VirtualDesktop.GetDesktops();
 				var newIndex = Array.IndexOf(desktops, e.NewDesktop) + 1;
 
-				this._notificationWindow.Disposable = ShowWindow(newIndex);
+				this._notificationWindow.Disposable = ShowDesktopWindow(newIndex);
 			});
 		}
 
-		private static IDisposable ShowWindow(int index)
+		private void VirtualDesktopServiceOnWindowPinned(object sender, WindowPinnedEventArgs e)
+		{
+			VisualHelper.InvokeOnUIDispatcher(() =>
+			{
+				this._notificationWindow.Disposable = ShowPinWindow(e.Target, e.PinOperation);
+			});
+		}
+
+		private static IDisposable ShowDesktopWindow(int index)
 		{
 			var vmodel = new NotificationWindowViewModel
 			{
@@ -45,7 +54,28 @@ namespace SylphyHorn.Services
 				Body = "Current Desktop: Desktop " + index,
 			};
 			var source = new CancellationTokenSource();
-			var window = new NotificationWindow
+			var window = new NotificationWindow()
+			{
+				DataContext = vmodel,
+			};
+			window.Show();
+
+			Task.Delay(TimeSpan.FromMilliseconds(Settings.General.NotificationDuration), source.Token)
+				.ContinueWith(_ => window.Close(), TaskScheduler.FromCurrentSynchronizationContext());
+
+			return Disposable.Create(() => source.Cancel());
+		}
+
+		private static IDisposable ShowPinWindow(IntPtr hWnd, PinOperations operation)
+		{
+			var vmodel = new NotificationWindowViewModel
+			{
+				Title = ProductInfo.Title,
+				Header = ProductInfo.Title,
+				Body = $"{(operation.HasFlag(PinOperations.Pin) ? "Pinned" : "Unpinned")} this {(operation.HasFlag(PinOperations.Window) ? "window" : "application")}",
+			};
+			var source = new CancellationTokenSource();
+			var window = new PinNotificationWindow(hWnd)
 			{
 				DataContext = vmodel,
 			};
@@ -60,6 +90,8 @@ namespace SylphyHorn.Services
 		public void Dispose()
 		{
 			VirtualDesktop.CurrentChanged -= this.VirtualDesktopOnCurrentChanged;
+			VirtualDesktopService.WindowPinned -= this.VirtualDesktopServiceOnWindowPinned;
+
 			this._notificationWindow.Dispose();
 		}
 	}

@@ -29,6 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -93,10 +94,6 @@
       <HintPath>..\packages\MetroRadiance.Chrome.2.2.0\lib\net46\MetroRadiance.Chrome.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MetroRadiance.Chrome.Externals, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MetroRadiance.Chrome.Externals.2.1.0\lib\net46\MetroRadiance.Chrome.Externals.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="MetroRadiance.Core, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroRadiance.Core.2.2.1\lib\net46\MetroRadiance.Core.dll</HintPath>
       <Private>True</Private>
@@ -155,10 +152,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="VDMHelperCLR.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\VDMHelper\Release\VDMHelperCLR.Common.dll</HintPath>
-    </Reference>
     <Reference Include="Windows.Foundation" />
     <Reference Include="Windows.System" />
     <Reference Include="WindowsBase" />
@@ -177,6 +170,9 @@
     <Compile Include="CommandLineArgsBase.cs" />
     <Compile Include="Interop\IconHelper.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="UI\PinNotificationWindow.xaml.cs">
+      <DependentUpon>PinNotificationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\TaskTrayIcon.cs" />
     <Compile Include="Interop\SystemParametersInfo.cs" />
     <Compile Include="Services\Helpers.cs" />
@@ -223,6 +219,10 @@
     </Compile>
     <Compile Include="Services\HookService.cs" />
     <Compile Include="Interop\NativeMethods.cs" />
+    <Page Include="UI\PinNotificationWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UI\PinMarker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -279,13 +279,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\MetroRadiance.Chrome.Externals.2.1.0\build\MetroRadiance.Chrome.Externals.targets" Condition="Exists('..\packages\MetroRadiance.Chrome.Externals.2.1.0\build\MetroRadiance.Chrome.Externals.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\MetroRadiance.Chrome.Externals.2.1.0\build\MetroRadiance.Chrome.Externals.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MetroRadiance.Chrome.Externals.2.1.0\build\MetroRadiance.Chrome.Externals.targets'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

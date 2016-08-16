@@ -90,7 +90,7 @@ namespace SylphyHorn.Serialization
 					Indent = true, // more readable!!!
 				};
 
-				using (var stream = this._targetFile.OpenWrite())
+				using (var stream = this._targetFile.Open(FileMode.Create))
 				using (var writer = XmlWriter.Create(stream, settings))
 				{
 					serializer.WriteObject(writer, dic);

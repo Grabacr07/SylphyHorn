@@ -63,62 +63,6 @@
   <Fragment>
     <ComponentGroup Id="SylphyHornComponents"
                     Directory="INSTALLDIR">
-      <Component Id="ChromeHook.InjectDll32.exe"
-                 Guid="*"
-                 DiskId='1'>
-        <File Id="ChromeHook.InjectDll32.exe"
-              Name="ChromeHook.InjectDll32.exe"
-              Source="$(var.SourceDir)\ChromeHook.InjectDll32.exe"
-              KeyPath='yes' />
-      </Component>
-      <Component Id="ChromeHook32.dll"
-                 Guid="*"
-                 DiskId='1'>
-        <File Id="ChromeHook32.dll"
-              Name="ChromeHook32.dll"
-              Source="$(var.SourceDir)\ChromeHook32.dll"
-              KeyPath='yes' />
-      </Component>
-      <Component Id="ChromeHook64.dll"
-                 Guid="*"
-                 DiskId='1'>
-        <File Id="ChromeHook64.dll"
-              Name="ChromeHook64.dll"
-              Source="$(var.SourceDir)\ChromeHook64.dll"
-              KeyPath='yes' />
-      </Component>
-      <Component Id="ChromeHookCLR32.dll"
-                 Guid="*"
-                 DiskId='1'>
-        <File Id="ChromeHookCLR32.dll"
-              Name="ChromeHookCLR32.dll"
-              Source="$(var.SourceDir)\ChromeHookCLR32.dll"
-              KeyPath='yes' />
-      </Component>
-      <Component Id="ChromeHookCLR64.dll"
-                 Guid="*"
-                 DiskId='1'>
-        <File Id="ChromeHookCLR64.dll"
-              Name="ChromeHookCLR64.dll"
-              Source="$(var.SourceDir)\ChromeHookCLR64.dll"
-              KeyPath='yes' />
-      </Component>
-      <Component Id="ChromeHookService.dll"
-                 Guid="*"
-                 DiskId='1'>
-        <File Id="ChromeHookService.dll"
-              Name="ChromeHookService.dll"
-              Source="$(var.SourceDir)\ChromeHookService.dll"
-              KeyPath='yes' />
-      </Component>
-      <Component Id="InjectDll32.exe"
-                 Guid="*"
-                 DiskId='1'>
-        <File Id="InjectDll32.exe"
-              Name="InjectDll32.exe"
-              Source="$(var.SourceDir)\InjectDll32.exe"
-              KeyPath='yes' />
-      </Component>
       <Component Id="Livet.dll"
                  Guid="*"
                  DiskId='1'>

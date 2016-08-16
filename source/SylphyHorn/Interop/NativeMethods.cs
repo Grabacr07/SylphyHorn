@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using MetroRadiance.Interop.Win32;
 
 namespace SylphyHorn.Interop
 {
@@ -17,6 +18,9 @@ namespace SylphyHorn.Interop
 
 		[DllImport("user32.dll", SetLastError = true)]
 		public static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
+
+		[DllImport("user32.dll")]
+		public static extern bool GetWindowRect(IntPtr hWnd, out RECT rect);
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		public static extern int SystemParametersInfo(SystemParametersInfo uAction, int uParam, string lpvParam, SystemParametersInfoFlag fuWinIni);
