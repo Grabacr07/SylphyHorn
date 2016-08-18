@@ -37,8 +37,8 @@ namespace SylphyHorn.UI
 				var width = this.ActualWidth * dpi.ScaleX;
 				var height = this.ActualHeight * dpi.ScaleY;
 
-				this.Left = rect.Left + (targetWidth - width) / 2;
-				this.Top = rect.Top + (targetHeight - height) / 2;
+				this.Left = (rect.Left + (targetWidth - width) / 2) / dpi.ScaleX;
+				this.Top = (rect.Top + (targetHeight - height) / 2) / dpi.ScaleY;
 			}
 
 			base.OnSourceInitialized(e);
