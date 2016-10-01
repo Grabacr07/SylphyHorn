@@ -31,9 +31,6 @@
     </WixExtension>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Shared.wxi" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\SylphyHorn.Installer.Gen\Product.wxs">
       <Link>Product.wxs</Link>
     </Compile>

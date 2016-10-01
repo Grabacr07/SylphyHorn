@@ -1,1 +1,1 @@
-msiexec /x SylphyHorn.Setup.msi
+msiexec /x SylphyHorn.Installer.msi
