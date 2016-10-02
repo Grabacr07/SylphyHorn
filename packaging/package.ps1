@@ -2,7 +2,7 @@
 {
     begin
     {
-        $target = 'Release'
+        $target = 'Release (AppX)'
         $bin = '..\source\SylphyHorn\bin'
  
         $targetKeywords = '*.exe','*.dll','*.exe.config','*.txt','*.VisualElementsManifest.xml', '*.png', 'AppxManifest.xml'

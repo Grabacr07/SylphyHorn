@@ -15,7 +15,16 @@ namespace SylphyHorn
 		[CommandLineOption(Key = nameof(Restarted))]
 		public int? Restarted { get; private set; }
 
-		public CommandLineArgs(string[] args) : base(args) { }
+		public CommandLineArgs()
+			: base(new string[0])
+		{
+			this.CanSettings = true;
+		}
+
+		public CommandLineArgs(string[] args)
+			: base(args)
+		{
+		}
 	}
 
 	public abstract class CommandLineArgsBase

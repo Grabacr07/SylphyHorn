@@ -26,11 +26,17 @@ namespace SylphyHorn
 		private readonly MultipleDisposable _compositeDisposable = new MultipleDisposable();
 
 		internal HookService HookService { get; private set; }
+
 		internal UwpInteropService InteropService { get; private set; }
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
-			Args = new CommandLineArgs(e.Args);
+			Args
+#if APPX
+				= new CommandLineArgs();
+#else
+				= new CommandLineArgs(e.Args);
+#endif
 
 			if (Args.Setup)
 			{
