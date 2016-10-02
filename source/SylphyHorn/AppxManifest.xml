@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+         xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+         IgnorableNamespaces="uap rescap desktop">
+  <Identity Name="46846grabacr.net.SylphyHorn"
+            ProcessorArchitecture="x86"
+            Publisher="CN=33C1D2CA-4B3F-4CCA-8103-6D02939C6477"
+            Version="1.1.2.0" />
+  <Properties>
+    <DisplayName>SylphyHorn</DisplayName>
+    <PublisherDisplayName>grabacr.net</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop"
+                        MinVersion="10.0.14393.0"
+                        MaxVersionTested="10.0.14393.0" />
+  </Dependencies>
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust"/>
+  </Capabilities>
+  <Applications>
+    <Application Id="SylphyHorn"
+                 Executable="SylphyHorn.exe"
+                 EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements DisplayName="SylphyHorn"
+                          Square150x150Logo="Assets\Square150x150Logo.png"
+                          Square44x44Logo="Assets\Square44x44Logo.png"
+                          Description="Virtual Desktop Tools for Windows 10."
+                          BackgroundColor="transparent" />
+      <Extensions>
+        <desktop:Extension Category="windows.startupTask"
+                           Executable="SylphyHorn.exe"
+                           EntryPoint="Windows.FullTrustApplication">
+          <desktop:StartupTask TaskId="SylphyHornEngineStartupTask"
+                               Enabled="true"
+                               DisplayName="SylphyHorn Engine" />
+        </desktop:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+</Package>
