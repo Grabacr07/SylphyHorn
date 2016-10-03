@@ -28,7 +28,7 @@ Provides global hotkeys, switching notification, change background and several f
 * Change the background for each desktop
 
 * Settings GUI (call from tasktray)  
-![](https://cloud.githubusercontent.com/assets/1779073/19052992/e929b3e2-89f3-11e6-9182-54c2af261499.png)
+![](https://cloud.githubusercontent.com/assets/1779073/19053583/80ba020a-89f6-11e6-9624-2a3564e66adc.png)
 
 
 ## Credits
