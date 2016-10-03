@@ -139,10 +139,11 @@
 							<TextBlock Margin="21,0,0,0">
 								<Run Text="Time Duration for Notification Messages:" />
 								<InlineUIContainer>
-									<TextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationDuration.Value, Mode=TwoWay}"
-											 Width="60"
-											 Margin="2,5,2,-4"
-											 IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}" />
+									<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationDuration.Value, Mode=TwoWay}"
+														 Prompt=""
+														 Width="60"
+														 Margin="2,2,2,-7"
+														 IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}" />
 								</InlineUIContainer>
 								<Run Text="ms" />
 							</TextBlock>
@@ -158,14 +159,15 @@
 							<TextBlock Margin="21,0,0,0">
 								<Run Text="Source image folder:" />
 								<InlineUIContainer>
-									<TextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopBackgroundFolderPath.Value, Mode=TwoWay}"
-											 Width="300"
-											 Margin="2,5,2,-4"
-											 IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}" />
+									<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopBackgroundFolderPath.Value, Mode=TwoWay}"
+														 Prompt="Source image folder path"
+														 Width="300"
+														 Margin="2,2,2,-7"
+														 IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}" />
 								</InlineUIContainer>
 							</TextBlock>
 						</StackPanel>
-						<Border Height="8" />
+						<!--<Border Height="8" />-->
 
 						<TextBlock Text="Startup"
 								   Style="{DynamicResource HeaderStyleKey}" />
