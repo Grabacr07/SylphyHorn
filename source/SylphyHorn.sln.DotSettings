@@ -33,8 +33,11 @@
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/XmlDocFormatter/ProcessingInstructionAttributesFormat/@EntryValue">OnSingleLine</s:String>
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/XmlDocFormatter/TagAttributesFormat/@EntryValue">OnSingleLine</s:String>
 	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/XmlDocFormatter/TagSpaceBeforeHeaderEnd1/@EntryValue">False</s:Boolean>
-	<s:String x:Key="/Default/CodeStyle/CodeFormatting/XmlFormatter/IndentSubtags/@EntryValue">ZeroIndent</s:String>
-	<s:String x:Key="/Default/CodeStyle/CodeFormatting/XmlFormatter/IndentTagContent/@EntryValue">RemoveIndent</s:String>
+	
+	
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/XmlFormatter/ProcessingInstructionAttributesFormat/@EntryValue">FirstAttributeOnSingleLine</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/XmlFormatter/TagAttributesFormat/@EntryValue">FirstAttributeOnSingleLine</s:String>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/XmlFormatter/WrapLongLines/@EntryValue">False</s:Boolean>
 	<s:String x:Key="/Default/CodeStyle/CSharpUsing/KeepImports/=System/@EntryIndexedValue">System</s:String>
 	<s:String x:Key="/Default/CodeStyle/CSharpUsing/KeepImports/=System_002ECollections_002EGeneric/@EntryIndexedValue">System.Collections.Generic</s:String>
 	<s:String x:Key="/Default/CodeStyle/CSharpUsing/KeepImports/=System_002ELinq/@EntryIndexedValue">System.Linq</s:String>
@@ -77,8 +80,8 @@
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpCodeStyle/BRACES_FOR_WHILE/@EntryValue">Required</s:String>
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpCodeStyle/BRACES_FOR_FOREACH/@EntryValue">Required</s:String>
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpCodeStyle/BRACES_FOR_IFELSE/@EntryValue">NotRequired</s:String>
-	<s:String x:Key="/Default/CodeStyle/CodeFormatting/XmlFormatter/ProcessingInstructionAttributeIndenting/@EntryValue">OneStep</s:String>
-	<s:String x:Key="/Default/CodeStyle/CodeFormatting/XmlFormatter/TagAttributeIndenting/@EntryValue">OneStep</s:String>
+	
+	
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/XmlDocFormatter/ProcessingInstructionAttributeIndenting/@EntryValue">OneStep</s:String>
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/XmlDocFormatter/IndentTagContent/@EntryValue">ZeroIndent</s:String>
 	<s:String x:Key="/Default/CodeStyle/CSharpFileLayoutPatterns/Pattern/@EntryValue">&lt;?xml version="1.0" encoding="utf-16"?&gt;&#xD;
@@ -288,6 +291,9 @@
     &lt;/Region&gt;&#xD;
   &lt;/TypePattern&gt;&#xD;
 &lt;/Patterns&gt;</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/XamlNaming/UserRules/=NAMESPACE_005FALIAS/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="aaBb" /&gt;</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/XamlNaming/UserRules/=XAML_005FFIELD/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="AaBb" /&gt;</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/XamlNaming/UserRules/=XAML_005FRESOURCE/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="AaBb" /&gt;</s:String>
 	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EAddAccessorOwnerDeclarationBracesMigration/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EAlwaysTreatStructAsNotReorderableMigration/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EMigrateBlankLinesAroundFieldToBlankLinesAroundProperty/@EntryIndexedValue">True</s:Boolean>
