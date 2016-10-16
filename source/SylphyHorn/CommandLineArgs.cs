@@ -10,7 +10,7 @@ namespace SylphyHorn
 		public bool Setup { get; private set; }
 
 		[CommandLineOption(Key = nameof(CanSettings))]
-		public bool CanSettings { get; private set; }
+		public bool CanSettings { get; private set; } = true;
 
 		[CommandLineOption(Key = nameof(Restarted))]
 		public int? Restarted { get; private set; }
@@ -18,7 +18,6 @@ namespace SylphyHorn
 		public CommandLineArgs()
 			: base(new string[0])
 		{
-			this.CanSettings = true;
 		}
 
 		public CommandLineArgs(string[] args)
