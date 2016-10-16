@@ -31,12 +31,7 @@ namespace SylphyHorn
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
-			Args
-#if APPX
-				= new CommandLineArgs();
-#else
-				= new CommandLineArgs(e.Args);
-#endif
+			Args = new CommandLineArgs(e.Args);
 
 			if (Args.Setup)
 			{
