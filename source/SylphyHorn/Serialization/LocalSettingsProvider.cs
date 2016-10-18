@@ -8,6 +8,7 @@ using System.Reactive.Threading.Tasks;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Xml;
+using SylphyHorn.Properties;
 
 namespace SylphyHorn.Serialization
 {
@@ -31,9 +32,8 @@ namespace SylphyHorn.Serialization
 		{
 			var path = Path.Combine(
 				Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-				"Packages",
-				"46846grabacr.net.SylphyHorn_vwznf8jfphrrc",
-				"LocalState",
+				ProductInfo.Company,
+				ProductInfo.Product,
 				this.Filename);
 
 			var file = new FileInfo(path);
