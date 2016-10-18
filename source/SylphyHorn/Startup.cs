@@ -1,7 +1,9 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using JetBrains.Annotations;
+using MetroTrilithon.Desktop;
+using MetroTrilithon.Threading.Tasks;
 using SylphyHorn.Annotations;
 using SylphyHorn.Interop;
 using Windows.ApplicationModel;
@@ -17,17 +19,9 @@ namespace SylphyHorn
 		[UsedImplicitly]
 		private readonly StartupTask _task;
 
-		public bool IsExists
-		{
-			get
-			{
-#if APPX
-				return this._task.State == StartupTaskState.Enabled || this._task.State == StartupTaskState.DisabledByUser;
-#else
-				return File.Exists(this._path);
-#endif
-			}
-		}
+		public bool IsExists => Platform.IsUwp
+			? this._task.State == StartupTaskState.Enabled || this._task.State == StartupTaskState.DisabledByUser
+			: File.Exists(this._path);
 
 		public Startup()
 			: this(GetExecutingAssemblyFileNameWithoutExtension())
@@ -36,37 +30,47 @@ namespace SylphyHorn
 
 		public Startup(string name)
 		{
-#if APPX
-			this._task = GetStartupTask();
-#endif
-			this._path = GetStartupFilePath(name);
+			if (Platform.IsUwp)
+			{
+				this._task = GetStartupTask();
+			}
+			else
+			{
+				this._path = GetStartupFilePath(name);
+			}
 		}
 
 		public void Create()
 		{
-#if APPX
-			if (this._task.State == StartupTaskState.Disabled)
+			if (Platform.IsUwp)
 			{
-				this._task.RequestEnableAsync().ToTask().Wait();
+				if (this._task.State == StartupTaskState.Disabled)
+				{
+					this._task.RequestEnableAsync().ToTask().Forget();
+				}
 			}
-#else
-			MetroTrilithon.Desktop.ShellLink.Create(this._path);
-#endif
+			else
+			{
+				ShellLink.Create(this._path);
+			}
 		}
 
 		public void Remove()
 		{
-#if APPX
-			if (this._task.State == StartupTaskState.Enabled || this._task.State == StartupTaskState.DisabledByUser)
+			if (Platform.IsUwp)
 			{
-				this._task.Disable();
+				if (this._task.State == StartupTaskState.Enabled || this._task.State == StartupTaskState.DisabledByUser)
+				{
+					this._task.Disable();
+				}
 			}
-#else
-			if (this.IsExists)
+			else
 			{
-				File.Delete(this._path);
+				if (this.IsExists)
+				{
+					File.Delete(this._path);
+				}
 			}
-#endif
 		}
 
 		private static string GetStartupFilePath(string name)

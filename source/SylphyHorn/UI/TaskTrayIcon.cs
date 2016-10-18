@@ -9,7 +9,6 @@ namespace SylphyHorn.UI
 {
 	public class TaskTrayIcon : IDisposable
 	{
-
 		private readonly Icon _icon;
 		private readonly TaskTrayIconItem[] _items;
 		private NotifyIcon _notifyIcon;
@@ -38,6 +37,17 @@ namespace SylphyHorn.UI
 			};
 		}
 
+		public TaskTrayBaloon CreateBaloon() => new TaskTrayBaloon(this);
+
+		internal void ShowBaloon(TaskTrayBaloon baloon)
+		{
+			this._notifyIcon.ShowBalloonTip(
+				(int)baloon.Timespan.TotalMilliseconds,
+				baloon.Title,
+				baloon.Text,
+				ToolTipIcon.None);
+		}
+
 		public void Dispose()
 		{
 			this._notifyIcon?.Dispose();
@@ -60,6 +70,27 @@ namespace SylphyHorn.UI
 			this.Text = text;
 			this.ClickAction = clickAction;
 			this.CanDisplay = canDisplay;
+		}
+	}
+
+	public class TaskTrayBaloon
+	{
+		private readonly TaskTrayIcon _icon;
+
+		public string Title { get; set; }
+
+		public string Text { get; set; }
+
+		public TimeSpan Timespan { get; set; }
+
+		internal TaskTrayBaloon(TaskTrayIcon icon)
+		{
+			this._icon = icon;
+		}
+
+		public void Show()
+		{
+			this._icon.ShowBaloon(this);
 		}
 	}
 }
