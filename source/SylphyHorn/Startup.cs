@@ -1,22 +1,16 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using JetBrains.Annotations;
 using MetroTrilithon.Desktop;
 using MetroTrilithon.Threading.Tasks;
-using SylphyHorn.Annotations;
 using SylphyHorn.Interop;
 using Windows.ApplicationModel;
 
 namespace SylphyHorn
 {
-	[Dark("#if directive is evil...")]
 	public class Startup
 	{
-		[UsedImplicitly]
 		private readonly string _path;
-
-		[UsedImplicitly]
 		private readonly StartupTask _task;
 
 		public bool IsExists => Platform.IsUwp
@@ -84,7 +78,6 @@ namespace SylphyHorn
 			return Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
 		}
 
-		[UsedImplicitly]
 		private static StartupTask GetStartupTask()
 		{
 			return StartupTask.GetAsync("SylphyHornEngineStartupTask").ToTask().Result;
