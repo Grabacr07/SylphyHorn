@@ -79,7 +79,7 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>assets\app.black.ico</ApplicationIcon>
+    <ApplicationIcon>assets\app.green.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release %28AppX%29|AnyCPU'">
     <OutputPath>bin\Release %28AppX%29\</OutputPath>
@@ -306,7 +306,6 @@
     <Resource Include="assets\tasktray.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\app.black.ico" />
     <Resource Include="assets\app.white.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -318,12 +317,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\LockScreenLogo.scale-200.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="assets\SplashScreen.scale-200.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="assets\Square150x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -334,6 +327,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Resource Include="assets\StoreLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\BadgeLogo.png" />
+    <Resource Include="assets\SplashScreen.png" />
+    <Resource Include="assets\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\app.green.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
