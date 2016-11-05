@@ -33,7 +33,7 @@
             Get-ChildItem | where { $_.Extension -eq ".appx" } | Remove-Item
             Get-ChildItem | where Name -Like "_*" | Remove-Item
  
-            Make-MappingFile -SourcePath $(Join-Path $bin $target) -Filename $mapping -Targets $targetKeywords -Exclude $ignoreKeyword
+            New-MappingFile -SourcePath $(Join-Path $bin $target) -Filename $mapping -Targets $targetKeywords -Exclude $ignoreKeyword
 
             Start-SdkTool -SdkPath $win10Sdk -ToolName 'makeappx' -Arguments "pack /l /f $mapping /p $package"
             Start-SdkTool -SdkPath $win10Sdk -ToolName 'makecert' -Arguments "/r /h 0 /n $publisher /eku `"1.3.6.1.5.5.7.3.3`" /pe /sv $tempPvk $tempCer"
@@ -49,7 +49,7 @@
     }
 }
 
-function Make-MappingFile
+function New-MappingFile
 {
     [CmdletBinding()]
     param
