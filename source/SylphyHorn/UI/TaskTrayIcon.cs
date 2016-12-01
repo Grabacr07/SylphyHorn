@@ -4,12 +4,16 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using SylphyHorn.Properties;
+using WindowsDesktop;
+using SylphyHorn.Interop;
+using SylphyHorn.Serialization;
 
 namespace SylphyHorn.UI
 {
 	public class TaskTrayIcon : IDisposable
 	{
-		private readonly Icon _icon;
+		private Icon _icon;
+        private readonly Icon _defaultIcon;
 		private readonly TaskTrayIconItem[] _items;
 		private NotifyIcon _notifyIcon;
 
@@ -17,11 +21,15 @@ namespace SylphyHorn.UI
 
 		public TaskTrayIcon(Icon icon, TaskTrayIconItem[] items)
 		{
+            _defaultIcon = icon;
+
 			this._icon = icon;
 			this._items = items;
+
+            VirtualDesktop.CurrentChanged += OnCurrentDesktopChanged;
 		}
 
-		public void Show()
+        public void Show()
 		{
 			var menus = this._items
 				.Where(x => x.CanDisplay())
@@ -29,6 +37,7 @@ namespace SylphyHorn.UI
 				.ToArray();
 
 			this._notifyIcon = new NotifyIcon()
+
 			{
 				Text = this.Text,
 				Icon = this._icon,
@@ -48,10 +57,39 @@ namespace SylphyHorn.UI
 				ToolTipIcon.None);
 		}
 
-		public void Dispose()
+        private void OnCurrentDesktopChanged(object sender, VirtualDesktopChangedEventArgs e)
+        {
+            if (Settings.General.TrayShowDesktop)
+            {
+                var desktops = VirtualDesktop.GetDesktops();
+                var currentDesktopIndex = Array.IndexOf(desktops, e.NewDesktop) + 1;
+                var totalDesktopCount = desktops.Length;
+
+                ChangeIcon(IconHelper.GetDesktopInfoIcon(currentDesktopIndex, totalDesktopCount, Color.White));
+            }
+            else if (_icon != _defaultIcon)
+            {
+                ChangeIcon(_defaultIcon);
+            }
+        }
+
+        private void ChangeIcon(Icon newIcon)
+        {
+            if (_icon != _defaultIcon)
+            {
+                _icon?.Dispose();
+            }
+
+            _icon = newIcon;
+            _notifyIcon.Icon = newIcon;
+        }
+
+        public void Dispose()
 		{
 			this._notifyIcon?.Dispose();
 			this._icon?.Dispose();
+
+            VirtualDesktop.CurrentChanged -= OnCurrentDesktopChanged;
 		}
 	}
 
@@ -78,6 +116,7 @@ namespace SylphyHorn.UI
 		private readonly TaskTrayIcon _icon;
 
 		public string Title { get; set; }
+
 
 		public string Text { get; set; }
 
