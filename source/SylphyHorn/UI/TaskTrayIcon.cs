@@ -37,7 +37,6 @@ namespace SylphyHorn.UI
 				.ToArray();
 
 			this._notifyIcon = new NotifyIcon()
-
 			{
 				Text = this.Text,
 				Icon = this._icon,
@@ -55,17 +54,23 @@ namespace SylphyHorn.UI
 				baloon.Title,
 				baloon.Text,
 				ToolTipIcon.None);
+
 		}
+
+        public void UpdateWithDesktopInfo(VirtualDesktop currentDesktop)
+        {
+            var desktops = VirtualDesktop.GetDesktops();
+            var currentDesktopIndex = Array.IndexOf(desktops, currentDesktop) + 1;
+            var totalDesktopCount = desktops.Length;
+
+            ChangeIcon(IconHelper.GetDesktopInfoIcon(currentDesktopIndex, totalDesktopCount, Color.White));
+        }
 
         private void OnCurrentDesktopChanged(object sender, VirtualDesktopChangedEventArgs e)
         {
             if (Settings.General.TrayShowDesktop)
             {
-                var desktops = VirtualDesktop.GetDesktops();
-                var currentDesktopIndex = Array.IndexOf(desktops, e.NewDesktop) + 1;
-                var totalDesktopCount = desktops.Length;
-
-                ChangeIcon(IconHelper.GetDesktopInfoIcon(currentDesktopIndex, totalDesktopCount, Color.White));
+                UpdateWithDesktopInfo(e.NewDesktop);
             }
             else if (_icon != _defaultIcon)
             {

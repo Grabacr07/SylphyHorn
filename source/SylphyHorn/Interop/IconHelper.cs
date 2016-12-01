@@ -21,21 +21,19 @@ namespace SylphyHorn.Interop
 			}
 		}
 
-        public static Icon GetDesktopInfoIcon(int currentDesktop, int totalDesktops, Color color)
+        public static Icon GetDesktopInfoIcon(int currentDesktop, int totalDesktopCount, Color color)
         {
             using (var bitmap = new Bitmap(16, 16))
             {
                 using (var graphics = Graphics.FromImage(bitmap))
                 {
-                    //graphics.FillRectangle(Brushes.Magenta, new Rectangle(0, 0, 16, 16));
-
-                    if (totalDesktops < 10)
+                    if (totalDesktopCount < 10)
                     {
-                        DrawHorizontalInfo(graphics, currentDesktop, totalDesktops, color);
+                        DrawHorizontalInfo(graphics, currentDesktop, totalDesktopCount, color);
                     }
                     else
                     {
-                        DrawVerticalInfo(graphics, currentDesktop, totalDesktops, color);
+                        DrawVerticalInfo(graphics, currentDesktop, totalDesktopCount, color);
                     }
 
                     IntPtr hIcon = bitmap.GetHicon();
@@ -114,6 +112,11 @@ namespace SylphyHorn.Interop
 
         private static void DrawDigit(Graphics targetImage, Point startPoint, int digit, Pen pen, int width, int height)
         {
+            /* Common positions for digit drawing
+             * 0 1
+             * 2 3
+             * 4 5
+             */
             var positions = new Point[]
             {
                 startPoint,
