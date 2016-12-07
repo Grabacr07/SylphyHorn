@@ -202,6 +202,12 @@
     <Compile Include="CommandLineArgs.cs" />
     <Compile Include="Interop\IconHelper.cs" />
     <Compile Include="Interop\Platform.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ResourceService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="UI\PinNotificationWindow.xaml.cs">
       <DependentUpon>PinNotificationWindow.xaml</DependentUpon>
@@ -224,9 +230,6 @@
     <Compile Include="UI\Bindings\SettingsWindowViewModel.cs" />
     <Compile Include="UI\Controls\ClosingStoryboardBehavior.cs" />
     <Compile Include="UI\Controls\ShortcutKeyBox.cs" />
-    <Compile Include="UI\PinMarker.xaml.cs">
-      <DependentUpon>PinMarker.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\NotificationWindow.xaml.cs">
       <DependentUpon>NotificationWindow.xaml</DependentUpon>
     </Compile>
@@ -256,10 +259,6 @@
     <Page Include="UI\PinNotificationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\PinMarker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\NotificationWindow.xaml">
       <SubType>Designer</SubType>
@@ -353,6 +352,15 @@
     <None Include="assets\Square150x150Logo.scale-100.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.ja.resx">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

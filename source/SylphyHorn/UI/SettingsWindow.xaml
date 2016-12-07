@@ -11,12 +11,13 @@
 				   xmlns:serialization="clr-namespace:SylphyHorn.Serialization"
 				   xmlns:bindings="clr-namespace:SylphyHorn.UI.Bindings"
 				   xmlns:controls="clr-namespace:SylphyHorn.UI.Controls"
+				   xmlns:services="clr-namespace:SylphyHorn.Services"
 				   mc:Ignorable="d"
 				   d:DataContext="{d:DesignInstance bindings:SettingsWindowViewModel}"
 				   Icon="/SylphyHorn;component/assets/app.white.ico"
-				   Title="{Binding Title}"
+				   Title="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Title}"
 				   Width="720"
-				   Height="540"
+				   Height="600"
 				   Background="{DynamicResource ThemeBrushKey}"
 				   Foreground="{DynamicResource ActiveForegroundBrushKey}"
 				   FontFamily="Segoe UI, Meiryo UI"
@@ -68,7 +69,7 @@
 						WindowChrome.IsHitTestVisibleInChrome="True">
 				<metro:SystemButtons />
 			</StackPanel>
-			<TextBlock Text="{Binding Title}"
+			<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Title}"
 					   FontFamily="Segoe UI Light, Meiryo UI"
 					   FontSize="18"
 					   Margin="12,8" />
@@ -108,36 +109,36 @@
 
 			<TabItem>
 				<TabItem.Header>
-					<TextBlock Text="General"
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_General}"
 							   Style="{DynamicResource TabitemStyleKey}" />
 				</TabItem.Header>
 
 				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
 							  VerticalScrollBarVisibility="Auto">
 					<StackPanel Margin="16,0,16,16">
-						<TextBlock Text="Desktop switching"
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_DesktopSwitching}"
 								   Style="{DynamicResource HeaderStyleKey}"
 								   Margin="0,0,0,8" />
 						<StackPanel Margin="8,0,0,0">
 							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=LoopDesktop.Value, Mode=TwoWay}">
-								<TextBlock Text="Loop virtual desktops" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_DesktopSwitching_Loop}" />
 							</CheckBox>
 							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=OverrideWindowsDefaultKeyCombination.Value, Mode=TwoWay}">
-								<TextBlock Text="Override OS default key combination (Ctrl+Win+Left and Right)" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_DesktopSwitching_OverrideOS}" />
 							</CheckBox>
 						</StackPanel>
 						<Border Height="8" />
 
-						<TextBlock Text="Notification"
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification}"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<StackPanel Margin="8,0,0,0">
 							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}">
 								<TextBlock>
-									<Run Text="Display a notification when switched virtual desktop" />
+									<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display, Mode=OneWay}" />
 								</TextBlock>
 							</CheckBox>
 							<TextBlock Margin="21,0,0,0">
-								<Run Text="Time Duration for Notification Messages:" />
+								<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display_Duration, Mode=OneWay}" />
 								<InlineUIContainer>
 									<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationDuration.Value, Mode=TwoWay}"
 														 Prompt=""
@@ -145,7 +146,7 @@
 														 Margin="2,2,2,-7"
 														 IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}" />
 								</InlineUIContainer>
-								<Run Text="ms" />
+								<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display_Duration_Milliseconds, Mode=OneWay}" />
 							</TextBlock>
 						</StackPanel>
 						<Border Height="8" />
@@ -167,13 +168,32 @@
 								</InlineUIContainer>
 							</TextBlock>
 						</StackPanel>
-						<!--<Border Height="8" />-->
+						<Border Height="8" />
 
-						<TextBlock Text="Startup"
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Language}"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<StackPanel Margin="8,0,0,0">
+							<metro:PromptComboBox ItemsSource="{Binding Cultures}"
+												  DisplayMemberPath="Display"
+												  SelectedValuePath="Value"
+												  SelectedValue="{Binding Culture, Mode=TwoWay}"
+												  Prompt=""
+												  IsReadOnly="True"
+												  MinWidth="250"
+												  Margin="1,0,0,0"
+												  HorizontalAlignment="Left" />
+							<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Language_RequireRestartMessage}"
+									   Visibility="{Binding RestartRequired, Converter={StaticResource BooleanToVisibilityConverter}}"
+									   Margin="3,2,0,0" />
+						</StackPanel>
+						<Border Height="8" />
+
+
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Startup}"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<StackPanel Margin="8,0,0,0">
 							<CheckBox IsChecked="{Binding HasStartupLink, Mode=TwoWay}">
-								<TextBlock Text="Automaticaly start at logon" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Startup_Automaticaly}" />
 							</CheckBox>
 						</StackPanel>
 					</StackPanel>
@@ -182,7 +202,7 @@
 
 			<TabItem>
 				<TabItem.Header>
-					<TextBlock Text="Shortcut key"
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_ShortcutKey}"
 							   Style="{DynamicResource TabitemStyleKey}" />
 				</TabItem.Header>
 
@@ -190,7 +210,7 @@
 							  VerticalScrollBarVisibility="Auto">
 					<StackPanel Margin="16,0,16,16"
 								Grid.IsSharedSizeScope="True">
-						<TextBlock Text="Move active window to adjacent desktop"
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToAdjacentDesktop}"
 								   Style="{DynamicResource HeaderStyleKey}"
 								   Margin="0,0,0,8" />
 						<Grid Margin="8,0,0,0">
@@ -201,10 +221,10 @@
 								<ColumnDefinition Width="*" />
 							</Grid.ColumnDefinitions>
 							<UniformGrid Columns="1">
-								<TextBlock Text="Left:" />
-								<TextBlock Text="Left (Switch):" />
-								<TextBlock Text="Right:" />
-								<TextBlock Text="Right (Switch):" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToAdjacentDesktop_Left}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToAdjacentDesktop_LeftAndSwitch}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToAdjacentDesktop_Right}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToAdjacentDesktop_RightAndSwitch}" />
 							</UniformGrid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
@@ -216,7 +236,7 @@
 						</Grid>
 						<Border Height="8" />
 
-						<TextBlock Text="Move active window to created new desktop"
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToCreatedDesktop}"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<Grid Margin="8,0,0,0">
 							<Grid.ColumnDefinitions>
@@ -226,20 +246,20 @@
 								<ColumnDefinition Width="*" />
 							</Grid.ColumnDefinitions>
 							<UniformGrid Columns="1">
-								<TextBlock Text="Create only" />
-								<TextBlock Text="Move:" />
-								<TextBlock Text="Move (Switch):" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToCreatedDesktop_CreateOnly}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToCreatedDesktop_Move}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToCreatedDesktop_MoveAndSwitch}" />
 							</UniformGrid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
-								<TextBlock Text="Ctrl + Win + D (provided by Windows)" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToCreatedDesktop_CreateOnly_Keys}" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveNew.Value, Mode=TwoWay}" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveNewAndSwitch.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
 						<Border Height="8" />
 
-						<TextBlock Text="Pin window to all desktops"
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_PinWindow}"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<Grid Margin="8,0,0,0">
 							<Grid.ColumnDefinitions>
@@ -249,9 +269,9 @@
 								<ColumnDefinition Width="*" />
 							</Grid.ColumnDefinitions>
 							<UniformGrid Columns="1">
-								<TextBlock Text="Pin window:" />
-								<TextBlock Text="Unpin window:" />
-								<TextBlock Text="Pin/Unpin toggle:" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Pin}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Unpin}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_PinToggle}" />
 							</UniformGrid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
@@ -262,7 +282,7 @@
 						</Grid>
 						<Border Height="8" />
 
-						<TextBlock Text="Pin window from app to all desktops"
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_PinWindowFromApp}"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<Grid Margin="8,0,0,0">
 							<Grid.ColumnDefinitions>
@@ -272,9 +292,9 @@
 								<ColumnDefinition Width="*" />
 							</Grid.ColumnDefinitions>
 							<UniformGrid Columns="1">
-								<TextBlock Text="Pin app:" />
-								<TextBlock Text="Unpin app:" />
-								<TextBlock Text="Pin/Unpin app:" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Pin}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Unpin}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_PinToggle}" />
 							</UniformGrid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
@@ -289,7 +309,7 @@
 
 			<TabItem>
 				<TabItem.Header>
-					<TextBlock Text="Version"
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Version}"
 							   Style="{DynamicResource TabitemStyleKey}" />
 				</TabItem.Header>
 

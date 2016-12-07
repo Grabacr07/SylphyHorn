@@ -12,10 +12,19 @@ namespace SylphyHorn.UI.Bindings
 {
 	public class SettingsWindowViewModel : WindowViewModel
 	{
+		private static bool _restartRequired;
+		private static readonly string _defaultCulture = Settings.General.Culture;
+
 		private readonly HookService _hookService;
 		private readonly Startup _startup;
 
-		#region HasStartupLink property
+		public IReadOnlyCollection<DisplayViewModel<string>> Cultures { get; }
+
+		public IReadOnlyCollection<BindableTextViewModel> Libraries { get; }
+
+		public bool RestartRequired => _restartRequired;
+
+		#region HasStartupLink notification property
 
 		private bool _HasStartupLink;
 
@@ -43,20 +52,43 @@ namespace SylphyHorn.UI.Bindings
 
 		#endregion
 
-		public IReadOnlyCollection<BindableTextViewModel> Libraries { get; }
+		#region Culture notification property
+
+		public string Culture
+		{
+			get { return Settings.General.Culture; }
+			set
+			{
+				if (Settings.General.Culture != value)
+				{
+					Settings.General.Culture.Value = value;
+					_restartRequired = value != _defaultCulture;
+
+					this.RaisePropertyChanged();
+					this.RaisePropertyChanged(nameof(this.RestartRequired));
+				}
+			}
+		}
+		
+		#endregion
 
 		public SettingsWindowViewModel(HookService hookService)
 		{
-			this.Title = "Settings";
 			this._hookService = hookService;
 			this._startup = new Startup();
+
+			this.Cultures = new[] { new DisplayViewModel<string> { Display = "(auto)", } }
+				.Concat(ResourceService.Current.SupportedCultures
+					.Select(x => new DisplayViewModel<string> { Display = x.NativeName, Value = x.Name, })
+					.OrderBy(x => x.Display))
+				.ToList();
 
 			this.Libraries = ProductInfo.Libraries.Aggregate(
 				new List<BindableTextViewModel>(),
 				(list, lib) =>
 				{
-					list.Add(new BindableTextViewModel { Text = list.Count == 0 ? "Build with " : ", " });
-					list.Add(new HyperlinkViewModel { Text = lib.Name.Replace(' ', Convert.ToChar(160)), Uri = lib.Url });
+					list.Add(new BindableTextViewModel { Text = list.Count == 0 ? "Build with " : ", ", });
+					list.Add(new HyperlinkViewModel { Text = lib.Name.Replace(' ', Convert.ToChar(160)), Uri = lib.Url, });
 					return list;
 				});
 			this._HasStartupLink = this._startup.IsExists;

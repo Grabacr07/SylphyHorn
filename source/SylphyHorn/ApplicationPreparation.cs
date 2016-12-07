@@ -4,6 +4,7 @@ using System.Linq;
 using MetroTrilithon.Lifetime;
 using MetroTrilithon.Threading.Tasks;
 using SylphyHorn.Interop;
+using SylphyHorn.Properties;
 using SylphyHorn.Serialization;
 using SylphyHorn.Services;
 using SylphyHorn.UI;
@@ -98,8 +99,8 @@ namespace SylphyHorn
 			var icon = IconHelper.GetIconFromResource(uri);
 			var menus = new[]
 			{
-				new TaskTrayIconItem("&Settings (S)", () => this.ShowSettings(), () => Application.Args.CanSettings),
-				new TaskTrayIconItem("E&xit (X)", () => this._application.Shutdown()),
+				new TaskTrayIconItem(Resources.TaskTray_Menu_Settings, () => this.ShowSettings(), () => Application.Args.CanSettings),
+				new TaskTrayIconItem(Resources.TaskTray_Menu_Exit, () => this._application.Shutdown()),
 			};
 
 			var taskTrayIcon = new TaskTrayIcon(icon, menus);
@@ -109,8 +110,8 @@ namespace SylphyHorn
 			if (Settings.General.FirstTime)
 			{
 				var baloon = taskTrayIcon.CreateBaloon();
-				baloon.Title = "SylphyHorn";
-				baloon.Text = "Application is running in the background.";
+				baloon.Title = ProductInfo.Title;
+				baloon.Text = Resources.TaskTray_FirstTimeMessage;
 				baloon.Timespan = TimeSpan.FromMilliseconds(5000);
 				baloon.Show();
 
