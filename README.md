@@ -4,6 +4,11 @@ SylphyHorn is Virtual Desktop Tools for Windows 10.
 Provides global hotkeys, switching notification, change background and several functions to virtual desktop.
 
 
+## Install
+
+Please download from [Windows app store](https://www.microsoft.com/store/apps/9nblggh58t01) and install.
+
+
 ## Requirements
 
 * Windows 10 build 14393 (Anniversary Update) or later
@@ -35,6 +40,7 @@ Provides global hotkeys, switching notification, change background and several f
 
 * Manato KAMEYA [@Grabacr07](https://twitter.com/Grabacr07) (Auther, Developer)
 * Yutaka TSUMORI [@tmyt](https://twitter.com/tmyt) (Developer)
+
 
 ## License
 
