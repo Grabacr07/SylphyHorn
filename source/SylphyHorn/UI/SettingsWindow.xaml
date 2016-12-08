@@ -425,7 +425,7 @@
 								<DataTemplate DataType="{x:Type bindings:BindableTextViewModel}">
 									<metro:InlineHolder>
 										<Run Text="{Binding Text, Mode=OneWay}"
-											 Foreground="{DynamicResource ActiveForegroundBrushKey}" />
+											 Foreground="{DynamicResource ForegroundBrushKey}" />
 									</metro:InlineHolder>
 								</DataTemplate>
 							</metro:BindableTextBlock.TextTemplates>

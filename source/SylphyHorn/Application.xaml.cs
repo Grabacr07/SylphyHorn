@@ -129,13 +129,13 @@ namespace SylphyHorn
 		{
 			if (Args != null)
 			{
-				var restartNum = Args.Restarted ?? 0;
+				var restartCount = Args.Restarted ?? 0;
 
 				Process.Start(
 					Environment.GetCommandLineArgs()[0],
 					Args.Options
 						.Where(x => x.Key != Args.GetKey(nameof(CommandLineArgs.Restarted)))
-						.Concat(EnumerableEx.Return(Args.CreateOption(nameof(CommandLineArgs.Restarted), (restartNum + 1).ToString())))
+						.Concat(EnumerableEx.Return(Args.CreateOption(nameof(CommandLineArgs.Restarted), (restartCount + 1).ToString())))
 						.Select(x => x.ToString())
 						.JoinString(" "));
 			}
