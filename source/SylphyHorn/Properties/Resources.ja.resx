@@ -117,6 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Common_Reference" xml:space="preserve">
+    <value>参照</value>
+  </data>
+  <data name="Settings_Background" xml:space="preserve">
+    <value>背景</value>
+  </data>
+  <data name="Settings_Background_ChangeBackground" xml:space="preserve">
+    <value>仮想デスクトップごとに背景を変更する</value>
+  </data>
+  <data name="Settings_Background_Desktop" xml:space="preserve">
+    <value>デスクトップの背景</value>
+  </data>
+  <data name="Settings_Background_Note1" xml:space="preserve">
+    <value>サポートされている画像形式: JPG, PNG, BMP</value>
+  </data>
+  <data name="Settings_Background_Note2" xml:space="preserve">
+    <value>メモ: 仮想デスクトップ番号をファイル名とした画像ファイルを用意してください (例: "1.png", "2.png", ...)。</value>
+  </data>
+  <data name="Settings_Background_SelectionDialog" xml:space="preserve">
+    <value>背景画像フォルダーを選択</value>
+  </data>
+  <data name="Settings_Background_SourceImageFolder" xml:space="preserve">
+    <value>画像フォルダー パス</value>
+  </data>
   <data name="Settings_DesktopSwitching" xml:space="preserve">
     <value>デスクトップ切り替え</value>
   </data>

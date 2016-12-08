@@ -17,48 +17,80 @@ namespace SylphyHorn.Services
 
 		private WallpaperService()
 		{
-			VirtualDesktop.CurrentChanged += VirtualDesktopOnCurrentChanged;
+			VirtualDesktop.CurrentChanged += this.VirtualDesktopOnCurrentChanged;
 		}
 
-		private static void VirtualDesktopOnCurrentChanged(object sender, VirtualDesktopChangedEventArgs e)
+		private void VirtualDesktopOnCurrentChanged(object sender, VirtualDesktopChangedEventArgs e)
 		{
-			Task.Run(() => 
-			//VisualHelper.InvokeOnUIDispatcher(() =>
+			Task.Run(() =>
 			{
 				if (!Settings.General.ChangeBackgroundEachDesktop) return;
 
 				var desktops = VirtualDesktop.GetDesktops();
 				var newIndex = Array.IndexOf(desktops, e.NewDesktop) + 1;
 
-				var dirPath = Settings.General.DesktopBackgroundFolderPath.Value ?? "";
-				if (Directory.Exists(dirPath))
+				var file = this.GetWallpaperFiles(Settings.General.DesktopBackgroundFolderPath).FirstOrDefault(x => x.Number == newIndex);
+				if (file != null) this.Set(file.Filepath);
+			});
+		}
+
+		public WallpaperFile[] GetWallpaperFiles(string directoryPath)
+		{
+			try
+			{
+				var directoryInfo = new DirectoryInfo(string.IsNullOrEmpty(directoryPath) ? "dummy" : directoryPath);
+				if (directoryInfo.Exists)
 				{
-					foreach (var extension in _supportedExtensions)
+					var dic = new Dictionary<ushort, WallpaperFile>();
+					foreach (var file in directoryInfo.GetFiles())
 					{
-						var filePath = Path.Combine(dirPath, newIndex + extension);
-						var wallpaper = new FileInfo(filePath);
-						if (wallpaper.Exists)
+						ushort number;
+						if (ushort.TryParse(Path.GetFileNameWithoutExtension(file.Name), out number)
+							&& _supportedExtensions.Any(x => x == file.Extension)
+							&& !dic.ContainsKey(number))
 						{
-							Set(wallpaper.FullName);
-							break;
+							dic[number] = new WallpaperFile(number, file.FullName);
 						}
 					}
+
+					return dic
+						.OrderBy(kvp => kvp.Key)
+						.Select(x => x.Value)
+						.ToArray();
 				}
-			});
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine(ex);
+			}
+
+			return Array.Empty<WallpaperFile>();
 		}
 
 		public void Dispose()
 		{
-			VirtualDesktop.CurrentChanged -= VirtualDesktopOnCurrentChanged;
+			VirtualDesktop.CurrentChanged -= this.VirtualDesktopOnCurrentChanged;
 		}
 
-		public static void Set(string path)
+		private void Set(string path)
 		{
 			NativeMethods.SystemParametersInfo(
 				SystemParametersInfo.SPI_SETDESKWALLPAPER,
 				0,
 				path,
 				SystemParametersInfoFlag.SPIF_UPDATEINIFILE | SystemParametersInfoFlag.SPIF_SENDWININICHANGE);
+		}
+	}
+
+	public class WallpaperFile
+	{
+		public ushort Number { get; }
+		public string Filepath { get; }
+
+		public WallpaperFile(ushort number, string path)
+		{
+			this.Number = number;
+			this.Filepath = path;
 		}
 	}
 }

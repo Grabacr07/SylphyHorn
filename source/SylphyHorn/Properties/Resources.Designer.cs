@@ -61,6 +61,78 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reference.
+        /// </summary>
+        public static string Common_Reference {
+            get {
+                return ResourceManager.GetString("Common_Reference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Background.
+        /// </summary>
+        public static string Settings_Background {
+            get {
+                return ResourceManager.GetString("Settings_Background", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the background for each desktop.
+        /// </summary>
+        public static string Settings_Background_ChangeBackground {
+            get {
+                return ResourceManager.GetString("Settings_Background_ChangeBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desktop Background.
+        /// </summary>
+        public static string Settings_Background_Desktop {
+            get {
+                return ResourceManager.GetString("Settings_Background_Desktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supported image formats: JPEG, PNG, BMP.
+        /// </summary>
+        public static string Settings_Background_Note1 {
+            get {
+                return ResourceManager.GetString("Settings_Background_Note1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note: Please prepare image files with the virtual desktop number as filename (e.g. &quot;1.png&quot;, &quot;2.png&quot;, ...)..
+        /// </summary>
+        public static string Settings_Background_Note2 {
+            get {
+                return ResourceManager.GetString("Settings_Background_Note2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Background Images Folder.
+        /// </summary>
+        public static string Settings_Background_SelectionDialog {
+            get {
+                return ResourceManager.GetString("Settings_Background_SelectionDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source image folder path.
+        /// </summary>
+        public static string Settings_Background_SourceImageFolder {
+            get {
+                return ResourceManager.GetString("Settings_Background_SourceImageFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Desktop switching.
         /// </summary>
         public static string Settings_DesktopSwitching {

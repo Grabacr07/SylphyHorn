@@ -53,6 +53,11 @@
 			<livet:TransitionInteractionMessageAction InvokeActionOnlyWhenWindowIsActive="False"
 													  IsOwned="True" />
 		</livet:InteractionMessageTrigger>
+
+		<livet:InteractionMessageTrigger Messenger="{Binding Messenger}"
+										 MessageKey="Window.OpenBackgroundImagesDialog.Open">
+			<livet:FolderBrowserDialogInteractionMessageAction InvokeActionOnlyWhenWindowIsActive="False" />
+		</livet:InteractionMessageTrigger>
 	</i:Interaction.Triggers>
 
 	<DockPanel>
@@ -151,22 +156,13 @@
 						</StackPanel>
 						<Border Height="8" />
 
-						<TextBlock Text="Background"
+
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Startup}"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<StackPanel Margin="8,0,0,0">
-							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}">
-								<TextBlock Text="Change the background for each desktop." />
+							<CheckBox IsChecked="{Binding HasStartupLink, Mode=TwoWay}">
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Startup_Automaticaly}" />
 							</CheckBox>
-							<TextBlock Margin="21,0,0,0">
-								<Run Text="Source image folder:" />
-								<InlineUIContainer>
-									<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopBackgroundFolderPath.Value, Mode=TwoWay}"
-														 Prompt="Source image folder path"
-														 Width="300"
-														 Margin="2,2,2,-7"
-														 IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}" />
-								</InlineUIContainer>
-							</TextBlock>
 						</StackPanel>
 						<Border Height="8" />
 
@@ -186,16 +182,79 @@
 									   Visibility="{Binding RestartRequired, Converter={StaticResource BooleanToVisibilityConverter}}"
 									   Margin="3,2,0,0" />
 						</StackPanel>
-						<Border Height="8" />
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
 
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background}"
+							   Style="{DynamicResource TabitemStyleKey}" />
+				</TabItem.Header>
 
-						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Startup}"
-								   Style="{DynamicResource HeaderStyleKey}" />
+				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+							  VerticalScrollBarVisibility="Auto">
+					<StackPanel Margin="16,0,16,16">
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_Desktop}"
+								   Style="{DynamicResource HeaderStyleKey}"
+								   Margin="0,0,0,8" />
 						<StackPanel Margin="8,0,0,0">
-							<CheckBox IsChecked="{Binding HasStartupLink, Mode=TwoWay}">
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Startup_Automaticaly}" />
+							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}">
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_ChangeBackground}" />
 							</CheckBox>
+							<StackPanel Margin="16,0,0,0">
+								<Grid IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}"
+									  Margin="2">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition MaxWidth="360" />
+										<ColumnDefinition Width="Auto" />
+									</Grid.ColumnDefinitions>
+									<metro:PromptTextBox Grid.Column="0"
+														 Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopBackgroundFolderPath.Value, Mode=TwoWay}"
+														 Prompt="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_SourceImageFolder}"
+														 Margin="2" />
+									<metro2:CallMethodButton Grid.Column="1"
+															 Content="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Common_Reference}"
+															 MethodTarget="{Binding}"
+															 MethodName="OpenBackgroundPathDialog"
+															 Margin="2" />
+								</Grid>
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_Note1}"
+										   TextWrapping="Wrap"
+										   Margin="4,0,0,0" />
+								<Border Height="4" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_Note2}"
+										   TextWrapping="Wrap"
+										   Margin="4,0,0,0" />
+							</StackPanel>
+							<Border Height="16" />
+							<ItemsControl ItemsSource="{Binding Backgrounds}"
+										  Visibility="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Converter={StaticResource BooleanToVisibilityConverter}}"
+										  Margin="18,0,0,0">
+								<ItemsControl.ItemsPanel>
+									<ItemsPanelTemplate>
+										<WrapPanel Orientation="Horizontal" />
+									</ItemsPanelTemplate>
+								</ItemsControl.ItemsPanel>
+								<ItemsControl.ItemTemplate>
+									<DataTemplate>
+										<DockPanel Margin="2">
+											<Label DockPanel.Dock="Top"
+												   Content="{Binding Number}"
+												   Background="{DynamicResource ActiveBackgroundBrushKey}"
+												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
+												   HorizontalContentAlignment="Center"
+												   Padding="8,1" />
+											<Image Source="{Binding Filepath, Converter={StaticResource UnlockImageConverter}}"
+												   Stretch="Uniform"
+												   VerticalAlignment="Top"
+												   MaxWidth="150" />
+										</DockPanel>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
 						</StackPanel>
+						<Border Height="8" />
 					</StackPanel>
 				</ScrollViewer>
 			</TabItem>
@@ -375,7 +434,6 @@
 						<TextBlock Foreground="{DynamicResource ForegroundBrushKey}"
 								   FontFamily="Segoe UI, Meiryo UI"
 								   Margin="2,6">
-
 							<Run Text="{Binding Source={x:Static properties:ProductInfo.Copyright}, Mode=OneWay}" />
 							<LineBreak />
 							<Run Text="{Binding Source={x:Static properties:ProductInfo.Product}, Mode=OneWay}" />

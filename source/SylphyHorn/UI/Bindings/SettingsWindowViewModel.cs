@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Livet;
+using Livet.Messaging.IO;
 using MetroTrilithon.Lifetime;
 using MetroTrilithon.Mvvm;
 using SylphyHorn.Properties;
@@ -69,7 +71,26 @@ namespace SylphyHorn.UI.Bindings
 				}
 			}
 		}
-		
+
+		#endregion
+
+		#region Backgrounds notification property
+
+		private WallpaperFile[] _Backgrounds;
+
+		public WallpaperFile[] Backgrounds
+		{
+			get { return this._Backgrounds; }
+			set
+			{
+				if (this._Backgrounds != value)
+				{
+					this._Backgrounds = value;
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
 		#endregion
 
 		public SettingsWindowViewModel(HookService hookService)
@@ -91,7 +112,12 @@ namespace SylphyHorn.UI.Bindings
 					list.Add(new HyperlinkViewModel { Text = lib.Name.Replace(' ', Convert.ToChar(160)), Uri = lib.Url, });
 					return list;
 				});
+
 			this._HasStartupLink = this._startup.IsExists;
+
+			Settings.General.DesktopBackgroundFolderPath
+				.Subscribe(path => this.Backgrounds = WallpaperService.Instance.GetWallpaperFiles(path))
+				.AddTo(this);
 
 			Disposable.Create(() => LocalSettingsProvider.Instance.SaveAsync().Wait())
 				.AddTo(this);
@@ -102,6 +128,22 @@ namespace SylphyHorn.UI.Bindings
 			base.InitializeCore();
 			this._hookService.Suspend()
 				.AddTo(this);
+		}
+
+		public void OpenBackgroundPathDialog()
+		{
+			var message = new FolderSelectionMessage("Window.OpenBackgroundImagesDialog.Open")
+			{
+				Title = Resources.Settings_Background_SelectionDialog,
+				SelectedPath = Settings.General.DesktopBackgroundFolderPath,
+				DialogPreference = FolderSelectionDialogPreference.CommonItemDialog,
+			};
+			this.Messenger.Raise(message);
+
+			if (Directory.Exists(message.Response))
+			{
+				Settings.General.DesktopBackgroundFolderPath.Value = message.Response;
+			}
 		}
 	}
 

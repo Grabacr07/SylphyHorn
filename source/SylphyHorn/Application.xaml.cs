@@ -162,7 +162,6 @@ args = {2}
 					else
 					{
 						// ToDo: 例外ダイアログ
-						MessageBox.Show(message, "Unexpected error occurred");
 					}
 				}
 			}
@@ -171,7 +170,6 @@ args = {2}
 				Debug.WriteLine(ex);
 			}
 
-			Current.Shutdown();
 		}
 
 		#region IDisposable members
