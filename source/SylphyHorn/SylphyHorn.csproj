@@ -219,6 +219,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\ResourceService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="UI\Controls\UnlockImageConverter.cs" />

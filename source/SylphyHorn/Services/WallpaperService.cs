@@ -61,7 +61,7 @@ namespace SylphyHorn.Services
 			}
 			catch (Exception ex)
 			{
-				System.Diagnostics.Debug.WriteLine(ex);
+				LoggingService.Instance.Register(ex);
 			}
 
 			return Array.Empty<WallpaperFile>();

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Threading;
 using Livet;
 using MetroRadiance.UI;
 using MetroTrilithon.Lifetime;
@@ -20,7 +20,7 @@ namespace SylphyHorn
 
 		static Application()
 		{
-			AppDomain.CurrentDomain.UnhandledException += (sender, args) => ReportException(sender, args.ExceptionObject as Exception);
+			AppDomain.CurrentDomain.UnhandledException += HandleUnhandledException;
 		}
 
 		private readonly MultipleDisposable _compositeDisposable = new MultipleDisposable();
@@ -46,11 +46,7 @@ namespace SylphyHorn
 				if (WindowsDesktop.VirtualDesktop.IsSupported)
 				{
 					this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
-					this.DispatcherUnhandledException += (sender, args) =>
-					{
-						ReportException(sender, args.Exception);
-						args.Handled = true;
-					};
+					this.DispatcherUnhandledException += this.HandleDispatcherUnhandledException;
 
 					DispatcherHelper.UIDispatcher = this.Dispatcher;
 
@@ -110,66 +106,39 @@ namespace SylphyHorn
 			}
 		}
 
-		private static void ReportException(object sender, Exception exception)
+		private void HandleDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs args)
 		{
-			#region const
+			LoggingService.Instance.Register(args.Exception);
+			args.Handled = true;
+		}
 
-			const string messageFormat = @"
-===========================================================
-ERROR, date = {0}, sender = {1},
-args = {2}
-{3}
-";
-			const string path = "error.log";
-
-			#endregion
-
-			var message = "";
-
-			try
+		private static void HandleUnhandledException(object sender, UnhandledExceptionEventArgs args)
+		{
+			if ((DateTime.Now - Process.GetCurrentProcess().StartTime).TotalMinutes >= 3)
 			{
-				message = string.Format(
-					messageFormat,
-					DateTimeOffset.Now,
-					sender,
-					Environment.GetCommandLineArgs().Skip(1).JoinString(" "),
-					exception);
-
-				Debug.WriteLine(message);
-				File.AppendAllText(path, message);
+				// 3 分以上生きてたら安定稼働と見做して再起動させる
+				Restart();
 			}
-			catch (Exception ex)
+			else
 			{
-				Debug.WriteLine(ex);
+				// ToDo: Exception dialog
 			}
+		}
 
-			try
+		private static void Restart()
+		{
+			if (Args != null)
 			{
-				if (Args != null)
-				{
-					var restartNum = Args.Restarted ?? 0;
-					if ((DateTime.Now - Process.GetCurrentProcess().StartTime).TotalMinutes >= 3)
-					{
-						// 3 分以上生きてたら安定稼働と見做して、とりあえず再起動させる
-						Process.Start(
-							Environment.GetCommandLineArgs()[0],
-							Args.Options
-								.Where(x => x.Key != Args.GetKey(nameof(CommandLineArgs.Restarted)))
-								.Concat(EnumerableEx.Return(Args.CreateOption(nameof(CommandLineArgs.Restarted), (restartNum + 1).ToString())))
-								.Select(x => x.ToString())
-								.JoinString(" "));
-					}
-					else
-					{
-						// ToDo: 例外ダイアログ
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex);
-			}
+				var restartNum = Args.Restarted ?? 0;
 
+				Process.Start(
+					Environment.GetCommandLineArgs()[0],
+					Args.Options
+						.Where(x => x.Key != Args.GetKey(nameof(CommandLineArgs.Restarted)))
+						.Concat(EnumerableEx.Return(Args.CreateOption(nameof(CommandLineArgs.Restarted), (restartNum + 1).ToString())))
+						.Select(x => x.ToString())
+						.JoinString(" "));
+			}
 		}
 
 		#region IDisposable members
