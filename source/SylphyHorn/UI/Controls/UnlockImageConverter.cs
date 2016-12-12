@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
+using SylphyHorn.Services;
 
 namespace SylphyHorn.UI.Controls
 {
@@ -14,19 +15,27 @@ namespace SylphyHorn.UI.Controls
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (DesignerProperties.GetIsInDesignMode(new DependencyObject())) return null;
-
-			using (var stream = new FileStream((string)value, FileMode.Open))
+			try
 			{
-				var decoder = BitmapDecoder.Create(
-					stream,
-					BitmapCreateOptions.None,
-					BitmapCacheOption.OnLoad);
+				if (DesignerProperties.GetIsInDesignMode(new DependencyObject())) return null;
 
-				var bitmap = new WriteableBitmap(decoder.Frames[0]);
-				bitmap.Freeze();
+				using (var stream = new FileStream((string)value, FileMode.Open))
+				{
+					var decoder = BitmapDecoder.Create(
+						stream,
+						BitmapCreateOptions.None,
+						BitmapCacheOption.OnLoad);
 
-				return bitmap;
+					var bitmap = new WriteableBitmap(decoder.Frames[0]);
+					bitmap.Freeze();
+
+					return bitmap;
+				}
+			}
+			catch (Exception ex)
+			{
+				LoggingService.Instance.Register(ex);
+				return null;
 			}
 		}
 
