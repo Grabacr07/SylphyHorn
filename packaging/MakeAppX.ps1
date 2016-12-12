@@ -5,7 +5,11 @@
         $target = 'Release (AppX)'
         $bin = '..\source\SylphyHorn\bin'
  
-        $targetKeywords = '*.exe','*.dll','*.exe.config','*.txt','*.VisualElementsManifest.xml', '*.png', 'AppxManifest.xml'
+        $appxManifest = 'AppxManifest.xml'
+        $appxManifestSource = 'app.appxmanifest'
+        $versionSource = 'SylphyHorn.exe'
+
+        $targetKeywords = '*.exe','*.dll','*.exe.config','*.txt','*.VisualElementsManifest.xml', '*.png', $appxManifest
         $ignoreKeyword  = '*.vshost.*'
 
         $appx = 'SylphyHorn.appx'
@@ -37,7 +41,13 @@
             Get-ChildItem | where { $_.Name -eq $appx -or $_.Name -eq $appxBundle } | Remove-Item
             Get-ChildItem | where Name -Like "_*" | Remove-Item
  
-            New-MappingFile -SourcePath $(Join-Path $bin $target) -Filename $appxMapping -Targets $targetKeywords -Exclude $ignoreKeyword
+            $source = Join-Path $bin $target -Resolve
+            $version = $(Get-ChildItem (Join-Path $source $versionSource)).VersionInfo.FileVersion
+
+            # replace version in appxmanifest with assembly version
+            $(Get-Content (Join-Path $source $appxManifestSource -Resolve)) -replace 'Version="0.0.0.0"', (' Version="{0}"' -f $version) | Out-File (Join-Path $source $appxManifest) -Encoding UTF8
+
+            New-MappingFile -SourcePath $source -Filename $appxMapping -Targets $targetKeywords -Exclude $ignoreKeyword
 
             Start-SdkTool -SdkPath $win10Sdk -ToolName 'makeappx' -Arguments "pack /l /f $appxMapping /p $appx"
             Start-SdkTool -SdkPath $win10Sdk -ToolName 'signtool' -Arguments "sign /f $storekey /fd SHA256 /v $appx"            
@@ -50,7 +60,7 @@
 
             New-MappingFile -SourcePath '.\' -Filename $appxBundleMapping -Targets $appx
 
-            Start-SdkTool -SdkPath $win10Sdk -ToolName 'makeappx' -Arguments "bundle /f $appxBundleMapping /p $appxBundle"
+            Start-SdkTool -SdkPath $win10Sdk -ToolName 'makeappx' -Arguments "bundle /f $appxBundleMapping /p $appxBundle /bv $version"
         }
         catch
         {
@@ -114,6 +124,49 @@ function New-MappingFile
 
         Write-Output $mapping
         Write-Output $mapping | Out-File $Filename
+    }
+}
+
+function hoge
+{
+    [CmdletBinding()]
+    param
+    (
+        [parameter(
+            mandatory = 1,
+            position  = 0,
+            ValueFromPipeline = 1,
+            ValueFromPipelineByPropertyName = 1)]
+        [string]
+        $SdkPath,
+ 
+        [parameter(
+            mandatory = 1,
+            position  = 1,
+            ValueFromPipelineByPropertyName = 1)]
+        [string]
+        $ToolName,
+ 
+        [parameter(
+            mandatory = 1,
+            position  = 2,
+            ValueFromPipelineByPropertyName = 1)]
+        [string]
+        $Arguments
+    )
+    
+    begin
+    {
+        $exe = (Join-Path $SdkPath ($ToolName + '.exe'))
+    }
+
+    end
+    {
+        Write-Host $ToolName $Arguments
+        Write-Host '----------'
+        & $exe ($Arguments -split " ")
+        Write-Host ''
+        Write-Host ''
     }
 }
 
