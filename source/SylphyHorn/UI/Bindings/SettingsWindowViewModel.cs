@@ -111,6 +111,11 @@ namespace SylphyHorn.UI.Bindings
 					list.Add(new BindableTextViewModel { Text = list.Count == 0 ? "Build with " : ", ", });
 					list.Add(new HyperlinkViewModel { Text = lib.Name.Replace(' ', Convert.ToChar(160)), Uri = lib.Url, });
 					return list;
+				},
+				list =>
+				{
+					list.Add(new BindableTextViewModel() { Text = ".", });
+					return list;
 				});
 
 			this._HasStartupLink = this._startup.IsExists;

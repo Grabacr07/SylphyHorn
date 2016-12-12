@@ -16,6 +16,13 @@ namespace SylphyHorn
 {
 	sealed partial class Application : IDisposableHolder
 	{
+		public static bool IsWindowsBridge { get; }
+#if APPX
+			= true;
+#else
+			= false;
+#endif
+
 		public static CommandLineArgs Args { get; private set; }
 
 		static Application()

@@ -7,6 +7,7 @@
 				   xmlns:livet="http://schemas.livet-mvvm.net/2011/wpf"
 				   xmlns:metro="http://schemes.grabacr.net/winfx/2014/controls"
 				   xmlns:metro2="http://schemes.grabacr.net/winfx/2015/personal/controls"
+				   xmlns:root="clr-namespace:SylphyHorn"
 				   xmlns:properties="clr-namespace:SylphyHorn.Properties"
 				   xmlns:serialization="clr-namespace:SylphyHorn.Serialization"
 				   xmlns:bindings="clr-namespace:SylphyHorn.UI.Bindings"
@@ -391,6 +392,12 @@
 							<Run Text="{x:Static properties:ProductInfo.VersionString}" />
 						</TextBlock>
 
+						<TextBlock Text="Built using the Desktop Bridge."
+								   Foreground="{DynamicResource ForegroundBrushKey}"
+								   FontFamily="Segoe UI, Meiryo UI"
+								   Visibility="{Binding Source={x:Static root:Application.IsWindowsBridge}, Converter={StaticResource BooleanToVisibilityConverter}}"
+								   Margin="2,6" />
+
 						<TextBlock Foreground="{DynamicResource ForegroundBrushKey}"
 								   FontFamily="Segoe UI, Meiryo UI"
 								   Margin="2,6">
@@ -410,10 +417,9 @@
 							</metro2:HyperlinkEx>
 						</TextBlock>
 
-
 						<metro:BindableTextBlock TextSource="{Binding Libraries}"
 												 TextWrapping="Wrap"
-												 Margin="1,6">
+												 Margin="2,6">
 							<metro:BindableTextBlock.TextTemplates>
 								<DataTemplate DataType="{x:Type bindings:HyperlinkViewModel}">
 									<metro:InlineHolder>
