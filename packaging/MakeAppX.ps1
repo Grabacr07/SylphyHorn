@@ -127,49 +127,6 @@ function New-MappingFile
     }
 }
 
-function hoge
-{
-    [CmdletBinding()]
-    param
-    (
-        [parameter(
-            mandatory = 1,
-            position  = 0,
-            ValueFromPipeline = 1,
-            ValueFromPipelineByPropertyName = 1)]
-        [string]
-        $SdkPath,
- 
-        [parameter(
-            mandatory = 1,
-            position  = 1,
-            ValueFromPipelineByPropertyName = 1)]
-        [string]
-        $ToolName,
- 
-        [parameter(
-            mandatory = 1,
-            position  = 2,
-            ValueFromPipelineByPropertyName = 1)]
-        [string]
-        $Arguments
-    )
-    
-    begin
-    {
-        $exe = (Join-Path $SdkPath ($ToolName + '.exe'))
-    }
-
-    end
-    {
-        Write-Host $ToolName $Arguments
-        Write-Host '----------'
-        & $exe ($Arguments -split " ")
-        Write-Host ''
-        Write-Host ''
-    }
-}
-
 function Start-SdkTool
 {
     [CmdletBinding()]
