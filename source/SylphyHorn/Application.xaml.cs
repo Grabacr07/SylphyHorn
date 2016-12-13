@@ -58,7 +58,6 @@ namespace SylphyHorn
 					DispatcherHelper.UIDispatcher = this.Dispatcher;
 
 					LocalSettingsProvider.Instance.LoadAsync().Wait();
-					LocalSettingsProvider.Instance.AddTo(this);
 
 					Settings.General.Culture.Subscribe(x => ResourceService.Current.ChangeCulture(x)).AddTo(this);
 					ThemeService.Current.Register(this, Theme.Windows, Accent.Windows);

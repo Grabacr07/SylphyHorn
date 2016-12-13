@@ -26,65 +26,65 @@ namespace SylphyHorn
 			var settings = Settings.ShortcutKey;
 
 			this._application.HookService
-				.Register(settings.MoveLeft.ToShortcutKey(), hWnd => hWnd.MoveToLeft())
+				.Register(()=>settings.MoveLeft.ToShortcutKey(), hWnd => hWnd.MoveToLeft())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.MoveLeftAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToLeft()?.Switch())
+				.Register(() => settings.MoveLeftAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToLeft()?.Switch())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.MoveRight.ToShortcutKey(), hWnd => hWnd.MoveToRight())
+				.Register(() => settings.MoveRight.ToShortcutKey(), hWnd => hWnd.MoveToRight())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.MoveRightAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToRight()?.Switch())
+				.Register(() => settings.MoveRightAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToRight()?.Switch())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.MoveNew.ToShortcutKey(), hWnd => hWnd.MoveToNew())
+				.Register(() => settings.MoveNew.ToShortcutKey(), hWnd => hWnd.MoveToNew())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.MoveNewAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToNew()?.Switch())
+				.Register(() => settings.MoveNewAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToNew()?.Switch())
 				.AddTo(this._application);
 
 			this._application.HookService
 				.Register(
-					settings.SwitchToLeft.ToShortcutKey(),
+					() => settings.SwitchToLeft.ToShortcutKey(),
 					_ => VirtualDesktopService.GetLeft()?.Switch(),
 					() => Settings.General.OverrideWindowsDefaultKeyCombination || Settings.General.ChangeBackgroundEachDesktop)
 				.AddTo(this._application);
 
 			this._application.HookService
 				.Register(
-					settings.SwitchToRight.ToShortcutKey(),
+					() => settings.SwitchToRight.ToShortcutKey(),
 					_ => VirtualDesktopService.GetRight()?.Switch(),
 					() => Settings.General.OverrideWindowsDefaultKeyCombination || Settings.General.ChangeBackgroundEachDesktop)
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.Pin.ToShortcutKey(), hWnd => hWnd.Pin())
+				.Register(() => settings.Pin.ToShortcutKey(), hWnd => hWnd.Pin())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.Unpin.ToShortcutKey(), hWnd => hWnd.Unpin())
+				.Register(() => settings.Unpin.ToShortcutKey(), hWnd => hWnd.Unpin())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.TogglePin.ToShortcutKey(), hWnd => hWnd.TogglePin())
+				.Register(() => settings.TogglePin.ToShortcutKey(), hWnd => hWnd.TogglePin())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.PinApp.ToShortcutKey(), hWnd => hWnd.PinApp())
+				.Register(() => settings.PinApp.ToShortcutKey(), hWnd => hWnd.PinApp())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.UnpinApp.ToShortcutKey(), hWnd => hWnd.UnpinApp())
+				.Register(() => settings.UnpinApp.ToShortcutKey(), hWnd => hWnd.UnpinApp())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.TogglePinApp.ToShortcutKey(), hWnd => hWnd.TogglePinApp())
+				.Register(() => settings.TogglePinApp.ToShortcutKey(), hWnd => hWnd.TogglePinApp())
 				.AddTo(this._application);
 		}
 
