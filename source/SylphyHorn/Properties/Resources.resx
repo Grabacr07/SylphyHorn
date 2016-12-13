@@ -127,7 +127,7 @@
     <value>Change the background for each desktop</value>
   </data>
   <data name="Settings_Background_Desktop" xml:space="preserve">
-    <value>Desktop Background</value>
+    <value>Desktop background</value>
   </data>
   <data name="Settings_Background_Note1" xml:space="preserve">
     <value>Supported image formats: JPEG, PNG, BMP</value>

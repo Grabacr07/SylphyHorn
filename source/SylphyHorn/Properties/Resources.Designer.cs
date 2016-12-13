@@ -88,7 +88,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Desktop Background.
+        ///   Looks up a localized string similar to Desktop background.
         /// </summary>
         public static string Settings_Background_Desktop {
             get {
