@@ -42,6 +42,7 @@ namespace SylphyHorn.Serialization
 			}
 
 			this._targetFile = file;
+			this.Available = true;
 		}
 
 
