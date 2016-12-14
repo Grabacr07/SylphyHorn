@@ -180,8 +180,8 @@
   <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly" xml:space="preserve">
     <value>Create only</value>
   </data>
-  <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly_Keys" xml:space="preserve">
-    <value>Ctrl + Win + D (provided by Windows)</value>
+  <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly_Note" xml:space="preserve">
+    <value>provided by Windows</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_Move" xml:space="preserve">
     <value>Move:</value>

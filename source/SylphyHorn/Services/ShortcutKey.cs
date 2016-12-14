@@ -67,9 +67,9 @@ namespace SylphyHorn.Services
 		public static bool operator ==(ShortcutKey key1, ShortcutKey key2)
 		{
 			return key1.Key == key2.Key
-				   && Equals(
-					   key1.ModifiersInternal ?? key1.Modifiers ?? Array.Empty<VirtualKey>(),
-					   key2.ModifiersInternal ?? key2.Modifiers ?? Array.Empty<VirtualKey>());
+				&& Equals(
+					key1.ModifiersInternal ?? key1.Modifiers ?? Array.Empty<VirtualKey>(),
+					key2.ModifiersInternal ?? key2.Modifiers ?? Array.Empty<VirtualKey>());
 		}
 
 		public static bool operator !=(ShortcutKey key1, ShortcutKey key2)

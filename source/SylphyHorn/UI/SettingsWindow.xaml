@@ -262,7 +262,7 @@
 
 			<TabItem>
 				<TabItem.Header>
-					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_ShortcutKey}"
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_ShortcutKey, StringFormat='{}{0} 1'}"
 							   Style="{DynamicResource TabitemStyleKey}" />
 				</TabItem.Header>
 
@@ -294,7 +294,7 @@
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveRightAndSwitch.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
-						<Border Height="8" />
+						<Border Height="16" />
 
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToCreatedDesktop}"
 								   Style="{DynamicResource HeaderStyleKey}" />
@@ -312,15 +312,31 @@
 							</UniformGrid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToCreatedDesktop_CreateOnly_Keys}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static services:KeyHelper.VirtualDesktopCreationKey}, Mode=OneWay}"
+														 Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToCreatedDesktop_CreateOnly_Note, StringFormat=' ({0})', Mode=OneWay}"
+														 IsReadOnly="True"
+														 IsEnabled="False" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveNew.Value, Mode=TwoWay}" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveNewAndSwitch.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
-						<Border Height="8" />
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
 
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_ShortcutKey, StringFormat='{}{0} 2'}"
+							   Style="{DynamicResource TabitemStyleKey}" />
+				</TabItem.Header>
+
+				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+							  VerticalScrollBarVisibility="Auto">
+					<StackPanel Margin="16,0,16,16"
+								Grid.IsSharedSizeScope="True">
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_PinWindow}"
-								   Style="{DynamicResource HeaderStyleKey}" />
+								   Style="{DynamicResource HeaderStyleKey}"
+								   Margin="0,0,0,8" />
 						<Grid Margin="8,0,0,0">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"
@@ -340,7 +356,7 @@
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=TogglePin.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
-						<Border Height="8" />
+						<Border Height="16" />
 
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_PinWindowFromApp}"
 								   Style="{DynamicResource HeaderStyleKey}" />
@@ -366,7 +382,7 @@
 					</StackPanel>
 				</ScrollViewer>
 			</TabItem>
-
+			
 			<TabItem>
 				<TabItem.Header>
 					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Version}"

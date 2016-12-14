@@ -180,8 +180,8 @@
   <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly" xml:space="preserve">
     <value>作成のみ</value>
   </data>
-  <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly_Keys" xml:space="preserve">
-    <value>Ctrl + Win + D (Windows が提供)</value>
+  <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly_Note" xml:space="preserve">
+    <value>Windows が提供</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_Move" xml:space="preserve">
     <value>作成して移動</value>
@@ -214,7 +214,7 @@
     <value>アプリのウィンドウをすべてのデスクトップに表示 (ピン留め)</value>
   </data>
   <data name="Settings_ShortcutKey" xml:space="preserve">
-    <value>ショートカット キー</value>
+    <value>キー設定</value>
   </data>
   <data name="Settings_Startup" xml:space="preserve">
     <value>起動</value>

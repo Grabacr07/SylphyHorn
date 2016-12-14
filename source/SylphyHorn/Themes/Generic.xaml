@@ -3,6 +3,7 @@
 
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="/SylphyHorn;component/Themes/Generic.ShortcutKeyBox.xaml" />
+		<ResourceDictionary Source="/SylphyHorn;component/Themes/Generic.Keytop.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

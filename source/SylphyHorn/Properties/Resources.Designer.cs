@@ -250,11 +250,11 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ctrl + Win + D (provided by Windows).
+        ///   Looks up a localized string similar to provided by Windows.
         /// </summary>
-        public static string Settings_MoveWindowToCreatedDesktop_CreateOnly_Keys {
+        public static string Settings_MoveWindowToCreatedDesktop_CreateOnly_Note {
             get {
-                return ResourceManager.GetString("Settings_MoveWindowToCreatedDesktop_CreateOnly_Keys", resourceCulture);
+                return ResourceManager.GetString("Settings_MoveWindowToCreatedDesktop_CreateOnly_Note", resourceCulture);
             }
         }
         

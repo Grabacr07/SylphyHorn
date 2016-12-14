@@ -4,15 +4,15 @@
 
 	<Style TargetType="{x:Type controls:ShortcutKeyBox}">
 		<Setter Property="Background"
-				Value="{DynamicResource SemiactiveBackgroundBrushKey}" />
+				Value="Transparent" />
 		<Setter Property="BorderBrush"
-				Value="{DynamicResource SemiactiveBorderBrushKey}" />
+				Value="Transparent" />
 		<Setter Property="Foreground"
 				Value="{DynamicResource ActiveForegroundBrushKey}" />
 		<Setter Property="BorderThickness"
 				Value="1" />
 		<Setter Property="Padding"
-				Value="2" />
+				Value="3" />
 		<Setter Property="Margin"
 				Value="0,2" />
 		<Setter Property="VerticalContentAlignment"
@@ -27,15 +27,38 @@
 					<Border Background="{TemplateBinding Background}"
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}"
-							CornerRadius="0"
-							SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-						<ScrollViewer x:Name="PART_ContentHost"
-									  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-									  HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
-									  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-									  VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
-									  Margin="{TemplateBinding Padding}"
-									  Background="Transparent" />
+							CornerRadius="0">
+						<DockPanel Margin="{TemplateBinding Padding}">
+							<ItemsControl x:Name="PART_ModifyKeys"
+										  Foreground="{TemplateBinding Foreground}">
+								<ItemsControl.Template>
+									<ControlTemplate TargetType="{x:Type ItemsControl}">
+										<DockPanel>
+											<Path DockPanel.Dock="Right"
+												  Data="M6.09375,0 L6.90625,0 L6.90625,6.09375 L13,6.09375 L13,6.90625 L6.90625,6.90625 L6.90625,13 L6.09375,13 L6.09375,6.90625 L0,6.90625 L0,6.09375 L6.09375,6.09375 z"
+												  Fill="{TemplateBinding Foreground}"
+												  VerticalAlignment="Center"
+												  Margin="4" />
+											<StackPanel IsItemsHost="True"
+														Orientation="Horizontal" />
+										</DockPanel>
+									</ControlTemplate>
+								</ItemsControl.Template>
+								<ItemsControl.ItemTemplate>
+									<DataTemplate>
+										<controls:Keytop Key="{Binding}" />
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+							<controls:Keytop x:Name="PART_Key" />
+
+							<ScrollViewer x:Name="PART_ContentHost"
+										  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+										  HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
+										  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+										  VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
+										  Background="Transparent" />
+						</DockPanel>
 					</Border>
 				</ControlTemplate>
 			</Setter.Value>
@@ -94,10 +117,6 @@
 
 			<Trigger Property="IsEnabled"
 					 Value="False">
-				<Setter Property="Background"
-						Value="{DynamicResource InactiveBackgroundBrushKey}" />
-				<Setter Property="BorderBrush"
-						Value="{DynamicResource InactiveBorderBrushKey}" />
 				<Setter Property="Foreground"
 						Value="{DynamicResource InactiveForegroundBrushKey}" />
 			</Trigger>

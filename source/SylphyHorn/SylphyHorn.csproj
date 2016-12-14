@@ -206,6 +206,7 @@
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\ResourceService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="UI\Controls\Keytop.cs" />
     <Compile Include="UI\Controls\UnlockImageConverter.cs" />
     <Compile Include="UI\PinNotificationWindow.xaml.cs">
       <DependentUpon>PinNotificationWindow.xaml</DependentUpon>
@@ -238,6 +239,11 @@
     <Page Include="Styles\Controls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.Keytop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Generic.xaml</DependentUpon>
     </Page>
     <Page Include="Themes\Generic.ShortcutKeyBox.xaml">
       <SubType>Designer</SubType>

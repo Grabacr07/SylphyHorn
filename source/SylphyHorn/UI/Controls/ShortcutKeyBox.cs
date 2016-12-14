@@ -5,11 +5,17 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using SylphyHorn.Serialization;
 using SylphyHorn.Services;
+using VirtualKey = System.Windows.Forms.Keys;
 
 namespace SylphyHorn.UI.Controls
 {
+	[TemplatePart(Name = PART_ModifyKeys, Type = typeof(ItemsControl))]
+	[TemplatePart(Name = PART_Key, Type = typeof(Keytop))]
 	public class ShortcutKeyBox : TextBox
 	{
+		private const string PART_ModifyKeys = nameof(PART_ModifyKeys);
+		private const string PART_Key = nameof(PART_Key);
+
 		static ShortcutKeyBox()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(
@@ -17,9 +23,10 @@ namespace SylphyHorn.UI.Controls
 				new FrameworkPropertyMetadata(typeof(ShortcutKeyBox)));
 		}
 
-
 		private readonly HashSet<Key> _pressedModifiers = new HashSet<Key>();
 		private Key _pressedKey = Key.None;
+		private ItemsControl _modifiersPresneter;
+		private Keytop _keyPresenter;
 
 		#region Current 依存関係プロパティ
 
@@ -45,6 +52,16 @@ namespace SylphyHorn.UI.Controls
 		}
 
 		#endregion
+
+		public override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+
+			this._modifiersPresneter = this.GetTemplateChild(PART_ModifyKeys) as ItemsControl;
+			this._keyPresenter = this.GetTemplateChild(PART_Key) as Keytop;
+
+			this.UpdateText();
+		}
 
 		protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
 		{
@@ -103,10 +120,27 @@ namespace SylphyHorn.UI.Controls
 
 		private void UpdateText()
 		{
-			var text = (this.CurrentAsKeys ?? this.GetShortcutKey()).ToString();
+			var currentKey = this.CurrentAsKeys ?? this.GetShortcutKey();
 
-			this.Text = text;
-			this.CaretIndex = text.Length;
+			if (this._modifiersPresneter != null)
+			{
+				var modifiers = (currentKey.ModifiersInternal ?? currentKey.Modifiers ?? Enumerable.Empty<VirtualKey>())
+					.OrderBy(x => x)
+					.ToArray();
+
+				this._modifiersPresneter.ItemsSource = modifiers;
+				this._modifiersPresneter.Visibility = modifiers.Length == 0
+					? Visibility.Collapsed
+					: Visibility.Visible;
+			}
+
+			if (this._keyPresenter != null)
+			{
+				this._keyPresenter.Key = currentKey.Key;
+				this._keyPresenter.Visibility = currentKey.Key == VirtualKey.None
+					? Visibility.Collapsed
+					: Visibility.Visible;
+			}
 		}
 
 		private ShortcutKey GetShortcutKey()

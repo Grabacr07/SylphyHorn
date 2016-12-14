@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SylphyHorn.Serialization;
 
 #if WINDOWS_UWP
 using Windows.System;
@@ -14,6 +15,8 @@ namespace SylphyHorn.Services
 {
 	public static class KeyHelper
 	{
+		public static int[] VirtualDesktopCreationKey { get; } = new ShortcutKey(VirtualKey.D, VirtualKey.NoName, VirtualKey.Control).ToSerializable();
+
 		public static bool IsModifyKey(this VirtualKey key)
 		{
 			return IsModifyKey((uint)key);
