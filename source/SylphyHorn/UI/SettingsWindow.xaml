@@ -121,7 +121,8 @@
 
 				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
 							  VerticalScrollBarVisibility="Auto">
-					<StackPanel Margin="16,0,16,16">
+					<StackPanel Margin="16,0,16,16"
+								Focusable="True">
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_DesktopSwitching}"
 								   Style="{DynamicResource HeaderStyleKey}"
 								   Margin="0,0,0,8" />
@@ -195,7 +196,8 @@
 
 				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
 							  VerticalScrollBarVisibility="Auto">
-					<StackPanel Margin="16,0,16,16">
+					<StackPanel Margin="16,0,16,16"
+								Focusable="True">
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_Desktop}"
 								   Style="{DynamicResource HeaderStyleKey}"
 								   Margin="0,0,0,8" />
@@ -269,7 +271,8 @@
 				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
 							  VerticalScrollBarVisibility="Auto">
 					<StackPanel Margin="16,0,16,16"
-								Grid.IsSharedSizeScope="True">
+								Grid.IsSharedSizeScope="True"
+								Focusable="True">
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToAdjacentDesktop}"
 								   Style="{DynamicResource HeaderStyleKey}"
 								   Margin="0,0,0,8" />
@@ -333,6 +336,7 @@
 				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
 							  VerticalScrollBarVisibility="Auto">
 					<StackPanel Margin="16,0,16,16"
+								Focusable="True"
 								Grid.IsSharedSizeScope="True">
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_PinWindow}"
 								   Style="{DynamicResource HeaderStyleKey}"
@@ -382,7 +386,7 @@
 					</StackPanel>
 				</ScrollViewer>
 			</TabItem>
-			
+
 			<TabItem>
 				<TabItem.Header>
 					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Version}"
@@ -392,6 +396,7 @@
 				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
 							  VerticalScrollBarVisibility="Auto">
 					<StackPanel Margin="16,0,16,16"
+								Focusable="True"
 								Grid.IsSharedSizeScope="True">
 						<TextBlock Text="{x:Static properties:ProductInfo.Title}"
 								   Foreground="{DynamicResource ActiveForegroundBrushKey}"
