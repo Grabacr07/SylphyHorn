@@ -241,7 +241,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create only.
+        ///   Looks up a localized string similar to Switch only.
         /// </summary>
         public static string Settings_MoveWindowToCreatedDesktop_CreateOnly {
             get {

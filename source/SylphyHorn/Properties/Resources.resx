@@ -178,7 +178,7 @@
     <value>Move active window to created new desktop</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly" xml:space="preserve">
-    <value>Create only</value>
+    <value>Switch only</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly_Note" xml:space="preserve">
     <value>provided by Windows</value>

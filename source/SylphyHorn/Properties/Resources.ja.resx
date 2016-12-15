@@ -160,7 +160,7 @@
     <value>すべての表示の反映にはアプリの再起動が必要です。</value>
   </data>
   <data name="Settings_MoveWindowToAdjacentDesktop" xml:space="preserve">
-    <value>隣接した仮想デスクトップへ移動</value>
+    <value>アクティブ ウィンドウを隣接した仮想デスクトップへ移動</value>
   </data>
   <data name="Settings_MoveWindowToAdjacentDesktop_Left" xml:space="preserve">
     <value>左へ移動:</value>
@@ -175,16 +175,16 @@
     <value>右へ移動して切り替え:</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop" xml:space="preserve">
-    <value>作成した仮想デスクトップへ移動</value>
+    <value>アクティブ ウィンドウを新しく作成した仮想デスクトップへ移動</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly" xml:space="preserve">
-    <value>作成のみ</value>
+    <value>切り替えのみ</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly_Note" xml:space="preserve">
     <value>Windows が提供</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_Move" xml:space="preserve">
-    <value>作成して移動</value>
+    <value>移動</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_MoveAndSwitch" xml:space="preserve">
     <value>移動して切り替え</value>
