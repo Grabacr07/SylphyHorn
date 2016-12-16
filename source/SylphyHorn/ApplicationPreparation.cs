@@ -124,11 +124,20 @@ namespace SylphyHorn
 		{
 			using (this._application.HookService.Suspend())
 			{
-				var window = new SettingsWindow
+				if (SettingsWindow.Instance != null)
 				{
-					DataContext = new SettingsWindowViewModel(this._application.HookService),
-				};
-				window.ShowDialog();
+					SettingsWindow.Instance.Activate();
+				}
+				else
+				{
+					SettingsWindow.Instance = new SettingsWindow
+					{
+						DataContext = new SettingsWindowViewModel(this._application.HookService),
+					};
+
+					SettingsWindow.Instance.ShowDialog();
+					SettingsWindow.Instance = null;
+				}
 			}
 		}
 	}
