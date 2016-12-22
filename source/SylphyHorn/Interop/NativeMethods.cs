@@ -24,5 +24,8 @@ namespace SylphyHorn.Interop
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		public static extern int SystemParametersInfo(SystemParametersInfo uAction, int uParam, string lpvParam, SystemParametersInfoFlag fuWinIni);
+
+		[DllImport("user32.dll")]
+		internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
 	}
 }
