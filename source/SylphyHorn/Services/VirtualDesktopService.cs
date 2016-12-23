@@ -99,6 +99,23 @@ namespace SylphyHorn.Services
 
 		#endregion
 
+		#region Close
+
+		public static void CloseCurrent()
+		{
+			var current = VirtualDesktop.Current;
+			var desktops = VirtualDesktop.GetDesktops();
+			
+			if (desktops.Length > 1)
+			{
+				var future = GetLeft() ?? GetRight();
+				future.Switch();
+				current.Remove();
+			}
+		}
+
+		#endregion
+
 		#region Pin / Unpin
 
 		public static event EventHandler<WindowPinnedEventArgs> WindowPinned;

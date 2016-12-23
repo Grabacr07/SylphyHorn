@@ -131,6 +131,25 @@ namespace SylphyHorn.Properties {
                 return ResourceManager.GetString("Settings_Background_SourceImageFolder", resourceCulture);
             }
         }
+
+
+        /// <summary>
+        ///   Looks up a localized string similar to Close desktop.
+        /// </summary>
+        public static string Settings_CloseDesktop {
+            get {
+                return ResourceManager.GetString("Settings_CloseDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close:.
+        /// </summary>
+        public static string Settings_CloseDesktop_Close {
+            get {
+                return ResourceManager.GetString("Settings_CloseDesktop_Close", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Desktop switching.

@@ -141,6 +141,12 @@
   <data name="Settings_Background_SourceImageFolder" xml:space="preserve">
     <value>Source image folder path</value>
   </data>
+  <data name="Settings_CloseDesktop" xml:space="preserve">
+    <value>Close desktop</value>
+  </data>
+  <data name="Settings_CloseDesktop_Close" xml:space="preserve">
+    <value>Close:</value>
+  </data>
   <data name="Settings_DesktopSwitching" xml:space="preserve">
     <value>Desktop switching</value>
   </data>

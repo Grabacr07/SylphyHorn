@@ -64,6 +64,10 @@ namespace SylphyHorn
 				.AddTo(this._application);
 
 			this._application.HookService
+				.Register(() => settings.Close.ToShortcutKey(), _ => VirtualDesktopService.CloseCurrent())
+				.AddTo(this._application);
+
+			this._application.HookService
 				.Register(() => settings.Pin.ToShortcutKey(), hWnd => hWnd.Pin())
 				.AddTo(this._application);
 

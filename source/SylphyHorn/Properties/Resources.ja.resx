@@ -141,6 +141,12 @@
   <data name="Settings_Background_SourceImageFolder" xml:space="preserve">
     <value>画像フォルダー パス</value>
   </data>
+  <data name="Settings_CloseDesktop" xml:space="preserve">
+    <value>仮想デスクトップを閉じる</value>
+  </data>
+  <data name="Settings_CloseDesktop_Close" xml:space="preserve">
+    <value>閉じる:</value>
+  </data>
   <data name="Settings_DesktopSwitching" xml:space="preserve">
     <value>デスクトップ切り替え</value>
   </data>
