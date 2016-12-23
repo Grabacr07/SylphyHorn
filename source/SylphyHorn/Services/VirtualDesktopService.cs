@@ -101,15 +101,26 @@ namespace SylphyHorn.Services
 
 		#region Close
 
-		public static void CloseCurrent()
+		public static void CloseAndSwitchLeft()
 		{
 			var current = VirtualDesktop.Current;
 			var desktops = VirtualDesktop.GetDesktops();
 			
 			if (desktops.Length > 1)
 			{
-				var future = GetLeft() ?? GetRight();
-				future.Switch();
+				GetLeft()?.Switch();
+				current.Remove();
+			}
+		}
+
+		public static void CloseAndSwitchRight()
+		{
+			var current = VirtualDesktop.Current;
+			var desktops = VirtualDesktop.GetDesktops();
+
+			if (desktops.Length > 1)
+			{
+				GetRight()?.Switch();
 				current.Remove();
 			}
 		}

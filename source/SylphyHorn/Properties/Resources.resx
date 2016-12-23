@@ -144,8 +144,14 @@
   <data name="Settings_CloseDesktop" xml:space="preserve">
     <value>Close desktop</value>
   </data>
-  <data name="Settings_CloseDesktop_Close" xml:space="preserve">
-    <value>Close:</value>
+  <data name="Settings_CloseDesktop_CloseAndSwitchLeft" xml:space="preserve">
+    <value>Close and switch left:</value>
+  </data>
+  <data name="Settings_CloseDesktop_CloseAndSwitchLeft_Note" xml:space="preserve">
+    <value>provided by Windows with Ctrl+Win+F4</value>
+  </data>
+  <data name="Settings_CloseDesktop_CloseAndSwitchRight" xml:space="preserve">
+    <value>Close and switch right:</value>
   </data>
   <data name="Settings_DesktopSwitching" xml:space="preserve">
     <value>Desktop switching</value>
