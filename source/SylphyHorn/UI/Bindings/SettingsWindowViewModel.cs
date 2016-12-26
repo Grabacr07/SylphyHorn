@@ -16,11 +16,19 @@ namespace SylphyHorn.UI.Bindings
 	{
 		private static bool _restartRequired;
 		private static readonly string _defaultCulture = Settings.General.Culture;
+		private static readonly WindowPlacement _defaultPlacement = (WindowPlacement)Settings.General.Placement.Value;
+		private static readonly uint _defaultDisplay = Settings.General.Display;
 
 		private readonly HookService _hookService;
 		private readonly Startup _startup;
 
 		public IReadOnlyCollection<DisplayViewModel<string>> Cultures { get; }
+
+		public IReadOnlyCollection<DisplayViewModel<WindowPlacement>> Placements { get; }
+
+		public bool IsDisplayEnabled { get; }
+
+		public IReadOnlyCollection<DisplayViewModel<uint>> Displays { get; }
 
 		public IReadOnlyCollection<BindableTextViewModel> Libraries { get; }
 
@@ -74,6 +82,44 @@ namespace SylphyHorn.UI.Bindings
 
 		#endregion
 
+		#region Placement notification property
+
+		public WindowPlacement Placement
+		{
+			get { return (WindowPlacement)Settings.General.Placement.Value; }
+			set
+			{
+				if ((WindowPlacement)Settings.General.Placement.Value != value)
+				{
+					Settings.General.Placement.Value = (uint)value;
+					_restartRequired = value != _defaultPlacement;
+
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
+		#region Display notification property
+
+		public uint Display
+		{
+			get { return Settings.General.Display; }
+			set
+			{
+				if (Settings.General.Display != value)
+				{
+					Settings.General.Display.Value = value;
+					_restartRequired = value != _defaultDisplay;
+
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
 		#region Backgrounds notification property
 
 		private WallpaperFile[] _Backgrounds;
@@ -103,6 +149,27 @@ namespace SylphyHorn.UI.Bindings
 					.Select(x => new DisplayViewModel<string> { Display = x.NativeName, Value = x.Name, })
 					.OrderBy(x => x.Display))
 				.ToList();
+
+			this.Placements = new[] {
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopLeft, Value = WindowPlacement.TopLeft },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopCenter, Value = WindowPlacement.TopCenter },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopRight, Value = WindowPlacement.TopRight },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_Center, Value = WindowPlacement.Center },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomLeft, Value = WindowPlacement.BottomLeft },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomCenter, Value = WindowPlacement.BottomCenter },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomRight, Value = WindowPlacement.BottomRight },
+			}.ToList();
+
+			this.Displays = new[] { new DisplayViewModel<uint> { Display = Resources.Settings_MultipleDisplays_CurrentDisplay, Value = 0 } }
+				.Concat(MonitorService.GetMonitors()
+					.Select((m, i) => new DisplayViewModel<uint>
+					{
+						Display = string.Format(Resources.Settings_MultipleDisplays_EachDisplay, i + 1, m.Name),
+						Value = (uint)(i + 1)
+					}))
+				.Concat(new[] { new DisplayViewModel<uint> { Display = Resources.Settings_MultipleDisplays_AllDisplays, Value = uint.MaxValue } })
+				.ToList();
+			if (this.Displays.Count > 3) this.IsDisplayEnabled = true;
 
 			this.Libraries = ProductInfo.Libraries.Aggregate(
 				new List<BindableTextViewModel>(),

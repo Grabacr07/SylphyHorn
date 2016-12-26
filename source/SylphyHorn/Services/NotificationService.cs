@@ -54,14 +54,37 @@ namespace SylphyHorn.Services
 				Body = "Current Desktop: Desktop " + index,
 			};
 			var source = new CancellationTokenSource();
-			var window = new NotificationWindow()
+
+			var settings = Settings.General.Display.Value;
+			Monitor[] targets;
+			if (settings == 0)
 			{
-				DataContext = vmodel,
-			};
-			window.Show();
+				targets = new[] { MonitorService.GetCurrentArea() };
+			}
+			else
+			{
+				var monitors = MonitorService.GetAreas();
+				if (settings == uint.MaxValue)
+				{
+					targets = monitors;
+				}
+				else
+				{
+					targets = new[] { monitors[settings - 1] };
+				}
+			}
+			var windows = targets.Select(area =>
+			{
+				var window = new NotificationWindow(area.WorkArea)
+				{
+					DataContext = vmodel,
+				};
+				window.Show();
+				return window;
+			}).ToList();
 
 			Task.Delay(TimeSpan.FromMilliseconds(Settings.General.NotificationDuration), source.Token)
-				.ContinueWith(_ => window.Close(), TaskScheduler.FromCurrentSynchronizationContext());
+				.ContinueWith(_ => windows.ForEach(window => window.Close()), TaskScheduler.FromCurrentSynchronizationContext());
 
 			return Disposable.Create(() => source.Cancel());
 		}

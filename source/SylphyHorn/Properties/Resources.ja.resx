@@ -189,8 +189,44 @@
   <data name="Settings_MoveWindowToCreatedDesktop_MoveAndSwitch" xml:space="preserve">
     <value>移動して切り替え</value>
   </data>
+  <data name="Settings_MultipleDisplays" xml:space="preserve">
+    <value>複数のディスプレイ</value>
+  </data>
+  <data name="Settings_MultipleDisplays_AllDisplays" xml:space="preserve">
+    <value>すべてのディスプレイ</value>
+  </data>
+  <data name="Settings_MultipleDisplays_CurrentDisplay" xml:space="preserve">
+    <value>作業中のディスプレイ</value>
+  </data>
+  <data name="Settings_MultipleDisplays_EachDisplay" xml:space="preserve">
+    <value>ディスプレイ {0} {1}</value>
+  </data>
   <data name="Settings_Notification" xml:space="preserve">
     <value>通知</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement" xml:space="preserve">
+    <value>通知ウィンドウの配置</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement_BottomCenter" xml:space="preserve">
+    <value>中央 下部</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement_BottomLeft" xml:space="preserve">
+    <value>左下</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement_BottomRight" xml:space="preserve">
+    <value>右下</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement_Center" xml:space="preserve">
+    <value>中央</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement_TopCenter" xml:space="preserve">
+    <value>中央 上部</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement_TopLeft" xml:space="preserve">
+    <value>左上</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement_TopRight" xml:space="preserve">
+    <value>右上</value>
   </data>
   <data name="Settings_Notification_Display" xml:space="preserve">
     <value>仮想デスクトップ切り替え時に通知を表示する</value>
@@ -212,6 +248,9 @@
   </data>
   <data name="Settings_PinWindowFromApp" xml:space="preserve">
     <value>アプリのウィンドウをすべてのデスクトップに表示 (ピン留め)</value>
+  </data>
+  <data name="Settings_Placement" xml:space="preserve">
+    <value>配置</value>
   </data>
   <data name="Settings_ShortcutKey" xml:space="preserve">
     <value>キー設定</value>

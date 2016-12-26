@@ -28,6 +28,27 @@ namespace SylphyHorn.UI.Controls
 
 		#endregion
 
+		#region WindowBorder 依存関係プロパティ
+
+		public AccentFlags WindowBorder
+		{
+			get { return (AccentFlags)this.GetValue(WindowBorderProperty); }
+			set { this.SetValue(WindowBorderProperty, value); }
+		}
+		public static readonly DependencyProperty WindowBorderProperty =
+			DependencyProperty.Register("WindowBorder", typeof(AccentFlags), typeof(BlurWindow), new UIPropertyMetadata(AccentFlags.DrawAllBorders, WindowBorderChangedCallback));
+
+		private static void WindowBorderChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var window = d as BlurWindow;
+			if (window == null) return;
+
+			window.ChangeWindowBorder((AccentFlags)e.NewValue);
+		}
+
+		#endregion
+
+
 		protected override void OnSourceInitialized(EventArgs e)
 		{
 			this.ChangeIsBlured(this.IsBlured);
@@ -35,13 +56,13 @@ namespace SylphyHorn.UI.Controls
 			base.OnSourceInitialized(e);
 		}
 
-		private void ChangeIsBlured(bool blured)
+		private void ChangeIsBlured(bool blured, bool force = false)
 		{
 			if (!this.IsInitialized) return;
 
 			var highContrast = SystemParameters.HighContrast;
 			var transparency = this.AllowsTransparency;
-			if (!highContrast && transparency && blured && !this._isBlured)
+			if (!highContrast && transparency && (force || (blured && !this._isBlured)))
 			{
 				this.EnableBlur();
 				this._isBlured = true;
@@ -53,9 +74,17 @@ namespace SylphyHorn.UI.Controls
 			}
 		}
 
+		private void ChangeWindowBorder(AccentFlags flags)
+		{
+			if (this.IsBlured)
+			{
+				this.ChangeIsBlured(true, true);
+			}
+		}
+
 		private void EnableBlur()
 		{
-			WindowCompositionHelper.SetWindowComposition(this, AccentState.ACCENT_ENABLE_BLURBEHIND, AccentFlags.DrawAllBorders);
+			WindowCompositionHelper.SetWindowComposition(this, AccentState.ACCENT_ENABLE_BLURBEHIND, this.WindowBorder);
 		}
 
 		private void DisableBlur()

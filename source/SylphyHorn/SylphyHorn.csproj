@@ -197,6 +197,8 @@
     <Compile Include="ApplicationPreparation.cs" />
     <Compile Include="CommandLineArgs.cs" />
     <Compile Include="Interop\IconHelper.cs" />
+    <Compile Include="Interop\MonitorInfoEx.cs" />
+    <Compile Include="Interop\PhysicalMonitor.cs" />
     <Compile Include="Interop\Platform.cs" />
     <Compile Include="Interop\WindowCompositionAttribute.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -205,6 +207,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\LoggingService.cs" />
+    <Compile Include="Services\MonitorService.cs" />
     <Compile Include="Services\ResourceService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="UI\Controls\BlurWindow.cs" />
