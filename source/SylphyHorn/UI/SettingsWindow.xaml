@@ -243,12 +243,12 @@
 									<DataTemplate>
 										<DockPanel Margin="2">
 											<Label DockPanel.Dock="Top"
-												   Content="{Binding Number}"
+												   Content="{Binding DesktopMonitorText}"
 												   Background="{DynamicResource ActiveBackgroundBrushKey}"
 												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
 												   HorizontalContentAlignment="Center"
 												   Padding="8,1" />
-											<Image Source="{Binding Filepath, Converter={StaticResource UnlockImageConverter}}"
+											<Image Source="{Binding Filepath, Converter={StaticResource UnlockImageConverter}, IsAsync=True}"
 												   Stretch="Uniform"
 												   VerticalAlignment="Top"
 												   MaxWidth="150" />

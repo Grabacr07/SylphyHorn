@@ -197,6 +197,7 @@
     <Compile Include="ApplicationPreparation.cs" />
     <Compile Include="CommandLineArgs.cs" />
     <Compile Include="Interop\IconHelper.cs" />
+    <Compile Include="Interop\IDesktopWallpaper.cs" />
     <Compile Include="Interop\MonitorInfoEx.cs" />
     <Compile Include="Interop\PhysicalMonitor.cs" />
     <Compile Include="Interop\Platform.cs" />
