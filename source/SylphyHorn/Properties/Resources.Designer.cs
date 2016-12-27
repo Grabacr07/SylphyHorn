@@ -131,6 +131,43 @@ namespace SylphyHorn.Properties {
                 return ResourceManager.GetString("Settings_Background_SourceImageFolder", resourceCulture);
             }
         }
+
+
+        /// <summary>
+        ///   Looks up a localized string similar to Close desktop.
+        /// </summary>
+        public static string Settings_CloseDesktop {
+            get {
+                return ResourceManager.GetString("Settings_CloseDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close and switch left:.
+        /// </summary>
+        public static string Settings_CloseDesktop_CloseAndSwitchLeft {
+            get {
+                return ResourceManager.GetString("Settings_CloseDesktop_CloseAndSwitchLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to provided by Windows with Ctrl+Win+F4.
+        /// </summary>
+        public static string Settings_CloseDesktop_CloseAndSwitchLeft_Note {
+            get {
+                return ResourceManager.GetString("Settings_CloseDesktop_CloseAndSwitchLeft_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close and switch right:.
+        /// </summary>
+        public static string Settings_CloseDesktop_CloseAndSwitchRight {
+            get {
+                return ResourceManager.GetString("Settings_CloseDesktop_CloseAndSwitchRight", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Desktop switching.
