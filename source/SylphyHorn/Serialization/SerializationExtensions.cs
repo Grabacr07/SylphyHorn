@@ -14,28 +14,11 @@ namespace SylphyHorn.Serialization
 {
 	public static class SerializationExtensions
 	{
-#if !WINDOWS_UWP
-		private static readonly Dictionary<string, ShortcutKey> _keyCache = new Dictionary<string, ShortcutKey>();
-
-		public static void ClearCache() => _keyCache.Clear();
-#endif
-
 		public static ShortcutKey ToShortcutKey(this ShortcutkeyProperty property)
 		{
-			if (property?.Value == null) return ShortcutKey.None;
-
-#if !WINDOWS_UWP
-			ShortcutKey cached;
-			if (_keyCache.TryGetValue(property.Key, out cached)) return cached;
-#endif
-
-			var result = ToShortcutKey(property.Value);
-
-#if !WINDOWS_UWP
-			_keyCache[property.Key] = result;
-#endif
-
-			return result;
+			return property?.Value == null 
+				? ShortcutKey.None 
+				: ToShortcutKey(property.Value);
 		}
 
 		public static ShortcutKey ToShortcutKey(this int[] keyCodes)
