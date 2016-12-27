@@ -61,6 +61,15 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to provided by Windows.
+        /// </summary>
+        public static string Common_ProvidedByWinows {
+            get {
+                return ResourceManager.GetString("Common_ProvidedByWinows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reference.
         /// </summary>
         public static string Common_Reference {
@@ -131,8 +140,7 @@ namespace SylphyHorn.Properties {
                 return ResourceManager.GetString("Settings_Background_SourceImageFolder", resourceCulture);
             }
         }
-
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Close desktop.
         /// </summary>
@@ -148,15 +156,6 @@ namespace SylphyHorn.Properties {
         public static string Settings_CloseDesktop_CloseAndSwitchLeft {
             get {
                 return ResourceManager.GetString("Settings_CloseDesktop_CloseAndSwitchLeft", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to provided by Windows with Ctrl+Win+F4.
-        /// </summary>
-        public static string Settings_CloseDesktop_CloseAndSwitchLeft_Note {
-            get {
-                return ResourceManager.GetString("Settings_CloseDesktop_CloseAndSwitchLeft_Note", resourceCulture);
             }
         }
         
@@ -283,15 +282,6 @@ namespace SylphyHorn.Properties {
         public static string Settings_MoveWindowToCreatedDesktop_CreateOnly {
             get {
                 return ResourceManager.GetString("Settings_MoveWindowToCreatedDesktop_CreateOnly", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to provided by Windows.
-        /// </summary>
-        public static string Settings_MoveWindowToCreatedDesktop_CreateOnly_Note {
-            get {
-                return ResourceManager.GetString("Settings_MoveWindowToCreatedDesktop_CreateOnly_Note", resourceCulture);
             }
         }
         
