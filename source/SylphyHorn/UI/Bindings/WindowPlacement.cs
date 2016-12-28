@@ -1,4 +1,4 @@
-﻿namespace SylphyHorn.Serialization
+﻿namespace SylphyHorn.UI.Bindings
 {
 	public enum WindowPlacement : uint
 	{

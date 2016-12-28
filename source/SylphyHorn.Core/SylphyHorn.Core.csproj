@@ -55,7 +55,6 @@
     <Compile Include="Serialization\SettingsHost.cs" />
     <Compile Include="Serialization\ShortcutKeySettings.cs" />
     <Compile Include="Serialization\DictionaryProvider.cs" />
-    <Compile Include="Serialization\WindowPlacement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

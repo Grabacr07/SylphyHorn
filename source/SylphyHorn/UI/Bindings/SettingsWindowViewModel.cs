@@ -16,8 +16,6 @@ namespace SylphyHorn.UI.Bindings
 	{
 		private static bool _restartRequired;
 		private static readonly string _defaultCulture = Settings.General.Culture;
-		private static readonly WindowPlacement _defaultPlacement = (WindowPlacement)Settings.General.Placement.Value;
-		private static readonly uint _defaultDisplay = Settings.General.Display;
 
 		private readonly HookService _hookService;
 		private readonly Startup _startup;
@@ -92,7 +90,6 @@ namespace SylphyHorn.UI.Bindings
 				if ((WindowPlacement)Settings.General.Placement.Value != value)
 				{
 					Settings.General.Placement.Value = (uint)value;
-					_restartRequired = value != _defaultPlacement;
 
 					this.RaisePropertyChanged();
 				}
@@ -111,7 +108,6 @@ namespace SylphyHorn.UI.Bindings
 				if (Settings.General.Display != value)
 				{
 					Settings.General.Display.Value = value;
-					_restartRequired = value != _defaultDisplay;
 
 					this.RaisePropertyChanged();
 				}
