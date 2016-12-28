@@ -7,6 +7,7 @@ using SylphyHorn.Interop;
 using SylphyHorn.Serialization;
 using WindowsDesktop;
 using System.Collections.ObjectModel;
+using System.Windows.Media;
 
 namespace SylphyHorn.Services
 {
@@ -85,6 +86,21 @@ namespace SylphyHorn.Services
 
 			var first = merged.First();
 			if (first != null) dw.SetPosition((DesktopWallpaperPosition)first.Item2.Position);
+		}
+
+		public static Tuple<Color, string> GetCurrentColorAndWallpaper()
+		{
+			var dw = DesktopWallpaperFactory.Create();
+			var colorref = dw.GetBackgroundColor();
+
+			string path = null;
+			if (dw.GetMonitorDevicePathCount() >= 1)
+			{
+				var monitorID = dw.GetMonitorDevicePathAt(0);
+				path = dw.GetWallpaper(monitorID);
+			}
+
+			return Tuple.Create(Color.FromRgb(colorref.R, colorref.G, colorref.B), path);
 		}
 	}
 

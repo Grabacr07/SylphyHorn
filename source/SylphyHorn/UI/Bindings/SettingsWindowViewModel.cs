@@ -9,6 +9,7 @@ using MetroTrilithon.Mvvm;
 using SylphyHorn.Properties;
 using SylphyHorn.Serialization;
 using SylphyHorn.Services;
+using System.Windows.Media;
 
 namespace SylphyHorn.UI.Bindings
 {
@@ -135,6 +136,50 @@ namespace SylphyHorn.UI.Bindings
 
 		#endregion
 
+		public bool HasWallpaper => !string.IsNullOrEmpty(this.PreviewBackgroundPath);
+
+		#region PreviewBackgroundBrush notification property
+
+		private SolidColorBrush _PreviewBackgroundBrush;
+
+		public SolidColorBrush PreviewBackgroundBrush
+		{
+			get { return this._PreviewBackgroundBrush; }
+			set
+			{
+				if (this._PreviewBackgroundBrush != value)
+				{
+					this._PreviewBackgroundBrush = value;
+
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
+		#region PreviewBackgroundPath notification property
+
+		private string _PreviewBackgroundPath;
+
+		public string PreviewBackgroundPath
+		{
+			get { return this._PreviewBackgroundPath; }
+			set
+			{
+				if (this._PreviewBackgroundPath != value)
+				{
+					this._PreviewBackgroundPath = value;
+
+					this.RaisePropertyChanged();
+					this.RaisePropertyChanged(nameof(HasWallpaper));
+				}
+			}
+		}
+
+		#endregion
+
+
 		public SettingsWindowViewModel(HookService hookService)
 		{
 			this._hookService = hookService;
@@ -186,6 +231,10 @@ namespace SylphyHorn.UI.Bindings
 			Settings.General.DesktopBackgroundFolderPath
 				.Subscribe(path => this.Backgrounds = WallpaperService.Instance.GetWallpaperFiles(path))
 				.AddTo(this);
+
+			var colAndWall = WallpaperService.GetCurrentColorAndWallpaper();
+			this.PreviewBackgroundBrush = new SolidColorBrush(colAndWall.Item1);
+			this.PreviewBackgroundPath = colAndWall.Item2;
 
 			Disposable.Create(() => LocalSettingsProvider.Instance.SaveAsync().Wait())
 				.AddTo(this);

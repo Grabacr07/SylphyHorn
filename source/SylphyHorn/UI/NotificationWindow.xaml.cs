@@ -3,8 +3,8 @@ using System.Windows;
 using System.Windows.Interop;
 using MetroRadiance.Interop.Win32;
 using MetroRadiance.Interop;
-using SylphyHorn.Services;
 using SylphyHorn.Serialization;
+using SylphyHorn.UI.Bindings;
 
 namespace SylphyHorn.UI
 {

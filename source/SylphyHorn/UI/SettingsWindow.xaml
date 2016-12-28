@@ -302,6 +302,205 @@
 												  Margin="1,0,0,0"
 												  HorizontalAlignment="Left" />
 						</StackPanel>
+						<Border Height="32" />
+
+						<Canvas>
+							<Canvas.Resources>
+								<Style x:Key="PreviewGridStyle"
+									   TargetType="Grid">
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopLeft}">
+											<Setter Property="Canvas.Left"
+													Value="0" />
+											<Setter Property="Canvas.Top"
+													Value="0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopCenter}">
+											<Setter Property="Canvas.Left"
+													Value="90" />
+											<Setter Property="Canvas.Top"
+													Value="0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopRight}">
+											<Setter Property="Canvas.Left"
+													Value="180" />
+											<Setter Property="Canvas.Top"
+													Value="0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.Center}">
+											<Setter Property="Canvas.Left"
+													Value="90" />
+											<Setter Property="Canvas.Top"
+													Value="110" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomLeft}">
+											<Setter Property="Canvas.Left"
+													Value="0" />
+											<Setter Property="Canvas.Top"
+													Value="205" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomCenter}">
+											<Setter Property="Canvas.Left"
+													Value="90" />
+											<Setter Property="Canvas.Top"
+													Value="205" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomRight}">
+											<Setter Property="Canvas.Left"
+													Value="180" />
+											<Setter Property="Canvas.Top"
+													Value="205" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+								<Style x:Key="PreviewBlurImageStyle"
+									   TargetType="Image">
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopLeft}">
+											<Setter Property="Margin"
+													Value="0,0,-180,-220" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopCenter}">
+											<Setter Property="Margin"
+													Value="-90,0,-90,-220" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopRight}">
+											<Setter Property="Margin"
+													Value="-180,0,0,-220" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.Center}">
+											<Setter Property="Margin"
+													Value="-90,-110,-90,-110" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomLeft}">
+											<Setter Property="Margin"
+													Value="0,-205,-180,-15" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomCenter}">
+											<Setter Property="Margin"
+													Value="-90,-205,-90,-15" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomRight}">
+											<Setter Property="Margin"
+													Value="-180,-205,0,-15" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+								<Style x:Key="PreviewBorderStyle"
+									   TargetType="Border">
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopLeft}">
+											<Setter Property="BorderThickness"
+													Value="0,0,1,1" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopCenter}">
+											<Setter Property="BorderThickness"
+													Value="1,0,1,1" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopRight}">
+											<Setter Property="BorderThickness"
+													Value="1,0,0,1" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.Center}">
+											<Setter Property="BorderThickness"
+													Value="1" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomLeft}">
+											<Setter Property="BorderThickness"
+													Value="0,1,1,0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomCenter}">
+											<Setter Property="BorderThickness"
+													Value="1,1,1,0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomRight}">
+											<Setter Property="BorderThickness"
+													Value="1,1,0,0" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</Canvas.Resources>
+							<Rectangle Fill="{Binding PreviewBackgroundBrush}"
+									   Width="480"
+									   Height="270" />
+							<Image Source="{Binding PreviewBackgroundPath, Converter={StaticResource UnlockImageConverter}, IsAsync=True}"
+								   Stretch="Uniform"
+								   VerticalAlignment="Top"
+								   Width="480"
+								   Height="270" />
+
+							<Grid x:Name="PreviewRoot"
+								  Width="300"
+								  Height="50"
+								  Style="{StaticResource PreviewGridStyle}">
+								<ContentControl Width="300"
+												Height="50"
+												ClipToBounds="True">
+									<ContentControl.CacheMode>
+										<BitmapCache RenderAtScale="0.2" />
+									</ContentControl.CacheMode>
+									<Image x:Name="PreviewBlurImage"
+										   Source="{Binding PreviewBackgroundPath, Converter={StaticResource UnlockImageConverter}, IsAsync=True}"
+										   Stretch="Uniform"
+										   VerticalAlignment="Top"
+										   Width="480"
+										   Height="270"
+										   Visibility="{Binding HasWallpaper, Converter={StaticResource BooleanToVisibilityConverter}}"
+										   Style="{StaticResource PreviewBlurImageStyle}">
+										<Image.Effect>
+											<BlurEffect Radius="20" />
+										</Image.Effect>
+									</Image>
+								</ContentControl>
+								<Border Background="{DynamicResource ThemeBrushKey}"
+										Opacity="0.7" />
+								<DockPanel VerticalAlignment="Center"
+										   Margin="8,6"
+										   Opacity="0.9">
+									<TextBlock DockPanel.Dock="Top"
+											   Text="Virtual Desktop Switched"
+											   Style="{DynamicResource CaptionTextStyleKey}"
+											   Foreground="{DynamicResource AccentBrushKey}"
+											   FontFamily="Segoe UI Light, Meiryo UI"
+											   FontSize="11"
+											   Margin="1,0,0,-4" />
+									<TextBlock DockPanel.Dock="Top"
+											   Text="Current Desktop: Desktop 1"
+											   Style="{DynamicResource CaptionTextStyleKey}"
+											   FontFamily="Segoe UI Light, Meiryo UI"
+											   FontSize="21" />
+								</DockPanel>
+								<Border BorderBrush="#A3A3A3"
+										SnapsToDevicePixels="True"
+										Style="{StaticResource PreviewBorderStyle}" />
+							</Grid>
+
+							<Rectangle Fill="#C000"
+									   Width="480"
+									   Height="15"
+									   Canvas.Top="255" />
+						</Canvas>
 					</StackPanel>
 				</ScrollViewer>
 			</TabItem>

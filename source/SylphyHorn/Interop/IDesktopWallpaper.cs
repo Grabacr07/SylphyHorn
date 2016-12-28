@@ -59,8 +59,7 @@ namespace SylphyHorn.Interop
 		RECT GetMonitorRECT([MarshalAs(UnmanagedType.LPWStr)] string monitorID);
 
 		void SetBackgroundColor([MarshalAs(UnmanagedType.U4)] COLORREF color);
-
-		[return: MarshalAs(UnmanagedType.U4)]
+		
 		COLORREF GetBackgroundColor();
 
 		void SetPosition([MarshalAs(UnmanagedType.I4)] DesktopWallpaperPosition position);
