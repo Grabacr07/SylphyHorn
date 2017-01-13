@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using MetroRadiance.Interop;
+using SylphyHorn.Services;
 
 namespace SylphyHorn.Interop
 {
 	public static class IconHelper
 	{
+        private static DigitDrawer _digitDrawer;
+
 		public static Icon GetIconFromResource(Uri uri)
 		{
 			var streamResourceInfo = System.Windows.Application.GetResourceStream(uri);
@@ -23,6 +26,22 @@ namespace SylphyHorn.Interop
 
         public static Icon GetDesktopInfoIcon(int currentDesktop, int totalDesktopCount, Color color)
         {
+            if (_digitDrawer.Color != color || _digitDrawer == null)
+            {
+                _digitDrawer?.Dispose();
+
+                _digitDrawer = new DigitDrawer(1, color);
+            }
+
+
+
+            IntPtr hIcon = bitmap.GetHicon();
+            var icon = Icon.FromHandle(hIcon);
+
+            return ScaleIconToDpi(icon);
+
+
+            //
             using (var bitmap = new Bitmap(16, 16))
             {
                 using (var graphics = Graphics.FromImage(bitmap))
@@ -51,17 +70,24 @@ namespace SylphyHorn.Interop
             return new Icon(targetIcon, new Size((int)(16 * dpi.ScaleX), (int)(16 * dpi.ScaleY)));
         }
 
-        private static void DrawHorizontalInfo(Graphics targetImage, int currentDesktop, int totalDesktops, Color color)
+        private static Image DrawHorizontalInfo(int currentDesktop, int totalDesktopCount)
         {
-            using (var pen = new Pen(color))
+            var digitSize = new Size(4, 13);
+
+            var currentDesktopImage = _digitDrawer.GetDigit(currentDesktop, digitSize);
+            var totalDesktopsImage = _digitDrawer.GetDigit(totalDesktopCount, digitSize);
+
+            using (var image = new Bitmap(16, 16))
             {
-                var digitWidth = 4;
-                var digitHeight = 13;
+                using (var graphics = Graphics.FromImage(image))
+                {
+                    graphics.DrawImage(currentDesktopImage, new Point(1, 1));
+                    graphics.DrawImage(totalDesktopsImage, new Point(9, 1));
 
-                DrawNumber(targetImage, new Point(1, 1), currentDesktop, pen, digitWidth, digitHeight);
-                DrawNumber(targetImage, new Point(10, 1), totalDesktops, pen, digitWidth, digitHeight);
+                    DrawSeparator(graphics, Color.DimGray);
+                }
 
-                DrawSeparator(targetImage, Color.DimGray);
+                return image;
             }
         }
 
