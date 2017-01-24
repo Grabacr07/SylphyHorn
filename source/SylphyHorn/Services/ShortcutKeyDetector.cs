@@ -14,11 +14,18 @@ namespace SylphyHorn.Services
     public class ShortcutKeyDetector : IShortcutKeyDetector
     {
         private readonly HashSet<Keys> _pressedModifiers = new HashSet<Keys>();
-        private readonly HashSet<Keys> _regularKeys = new HashSet<Keys>();
+        private readonly HashSet<Keys> _pressedRegularKeys = new HashSet<Keys>();
         private readonly IKeyboardInterceptor _interceptor = new KeyboardInterceptor();
 
         private bool _started;
         private bool _suspended;
+
+        private bool _suspendUntilKey;
+        private ShortcutKey _keyToSuspendUntil;
+        private int _keyCountToIgnore;
+        private int _keyCountSeen;
+        private readonly HashSet<Keys> _suspendedPressedModifiers = new HashSet<Keys>();
+        private Keys _suspendedRegularKey;
 
         private readonly ManualResetEvent _noKeysPressedEvent = new ManualResetEvent(true);
 
@@ -50,6 +57,15 @@ namespace SylphyHorn.Services
             this._pressedModifiers.Clear();
         }
 
+        public void SuspendUntil(IShortcutKey key, int keyCountToIgnore)
+        {
+            this._suspended = true;
+            this._suspendUntilKey = true;
+            this._keyToSuspendUntil = (ShortcutKey)key;
+            this._keyCountToIgnore = keyCountToIgnore;
+            this._keyCountSeen = 0;
+        }
+
         public bool WaitForNoKeysPressed()
         {
             if (this._suspended) return false;
@@ -59,6 +75,31 @@ namespace SylphyHorn.Services
 
         private void InterceptorOnKeyDown(object sender, KeyEventArgs args)
         {
+            if (this._keyCountToIgnore > 0 && this._keyCountSeen >= this._keyCountToIgnore)
+            {
+                this._suspended = false;
+                this._suspendUntilKey = false;
+                this._keyCountSeen = 0;
+                this._keyCountToIgnore = 0;
+            }
+            else if (this._suspendUntilKey)
+            {
+                if (args.KeyCode.IsModifyKey())
+                {
+                    this._suspendedPressedModifiers.Add(args.KeyCode);
+                }
+                else
+                {
+                    this._suspendedRegularKey = args.KeyCode;
+                }
+
+                var currentKey = new ShortcutKey(this._suspendedRegularKey, this._suspendedPressedModifiers);
+                if (currentKey == this._keyToSuspendUntil)
+                {
+                    this._keyCountSeen++;
+                }
+            }
+
             if (this._suspended) return;
 
             this._noKeysPressedEvent.Reset();
@@ -69,7 +110,7 @@ namespace SylphyHorn.Services
             }
             else
             {
-                this._regularKeys.Add(args.KeyCode);
+                this._pressedRegularKeys.Add(args.KeyCode);
 
                 var pressedEventArgs = new ShortcutKeyPressedEventArgs(args.KeyCode, this._pressedModifiers);
                 this.Pressed?.Invoke(this, pressedEventArgs);
@@ -86,12 +127,12 @@ namespace SylphyHorn.Services
                 this._pressedModifiers.Remove(args.KeyCode);
             }
 
-            if (this._regularKeys.Count != 0 && !args.KeyCode.IsModifyKey())
+            if (this._pressedRegularKeys.Count != 0 && !args.KeyCode.IsModifyKey())
             {
-                this._regularKeys.Remove(args.KeyCode);
+                this._pressedRegularKeys.Remove(args.KeyCode);
             }
 
-            if (!this._pressedModifiers.Any() && !this._regularKeys.Any())
+            if (!this._pressedModifiers.Any() && !this._pressedRegularKeys.Any())
             {
                 this._noKeysPressedEvent.Set();
             }

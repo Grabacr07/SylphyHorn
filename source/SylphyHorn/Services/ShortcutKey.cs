@@ -40,7 +40,13 @@ namespace SylphyHorn.Services
 			return this == other;
 		}
 
-		public override bool Equals(object obj)
+	    public bool Equals(IShortcutKey other)
+	    {
+            if (ReferenceEquals(null, other)) return false;
+            return other is ShortcutKey && this.Equals((ShortcutKey)other);
+        }
+
+        public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
 			return obj is ShortcutKey && this.Equals((ShortcutKey)obj);

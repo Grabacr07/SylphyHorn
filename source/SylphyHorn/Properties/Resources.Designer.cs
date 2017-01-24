@@ -185,24 +185,22 @@ namespace SylphyHorn.Properties {
                 return ResourceManager.GetString("Settings_DesktopSwitching_Loop", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Smooth switch between virtual desktops.
-        /// </summary>
-        public static string Settings_DesktopSwitching_Smooth
-        {
-            get
-            {
-                return ResourceManager.GetString("Settings_DesktopSwitching_Smooth", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Override OS default key combination (Ctrl+Win+Left and Right).
         /// </summary>
         public static string Settings_DesktopSwitching_OverrideOS {
             get {
                 return ResourceManager.GetString("Settings_DesktopSwitching_OverrideOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Smooth switching between virtual desktops.
+        /// </summary>
+        public static string Settings_DesktopSwitching_Smooth {
+            get {
+                return ResourceManager.GetString("Settings_DesktopSwitching_Smooth", resourceCulture);
             }
         }
         
