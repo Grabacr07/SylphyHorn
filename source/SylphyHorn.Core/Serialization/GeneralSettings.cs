@@ -17,7 +17,9 @@ namespace SylphyHorn.Serialization
 
 		public SerializableProperty<bool> LoopDesktop => this.Cache(key => new SerializableProperty<bool>(key, this._provider));
 
-		public SerializableProperty<bool> NotificationWhenSwitchedDesktop => this.Cache(key => new SerializableProperty<bool>(key, this._provider, true));
+        public SerializableProperty<bool> SmoothSwitch => this.Cache(key => new SerializableProperty<bool>(key, this._provider));
+
+        public SerializableProperty<bool> NotificationWhenSwitchedDesktop => this.Cache(key => new SerializableProperty<bool>(key, this._provider, true));
 
 		public SerializableProperty<int> NotificationDuration => this.Cache(key => new SerializableProperty<int>(key, this._provider, 2500));
 
