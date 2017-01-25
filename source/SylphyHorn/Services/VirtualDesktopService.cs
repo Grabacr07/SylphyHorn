@@ -101,26 +101,26 @@ namespace SylphyHorn.Services
 
 		#region Close
 
-		public static void CloseAndSwitchLeft()
+		public static void CloseAndSwitchLeft(IntPtr hWnd, IShortcutKeyDetector keyDetector, bool smoothSwitch, IShortcutKey switchLeftShortcutKey, IShortcutKey switchRightShortcutKey)
 		{
 			var current = VirtualDesktop.Current;
 			var desktops = VirtualDesktop.GetDesktops();
 			
 			if (desktops.Length > 1)
 			{
-				GetLeft()?.Switch();
+				GetLeft()?.Switch(hWnd, keyDetector, smoothSwitch, switchLeftShortcutKey, switchRightShortcutKey);
 				current.Remove();
 			}
 		}
 
-		public static void CloseAndSwitchRight()
+		public static void CloseAndSwitchRight(IntPtr hWnd, IShortcutKeyDetector keyDetector, bool smoothSwitch, IShortcutKey switchLeftShortcutKey, IShortcutKey switchRightShortcutKey)
 		{
 			var current = VirtualDesktop.Current;
 			var desktops = VirtualDesktop.GetDesktops();
 
 			if (desktops.Length > 1)
 			{
-				GetRight()?.Switch();
+				GetRight()?.Switch(hWnd, keyDetector, smoothSwitch, switchLeftShortcutKey, switchRightShortcutKey);
 				current.Remove();
 			}
 		}

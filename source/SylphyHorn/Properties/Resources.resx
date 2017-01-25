@@ -159,6 +159,9 @@
   <data name="Settings_DesktopSwitching_Loop" xml:space="preserve">
     <value>Loop virtual desktops</value>
   </data>
+  <data name="Settings_DesktopSwitching_Smooth" xml:space="preserve">
+    <value>Smooth switch between virtual desktops</value>
+  </data>
   <data name="Settings_DesktopSwitching_OverrideOS" xml:space="preserve">
     <value>Override OS default key combination (Ctrl+Win+Left and Right)</value>
   </data>

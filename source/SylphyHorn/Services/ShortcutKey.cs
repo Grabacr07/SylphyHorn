@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using WindowsDesktop;
 using MetroTrilithon.Linq;
 
 #if WINDOWS_UWP
@@ -14,7 +15,7 @@ namespace SylphyHorn.Services
 	/// <summary>
 	/// Represents a shortcut key ([modifer key(s)] + [key] style).
 	/// </summary>
-	public struct ShortcutKey
+	public struct ShortcutKey : IShortcutKey
 	{
 		public VirtualKey Key { get; }
 		public VirtualKey[] Modifiers { get; }
