@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Forms;
 using WindowsDesktop;
@@ -28,6 +29,9 @@ namespace SylphyHorn.Services
         private Keys _suspendedRegularKey;
 
         private readonly ManualResetEvent _noKeysPressedEvent = new ManualResetEvent(true);
+        private readonly ManualResetEvent _notSuspendedEvent = new ManualResetEvent(true);
+
+        public bool IsSuspendedUntilKeyPress => this._suspendUntilKey;
 
         /// <summary>
         /// Occurs when detects a shortcut key.
@@ -59,11 +63,14 @@ namespace SylphyHorn.Services
 
         public void SuspendUntil(IShortcutKey key, int keyCountToIgnore)
         {
+            Console.WriteLine($"Ignoring {key} exactly {keyCountToIgnore} times");
             this._suspended = true;
             this._suspendUntilKey = true;
             this._keyToSuspendUntil = (ShortcutKey)key;
             this._keyCountToIgnore = keyCountToIgnore;
             this._keyCountSeen = 0;
+
+            this._notSuspendedEvent.Reset();
         }
 
         public bool WaitForNoKeysPressed()
@@ -73,6 +80,7 @@ namespace SylphyHorn.Services
             return this._noKeysPressedEvent.WaitOne();
         }
 
+
         private void InterceptorOnKeyDown(object sender, KeyEventArgs args)
         {
             if (this._keyCountToIgnore > 0 && this._keyCountSeen >= this._keyCountToIgnore)
@@ -81,6 +89,11 @@ namespace SylphyHorn.Services
                 this._suspendUntilKey = false;
                 this._keyCountSeen = 0;
                 this._keyCountToIgnore = 0;
+
+                this._suspendedPressedModifiers.Clear();
+                this._suspendedRegularKey = Keys.None;
+
+                this._notSuspendedEvent.Set();
             }
             else if (this._suspendUntilKey)
             {

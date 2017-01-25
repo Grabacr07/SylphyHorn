@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Interop;
+using WindowsDesktop;
+using WindowsDesktop.Interop;
 using MetroTrilithon.Lifetime;
 using MetroTrilithon.Threading.Tasks;
 using SylphyHorn.Interop;
@@ -25,83 +28,96 @@ namespace SylphyHorn
 		{
 			var settings = Settings.ShortcutKey;
 
+		    Func<IntPtr, IShortcutKey, SmoothSwitchData> buildSwitchData =
+		        (hWnd, key) =>
+		            new SmoothSwitchData(
+		                hWnd,
+		                Settings.General.SmoothSwitch ? SwitchType.Smooth : SwitchType.Quick,
+		                this._application.HookService.KeyDetector,
+		                settings.SwitchToLeft.ToShortcutKey(),
+		                settings.SwitchToRight.ToShortcutKey(),
+		                key);
+
+
 			this._application.HookService
-				.Register(()=>settings.MoveLeft.ToShortcutKey(), (hWnd, keyDetector, key) => hWnd.MoveToLeft())
+				.Register(()=>settings.MoveLeft.ToShortcutKey(), (hWnd, key) => hWnd.MoveToLeft().Execute(this._application.HookService.KeyDetector))
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(() => settings.MoveLeftAndSwitch.ToShortcutKey(), (hWnd, keyDetector, key) =>
-                    hWnd.MoveToLeft()?.Switch(hWnd, keyDetector, Settings.General.SmoothSwitch, settings.SwitchToLeft.ToShortcutKey(), settings.SwitchToRight.ToShortcutKey(), null))
+				.Register(() => settings.MoveLeftAndSwitch.ToShortcutKey(), (hWnd, key) =>
+                    hWnd.MoveToLeft()?.Switch(buildSwitchData(hWnd, key), AdjacentDesktop.LeftDirection, Settings.General.LoopDesktop).Execute(this._application.HookService.KeyDetector))
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(() => settings.MoveRight.ToShortcutKey(), (hWnd, keyDetector, key) => hWnd.MoveToRight())
+				.Register(() => settings.MoveRight.ToShortcutKey(), (hWnd, key) => hWnd.MoveToRight().Execute(this._application.HookService.KeyDetector))
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(() => settings.MoveRightAndSwitch.ToShortcutKey(), (hWnd, keyDetector, key) =>
-                    hWnd.MoveToRight()?.Switch(hWnd, keyDetector, Settings.General.SmoothSwitch, settings.SwitchToLeft.ToShortcutKey(), settings.SwitchToRight.ToShortcutKey(), null))
+				.Register(() => settings.MoveRightAndSwitch.ToShortcutKey(), (hWnd, key) =>
+                    hWnd.MoveToRight()?.Switch(buildSwitchData(hWnd, key), AdjacentDesktop.RightDirection, Settings.General.LoopDesktop).Execute(this._application.HookService.KeyDetector))
+                .AddTo(this._application);
+
+			this._application.HookService
+				.Register(() => settings.MoveNew.ToShortcutKey(), (hWnd, key) => hWnd.MoveToNew().Execute(this._application.HookService.KeyDetector))
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(() => settings.MoveNew.ToShortcutKey(), (hWnd, keyDetector, key) => hWnd.MoveToNew())
-				.AddTo(this._application);
-
-			this._application.HookService
-				.Register(() => settings.MoveNewAndSwitch.ToShortcutKey(), (hWnd, keyDetector, key) =>
-                    hWnd.MoveToNew()?.Switch(hWnd, keyDetector, Settings.General.SmoothSwitch, settings.SwitchToLeft.ToShortcutKey(), settings.SwitchToRight.ToShortcutKey(), null))
-				.AddTo(this._application);
+				.Register(() => settings.MoveNewAndSwitch.ToShortcutKey(), (hWnd, key) =>
+                    hWnd.MoveToNew()?.Switch(buildSwitchData(hWnd, key), AdjacentDesktop.Jump, false).Execute(this._application.HookService.KeyDetector))
+                .AddTo(this._application);
 
 			this._application.HookService
 				.Register(
 					() => settings.SwitchToLeft.ToShortcutKey(),
-                    (hWnd, keyDetector, key) =>
-                        VirtualDesktopService.GetLeft()?.Switch(IntPtr.Zero, keyDetector, Settings.General.SmoothSwitch, settings.SwitchToLeft.ToShortcutKey(), settings.SwitchToRight.ToShortcutKey(), key),
+                    (hWnd, key) => VirtualDesktopService.GetLeft()?
+                        .Switch(buildSwitchData(IntPtr.Zero, key), AdjacentDesktop.LeftDirection, Settings.General.LoopDesktop)
+                        .Execute(this._application.HookService.KeyDetector),
 					() => Settings.General.OverrideWindowsDefaultKeyCombination || Settings.General.ChangeBackgroundEachDesktop,
-                    () => false)
+                    () => !this._application.HookService.KeyDetector.IsSuspendedUntilKeyPress)
 				.AddTo(this._application);
 
 			this._application.HookService
 				.Register(
 					() => settings.SwitchToRight.ToShortcutKey(),
-                    (hWnd, keyDetector, key) =>
-                        VirtualDesktopService.GetRight()?.Switch(IntPtr.Zero, keyDetector, Settings.General.SmoothSwitch, settings.SwitchToLeft.ToShortcutKey(), settings.SwitchToRight.ToShortcutKey(), key),
+                    (hWnd, key) => VirtualDesktopService.GetRight()?
+                        .Switch(buildSwitchData(IntPtr.Zero, key), AdjacentDesktop.RightDirection, Settings.General.LoopDesktop)
+                        .Execute(this._application.HookService.KeyDetector),
 					() => Settings.General.OverrideWindowsDefaultKeyCombination || Settings.General.ChangeBackgroundEachDesktop,
-                    () => false)
+                    () => !this._application.HookService.KeyDetector.IsSuspendedUntilKeyPress)
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(() => settings.CloseAndSwitchLeft.ToShortcutKey(), (hWnd, keyDetector, key) =>
-                    VirtualDesktopService.CloseAndSwitchLeft(keyDetector, Settings.General.SmoothSwitch, settings.SwitchToLeft.ToShortcutKey(), settings.SwitchToRight.ToShortcutKey()))
+				.Register(() => settings.CloseAndSwitchLeft.ToShortcutKey(), (hWnd, key) =>
+                    VirtualDesktopService.CloseAndSwitchLeft(buildSwitchData(hWnd, key)))
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(() => settings.CloseAndSwitchRight.ToShortcutKey(), (hWnd, keyDetector, key) =>
-                    VirtualDesktopService.CloseAndSwitchRight(keyDetector, Settings.General.SmoothSwitch, settings.SwitchToLeft.ToShortcutKey(), settings.SwitchToRight.ToShortcutKey()))
+				.Register(() => settings.CloseAndSwitchRight.ToShortcutKey(), (hWnd, key) =>
+                    VirtualDesktopService.CloseAndSwitchRight(buildSwitchData(hWnd, key)))
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(() => settings.Pin.ToShortcutKey(), (hWnd, keyDetector, key) => hWnd.Pin())
+				.Register(() => settings.Pin.ToShortcutKey(), (hWnd, key) => hWnd.Pin())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(() => settings.Unpin.ToShortcutKey(), (hWnd, keyDetector, key) => hWnd.Unpin())
+				.Register(() => settings.Unpin.ToShortcutKey(), (hWnd, key) => hWnd.Unpin())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(() => settings.TogglePin.ToShortcutKey(), (hWnd, keyDetector, key) => hWnd.TogglePin())
+				.Register(() => settings.TogglePin.ToShortcutKey(), (hWnd, key) => hWnd.TogglePin())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(() => settings.PinApp.ToShortcutKey(), (hWnd, keyDetector, key) => hWnd.PinApp())
+				.Register(() => settings.PinApp.ToShortcutKey(), (hWnd, key) => hWnd.PinApp())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(() => settings.UnpinApp.ToShortcutKey(), (hWnd, keyDetector, key) => hWnd.UnpinApp())
+				.Register(() => settings.UnpinApp.ToShortcutKey(), (hWnd, key) => hWnd.UnpinApp())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(() => settings.TogglePinApp.ToShortcutKey(), (hWnd, keyDetector, key) => hWnd.TogglePinApp())
+				.Register(() => settings.TogglePinApp.ToShortcutKey(), (hWnd, key) => hWnd.TogglePinApp())
 				.AddTo(this._application);
 		}
 
