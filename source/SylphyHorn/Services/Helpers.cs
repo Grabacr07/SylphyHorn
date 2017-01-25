@@ -42,9 +42,9 @@ namespace SylphyHorn.Services
 
 	internal static class VisualHelper
 	{
-		public static void InvokeOnUIDispatcher(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+		public static DispatcherOperation InvokeOnUIDispatcher(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
 		{
-			DispatcherHelper.UIDispatcher.BeginInvoke(action, priority);
+			return DispatcherHelper.UIDispatcher.BeginInvoke(action, priority);
 		}
 	}
 }
