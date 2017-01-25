@@ -197,6 +197,7 @@
     <Compile Include="ApplicationPreparation.cs" />
     <Compile Include="CommandLineArgs.cs" />
     <Compile Include="Interop\IconHelper.cs" />
+    <Compile Include="Interop\ImmersiveColorHelper.cs" />
     <Compile Include="Interop\Platform.cs" />
     <Compile Include="Interop\WindowCompositionAttribute.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -238,6 +239,8 @@
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interop\UwpBridge.cs" />
+    <Compile Include="UI\Themes\ThemeService2.cs" />
+    <Compile Include="UI\Themes\WindowsTheme2.cs" />
     <Page Include="Styles\Controls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
