@@ -29,10 +29,10 @@ namespace SylphyHorn.Services
 			this.ModifiersInternal = modifiers;
 		}
 
-		internal ShortcutKey(VirtualKey key, ICollection<VirtualKey> modifiers) : this()
+		internal ShortcutKey(VirtualKey key, IReadOnlyCollection<VirtualKey> modifiers) : this()
 		{
 			this.Key = key;
-			this.ModifiersInternal = modifiers;
+			this.ModifiersInternal = new List<VirtualKey>(modifiers);
 		}
 
 		public bool Equals(ShortcutKey other)
@@ -54,12 +54,13 @@ namespace SylphyHorn.Services
 
 		public override int GetHashCode()
 		{
-			unchecked
-			{
-				var hashCode = (this.ModifiersInternal ?? this.Modifiers)?.GetHashCode() ?? 0;
-				hashCode = (hashCode * 397) ^ (int)this.Key;
-				return hashCode;
-			}
+			//unchecked
+			//{
+			//	var hashCode = (this.ModifiersInternal ?? this.Modifiers)?.GetHashCode() ?? 0;
+			//	hashCode = (hashCode * 397) ^ (int)this.Key;
+			//	return hashCode;
+			//}
+		    return this.ToString().GetHashCode();
 		}
 
 		public override string ToString()
