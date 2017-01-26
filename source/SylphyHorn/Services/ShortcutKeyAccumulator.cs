@@ -52,7 +52,7 @@ namespace SylphyHorn.Services
 
         public void Clear()
         {
-            this._pressedModifiers.Clear();
+            this._pressedKeys.Clear();
             this._pressedModifiers.Clear();
         }
     }

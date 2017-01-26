@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using MetroTrilithon.Lifetime;
+using Microsoft.Win32;
 
 namespace SylphyHorn.Services
 {
@@ -16,7 +17,8 @@ namespace SylphyHorn.Services
 
 		public HookService()
 		{
-			this.KeyDetector.Pressed += this.KeyHookOnPressed;
+            SystemEvents.SessionSwitch += this.SystemEvents_SessionSwitch;
+            this.KeyDetector.Pressed += this.KeyHookOnPressed;
 			this.KeyDetector.Start();
 		}
 
@@ -53,7 +55,25 @@ namespace SylphyHorn.Services
 			return Disposable.Create(() => this._hookActions.Remove(hook));
 		}
 
-	    private DispatcherOperation _activeDispatcherOperation;
+	    private IDisposable _sessionLockSuspend;
+
+        private void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            switch (e.Reason)
+            {
+                // ...
+                case SessionSwitchReason.SessionLock:
+                    this._sessionLockSuspend?.Dispose();
+                    this._sessionLockSuspend = this.Suspend();
+                    break;
+                case SessionSwitchReason.SessionUnlock:
+                    this._sessionLockSuspend?.Dispose();
+                    this._sessionLockSuspend = null;
+                    break;
+            }
+        }
+
+        private DispatcherOperation _activeDispatcherOperation;
 
 		private void KeyHookOnPressed(object sender, ShortcutKeyPressedEventArgs args)
 		{
