@@ -559,11 +559,40 @@
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static services:KeyHelper.VirtualDesktopCreationKey}, Mode=OneWay}"
-														 Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToCreatedDesktop_CreateOnly_Note, StringFormat=' ({0})', Mode=OneWay}"
+														 Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Common_ProvidedByWinows, StringFormat=' ({0})', Mode=OneWay}"
 														 IsReadOnly="True"
 														 IsEnabled="False" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveNew.Value, Mode=TwoWay}" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveNewAndSwitch.Value, Mode=TwoWay}" />
+							</UniformGrid>
+						</Grid>
+						<Border Height="16" />
+
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_CloseDesktop}"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<Grid Margin="8,0,0,0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"
+												  SharedSizeGroup="KeyHeader" />
+								<ColumnDefinition Width="8" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="2*" />
+									<RowDefinition Height="*" />
+								</Grid.RowDefinitions>
+								<TextBlock Grid.Row="0" Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_CloseDesktop_CloseAndSwitchLeft}" />
+								<TextBlock Grid.Row="1" Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_CloseDesktop_CloseAndSwitchRight}" />
+							</Grid>
+							<UniformGrid Grid.Column="2"
+										 Columns="1">
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static services:KeyHelper.VirtualDesktopDeletionKey}, Mode=OneWay}"
+														 Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Common_ProvidedByWinows, StringFormat=' ({0})', Mode=OneWay}"
+														 IsReadOnly="True"
+														 IsEnabled="False" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=CloseAndSwitchLeft.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=CloseAndSwitchRight.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
 					</StackPanel>

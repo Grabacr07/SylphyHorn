@@ -28,37 +28,41 @@
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}"
 							CornerRadius="0">
-						<DockPanel Margin="{TemplateBinding Padding}">
-							<ItemsControl x:Name="PART_ModifyKeys"
-										  Foreground="{TemplateBinding Foreground}">
-								<ItemsControl.Template>
-									<ControlTemplate TargetType="{x:Type ItemsControl}">
-										<DockPanel>
-											<Path DockPanel.Dock="Right"
-												  Data="M6.09375,0 L6.90625,0 L6.90625,6.09375 L13,6.09375 L13,6.90625 L6.90625,6.90625 L6.90625,13 L6.09375,13 L6.09375,6.90625 L0,6.90625 L0,6.09375 L6.09375,6.09375 z"
-												  Fill="{TemplateBinding Foreground}"
-												  VerticalAlignment="Center"
-												  Margin="4" />
-											<StackPanel IsItemsHost="True"
-														Orientation="Horizontal" />
-										</DockPanel>
-									</ControlTemplate>
-								</ItemsControl.Template>
-								<ItemsControl.ItemTemplate>
-									<DataTemplate>
-										<controls:Keytop Key="{Binding}" />
-									</DataTemplate>
-								</ItemsControl.ItemTemplate>
-							</ItemsControl>
-							<controls:Keytop x:Name="PART_Key" />
+						<Grid Margin="{TemplateBinding Padding}">
+							<controls:Keytop x:Name="Dummy"
+											 Visibility="Hidden" />
+							<DockPanel>
+								<ItemsControl x:Name="PART_ModifyKeys"
+											  Foreground="{TemplateBinding Foreground}">
+									<ItemsControl.Template>
+										<ControlTemplate TargetType="{x:Type ItemsControl}">
+											<DockPanel>
+												<Path DockPanel.Dock="Right"
+													  Data="M6.09375,0 L6.90625,0 L6.90625,6.09375 L13,6.09375 L13,6.90625 L6.90625,6.90625 L6.90625,13 L6.09375,13 L6.09375,6.90625 L0,6.90625 L0,6.09375 L6.09375,6.09375 z"
+													  Fill="{TemplateBinding Foreground}"
+													  VerticalAlignment="Center"
+													  Margin="4" />
+												<StackPanel IsItemsHost="True"
+															Orientation="Horizontal" />
+											</DockPanel>
+										</ControlTemplate>
+									</ItemsControl.Template>
+									<ItemsControl.ItemTemplate>
+										<DataTemplate>
+											<controls:Keytop Key="{Binding}" />
+										</DataTemplate>
+									</ItemsControl.ItemTemplate>
+								</ItemsControl>
+								<controls:Keytop x:Name="PART_Key" />
 
-							<ScrollViewer x:Name="PART_ContentHost"
-										  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-										  HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
-										  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-										  VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
-										  Background="Transparent" />
-						</DockPanel>
+								<ScrollViewer x:Name="PART_ContentHost"
+											  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+											  HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
+											  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+											  VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
+											  Background="Transparent" />
+							</DockPanel>
+						</Grid>
 					</Border>
 				</ControlTemplate>
 			</Setter.Value>

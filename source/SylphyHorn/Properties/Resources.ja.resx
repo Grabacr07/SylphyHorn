@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Common_ProvidedByWinows" xml:space="preserve">
+    <value>Windows が提供</value>
+  </data>
   <data name="Common_Reference" xml:space="preserve">
     <value>参照</value>
   </data>
@@ -140,6 +143,15 @@
   </data>
   <data name="Settings_Background_SourceImageFolder" xml:space="preserve">
     <value>画像フォルダー パス</value>
+  </data>
+  <data name="Settings_CloseDesktop" xml:space="preserve">
+    <value>仮想デスクトップを閉じる</value>
+  </data>
+  <data name="Settings_CloseDesktop_CloseAndSwitchLeft" xml:space="preserve">
+    <value>閉じて左へ切り替え:</value>
+  </data>
+  <data name="Settings_CloseDesktop_CloseAndSwitchRight" xml:space="preserve">
+    <value>閉じて右へ切り替え:</value>
   </data>
   <data name="Settings_DesktopSwitching" xml:space="preserve">
     <value>デスクトップ切り替え</value>
@@ -179,9 +191,6 @@
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly" xml:space="preserve">
     <value>切り替えのみ</value>
-  </data>
-  <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly_Note" xml:space="preserve">
-    <value>Windows が提供</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_Move" xml:space="preserve">
     <value>移動</value>
