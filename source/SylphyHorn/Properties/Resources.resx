@@ -225,6 +225,15 @@
   <data name="Settings_PinWindowFromApp" xml:space="preserve">
     <value>Pin window from app to all desktops</value>
   </data>
+  <data name="Settings_Colors" xml:space="preserve">
+    <value>Colors</value>
+  </data>
+  <data name="Settings_Colors_Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="Settings_Colors_Accent" xml:space="preserve">
+    <value>Accent</value>
+  </data>
   <data name="Settings_ShortcutKey" xml:space="preserve">
     <value>Shortcut key</value>
   </data>

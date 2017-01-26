@@ -162,7 +162,36 @@
 						<Border Height="8" />
 
 
-						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Startup}"
+                        <TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Colors}"
+								   Style="{DynamicResource HeaderStyleKey}" />
+                        <StackPanel Margin="8,0,0,0">
+                            <TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Colors_Theme}" />
+                            <Border Height="2" />
+                            <metro:PromptComboBox ItemsSource="{Binding Themes}"
+												  DisplayMemberPath="Display"
+												  SelectedValuePath="Value"
+												  SelectedValue="{Binding Theme, Mode=TwoWay}"
+												  Prompt=""
+												  IsReadOnly="True"
+												  MinWidth="250"
+												  Margin="1,0,0,0"
+												  HorizontalAlignment="Left" />
+
+                            <TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Colors_Accent}" />
+                            <Border Height="2" />
+                            <metro:PromptComboBox ItemsSource="{Binding Accents}"
+												  DisplayMemberPath="Display"
+												  SelectedValuePath="Value"
+												  SelectedValue="{Binding Accent, Mode=TwoWay}"
+												  Prompt=""
+												  IsReadOnly="True"
+												  MinWidth="250"
+												  Margin="1,0,0,0"
+												  HorizontalAlignment="Left" />
+                        </StackPanel>
+                        <Border Height="8" />
+
+                        <TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Startup}"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<StackPanel Margin="8,0,0,0">
 							<CheckBox IsChecked="{Binding HasStartupLink, Mode=TwoWay}">

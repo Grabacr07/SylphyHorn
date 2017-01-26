@@ -34,5 +34,9 @@ namespace SylphyHorn.Serialization
 		public SerializableProperty<bool> FirstTime => this.Cache(key => new SerializableProperty<bool>(key, this._provider, true));
 
 		public SerializableProperty<string> Culture => this.Cache(key => new SerializableProperty<string>(key, this._provider));
-	}
+
+        public SerializableProperty<string> Theme => this.Cache(key => new SerializableProperty<string>(key, this._provider));
+
+        public SerializableProperty<string> Accent => this.Cache(key => new SerializableProperty<string>(key, this._provider));
+    }
 }

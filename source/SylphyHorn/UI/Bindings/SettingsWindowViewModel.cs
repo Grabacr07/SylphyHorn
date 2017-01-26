@@ -22,6 +22,10 @@ namespace SylphyHorn.UI.Bindings
 
 		public IReadOnlyCollection<DisplayViewModel<string>> Cultures { get; }
 
+        public IReadOnlyCollection<DisplayViewModel<string>> Themes { get; }
+
+        public IReadOnlyCollection<DisplayViewModel<string>> Accents { get; }
+
 		public IReadOnlyCollection<BindableTextViewModel> Libraries { get; }
 
 		public bool RestartRequired => _restartRequired;
@@ -72,11 +76,47 @@ namespace SylphyHorn.UI.Bindings
 			}
 		}
 
-		#endregion
+        #endregion
 
-		#region Backgrounds notification property
+        #region Colors notification properties
 
-		private WallpaperFile[] _Backgrounds;
+        public string Theme
+        {
+            get { return Settings.General.Theme; }
+            set
+            {
+                if (Settings.General.Theme != value)
+                {
+                    Settings.General.Theme.Value = value;
+                    //_restartRequired = value != _defaultCulture;
+
+                    this.RaisePropertyChanged();
+                    //this.RaisePropertyChanged(nameof(this.RestartRequired));
+                }
+            }
+        }
+
+        public string Accent
+        {
+            get { return Settings.General.Accent; }
+            set
+            {
+                if (Settings.General.Accent != value)
+                {
+                    Settings.General.Accent.Value = value;
+                    //_restartRequired = value != _defaultCulture;
+
+                    this.RaisePropertyChanged();
+                    //this.RaisePropertyChanged(nameof(this.RestartRequired));
+                }
+            }
+        }
+
+        #endregion
+
+        #region Backgrounds notification property
+
+        private WallpaperFile[] _Backgrounds;
 
 		public WallpaperFile[] Backgrounds
 		{
@@ -104,7 +144,19 @@ namespace SylphyHorn.UI.Bindings
 					.OrderBy(x => x.Display))
 				.ToList();
 
-			this.Libraries = ProductInfo.Libraries.Aggregate(
+		    this.Themes = new DisplayViewModel<string>[] { }
+		        .Concat(ResourceService.Current.SupportedThemes
+		            .Select(x => new DisplayViewModel<string> { Display = x.ToString(), Value = x.Specified?.ToString() })
+		            .OrderBy(x => x.Display))
+		        .ToList();
+
+            this.Accents = new DisplayViewModel<string>[] { }
+                .Concat(ResourceService.Current.SupportedAccents
+                    .Select(x => new DisplayViewModel<string> { Display = x.ToString(), Value = x.Specified?.ToString() })
+                    .OrderBy(x => x.Display))
+                .ToList();
+
+            this.Libraries = ProductInfo.Libraries.Aggregate(
 				new List<BindableTextViewModel>(),
 				(list, lib) =>
 				{

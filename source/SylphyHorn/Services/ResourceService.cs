@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Livet;
+using MetroRadiance.UI;
 using SylphyHorn.Properties;
 using SylphyHorn.Serialization;
 
@@ -35,7 +36,12 @@ namespace SylphyHorn.Services
 		/// </summary>
 		public IReadOnlyCollection<CultureInfo> SupportedCultures { get; }
 
-		private ResourceService()
+        public IReadOnlyCollection<Theme> SupportedThemes { get; }
+
+        public IReadOnlyCollection<Accent> SupportedAccents { get; }
+
+
+        private ResourceService()
 		{
 			this.Resources = new Resources();
 			this.SupportedCultures = this._supportedCultureNames
@@ -52,6 +58,21 @@ namespace SylphyHorn.Services
 				})
 				.Where(x => x != null)
 				.ToList();
+
+		    this.SupportedThemes = new[]
+		    {
+		        Theme.Dark,
+		        Theme.Light,
+		        Theme.Windows
+		    };
+
+		    this.SupportedAccents = new[]
+		    {
+		        Accent.Blue,
+		        Accent.Orange,
+		        Accent.Purple,
+		        Accent.Windows
+		    };
 		}
 
 		/// <summary>

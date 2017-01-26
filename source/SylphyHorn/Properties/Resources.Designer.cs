@@ -169,6 +169,33 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Colors.
+        /// </summary>
+        public static string Settings_Colors {
+            get {
+                return ResourceManager.GetString("Settings_Colors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accent.
+        /// </summary>
+        public static string Settings_Colors_Accent {
+            get {
+                return ResourceManager.GetString("Settings_Colors_Accent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme.
+        /// </summary>
+        public static string Settings_Colors_Theme {
+            get {
+                return ResourceManager.GetString("Settings_Colors_Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Desktop switching.
         /// </summary>
         public static string Settings_DesktopSwitching {

@@ -36,6 +36,21 @@ namespace SylphyHorn
 
 		internal UwpInteropService InteropService { get; private set; }
 
+	    internal Theme GetTheme(string themeName)
+	    {
+	        return themeName == Theme.Dark.ToString() ? Theme.Dark :
+	            themeName == Theme.Light.ToString() ? Theme.Light :
+	                Theme.Windows;
+	    }
+
+	    internal Accent GetAccent(string accentName)
+	    {
+	        return accentName == Accent.Blue.ToString() ? Accent.Blue :
+	            accentName == Accent.Orange.ToString() ? Accent.Orange :
+	                accentName == Accent.Purple.ToString() ? Accent.Purple :
+	                    Accent.Windows;
+	    }
+
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			Args = new CommandLineArgs(e.Args);
@@ -59,8 +74,11 @@ namespace SylphyHorn
 
 					LocalSettingsProvider.Instance.LoadAsync().Wait();
 
-					Settings.General.Culture.Subscribe(x => ResourceService.Current.ChangeCulture(x)).AddTo(this);
-					ThemeService.Current.Register(this, Theme.Windows, Accent.Windows);
+                    Settings.General.Culture.Subscribe(x => ResourceService.Current.ChangeCulture(x)).AddTo(this);
+				    Settings.General.Theme.Subscribe(x =>
+				        ThemeService.Current.Register(this, this.GetTheme(x), this.GetAccent(Settings.General.Accent)));
+				    Settings.General.Accent.Subscribe(x =>
+                        ThemeService.Current.Register(this, this.GetTheme(Settings.General.Theme), this.GetAccent(x)));
 
 					this.HookService = new HookService().AddTo(this);
 					this.InteropService = new UwpInteropService(this.HookService, Settings.General).AddTo(this);

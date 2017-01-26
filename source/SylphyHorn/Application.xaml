@@ -9,8 +9,8 @@
 				<ResourceDictionary Source="pack://application:,,,/MetroRadiance;component/Styles/Controls.xaml" />
 				<ResourceDictionary Source="pack://application:,,,/MetroRadiance;component/Styles/Icons.xaml" />
 				<ResourceDictionary Source="pack://application:,,,/MetroRadiance;component/Themes/Light.xaml" />
-				<ResourceDictionary Source="pack://application:,,,/MetroRadiance;component/Themes/Accents/Blue.xaml" />
 				<ResourceDictionary Source="pack://application:,,,/MetroTrilithon.Desktop;component/Styles/Controls.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/MetroRadiance;component/Themes/Accents/Blue.xaml" />
 				
 				<ResourceDictionary Source="pack://application:,,,/SylphyHorn;component/Styles/Controls.xaml" />
 			</ResourceDictionary.MergedDictionaries>

@@ -225,6 +225,15 @@
   <data name="Settings_PinWindowFromApp" xml:space="preserve">
     <value>アプリのウィンドウをすべてのデスクトップに表示 (ピン留め)</value>
   </data>
+  <data name="Settings_Colors" xml:space="preserve">
+    <value>色</value>
+  </data>
+  <data name="Settings_Colors_Theme" xml:space="preserve">
+    <value>テーマ</value>
+  </data>
+  <data name="Settings_Colors_Accent" xml:space="preserve">
+    <value>アクセント</value>
+  </data>
   <data name="Settings_ShortcutKey" xml:space="preserve">
     <value>キー設定</value>
   </data>
