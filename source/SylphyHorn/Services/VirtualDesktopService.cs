@@ -3,6 +3,7 @@ using System.Linq;
 using System.Media;
 using SylphyHorn.Serialization;
 using WindowsDesktop;
+using WindowsDesktop.Interop;
 
 namespace SylphyHorn.Services
 {
@@ -12,34 +13,36 @@ namespace SylphyHorn.Services
 
 		public static VirtualDesktop GetLeft()
 		{
-			var current = VirtualDesktop.Current;
-			var desktops = VirtualDesktop.GetDesktops();
-
-			return desktops.Length >= 2 && current.Id == desktops.First().Id
-				? Settings.General.LoopDesktop ? desktops.Last() : null
-				: current.GetLeft();
+			var current = VirtualDesktop.CurrentOrDesktopToSwitchTo;
+		    return GetLeftOf(current);
 		}
 
-		public static VirtualDesktop GetRight()
+        public static VirtualDesktop GetLeftOf(VirtualDesktop current)
+        {
+            return current.GetLeft(Settings.General.LoopDesktop);
+        }
+
+        public static VirtualDesktop GetRight()
 		{
-			var current = VirtualDesktop.Current;
-			var desktops = VirtualDesktop.GetDesktops();
-
-			return desktops.Length >= 2 && current.Id == desktops.Last().Id
-				? Settings.General.LoopDesktop ? desktops.First() : null
-				: current.GetRight();
+			var current = VirtualDesktop.CurrentOrDesktopToSwitchTo;
+		    return GetRightOf(current);
 		}
 
-		#endregion
+        public static VirtualDesktop GetRightOf(VirtualDesktop current)
+        {
+            return current.GetRight(Settings.General.LoopDesktop);
+        }
 
-		#region Move
+        #endregion
 
-		public static VirtualDesktop MoveToLeft(this IntPtr hWnd)
+        #region Move
+
+        public static VirtualDesktop MoveToLeft(this IntPtr hWnd)
 		{
 			var current = VirtualDesktop.FromHwnd(hWnd);
 			if (current != null)
 			{
-				var left = current.GetLeft();
+				var left = current.GetLeft(Settings.General.LoopDesktop);
 				if (left == null)
 				{
 					if (Settings.General.LoopDesktop)
@@ -50,8 +53,8 @@ namespace SylphyHorn.Services
 				}
 				if (left != null)
 				{
-					VirtualDesktopHelper.MoveToDesktop(hWnd, left);
-					return left;
+					VirtualDesktopHelper.MoveToDesktop(hWnd, left, AdjacentDesktop.LeftDirection, Settings.General.LoopDesktop);
+				    return left;
 				}
 			}
 
@@ -64,7 +67,7 @@ namespace SylphyHorn.Services
 			var current = VirtualDesktop.FromHwnd(hWnd);
 			if (current != null)
 			{
-				var right = current.GetRight();
+				var right = current.GetRight(Settings.General.LoopDesktop);
 				if (right == null)
 				{
 					if (Settings.General.LoopDesktop)
@@ -75,8 +78,8 @@ namespace SylphyHorn.Services
 				}
 				if (right != null)
 				{
-					VirtualDesktopHelper.MoveToDesktop(hWnd, right);
-					return right;
+					VirtualDesktopHelper.MoveToDesktop(hWnd, right, AdjacentDesktop.RightDirection, Settings.General.LoopDesktop);
+				    return right;
 				}
 			}
 
@@ -89,8 +92,8 @@ namespace SylphyHorn.Services
 			var newone = VirtualDesktop.Create();
 			if (newone != null)
 			{
-				VirtualDesktopHelper.MoveToDesktop(hWnd, newone);
-				return newone;
+				VirtualDesktopHelper.MoveToDesktop(hWnd, newone, AdjacentDesktop.Jump, false);
+			    return newone;
 			}
 
 			SystemSounds.Asterisk.Play();
@@ -101,26 +104,26 @@ namespace SylphyHorn.Services
 
 		#region Close
 
-		public static void CloseAndSwitchLeft()
+		public static void CloseAndSwitchLeft(SmoothSwitchData switchData)
 		{
 			var current = VirtualDesktop.Current;
 			var desktops = VirtualDesktop.GetDesktops();
 			
 			if (desktops.Length > 1)
 			{
-				GetLeft()?.Switch();
+				GetLeft()?.Switch(switchData, AdjacentDesktop.LeftDirection, Settings.General.LoopDesktop).Execute(null);
 				current.Remove();
 			}
 		}
 
-		public static void CloseAndSwitchRight()
+		public static void CloseAndSwitchRight(SmoothSwitchData switchData)
 		{
 			var current = VirtualDesktop.Current;
 			var desktops = VirtualDesktop.GetDesktops();
 
 			if (desktops.Length > 1)
 			{
-				GetRight()?.Switch();
+				GetRight()?.Switch(switchData, AdjacentDesktop.RightDirection, Settings.General.LoopDesktop).Execute(null);
 				current.Remove();
 			}
 		}

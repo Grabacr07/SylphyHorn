@@ -196,6 +196,15 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Smooth switching between virtual desktops.
+        /// </summary>
+        public static string Settings_DesktopSwitching_Smooth {
+            get {
+                return ResourceManager.GetString("Settings_DesktopSwitching_Smooth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
         public static string Settings_General {

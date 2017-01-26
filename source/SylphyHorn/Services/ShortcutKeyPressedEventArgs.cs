@@ -15,7 +15,7 @@ namespace SylphyHorn.Services
 			this.ShortcutKey = shortcutKey;
 		}
 
-		internal ShortcutKeyPressedEventArgs(Keys key, ICollection<Keys> modifiers)
+		internal ShortcutKeyPressedEventArgs(Keys key, IReadOnlyCollection<Keys> modifiers)
 		{
 			this.ShortcutKey = new ShortcutKey(key, modifiers);
 		}

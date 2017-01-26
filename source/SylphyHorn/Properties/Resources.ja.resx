@@ -159,6 +159,9 @@
   <data name="Settings_DesktopSwitching_Loop" xml:space="preserve">
     <value>仮想デスクトップをループさせる</value>
   </data>
+  <data name="Settings_DesktopSwitching_Smooth" xml:space="preserve">
+    <value>仮想デスクトップ間のスムーズな切り替え</value>
+  </data>
   <data name="Settings_DesktopSwitching_OverrideOS" xml:space="preserve">
     <value>OS 既定のキー コンビネーションを上書きする (Ctrl+Win+Left および Right)</value>
   </data>

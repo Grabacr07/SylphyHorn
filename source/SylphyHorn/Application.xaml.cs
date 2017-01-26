@@ -46,7 +46,7 @@ namespace SylphyHorn
 			}
 
 #if !DEBUG
-			var appInstance = new MetroTrilithon.Desktop.ApplicationInstance().AddTo(this);
+            var appInstance = new MetroTrilithon.Desktop.ApplicationInstance().AddTo(this);
 			if (appInstance.IsFirst || Args.Restarted.HasValue)
 #endif
 			{

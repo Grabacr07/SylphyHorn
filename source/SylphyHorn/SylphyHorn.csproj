@@ -108,6 +108,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>SylphyHorn.Application</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="JetBrains.Annotations, Version=10.2.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\packages\JetBrains.Annotations.10.2.1\lib\net\JetBrains.Annotations.dll</HintPath>
@@ -207,6 +210,7 @@
     </Compile>
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\ResourceService.cs" />
+    <Compile Include="Services\ShortcutKeyAccumulator.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="UI\Controls\BlurWindow.cs" />
     <Compile Include="UI\Controls\Keytop.cs" />
