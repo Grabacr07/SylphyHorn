@@ -9,6 +9,7 @@ using MetroTrilithon.Mvvm;
 using SylphyHorn.Properties;
 using SylphyHorn.Serialization;
 using SylphyHorn.Services;
+using System.Windows.Media;
 
 namespace SylphyHorn.UI.Bindings
 {
@@ -21,6 +22,12 @@ namespace SylphyHorn.UI.Bindings
 		private readonly Startup _startup;
 
 		public IReadOnlyCollection<DisplayViewModel<string>> Cultures { get; }
+
+		public IReadOnlyCollection<DisplayViewModel<WindowPlacement>> Placements { get; }
+
+		public bool IsDisplayEnabled { get; }
+
+		public IReadOnlyCollection<DisplayViewModel<uint>> Displays { get; }
 
 		public IReadOnlyCollection<BindableTextViewModel> Libraries { get; }
 
@@ -74,6 +81,42 @@ namespace SylphyHorn.UI.Bindings
 
 		#endregion
 
+		#region Placement notification property
+
+		public WindowPlacement Placement
+		{
+			get { return (WindowPlacement)Settings.General.Placement.Value; }
+			set
+			{
+				if ((WindowPlacement)Settings.General.Placement.Value != value)
+				{
+					Settings.General.Placement.Value = (uint)value;
+
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
+		#region Display notification property
+
+		public uint Display
+		{
+			get { return Settings.General.Display; }
+			set
+			{
+				if (Settings.General.Display != value)
+				{
+					Settings.General.Display.Value = value;
+
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
 		#region Backgrounds notification property
 
 		private WallpaperFile[] _Backgrounds;
@@ -93,6 +136,50 @@ namespace SylphyHorn.UI.Bindings
 
 		#endregion
 
+		public bool HasWallpaper => !string.IsNullOrEmpty(this.PreviewBackgroundPath);
+
+		#region PreviewBackgroundBrush notification property
+
+		private SolidColorBrush _PreviewBackgroundBrush;
+
+		public SolidColorBrush PreviewBackgroundBrush
+		{
+			get { return this._PreviewBackgroundBrush; }
+			set
+			{
+				if (this._PreviewBackgroundBrush != value)
+				{
+					this._PreviewBackgroundBrush = value;
+
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
+		#region PreviewBackgroundPath notification property
+
+		private string _PreviewBackgroundPath;
+
+		public string PreviewBackgroundPath
+		{
+			get { return this._PreviewBackgroundPath; }
+			set
+			{
+				if (this._PreviewBackgroundPath != value)
+				{
+					this._PreviewBackgroundPath = value;
+
+					this.RaisePropertyChanged();
+					this.RaisePropertyChanged(nameof(HasWallpaper));
+				}
+			}
+		}
+
+		#endregion
+
+
 		public SettingsWindowViewModel(HookService hookService)
 		{
 			this._hookService = hookService;
@@ -103,6 +190,27 @@ namespace SylphyHorn.UI.Bindings
 					.Select(x => new DisplayViewModel<string> { Display = x.NativeName, Value = x.Name, })
 					.OrderBy(x => x.Display))
 				.ToList();
+
+			this.Placements = new[] {
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopLeft, Value = WindowPlacement.TopLeft },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopCenter, Value = WindowPlacement.TopCenter },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopRight, Value = WindowPlacement.TopRight },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_Center, Value = WindowPlacement.Center },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomLeft, Value = WindowPlacement.BottomLeft },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomCenter, Value = WindowPlacement.BottomCenter },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomRight, Value = WindowPlacement.BottomRight },
+			}.ToList();
+
+			this.Displays = new[] { new DisplayViewModel<uint> { Display = Resources.Settings_MultipleDisplays_CurrentDisplay, Value = 0 } }
+				.Concat(MonitorService.GetMonitors()
+					.Select((m, i) => new DisplayViewModel<uint>
+					{
+						Display = string.Format(Resources.Settings_MultipleDisplays_EachDisplay, i + 1, m.Name),
+						Value = (uint)(i + 1)
+					}))
+				.Concat(new[] { new DisplayViewModel<uint> { Display = Resources.Settings_MultipleDisplays_AllDisplays, Value = uint.MaxValue } })
+				.ToList();
+			if (this.Displays.Count > 3) this.IsDisplayEnabled = true;
 
 			this.Libraries = ProductInfo.Libraries.Aggregate(
 				new List<BindableTextViewModel>(),
@@ -123,6 +231,10 @@ namespace SylphyHorn.UI.Bindings
 			Settings.General.DesktopBackgroundFolderPath
 				.Subscribe(path => this.Backgrounds = WallpaperService.Instance.GetWallpaperFiles(path))
 				.AddTo(this);
+
+			var colAndWall = WallpaperService.GetCurrentColorAndWallpaper();
+			this.PreviewBackgroundBrush = new SolidColorBrush(colAndWall.Item1);
+			this.PreviewBackgroundPath = colAndWall.Item2;
 
 			Disposable.Create(() => LocalSettingsProvider.Instance.SaveAsync().Wait())
 				.AddTo(this);

@@ -304,6 +304,42 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Multiple displays.
+        /// </summary>
+        public static string Settings_MultipleDisplays {
+            get {
+                return ResourceManager.GetString("Settings_MultipleDisplays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All displays.
+        /// </summary>
+        public static string Settings_MultipleDisplays_AllDisplays {
+            get {
+                return ResourceManager.GetString("Settings_MultipleDisplays_AllDisplays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current display.
+        /// </summary>
+        public static string Settings_MultipleDisplays_CurrentDisplay {
+            get {
+                return ResourceManager.GetString("Settings_MultipleDisplays_CurrentDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display {0}: {1}.
+        /// </summary>
+        public static string Settings_MultipleDisplays_EachDisplay {
+            get {
+                return ResourceManager.GetString("Settings_MultipleDisplays_EachDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notification.
         /// </summary>
         public static string Settings_Notification {
@@ -340,6 +376,78 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notification window placement.
+        /// </summary>
+        public static string Settings_NotificationWindowPlacement {
+            get {
+                return ResourceManager.GetString("Settings_NotificationWindowPlacement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bottom center.
+        /// </summary>
+        public static string Settings_NotificationWindowPlacement_BottomCenter {
+            get {
+                return ResourceManager.GetString("Settings_NotificationWindowPlacement_BottomCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bottom left.
+        /// </summary>
+        public static string Settings_NotificationWindowPlacement_BottomLeft {
+            get {
+                return ResourceManager.GetString("Settings_NotificationWindowPlacement_BottomLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bottom right.
+        /// </summary>
+        public static string Settings_NotificationWindowPlacement_BottomRight {
+            get {
+                return ResourceManager.GetString("Settings_NotificationWindowPlacement_BottomRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Center.
+        /// </summary>
+        public static string Settings_NotificationWindowPlacement_Center {
+            get {
+                return ResourceManager.GetString("Settings_NotificationWindowPlacement_Center", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top center.
+        /// </summary>
+        public static string Settings_NotificationWindowPlacement_TopCenter {
+            get {
+                return ResourceManager.GetString("Settings_NotificationWindowPlacement_TopCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top left.
+        /// </summary>
+        public static string Settings_NotificationWindowPlacement_TopLeft {
+            get {
+                return ResourceManager.GetString("Settings_NotificationWindowPlacement_TopLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top right.
+        /// </summary>
+        public static string Settings_NotificationWindowPlacement_TopRight {
+            get {
+                return ResourceManager.GetString("Settings_NotificationWindowPlacement_TopRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pin window:.
         /// </summary>
         public static string Settings_Pin {
@@ -372,6 +480,15 @@ namespace SylphyHorn.Properties {
         public static string Settings_PinWindowFromApp {
             get {
                 return ResourceManager.GetString("Settings_PinWindowFromApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Placement.
+        /// </summary>
+        public static string Settings_Placement {
+            get {
+                return ResourceManager.GetString("Settings_Placement", resourceCulture);
             }
         }
         

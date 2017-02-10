@@ -16,12 +16,16 @@ namespace SylphyHorn.Interop
 	}
 
 	[Flags]
-	internal enum AccentFlags
+	public enum AccentFlags
 	{
 		DrawLeftBorder = 0x20,
 		DrawTopBorder = 0x40,
 		DrawRightBorder = 0x80,
 		DrawBottomBorder = 0x100,
+		DrawTopLeftBorder = (DrawLeftBorder | DrawTopBorder),
+		DrawTopRightBorder = (DrawTopBorder | DrawRightBorder),
+		DrawBottomLeftBorder = (DrawLeftBorder | DrawBottomBorder),
+		DrawBottomRightBorder = (DrawRightBorder | DrawBottomBorder),
 		DrawAllBorders = (DrawLeftBorder | DrawTopBorder | DrawRightBorder | DrawBottomBorder)
 	}
 

@@ -243,12 +243,12 @@
 									<DataTemplate>
 										<DockPanel Margin="2">
 											<Label DockPanel.Dock="Top"
-												   Content="{Binding Number}"
+												   Content="{Binding DesktopMonitorText}"
 												   Background="{DynamicResource ActiveBackgroundBrushKey}"
 												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
 												   HorizontalContentAlignment="Center"
 												   Padding="8,1" />
-											<Image Source="{Binding Filepath, Converter={StaticResource UnlockImageConverter}}"
+											<Image Source="{Binding Filepath, Converter={StaticResource UnlockImageConverter}, IsAsync=True}"
 												   Stretch="Uniform"
 												   VerticalAlignment="Top"
 												   MaxWidth="150" />
@@ -258,6 +258,246 @@
 							</ItemsControl>
 						</StackPanel>
 						<Border Height="8" />
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Placement}"
+							   Style="{DynamicResource TabitemStyleKey}" />
+				</TabItem.Header>
+
+				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+							  VerticalScrollBarVisibility="Auto">
+					<StackPanel Margin="16,0,16,16"
+								Focusable="True">
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_NotificationWindowPlacement}"
+								   Style="{DynamicResource HeaderStyleKey}"
+								   Margin="0,0,0,8" />
+						<StackPanel Margin="8,0,0,0">
+							<metro:PromptComboBox ItemsSource="{Binding Placements}"
+												  DisplayMemberPath="Display"
+												  SelectedValuePath="Value"
+												  SelectedValue="{Binding Placement, Mode=TwoWay}"
+												  Prompt=""
+												  IsReadOnly="True"
+												  MinWidth="250"
+												  Margin="1,0,0,0"
+												  HorizontalAlignment="Left" />
+						</StackPanel>
+						<Border Height="8" />
+
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MultipleDisplays}"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<StackPanel Margin="8,0,0,0">
+							<metro:PromptComboBox ItemsSource="{Binding Displays}"
+												  DisplayMemberPath="Display"
+												  SelectedValuePath="Value"
+												  SelectedValue="{Binding Display, Mode=TwoWay}"
+												  Prompt=""
+												  IsReadOnly="True"
+												  IsEnabled="{Binding IsDisplayEnabled}"
+												  MinWidth="250"
+												  Margin="1,0,0,0"
+												  HorizontalAlignment="Left" />
+						</StackPanel>
+						<Border Height="32" />
+
+						<Canvas>
+							<Canvas.Resources>
+								<Style x:Key="PreviewGridStyle"
+									   TargetType="Grid">
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopLeft}">
+											<Setter Property="Canvas.Left"
+													Value="0" />
+											<Setter Property="Canvas.Top"
+													Value="0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopCenter}">
+											<Setter Property="Canvas.Left"
+													Value="90" />
+											<Setter Property="Canvas.Top"
+													Value="0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopRight}">
+											<Setter Property="Canvas.Left"
+													Value="180" />
+											<Setter Property="Canvas.Top"
+													Value="0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.Center}">
+											<Setter Property="Canvas.Left"
+													Value="90" />
+											<Setter Property="Canvas.Top"
+													Value="110" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomLeft}">
+											<Setter Property="Canvas.Left"
+													Value="0" />
+											<Setter Property="Canvas.Top"
+													Value="205" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomCenter}">
+											<Setter Property="Canvas.Left"
+													Value="90" />
+											<Setter Property="Canvas.Top"
+													Value="205" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomRight}">
+											<Setter Property="Canvas.Left"
+													Value="180" />
+											<Setter Property="Canvas.Top"
+													Value="205" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+								<Style x:Key="PreviewBlurImageStyle"
+									   TargetType="Image">
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopLeft}">
+											<Setter Property="Margin"
+													Value="0,0,-180,-220" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopCenter}">
+											<Setter Property="Margin"
+													Value="-90,0,-90,-220" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopRight}">
+											<Setter Property="Margin"
+													Value="-180,0,0,-220" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.Center}">
+											<Setter Property="Margin"
+													Value="-90,-110,-90,-110" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomLeft}">
+											<Setter Property="Margin"
+													Value="0,-205,-180,-15" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomCenter}">
+											<Setter Property="Margin"
+													Value="-90,-205,-90,-15" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomRight}">
+											<Setter Property="Margin"
+													Value="-180,-205,0,-15" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+								<Style x:Key="PreviewBorderStyle"
+									   TargetType="Border">
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopLeft}">
+											<Setter Property="BorderThickness"
+													Value="0,0,1,1" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopCenter}">
+											<Setter Property="BorderThickness"
+													Value="1,0,1,1" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopRight}">
+											<Setter Property="BorderThickness"
+													Value="1,0,0,1" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.Center}">
+											<Setter Property="BorderThickness"
+													Value="1" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomLeft}">
+											<Setter Property="BorderThickness"
+													Value="0,1,1,0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomCenter}">
+											<Setter Property="BorderThickness"
+													Value="1,1,1,0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomRight}">
+											<Setter Property="BorderThickness"
+													Value="1,1,0,0" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</Canvas.Resources>
+							<Rectangle Fill="{Binding PreviewBackgroundBrush}"
+									   Width="480"
+									   Height="270" />
+							<Image Source="{Binding PreviewBackgroundPath, Converter={StaticResource UnlockImageConverter}, IsAsync=True}"
+								   Stretch="Uniform"
+								   VerticalAlignment="Top"
+								   Width="480"
+								   Height="270" />
+
+							<Grid x:Name="PreviewRoot"
+								  Width="300"
+								  Height="50"
+								  Style="{StaticResource PreviewGridStyle}">
+								<ContentControl Width="300"
+												Height="50"
+												ClipToBounds="True">
+									<ContentControl.CacheMode>
+										<BitmapCache RenderAtScale="0.2" />
+									</ContentControl.CacheMode>
+									<Image x:Name="PreviewBlurImage"
+										   Source="{Binding PreviewBackgroundPath, Converter={StaticResource UnlockImageConverter}, IsAsync=True}"
+										   Stretch="Uniform"
+										   VerticalAlignment="Top"
+										   Width="480"
+										   Height="270"
+										   Visibility="{Binding HasWallpaper, Converter={StaticResource BooleanToVisibilityConverter}}"
+										   Style="{StaticResource PreviewBlurImageStyle}">
+										<Image.Effect>
+											<BlurEffect Radius="20" />
+										</Image.Effect>
+									</Image>
+								</ContentControl>
+								<Border Background="{DynamicResource AccentBackgroundBrushKey}" />
+								<DockPanel VerticalAlignment="Center"
+										   Margin="8,6">
+									<TextBlock DockPanel.Dock="Top"
+											   Text="Virtual Desktop Switched"
+											   Foreground="{DynamicResource AccentForegroundBrushKey}"
+											   FontFamily="Segoe UI Light, Meiryo UI"
+											   FontSize="11"
+											   Margin="1,0,0,-4" />
+									<TextBlock DockPanel.Dock="Top"
+											   Text="Current Desktop: Desktop 1"
+											   Foreground="{DynamicResource AccentForegroundBrushKey}"
+											   FontFamily="Segoe UI Light, Meiryo UI"
+											   FontSize="21" />
+								</DockPanel>
+								<Border BorderBrush="#AAAAAA"
+										SnapsToDevicePixels="True"
+										Style="{StaticResource PreviewBorderStyle}" />
+							</Grid>
+
+							<Rectangle Fill="#C000"
+									   Width="480"
+									   Height="15"
+									   Canvas.Top="255" />
+						</Canvas>
 					</StackPanel>
 				</ScrollViewer>
 			</TabItem>
