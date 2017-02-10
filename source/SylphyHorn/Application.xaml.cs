@@ -34,8 +34,6 @@ namespace SylphyHorn
 
 		internal HookService HookService { get; private set; }
 
-		internal UwpInteropService InteropService { get; private set; }
-
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			Args = new CommandLineArgs(e.Args);
@@ -64,7 +62,6 @@ namespace SylphyHorn
 					UI.Themes.ThemeService2.Current.Register(this);
 
 					this.HookService = new HookService().AddTo(this);
-					this.InteropService = new UwpInteropService(this.HookService, Settings.General).AddTo(this);
 
 					var preparation = new ApplicationPreparation(this);
 					preparation.ShowTaskTrayIcon();

@@ -199,7 +199,7 @@
     <value>Move (Switch):</value>
   </data>
   <data name="Settings_MultipleDisplays" xml:space="preserve">
-    <value>Multiple displays</value>
+    <value>Destination displays</value>
   </data>
   <data name="Settings_MultipleDisplays_AllDisplays" xml:space="preserve">
     <value>All displays</value>

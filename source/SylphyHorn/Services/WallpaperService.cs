@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using SylphyHorn.Interop;
 using SylphyHorn.Serialization;
 using WindowsDesktop;
-using System.Collections.ObjectModel;
-using System.Windows.Media;
 
 namespace SylphyHorn.Services
 {
@@ -96,8 +96,8 @@ namespace SylphyHorn.Services
 			string path = null;
 			if (dw.GetMonitorDevicePathCount() >= 1)
 			{
-				var monitorID = dw.GetMonitorDevicePathAt(0);
-				path = dw.GetWallpaper(monitorID);
+				var monitorId = dw.GetMonitorDevicePathAt(0);
+				path = dw.GetWallpaper(monitorId);
 			}
 
 			return Tuple.Create(Color.FromRgb(colorref.R, colorref.G, colorref.B), path);
@@ -128,6 +128,7 @@ namespace SylphyHorn.Services
 		public WallpaperPosition Position { get; }
 
 		public uint Number => (uint)(this.DesktopIndex << 16 | this.MonitorIndex);
+
 		public string DesktopMonitorText => this.MonitorIndex == 0 ? this.DesktopIndex.ToString() : $"{this.DesktopIndex}-{this.MonitorIndex}";
 
 		private WallpaperFile(string path, ushort desktopIndex, ushort monitorIndex, WallpaperPosition position)
@@ -145,6 +146,7 @@ namespace SylphyHorn.Services
 			ushort desktop = 0;
 			ushort monitor = 0;
 			var position = WallpaperPosition.Fit;
+
 			if (identifiers.Length > 0 && ushort.TryParse(identifiers[0], out desktop))
 			{
 				if (identifiers.Length > 1 && ushort.TryParse(identifiers[1], out monitor))
@@ -155,6 +157,7 @@ namespace SylphyHorn.Services
 					}
 				}
 			}
+
 			return new WallpaperFile(file.FullName, desktop, monitor, position);
 		}
 

@@ -141,19 +141,19 @@
 						<StackPanel Margin="8,0,0,0">
 							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}">
 								<TextBlock>
-									<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display, Mode=OneWay}" />
+<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display, Mode=OneWay}" />
 								</TextBlock>
 							</CheckBox>
 							<TextBlock Margin="21,0,0,0">
-								<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display_Duration, Mode=OneWay}" />
-								<InlineUIContainer>
-									<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationDuration.Value, Mode=TwoWay}"
-														 Prompt=""
-														 Width="60"
-														 Margin="2,2,2,-7"
-														 IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}" />
-								</InlineUIContainer>
-								<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display_Duration_Milliseconds, Mode=OneWay}" />
+<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display_Duration, Mode=OneWay}" />
+<InlineUIContainer>
+<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationDuration.Value, Mode=TwoWay}"
+									Prompt=""
+									Width="60"
+									Margin="2,2,2,-7"
+									IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}" />
+</InlineUIContainer>
+<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display_Duration_Milliseconds, Mode=OneWay}" />
 							</TextBlock>
 						</StackPanel>
 						<Border Height="8" />
@@ -272,24 +272,9 @@
 							  VerticalScrollBarVisibility="Auto">
 					<StackPanel Margin="16,0,16,16"
 								Focusable="True">
-						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_NotificationWindowPlacement}"
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MultipleDisplays}"
 								   Style="{DynamicResource HeaderStyleKey}"
 								   Margin="0,0,0,8" />
-						<StackPanel Margin="8,0,0,0">
-							<metro:PromptComboBox ItemsSource="{Binding Placements}"
-												  DisplayMemberPath="Display"
-												  SelectedValuePath="Value"
-												  SelectedValue="{Binding Placement, Mode=TwoWay}"
-												  Prompt=""
-												  IsReadOnly="True"
-												  MinWidth="250"
-												  Margin="1,0,0,0"
-												  HorizontalAlignment="Left" />
-						</StackPanel>
-						<Border Height="8" />
-
-						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MultipleDisplays}"
-								   Style="{DynamicResource HeaderStyleKey}" />
 						<StackPanel Margin="8,0,0,0">
 							<metro:PromptComboBox ItemsSource="{Binding Displays}"
 												  DisplayMemberPath="Display"
@@ -298,6 +283,21 @@
 												  Prompt=""
 												  IsReadOnly="True"
 												  IsEnabled="{Binding IsDisplayEnabled}"
+												  MinWidth="250"
+												  Margin="1,0,0,0"
+												  HorizontalAlignment="Left" />
+						</StackPanel>
+						<Border Height="8" />
+
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_NotificationWindowPlacement}"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<StackPanel Margin="8,0,0,0">
+							<metro:PromptComboBox ItemsSource="{Binding Placements}"
+												  DisplayMemberPath="Display"
+												  SelectedValuePath="Value"
+												  SelectedValue="{Binding Placement, Mode=TwoWay}"
+												  Prompt=""
+												  IsReadOnly="True"
 												  MinWidth="250"
 												  Margin="1,0,0,0"
 												  HorizontalAlignment="Left" />
@@ -579,8 +579,10 @@
 									<RowDefinition Height="2*" />
 									<RowDefinition Height="*" />
 								</Grid.RowDefinitions>
-								<TextBlock Grid.Row="0" Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_CloseDesktop_CloseAndSwitchLeft}" />
-								<TextBlock Grid.Row="1" Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_CloseDesktop_CloseAndSwitchRight}" />
+								<TextBlock Grid.Row="0"
+										   Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_CloseDesktop_CloseAndSwitchLeft}" />
+								<TextBlock Grid.Row="1"
+										   Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_CloseDesktop_CloseAndSwitchRight}" />
 							</Grid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
@@ -676,10 +678,10 @@
 								   FontFamily="Segoe UI Light, Meiryo UI"
 								   FontSize="20"
 								   Margin="1,6">
-							<Run Text="{x:Static properties:ProductInfo.Description}" />
-							<LineBreak />
-							<Run Text="version" />
-							<Run Text="{x:Static properties:ProductInfo.VersionString}" />
+<Run Text="{x:Static properties:ProductInfo.Description}" />
+<LineBreak />
+<Run Text="version" />
+<Run Text="{x:Static properties:ProductInfo.VersionString}" />
 						</TextBlock>
 
 						<TextBlock Text="Built using the Desktop Bridge."
@@ -691,20 +693,20 @@
 						<TextBlock Foreground="{DynamicResource ForegroundBrushKey}"
 								   FontFamily="Segoe UI, Meiryo UI"
 								   Margin="2,6">
-							<Run Text="Source code:" />
-							<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn">
-								<Run Text="https://github.com/Grabacr07/SylphyHorn" />
-							</metro2:HyperlinkEx>
+<Run Text="Source code:" />
+<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn">
+<Run Text="https://github.com/Grabacr07/SylphyHorn" />
+</metro2:HyperlinkEx>
 
-							<LineBreak />
+<LineBreak />
 
-							<Run Text="Developer:" />
-							<metro2:HyperlinkEx Uri="https://twitter.com/Grabacr07">
-								<Run Text="@Grabacr07" />
-							</metro2:HyperlinkEx>
-							<metro2:HyperlinkEx Uri="https://twitter.com/tmyt">
-								<Run Text="@tmyt" />
-							</metro2:HyperlinkEx>
+<Run Text="Developer:" />
+<metro2:HyperlinkEx Uri="https://twitter.com/Grabacr07">
+<Run Text="@Grabacr07" />
+</metro2:HyperlinkEx>
+<metro2:HyperlinkEx Uri="https://twitter.com/tmyt">
+<Run Text="@tmyt" />
+</metro2:HyperlinkEx>
 						</TextBlock>
 
 						<metro:BindableTextBlock TextSource="{Binding Libraries}"
@@ -730,16 +732,16 @@
 						<TextBlock Foreground="{DynamicResource ForegroundBrushKey}"
 								   FontFamily="Segoe UI, Meiryo UI"
 								   Margin="2,6">
-							<Run Text="{Binding Source={x:Static properties:ProductInfo.Copyright}, Mode=OneWay}" />
-							<LineBreak />
-							<Run Text="{Binding Source={x:Static properties:ProductInfo.Product}, Mode=OneWay}" />
-							<Run Text="is" />
-							<Run Text="OSS"
-								 ToolTip="Open Source Software" />
-							<Run Text="released under" />
-							<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn/blob/master/LICENSE">
-								<Run Text="The MIT License." />
-							</metro2:HyperlinkEx>
+<Run Text="{Binding Source={x:Static properties:ProductInfo.Copyright}, Mode=OneWay}" />
+<LineBreak />
+<Run Text="{Binding Source={x:Static properties:ProductInfo.Product}, Mode=OneWay}" />
+<Run Text="is" />
+<Run Text="OSS"
+							ToolTip="Open Source Software" />
+<Run Text="released under" />
+<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn/blob/master/LICENSE">
+<Run Text="The MIT License." />
+</metro2:HyperlinkEx>
 						</TextBlock>
 					</StackPanel>
 				</ScrollViewer>

@@ -304,7 +304,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Multiple displays.
+        ///   Looks up a localized string similar to Destination displays.
         /// </summary>
         public static string Settings_MultipleDisplays {
             get {

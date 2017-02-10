@@ -199,7 +199,7 @@
     <value>移動して切り替え</value>
   </data>
   <data name="Settings_MultipleDisplays" xml:space="preserve">
-    <value>複数のディスプレイ</value>
+    <value>通知先のディスプレイ</value>
   </data>
   <data name="Settings_MultipleDisplays_AllDisplays" xml:space="preserve">
     <value>すべてのディスプレイ</value>

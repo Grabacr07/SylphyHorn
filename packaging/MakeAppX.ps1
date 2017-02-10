@@ -48,14 +48,14 @@
             $(Get-Content (Join-Path $source $appxManifestSource -Resolve)) -replace 'Version="0.0.0.0"', (' Version="{0}"' -f $version) | Out-File (Join-Path $source $appxManifest) -Encoding UTF8
 
             New-MappingFile -SourcePath $source -Filename $appxMapping -Targets $targetKeywords -Exclude $ignoreKeyword
-
+            
             Start-SdkTool -SdkPath $win10Sdk -ToolName 'makeappx' -Arguments "pack /l /f $appxMapping /p $appx"
             Start-SdkTool -SdkPath $win10Sdk -ToolName 'signtool' -Arguments "sign /f $storekey /fd SHA256 /v $appx"            
             
             # if you don't have pfx file, can create that by following commands (Administrator authority required).
             #Start-SdkTool -SdkPath $win10Sdk -ToolName 'makecert' -Arguments "/r /h 0 /n $publisher /eku `"1.3.6.1.5.5.7.3.3`" /pe /sv $tempPvk $tempCer"
             #Start-SdkTool -SdkPath $win10Sdk -ToolName 'pvk2pfx'  -Arguments "/pvk $tempPvk /spc $tempCer /pfx $tempPfx"
-            #Start-SdkTool -SdkPath $win10Sdk -ToolName 'signtool' -Arguments "sign /f $tempPfx /fd SHA256 /v $package"
+            #Start-SdkTool -SdkPath $win10Sdk -ToolName 'signtool' -Arguments "sign /f $tempPfx /fd SHA256 /v $appx"
             #Certutil -addStore TrustedPeople $tempCer
 
             New-MappingFile -SourcePath '.\' -Filename $appxBundleMapping -Targets $appx

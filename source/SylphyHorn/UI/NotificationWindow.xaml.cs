@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Interop;
-using MetroRadiance.Interop.Win32;
 using MetroRadiance.Interop;
+using MetroRadiance.Interop.Win32;
 using SylphyHorn.Serialization;
 using SylphyHorn.UI.Bindings;
 
@@ -10,7 +10,7 @@ namespace SylphyHorn.UI
 {
 	partial class NotificationWindow
 	{
-		private Rect _area;
+		private readonly Rect _area;
 
 		public NotificationWindow(Rect area)
 		{

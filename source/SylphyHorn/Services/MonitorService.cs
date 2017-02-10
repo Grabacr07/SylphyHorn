@@ -1,11 +1,11 @@
-﻿using MetroRadiance.Interop.Win32;
-using SylphyHorn.Interop;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
+using MetroRadiance.Interop.Win32;
+using SylphyHorn.Interop;
 
 namespace SylphyHorn.Services
 {
@@ -49,14 +49,19 @@ namespace SylphyHorn.Services
 		private static Monitor[] GetMonitorsInternal(bool additionalRetrive = false)
 		{
 			var list = new List<Monitor>();
-			var ret = NativeMethods.EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero,
+			var ret = NativeMethods.EnumDisplayMonitors(
+				IntPtr.Zero,
+				IntPtr.Zero,
 				(IntPtr hMonitor, IntPtr hdcMonitor, ref RECT lprcMonitor, IntPtr _) =>
 				{
 					var monitor = GetMonitorInternal(hMonitor, additionalRetrive);
-					list.Add(monitor);
+					if (monitor != null) list.Add(monitor);
 					return true;
-				}, IntPtr.Zero);
+				},
+				IntPtr.Zero);
+
 			if (!ret) throw new Win32Exception(Marshal.GetLastWin32Error());
+
 			return list.ToArray();
 		}
 
@@ -70,6 +75,7 @@ namespace SylphyHorn.Services
 		{
 			var info = new MONITORINFOEX();
 			info.cbSize = Marshal.SizeOf(info);
+
 			if (NativeMethods.GetMonitorInfo(hMonitor, ref info))
 			{
 				var name = info.szDevice;

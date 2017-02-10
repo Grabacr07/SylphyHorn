@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Media;
 using Livet;
 using Livet.Messaging.IO;
 using MetroTrilithon.Lifetime;
@@ -9,7 +10,6 @@ using MetroTrilithon.Mvvm;
 using SylphyHorn.Properties;
 using SylphyHorn.Serialization;
 using SylphyHorn.Services;
-using System.Windows.Media;
 
 namespace SylphyHorn.UI.Bindings
 {
@@ -172,7 +172,7 @@ namespace SylphyHorn.UI.Bindings
 					this._PreviewBackgroundPath = value;
 
 					this.RaisePropertyChanged();
-					this.RaisePropertyChanged(nameof(HasWallpaper));
+					this.RaisePropertyChanged(nameof(this.HasWallpaper));
 				}
 			}
 		}
@@ -191,24 +191,32 @@ namespace SylphyHorn.UI.Bindings
 					.OrderBy(x => x.Display))
 				.ToList();
 
-			this.Placements = new[] {
-				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopLeft, Value = WindowPlacement.TopLeft },
-				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopCenter, Value = WindowPlacement.TopCenter },
-				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopRight, Value = WindowPlacement.TopRight },
-				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_Center, Value = WindowPlacement.Center },
-				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomLeft, Value = WindowPlacement.BottomLeft },
-				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomCenter, Value = WindowPlacement.BottomCenter },
-				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomRight, Value = WindowPlacement.BottomRight },
+			this.Placements = new[]
+			{
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopLeft, Value = WindowPlacement.TopLeft, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopCenter, Value = WindowPlacement.TopCenter, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopRight, Value = WindowPlacement.TopRight, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_Center, Value = WindowPlacement.Center, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomLeft, Value = WindowPlacement.BottomLeft, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomCenter, Value = WindowPlacement.BottomCenter, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomRight, Value = WindowPlacement.BottomRight, },
 			}.ToList();
 
-			this.Displays = new[] { new DisplayViewModel<uint> { Display = Resources.Settings_MultipleDisplays_CurrentDisplay, Value = 0 } }
+			this.Displays = new[] { new DisplayViewModel<uint> { Display = Resources.Settings_MultipleDisplays_CurrentDisplay, Value = 0, } }
 				.Concat(MonitorService.GetMonitors()
 					.Select((m, i) => new DisplayViewModel<uint>
 					{
 						Display = string.Format(Resources.Settings_MultipleDisplays_EachDisplay, i + 1, m.Name),
-						Value = (uint)(i + 1)
+						Value = (uint)(i + 1),
 					}))
-				.Concat(new[] { new DisplayViewModel<uint> { Display = Resources.Settings_MultipleDisplays_AllDisplays, Value = uint.MaxValue } })
+				.Concat(new[]
+				{
+					new DisplayViewModel<uint>
+					{
+						Display = Resources.Settings_MultipleDisplays_AllDisplays,
+						Value = uint.MaxValue,
+					}
+				})
 				.ToList();
 			if (this.Displays.Count > 3) this.IsDisplayEnabled = true;
 

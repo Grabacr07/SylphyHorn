@@ -230,7 +230,6 @@
     <Compile Include="Services\KeyHelper.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\ShortcutKeyPressedEventArgs.cs" />
-    <Compile Include="Services\UwpInteropService.cs" />
     <Compile Include="Services\VirtualDesktopService.cs" />
     <Compile Include="Services\WallpaperService.cs" />
     <Compile Include="UI\Bindings\NotificationWindowViewModel.cs" />
