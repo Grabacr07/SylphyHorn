@@ -86,24 +86,26 @@ namespace SylphyHorn.Services
 					if (NativeMethods.GetNumberOfPhysicalMonitorsFromHMONITOR(hMonitor, ref cPhysicalMonitors))
 					{
 						var closing = false;
-						var physicalMonitor = new PHYSICAL_MONITOR();
+						var numberOfMonitors = 1u;
+						var physicalMonitors = new PHYSICAL_MONITOR[numberOfMonitors];
 						try
 						{
-							if (NativeMethods.GetPhysicalMonitorsFromHMONITOR(hMonitor, 1, ref physicalMonitor))
+							if (NativeMethods.GetPhysicalMonitorsFromHMONITOR(hMonitor, numberOfMonitors, physicalMonitors))
 							{
-								name = physicalMonitor.szPhysicalMonitorDescription;
+								name = physicalMonitors[0].szPhysicalMonitorDescription;
 								closing = true;
 							}
 						}
 						finally
 						{
-							if (closing) NativeMethods.DestroyPhysicalMonitors(1, physicalMonitor);
+							if (closing) NativeMethods.DestroyPhysicalMonitors(numberOfMonitors, physicalMonitors);
 						}
 					}
 				}
 
 				return new Monitor(name, info.rcMonitor.ToRect(), info.rcWork.ToRect());
 			}
+
 			throw new Win32Exception(Marshal.GetLastWin32Error());
 		}
 

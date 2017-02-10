@@ -67,10 +67,10 @@ namespace SylphyHorn.Interop
 
 		[DllImport("dxva2.dll", SetLastError = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
-		internal static extern bool GetPhysicalMonitorsFromHMONITOR(IntPtr hMonitor, int dwPhysicalMonitorArraySize, ref PHYSICAL_MONITOR pPhysicalMonitorArray);
+		internal static extern bool GetPhysicalMonitorsFromHMONITOR(IntPtr hMonitor, uint dwPhysicalMonitorArraySize, [Out] PHYSICAL_MONITOR[] pPhysicalMonitorArray);
 
-		[DllImport("dxva2.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+		[DllImport("dxva2.dll", SetLastError = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
-		internal static extern bool DestroyPhysicalMonitors(int dwPhysicalMonitorArraySize, PHYSICAL_MONITOR pPhysicalMonitorArray);
+		internal static extern bool DestroyPhysicalMonitors(uint dwPhysicalMonitorArraySize, PHYSICAL_MONITOR[] pPhysicalMonitorArray);
 	}
 }
