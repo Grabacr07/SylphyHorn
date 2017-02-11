@@ -22,14 +22,14 @@ Please download from [Windows app store](https://www.microsoft.com/store/apps/9n
 <!-- ![](https://cloud.githubusercontent.com/assets/1779073/19052151/a6be54ac-89f0-11e6-8936-9bcc2aafc1d5.gif) -->
 
 * Move active window to adjacent desktop  
-(default key combination: `Ctrl` + `Alt` + `Win` + `<-` or `->`)
+(default key combination: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Win</kbd> + <kbd><-</kbd> or <kbd>-></kbd>)
 <!-- ![](https://cloud.githubusercontent.com/assets/1779073/19051476/22e49daa-89ee-11e6-8fe2-9734f2714871.gif) -->
 
 * Move active window to create new desktop  
-(default key combination: `Ctrl` + `Alt` + `Win` + `D`)
+(default key combination: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Win</kbd> + <kbd>D</kbd>)
 
 * Pin window to all desktops ... It is more convenient than using the task view  
-(default key combination: `Ctrl` + `Alt` + `Win` + `P`)  
+(default key combination: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Win</kbd> + <kbd>P</kbd>)  
 ![](https://cloud.githubusercontent.com/assets/1779073/19052776/10050fbc-89f3-11e6-8aa9-6725424d5fca.gif)
 
 * Settings GUI (call from tasktray)  
