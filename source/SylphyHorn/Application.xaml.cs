@@ -59,7 +59,6 @@ namespace SylphyHorn
 
 					Settings.General.Culture.Subscribe(x => ResourceService.Current.ChangeCulture(x)).AddTo(this);
 					ThemeService.Current.Register(this, Theme.Windows, Accent.Windows);
-					UI.Themes.ThemeService2.Current.Register(this);
 
 					this.HookService = new HookService().AddTo(this);
 

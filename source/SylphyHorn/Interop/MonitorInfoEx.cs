@@ -1,5 +1,6 @@
 ﻿using MetroRadiance.Interop.Win32;
 using System.Runtime.InteropServices;
+// ReSharper disable InconsistentNaming
 
 namespace SylphyHorn.Interop
 {

@@ -75,7 +75,7 @@ namespace SylphyHorn.Services
 			}
 			var windows = targets.Select(area =>
 			{
-				var window = new NotificationWindow(area.WorkArea)
+				var window = new SwitchWindow(area.WorkArea)
 				{
 					DataContext = vmodel,
 				};
@@ -94,11 +94,11 @@ namespace SylphyHorn.Services
 			var vmodel = new NotificationWindowViewModel
 			{
 				Title = ProductInfo.Title,
-				Header = ProductInfo.Title,
+				Header = "Virtual Desktop",
 				Body = $"{(operation.HasFlag(PinOperations.Pin) ? "Pinned" : "Unpinned")} this {(operation.HasFlag(PinOperations.Window) ? "window" : "application")}",
 			};
 			var source = new CancellationTokenSource();
-			var window = new PinNotificationWindow(hWnd)
+			var window = new PinWindow(hWnd)
 			{
 				DataContext = vmodel,
 			};

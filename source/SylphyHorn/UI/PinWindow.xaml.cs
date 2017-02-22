@@ -7,11 +7,11 @@ using SylphyHorn.Interop;
 
 namespace SylphyHorn.UI
 {
-	partial class PinNotificationWindow
+	partial class PinWindow
 	{
 		private readonly IntPtr _target;
 
-		public PinNotificationWindow(IntPtr target)
+		public PinWindow(IntPtr target)
 		{
 			this._target = target;
 			this.InitializeComponent();
@@ -19,13 +19,7 @@ namespace SylphyHorn.UI
 
 		protected override void OnSourceInitialized(EventArgs e)
 		{
-			var hwndSource = PresentationSource.FromVisual(this) as HwndSource;
-			if (hwndSource != null)
-			{
-				var style = User32.GetWindowLongEx(hwndSource.Handle);
-				style |= WindowExStyles.WS_EX_TOOLWINDOW | WindowExStyles.WS_EX_NOACTIVATE | WindowExStyles.WS_EX_TRANSPARENT;
-				User32.SetWindowLongEx(hwndSource.Handle, style);
-			}
+			base.OnSourceInitialized(e);
 
 			RECT rect;
 			if (NativeMethods.GetWindowRect(this._target, out rect))
@@ -40,8 +34,6 @@ namespace SylphyHorn.UI
 				this.Left = (rect.Left + (targetWidth - width) / 2) / dpi.ScaleX;
 				this.Top = (rect.Top + (targetHeight - height) / 2) / dpi.ScaleY;
 			}
-
-			base.OnSourceInitialized(e);
 		}
 	}
 }

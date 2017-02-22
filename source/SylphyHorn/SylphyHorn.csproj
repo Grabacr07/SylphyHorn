@@ -121,16 +121,16 @@
       <HintPath>..\packages\LivetExtensions.1.1.0.0\lib\net45\Livet.Extensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MetroRadiance, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MetroRadiance.2.3.0\lib\net46\MetroRadiance.dll</HintPath>
+    <Reference Include="MetroRadiance, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroRadiance.2.4.0\lib\net46\MetroRadiance.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MetroRadiance.Chrome, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroRadiance.Chrome.2.2.0\lib\net46\MetroRadiance.Chrome.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MetroRadiance.Core, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MetroRadiance.Core.2.2.1\lib\net46\MetroRadiance.Core.dll</HintPath>
+    <Reference Include="MetroRadiance.Core, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroRadiance.Core.2.4.0\lib\net46\MetroRadiance.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MetroTrilithon, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -198,11 +198,10 @@
     <Compile Include="CommandLineArgs.cs" />
     <Compile Include="Interop\IconHelper.cs" />
     <Compile Include="Interop\IDesktopWallpaper.cs" />
-    <Compile Include="Interop\ImmersiveColorHelper.cs" />
+    <Compile Include="Interop\LayeredWindowAttributes.cs" />
     <Compile Include="Interop\MonitorInfoEx.cs" />
     <Compile Include="Interop\PhysicalMonitor.cs" />
     <Compile Include="Interop\Platform.cs" />
-    <Compile Include="Interop\WindowCompositionAttribute.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -213,14 +212,13 @@
     <Compile Include="Services\MonitorService.cs" />
     <Compile Include="Services\ResourceService.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="UI\Controls\BlurWindow.cs" />
     <Compile Include="UI\Controls\Keytop.cs" />
     <Compile Include="UI\Controls\UnlockImageConverter.cs" />
-    <Compile Include="UI\PinNotificationWindow.xaml.cs">
-      <DependentUpon>PinNotificationWindow.xaml</DependentUpon>
+    <Compile Include="UI\NotificationWindow.cs" />
+    <Compile Include="UI\PinWindow.xaml.cs">
+      <DependentUpon>PinWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\TaskTrayIcon.cs" />
-    <Compile Include="Interop\SystemParametersInfo.cs" />
     <Compile Include="Services\Helpers.cs" />
     <Compile Include="Serialization\LocalSettingsProperty.cs" />
     <Compile Include="Serialization\LocalSettingsProvider.cs" />
@@ -236,15 +234,13 @@
     <Compile Include="UI\Bindings\SettingsWindowViewModel.cs" />
     <Compile Include="UI\Controls\ClosingStoryboardBehavior.cs" />
     <Compile Include="UI\Controls\ShortcutKeyBox.cs" />
-    <Compile Include="UI\NotificationWindow.xaml.cs">
-      <DependentUpon>NotificationWindow.xaml</DependentUpon>
+    <Compile Include="UI\SwitchWindow.xaml.cs">
+      <DependentUpon>SwitchWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interop\UwpBridge.cs" />
-    <Compile Include="UI\Themes\ThemeService2.cs" />
-    <Compile Include="UI\Themes\WindowsTheme2.cs" />
     <Page Include="Styles\Controls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -269,11 +265,11 @@
     </Compile>
     <Compile Include="Services\HookService.cs" />
     <Compile Include="Interop\NativeMethods.cs" />
-    <Page Include="UI\PinNotificationWindow.xaml">
+    <Page Include="UI\PinWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UI\NotificationWindow.xaml">
+    <Page Include="UI\SwitchWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
