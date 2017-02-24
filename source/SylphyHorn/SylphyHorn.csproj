@@ -202,7 +202,6 @@
     <Compile Include="CommandLineArgs.cs" />
     <Compile Include="Interop\IconHelper.cs" />
     <Compile Include="Interop\Platform.cs" />
-    <Compile Include="Services\DigitDrawer.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="UI\PinNotificationWindow.xaml.cs">
       <DependentUpon>PinNotificationWindow.xaml</DependentUpon>
