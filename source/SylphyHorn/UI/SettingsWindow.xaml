@@ -473,18 +473,18 @@
 										</Image.Effect>
 									</Image>
 								</ContentControl>
-								<Border Background="{DynamicResource AccentBackgroundBrushKey}" />
+								<Border Background="{Binding NotificationBackground}" />
 								<DockPanel VerticalAlignment="Center"
 										   Margin="8,6">
 									<TextBlock DockPanel.Dock="Top"
 											   Text="Virtual Desktop Switched"
-											   Foreground="{DynamicResource AccentForegroundBrushKey}"
+											   Foreground="{Binding NotificationForeground}"
 											   FontFamily="Segoe UI Light, Meiryo UI"
 											   FontSize="11"
 											   Margin="1,0,0,-4" />
 									<TextBlock DockPanel.Dock="Top"
 											   Text="Current Desktop: Desktop 1"
-											   Foreground="{DynamicResource AccentForegroundBrushKey}"
+											   Foreground="{Binding NotificationForeground}"
 											   FontFamily="Segoe UI Light, Meiryo UI"
 											   FontSize="21" />
 								</DockPanel>
@@ -493,7 +493,7 @@
 										Style="{StaticResource PreviewBorderStyle}" />
 							</Grid>
 
-							<Rectangle Fill="#C000"
+							<Rectangle Fill="{Binding TaskbarBackground}"
 									   Width="480"
 									   Height="15"
 									   Canvas.Top="255" />

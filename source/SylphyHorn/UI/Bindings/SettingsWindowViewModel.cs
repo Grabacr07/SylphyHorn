@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Media;
 using Livet;
 using Livet.Messaging.IO;
+using MetroRadiance.Platform;
 using MetroTrilithon.Lifetime;
 using MetroTrilithon.Mvvm;
 using SylphyHorn.Properties;
@@ -179,6 +180,17 @@ namespace SylphyHorn.UI.Bindings
 
 		#endregion
 
+		public Brush NotificationBackground => new SolidColorBrush(WindowsTheme.ColorPrevalence.Current
+			? ImmersiveColor.GetColorByTypeName(ImmersiveColorNames.SystemAccentDark1)
+			: ImmersiveColor.GetColorByTypeName(ImmersiveColorNames.DarkChromeMedium))
+		{ Opacity = WindowsTheme.Transparency.Current ? 0.6 : 1.0 };
+
+		public Brush NotificationForeground => new SolidColorBrush(ImmersiveColor.GetColorByTypeName(ImmersiveColorNames.SystemTextDarkTheme));
+
+		public Brush TaskbarBackground => new SolidColorBrush(WindowsTheme.ColorPrevalence.Current
+			? ImmersiveColor.GetColorByTypeName(ImmersiveColorNames.SystemAccentDark1)
+			: ImmersiveColor.GetColorByTypeName(ImmersiveColorNames.DarkChromeMedium))
+		{ Opacity = WindowsTheme.Transparency.Current ? 0.8 : 1.0 };
 
 		public SettingsWindowViewModel(HookService hookService)
 		{
@@ -243,6 +255,19 @@ namespace SylphyHorn.UI.Bindings
 			var colAndWall = WallpaperService.GetCurrentColorAndWallpaper();
 			this.PreviewBackgroundBrush = new SolidColorBrush(colAndWall.Item1);
 			this.PreviewBackgroundPath = colAndWall.Item2;
+
+			WindowsTheme.ColorPrevalence
+				.RegisterListener(_ => this.RaisePropertyChanged(nameof(this.NotificationBackground)))
+				.AddTo(this);
+			WindowsTheme.ColorPrevalence
+				.RegisterListener(_ => this.RaisePropertyChanged(nameof(this.TaskbarBackground)))
+				.AddTo(this);
+			WindowsTheme.Transparency
+				.RegisterListener(_ => this.RaisePropertyChanged(nameof(this.NotificationBackground)))
+				.AddTo(this);
+			WindowsTheme.Transparency
+				.RegisterListener(_ => this.RaisePropertyChanged(nameof(this.TaskbarBackground)))
+				.AddTo(this);
 
 			Disposable.Create(() => LocalSettingsProvider.Instance.SaveAsync().Wait())
 				.AddTo(this);
