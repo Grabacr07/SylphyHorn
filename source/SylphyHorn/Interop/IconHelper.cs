@@ -10,6 +10,7 @@ namespace SylphyHorn.Interop
 {
     // handle exception thrown when font is not found
     // reuse objects if possible (fontfamily, font, brush?)
+    // scale string positions too?
     public static class IconHelper
 	{
 		public static Icon GetIconFromResource(Uri uri)
@@ -71,7 +72,6 @@ namespace SylphyHorn.Interop
         }
 
         // one string with \n instead of two?
-        // center strings?
         private static Bitmap DrawVerticalInfo(int currentDesktop, int totalDesktops, Color color)
         {
             var iconSize = GetIconSize();
@@ -80,7 +80,20 @@ namespace SylphyHorn.Interop
             var firstPosition = new PointF(-2, -2);
             var secondPosition = new PointF(-2, bitmap.Height / 2 - 2);
 
-            // dont convert to strings?
+            if (currentDesktop < 10)
+            {
+                firstPosition.X += 7;
+            }
+            else if (currentDesktop < 100)
+            {
+                firstPosition.X += 4;
+            }
+
+            if (totalDesktops < 100)
+            {
+                secondPosition.X += 4;
+            }
+
             var firstString = currentDesktop.ToString();
             var secondString = totalDesktops.ToString();
 
