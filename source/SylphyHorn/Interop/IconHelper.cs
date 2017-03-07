@@ -52,7 +52,7 @@ namespace SylphyHorn.Interop
 
             var stringToDraw = $"{currentDesktop}/{totalDesktopCount}";
 
-            var position = new PointF(-2, 0);
+            var offset = GetHorizontalStringOffset();
 
             using (var fontFamily = new FontFamily("Segoe UI"))
             {
@@ -62,7 +62,7 @@ namespace SylphyHorn.Interop
                     {
                         using (var brush = new SolidBrush(color))
                         {
-                            graphics.DrawString(stringToDraw, font, brush, position);
+                            graphics.DrawString(stringToDraw, font, brush, offset);
                         }
                     }
                 }
@@ -77,22 +77,8 @@ namespace SylphyHorn.Interop
             var iconSize = GetIconSize();
             var bitmap = new Bitmap((int)iconSize.Width, (int)iconSize.Height);
 
-            var firstPosition = new PointF(-2, -2);
-            var secondPosition = new PointF(-2, bitmap.Height / 2 - 2);
-
-            if (currentDesktop < 10)
-            {
-                firstPosition.X += 7;
-            }
-            else if (currentDesktop < 100)
-            {
-                firstPosition.X += 4;
-            }
-
-            if (totalDesktops < 100)
-            {
-                secondPosition.X += 4;
-            }
+            var firstOffset = GetFirstVerticalStringOffset(currentDesktop);
+            var secondOffset = GetSecondVerticalStringOffset(totalDesktops, bitmap.Height);
 
             var firstString = currentDesktop.ToString();
             var secondString = totalDesktops.ToString();
@@ -105,14 +91,44 @@ namespace SylphyHorn.Interop
                     {
                         using (var brush = new SolidBrush(color))
                         {
-                            graphics.DrawString(firstString, font, brush, firstPosition);
-                            graphics.DrawString(secondString, font, brush, secondPosition);
+                            graphics.DrawString(firstString, font, brush, firstOffset);
+                            graphics.DrawString(secondString, font, brush, secondOffset);
                         }
                     }
                 }
             }
 
             return bitmap;
+        }
+
+        private static PointF GetHorizontalStringOffset()
+        {
+            return new PointF(-2, 0);
+        }
+
+        private static PointF GetFirstVerticalStringOffset(int value)
+        {
+            var offset = new PointF(-2, -2);
+
+            if (value < 10)
+            {
+                offset.X += 7;
+            }
+            else if (value < 100)
+            {
+                offset.X += 4;
+            }
+
+            return offset;
+        }
+
+        private static PointF GetSecondVerticalStringOffset(int value, int bitmapHeight)
+        {
+            var offset = GetFirstVerticalStringOffset(value);
+
+            offset.Y += bitmapHeight / 2;
+
+            return offset;
         }
 
         private static Icon ScaleIconToDpi(Icon targetIcon)
@@ -122,16 +138,16 @@ namespace SylphyHorn.Interop
             return new Icon(targetIcon, new System.Drawing.Size((int)(16 * dpi.ScaleX), (int)(16 * dpi.ScaleY)));
         }
 
-        private static Dpi GetMonitorDpi()
-        {
-            return PerMonitorDpi.GetDpi(IntPtr.Zero);
-        }
-
         private static System.Windows.Size GetIconSize()
         {
             var dpi = GetMonitorDpi();
 
             return new System.Windows.Size(SystemParameters.SmallIconWidth * dpi.ScaleX, SystemParameters.SmallIconHeight * dpi.ScaleY);
+        }
+        
+        private static Dpi GetMonitorDpi()
+        {
+            return PerMonitorDpi.GetDpi(IntPtr.Zero);
         }
 
         // move to appropriate file
