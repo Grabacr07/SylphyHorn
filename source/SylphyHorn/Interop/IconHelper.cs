@@ -4,10 +4,11 @@ using System.Drawing;
 using System.Linq;
 using MetroRadiance.Interop;
 using SylphyHorn.Services;
+using System.Windows;
 
 namespace SylphyHorn.Interop
 {
-    // test for various scaling and resolution
+    // use calibri instead of arial?
 	public static class IconHelper
 	{
 		public static Icon GetIconFromResource(Uri uri)
@@ -42,21 +43,15 @@ namespace SylphyHorn.Interop
             return icon;
         }
 
-        private static Icon ScaleIconToDpi(Icon targetIcon)
-        {
-            var dpi = GetMonitorDpi();
-
-            return new Icon(targetIcon, new Size((int)(16 * dpi.ScaleX), (int)(16 * dpi.ScaleY)));
-        }
-
         private static Bitmap DrawHorizontalInfo(int currentDesktop, int totalDesktopCount, Color color)
         {
-            var dpi = GetMonitorDpi();
-            var bitmap = GetEmptyIconBitmap(dpi);
+            var iconSize = GetIconSize();
+            var bitmap = new Bitmap((int)iconSize.Width, (int)iconSize.Height);
 
             var stringToDraw = $"{currentDesktop}/{totalDesktopCount}";
-            var font = new Font(new FontFamily("Arial"), 6 * (float) dpi.ScaleY, FontStyle.Bold);
-            var position = new PointF(0, 0);
+
+            var font = new Font(new FontFamily("Arial"), (float)iconSize.Height * 0.4f, System.Drawing.FontStyle.Bold);
+            var position = new PointF(-1, 0);
 
             using (var graphics = Graphics.FromImage(bitmap))
             {
@@ -69,15 +64,18 @@ namespace SylphyHorn.Interop
             return bitmap;
         }
 
+        // one string with \n instead of two?
+        // center strings?
         private static Bitmap DrawVerticalInfo(int currentDesktop, int totalDesktops, Color color)
         {
-            var dpi = GetMonitorDpi();
-            var bitmap = GetEmptyIconBitmap(dpi);
+            var iconSize = GetIconSize();
+            var bitmap = new Bitmap((int)iconSize.Width, (int)iconSize.Height);
 
-            var font = new Font(new FontFamily("Arial"), 5 * (float) dpi.ScaleY, FontStyle.Bold);
-            var firstPosition = new PointF(0, 0);
-            var secondPosition = new PointF(0, bitmap.Height / 2);
+            var font = new Font(new FontFamily("Arial"), (float)iconSize.Height * 0.35f, System.Drawing.FontStyle.Bold);
+            var firstPosition = new PointF(-2, -2);
+            var secondPosition = new PointF(-2, bitmap.Height / 2 - 2);
 
+            // dont convert to strings?
             var firstString = currentDesktop.ToString();
             var secondString = totalDesktops.ToString();
 
@@ -93,17 +91,23 @@ namespace SylphyHorn.Interop
             return bitmap;
         }
 
+        private static Icon ScaleIconToDpi(Icon targetIcon)
+        {
+            var dpi = GetMonitorDpi();
+
+            return new Icon(targetIcon, new System.Drawing.Size((int)(16 * dpi.ScaleX), (int)(16 * dpi.ScaleY)));
+        }
+
         private static Dpi GetMonitorDpi()
         {
             return PerMonitorDpi.GetDpi(IntPtr.Zero);
         }
 
-        private static Bitmap GetEmptyIconBitmap(Dpi dpi)
+        private static System.Windows.Size GetIconSize()
         {
-            var width = Convert.ToInt32(16 * dpi.ScaleX);
-            var height = Convert.ToInt32(16 * dpi.ScaleY);
+            var dpi = GetMonitorDpi();
 
-            return new Bitmap(width, height);
+            return new System.Windows.Size(SystemParameters.SmallIconWidth * dpi.ScaleX, SystemParameters.SmallIconHeight * dpi.ScaleY);
         }
 
         // move to appropriate file
