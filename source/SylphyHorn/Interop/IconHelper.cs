@@ -9,7 +9,8 @@ using System.Windows;
 namespace SylphyHorn.Interop
 {
     // use calibri instead of arial?
-	public static class IconHelper
+    // handle exception thrown when font is not found
+    public static class IconHelper
 	{
 		public static Icon GetIconFromResource(Uri uri)
 		{
@@ -42,7 +43,7 @@ namespace SylphyHorn.Interop
 
             return icon;
         }
-
+        
         private static Bitmap DrawHorizontalInfo(int currentDesktop, int totalDesktopCount, Color color)
         {
             var iconSize = GetIconSize();
@@ -50,14 +51,19 @@ namespace SylphyHorn.Interop
 
             var stringToDraw = $"{currentDesktop}/{totalDesktopCount}";
 
-            var font = new Font(new FontFamily("Arial"), (float)iconSize.Height * 0.4f, System.Drawing.FontStyle.Bold);
-            var position = new PointF(-1, 0);
+            var position = new PointF(0, 0);
 
-            using (var graphics = Graphics.FromImage(bitmap))
+            using (var fontFamily = new FontFamily("Arial"))
             {
-                using (var brush = new SolidBrush(color))
+                using (var font = new Font(fontFamily, (float)iconSize.Height * 0.4f, System.Drawing.FontStyle.Bold))
                 {
-                    graphics.DrawString(stringToDraw, font, brush, position);
+                    using (var graphics = Graphics.FromImage(bitmap))
+                    {
+                        using (var brush = new SolidBrush(color))
+                        {
+                            graphics.DrawString(stringToDraw, font, brush, position);
+                        }
+                    }
                 }
             }
 
@@ -71,7 +77,6 @@ namespace SylphyHorn.Interop
             var iconSize = GetIconSize();
             var bitmap = new Bitmap((int)iconSize.Width, (int)iconSize.Height);
 
-            var font = new Font(new FontFamily("Arial"), (float)iconSize.Height * 0.35f, System.Drawing.FontStyle.Bold);
             var firstPosition = new PointF(-2, -2);
             var secondPosition = new PointF(-2, bitmap.Height / 2 - 2);
 
@@ -79,12 +84,18 @@ namespace SylphyHorn.Interop
             var firstString = currentDesktop.ToString();
             var secondString = totalDesktops.ToString();
 
-            using (var graphics = Graphics.FromImage(bitmap))
+            using (var fontFamily = new FontFamily("Arial"))
             {
-                using (var brush = new SolidBrush(color))
+                using (var font = new Font(fontFamily, (float)iconSize.Height * 0.35f, System.Drawing.FontStyle.Bold))
                 {
-                    graphics.DrawString(firstString, font, brush, firstPosition);
-                    graphics.DrawString(secondString, font, brush, secondPosition);
+                    using (var graphics = Graphics.FromImage(bitmap))
+                    {
+                        using (var brush = new SolidBrush(color))
+                        {
+                            graphics.DrawString(firstString, font, brush, firstPosition);
+                            graphics.DrawString(secondString, font, brush, secondPosition);
+                        }
+                    }
                 }
             }
 
@@ -111,6 +122,7 @@ namespace SylphyHorn.Interop
         }
 
         // move to appropriate file
+        // not used but useful
         public static List<int> ToDigits(this int value)
         {
             var result = new List<int>();
