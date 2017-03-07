@@ -8,8 +8,8 @@ using System.Windows;
 
 namespace SylphyHorn.Interop
 {
-    // use calibri instead of arial?
     // handle exception thrown when font is not found
+    // reuse objects if possible (fontfamily, font, brush?)
     public static class IconHelper
 	{
 		public static Icon GetIconFromResource(Uri uri)
@@ -51,11 +51,11 @@ namespace SylphyHorn.Interop
 
             var stringToDraw = $"{currentDesktop}/{totalDesktopCount}";
 
-            var position = new PointF(0, 0);
+            var position = new PointF(-2, 0);
 
-            using (var fontFamily = new FontFamily("Arial"))
+            using (var fontFamily = new FontFamily("Segoe UI"))
             {
-                using (var font = new Font(fontFamily, (float)iconSize.Height * 0.4f, System.Drawing.FontStyle.Bold))
+                using (var font = new Font(fontFamily, (float)iconSize.Height * 0.375f, System.Drawing.FontStyle.Bold))
                 {
                     using (var graphics = Graphics.FromImage(bitmap))
                     {
@@ -84,9 +84,9 @@ namespace SylphyHorn.Interop
             var firstString = currentDesktop.ToString();
             var secondString = totalDesktops.ToString();
 
-            using (var fontFamily = new FontFamily("Arial"))
+            using (var fontFamily = new FontFamily("Segoe UI"))
             {
-                using (var font = new Font(fontFamily, (float)iconSize.Height * 0.35f, System.Drawing.FontStyle.Bold))
+                using (var font = new Font(fontFamily, (float)iconSize.Height * 0.325f, System.Drawing.FontStyle.Bold))
                 {
                     using (var graphics = Graphics.FromImage(bitmap))
                     {
