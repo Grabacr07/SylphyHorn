@@ -6,7 +6,6 @@
         $bin = '..\source\SylphyHorn\bin'
  
         $appxManifest = 'AppxManifest.xml'
-        $appxManifestSource = 'app.appxmanifest'
         $versionSource = 'SylphyHorn.exe'
 
         $targetKeywords = '*.exe','*.dll','*.exe.config','*.txt','*.VisualElementsManifest.xml', '*.png', $appxManifest
@@ -45,7 +44,7 @@
             $version = $(Get-ChildItem (Join-Path $source $versionSource)).VersionInfo.FileVersion
 
             # replace version in appxmanifest with assembly version
-            $(Get-Content (Join-Path $source $appxManifestSource -Resolve)) -replace 'Version="0.0.0.0"', (' Version="{0}"' -f $version) | Out-File (Join-Path $source $appxManifest) -Encoding UTF8
+            $(Get-Content (Join-Path $source $appxManifest -Resolve)) -replace 'Version="0.0.0.0"', (' Version="{0}"' -f $version) | Out-File (Join-Path $source $appxManifest) -Encoding UTF8
 
             New-MappingFile -SourcePath $source -Filename $appxMapping -Targets $targetKeywords -Exclude $ignoreKeyword
             
