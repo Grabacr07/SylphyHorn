@@ -8,9 +8,7 @@ using System.Windows;
 
 namespace SylphyHorn.Interop
 {
-    // handle exception thrown when font is not found
     // reuse objects if possible (fontfamily, font, brush?)
-    // scale string positions too?
     public static class IconHelper
 	{
 		public static Icon GetIconFromResource(Uri uri)
@@ -36,7 +34,6 @@ namespace SylphyHorn.Interop
             }
         }
 
-        // move to appropriate file
         private static Icon ToIcon(this Bitmap bitmap)
         {
             IntPtr iconHandle = bitmap.GetHicon();
@@ -71,7 +68,6 @@ namespace SylphyHorn.Interop
             return bitmap;
         }
 
-        // one string with \n instead of two?
         private static Bitmap DrawVerticalInfo(int currentDesktop, int totalDesktops, Color color)
         {
             var iconSize = GetIconSize();
@@ -85,7 +81,7 @@ namespace SylphyHorn.Interop
 
             using (var fontFamily = new FontFamily("Segoe UI"))
             {
-                using (var font = new Font(fontFamily, (float)iconSize.Height * 0.325f, System.Drawing.FontStyle.Bold))
+                using (var font = new Font(fontFamily, 6, System.Drawing.FontStyle.Bold))
                 {
                     using (var graphics = Graphics.FromImage(bitmap))
                     {
@@ -148,23 +144,6 @@ namespace SylphyHorn.Interop
         private static Dpi GetMonitorDpi()
         {
             return PerMonitorDpi.GetDpi(IntPtr.Zero);
-        }
-
-        // move to appropriate file
-        // not used but useful
-        public static List<int> ToDigits(this int value)
-        {
-            var result = new List<int>();
-
-            while (value >= 10)
-            {
-                result.Add(value % 10);
-
-                value /= 10;
-            }
-
-            result.Add(value);
-            return result;
         }
 	}
 }
