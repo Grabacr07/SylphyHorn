@@ -7,7 +7,7 @@
   <Identity Name="46846grabacr.net.SylphyHorn"
             ProcessorArchitecture="x86"
             Publisher="CN=33C1D2CA-4B3F-4CCA-8103-6D02939C6477"
-            Version="2.2.0.0" />
+            Version="0.0.0.0" />
   <Properties>
     <DisplayName>SylphyHorn</DisplayName>
     <PublisherDisplayName>grabacr.net</PublisherDisplayName>

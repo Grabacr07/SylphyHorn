@@ -1,7 +1,8 @@
 ﻿<Application x:Class="SylphyHorn.Application"
 			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:converters="http://schemes.grabacr.net/winfx/2015/personal/converters">
+			 xmlns:converters="http://schemes.grabacr.net/winfx/2015/personal/converters"
+			 xmlns:controls="clr-namespace:SylphyHorn.UI.Controls">
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
@@ -20,6 +21,7 @@
 			<converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 			<converters:ReverseBooleanConverter x:Key="ReverseBooleanConverter" />
 			<converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+			<controls:UnlockImageConverter x:Key="UnlockImageConverter" />
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

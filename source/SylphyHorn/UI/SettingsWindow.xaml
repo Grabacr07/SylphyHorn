@@ -7,16 +7,18 @@
 				   xmlns:livet="http://schemas.livet-mvvm.net/2011/wpf"
 				   xmlns:metro="http://schemes.grabacr.net/winfx/2014/controls"
 				   xmlns:metro2="http://schemes.grabacr.net/winfx/2015/personal/controls"
+				   xmlns:root="clr-namespace:SylphyHorn"
 				   xmlns:properties="clr-namespace:SylphyHorn.Properties"
 				   xmlns:serialization="clr-namespace:SylphyHorn.Serialization"
 				   xmlns:bindings="clr-namespace:SylphyHorn.UI.Bindings"
 				   xmlns:controls="clr-namespace:SylphyHorn.UI.Controls"
+				   xmlns:services="clr-namespace:SylphyHorn.Services"
 				   mc:Ignorable="d"
 				   d:DataContext="{d:DesignInstance bindings:SettingsWindowViewModel}"
 				   Icon="/SylphyHorn;component/assets/app.white.ico"
-				   Title="{Binding Title}"
+				   Title="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Title}"
 				   Width="720"
-				   Height="540"
+				   Height="600"
 				   Background="{DynamicResource ThemeBrushKey}"
 				   Foreground="{DynamicResource ActiveForegroundBrushKey}"
 				   FontFamily="Segoe UI, Meiryo UI"
@@ -52,6 +54,11 @@
 			<livet:TransitionInteractionMessageAction InvokeActionOnlyWhenWindowIsActive="False"
 													  IsOwned="True" />
 		</livet:InteractionMessageTrigger>
+
+		<livet:InteractionMessageTrigger Messenger="{Binding Messenger}"
+										 MessageKey="Window.OpenBackgroundImagesDialog.Open">
+			<livet:FolderBrowserDialogInteractionMessageAction InvokeActionOnlyWhenWindowIsActive="False" />
+		</livet:InteractionMessageTrigger>
 	</i:Interaction.Triggers>
 
 	<DockPanel>
@@ -68,7 +75,7 @@
 						WindowChrome.IsHitTestVisibleInChrome="True">
 				<metro:SystemButtons />
 			</StackPanel>
-			<TextBlock Text="{Binding Title}"
+			<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Title}"
 					   FontFamily="Segoe UI Light, Meiryo UI"
 					   FontSize="18"
 					   Margin="12,8" />
@@ -108,97 +115,413 @@
 
 			<TabItem>
 				<TabItem.Header>
-					<TextBlock Text="General"
-							   Style="{DynamicResource TabitemStyleKey}" />
-				</TabItem.Header>
-
-				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
-							  VerticalScrollBarVisibility="Auto">
-					<StackPanel Margin="16,0,16,16">
-						<TextBlock Text="Desktop switching"
-								   Style="{DynamicResource HeaderStyleKey}"
-								   Margin="0,0,0,8" />
-						<StackPanel Margin="8,0,0,0">
-							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=LoopDesktop.Value, Mode=TwoWay}">
-								<TextBlock Text="Loop virtual desktops" />
-							</CheckBox>
-							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=OverrideWindowsDefaultKeyCombination.Value, Mode=TwoWay}">
-								<TextBlock Text="Override OS default key combination (Ctrl+Win+Left and Right)" />
-							</CheckBox>
-						</StackPanel>
-						<Border Height="8" />
-
-						<TextBlock Text="Notification"
-								   Style="{DynamicResource HeaderStyleKey}" />
-						<StackPanel Margin="8,0,0,0">
-							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}">
-								<TextBlock>
-									<Run Text="Display a notification when switched virtual desktop" />
-								</TextBlock>
-							</CheckBox>
-							<TextBlock Margin="21,0,0,0">
-								<Run Text="Time Duration for Notification Messages:" />
-								<InlineUIContainer>
-									<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationDuration.Value, Mode=TwoWay}"
-														 Prompt=""
-														 Width="60"
-														 Margin="2,2,2,-7"
-														 IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}" />
-								</InlineUIContainer>
-								<Run Text="ms" />
-							</TextBlock>
-						</StackPanel>
-						<Border Height="8" />
-
-						<TextBlock Text="Background"
-								   Style="{DynamicResource HeaderStyleKey}" />
-						<StackPanel Margin="8,0,0,0">
-							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}">
-								<TextBlock Text="Change the background for each desktop." />
-							</CheckBox>
-							<TextBlock Margin="21,0,0,0">
-								<Run Text="Source image folder:" />
-								<InlineUIContainer>
-									<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopBackgroundFolderPath.Value, Mode=TwoWay}"
-														 Prompt="Source image folder path"
-														 Width="300"
-														 Margin="2,2,2,-7"
-														 IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}" />
-								</InlineUIContainer>
-							</TextBlock>
-						</StackPanel>
-						<!--<Border Height="8" />-->
-
-						<TextBlock Text="Startup"
-								   Style="{DynamicResource HeaderStyleKey}" />
-						<StackPanel Margin="8,0,0,0">
-							<CheckBox IsChecked="{Binding HasStartupLink, Mode=TwoWay}">
-								<TextBlock Text="Automaticaly start at logon" />
-							</CheckBox>
-						</StackPanel>
-
-                        <TextBlock Text="Tray icon"
-                                   Style="{DynamicResource HeaderStyleKey}" />
-						<StackPanel Margin="8,0,0,0">
-							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=TrayShowDesktop.Value, Mode=TwoWay}">
-								<TextBlock Text="Show current virtual desktop" />
-							</CheckBox>
-                        </StackPanel>
-                    </StackPanel>
-				</ScrollViewer>
-			</TabItem>
-
-			<TabItem>
-				<TabItem.Header>
-					<TextBlock Text="Shortcut key"
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_General}"
 							   Style="{DynamicResource TabitemStyleKey}" />
 				</TabItem.Header>
 
 				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
 							  VerticalScrollBarVisibility="Auto">
 					<StackPanel Margin="16,0,16,16"
-								Grid.IsSharedSizeScope="True">
-						<TextBlock Text="Move active window to adjacent desktop"
+								Focusable="True">
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_DesktopSwitching}"
+								   Style="{DynamicResource HeaderStyleKey}"
+								   Margin="0,0,0,8" />
+						<StackPanel Margin="8,0,0,0">
+							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=LoopDesktop.Value, Mode=TwoWay}">
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_DesktopSwitching_Loop}" />
+							</CheckBox>
+							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=OverrideWindowsDefaultKeyCombination.Value, Mode=TwoWay}">
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_DesktopSwitching_OverrideOS}" />
+							</CheckBox>
+						</StackPanel>
+						<Border Height="8" />
+
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification}"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<StackPanel Margin="8,0,0,0">
+							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}">
+								<TextBlock>
+<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display, Mode=OneWay}" />
+								</TextBlock>
+							</CheckBox>
+							<TextBlock Margin="21,0,0,0">
+<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display_Duration, Mode=OneWay}" />
+<InlineUIContainer>
+<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationDuration.Value, Mode=TwoWay}"
+									Prompt=""
+									Width="60"
+									Margin="2,2,2,-7"
+									IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}" />
+</InlineUIContainer>
+<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display_Duration_Milliseconds, Mode=OneWay}" />
+							</TextBlock>
+						</StackPanel>
+						<Border Height="8" />
+
+
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Startup}"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<StackPanel Margin="8,0,0,0">
+							<CheckBox IsChecked="{Binding HasStartupLink, Mode=TwoWay}">
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Startup_Automaticaly}" />
+							</CheckBox>
+						</StackPanel>
+						<Border Height="8" />
+
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Language}"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<StackPanel Margin="8,0,0,0">
+							<metro:PromptComboBox ItemsSource="{Binding Cultures}"
+												  DisplayMemberPath="Display"
+												  SelectedValuePath="Value"
+												  SelectedValue="{Binding Culture, Mode=TwoWay}"
+												  Prompt=""
+												  IsReadOnly="True"
+												  MinWidth="250"
+												  Margin="1,0,0,0"
+												  HorizontalAlignment="Left" />
+							<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Language_RequireRestartMessage}"
+									   Visibility="{Binding RestartRequired, Converter={StaticResource BooleanToVisibilityConverter}}"
+									   Margin="3,2,0,0" />
+						</StackPanel>
+                        
+                        <TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_TrayIcon}"
+                                   Style="{DynamicResource HeaderStyleKey}" />
+						<StackPanel Margin="8,0,0,0">
+							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=TrayShowDesktop.Value, Mode=TwoWay}">
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_ToggleTrayIconInfo}" />
+							</CheckBox>
+                        </StackPanel>
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background}"
+							   Style="{DynamicResource TabitemStyleKey}" />
+				</TabItem.Header>
+
+				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+							  VerticalScrollBarVisibility="Auto">
+					<StackPanel Margin="16,0,16,16"
+								Focusable="True">
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_Desktop}"
+								   Style="{DynamicResource HeaderStyleKey}"
+								   Margin="0,0,0,8" />
+						<StackPanel Margin="8,0,0,0">
+							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}">
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_ChangeBackground}" />
+							</CheckBox>
+							<StackPanel Margin="16,0,0,0">
+								<Grid IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}"
+									  Margin="2">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition MaxWidth="360" />
+										<ColumnDefinition Width="Auto" />
+									</Grid.ColumnDefinitions>
+									<metro:PromptTextBox Grid.Column="0"
+														 Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopBackgroundFolderPath.Value, Mode=TwoWay}"
+														 Prompt="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_SourceImageFolder}"
+														 Margin="2" />
+									<metro2:CallMethodButton Grid.Column="1"
+															 Content="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Common_Reference}"
+															 MethodTarget="{Binding}"
+															 MethodName="OpenBackgroundPathDialog"
+															 Margin="2" />
+								</Grid>
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_Note1}"
+										   TextWrapping="Wrap"
+										   Margin="4,0,0,0" />
+								<Border Height="4" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_Note2}"
+										   TextWrapping="Wrap"
+										   Margin="4,0,0,0" />
+							</StackPanel>
+							<Border Height="16" />
+							<ItemsControl ItemsSource="{Binding Backgrounds}"
+										  Visibility="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Converter={StaticResource BooleanToVisibilityConverter}}"
+										  Margin="18,0,0,0">
+								<ItemsControl.ItemsPanel>
+									<ItemsPanelTemplate>
+										<WrapPanel Orientation="Horizontal" />
+									</ItemsPanelTemplate>
+								</ItemsControl.ItemsPanel>
+								<ItemsControl.ItemTemplate>
+									<DataTemplate>
+										<DockPanel Margin="2">
+											<Label DockPanel.Dock="Top"
+												   Content="{Binding DesktopMonitorText}"
+												   Background="{DynamicResource ActiveBackgroundBrushKey}"
+												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
+												   HorizontalContentAlignment="Center"
+												   Padding="8,1" />
+											<Image Source="{Binding Filepath, Converter={StaticResource UnlockImageConverter}, IsAsync=True}"
+												   Stretch="Uniform"
+												   VerticalAlignment="Top"
+												   MaxWidth="150" />
+										</DockPanel>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</StackPanel>
+						<Border Height="8" />
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Placement}"
+							   Style="{DynamicResource TabitemStyleKey}" />
+				</TabItem.Header>
+
+				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+							  VerticalScrollBarVisibility="Auto">
+					<StackPanel Margin="16,0,16,16"
+								Focusable="True">
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MultipleDisplays}"
+								   Style="{DynamicResource HeaderStyleKey}"
+								   Margin="0,0,0,8" />
+						<StackPanel Margin="8,0,0,0">
+							<metro:PromptComboBox ItemsSource="{Binding Displays}"
+												  DisplayMemberPath="Display"
+												  SelectedValuePath="Value"
+												  SelectedValue="{Binding Display, Mode=TwoWay}"
+												  Prompt=""
+												  IsReadOnly="True"
+												  IsEnabled="{Binding IsDisplayEnabled}"
+												  MinWidth="250"
+												  Margin="1,0,0,0"
+												  HorizontalAlignment="Left" />
+						</StackPanel>
+						<Border Height="8" />
+
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_NotificationWindowPlacement}"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<StackPanel Margin="8,0,0,0">
+							<metro:PromptComboBox ItemsSource="{Binding Placements}"
+												  DisplayMemberPath="Display"
+												  SelectedValuePath="Value"
+												  SelectedValue="{Binding Placement, Mode=TwoWay}"
+												  Prompt=""
+												  IsReadOnly="True"
+												  MinWidth="250"
+												  Margin="1,0,0,0"
+												  HorizontalAlignment="Left" />
+						</StackPanel>
+						<Border Height="32" />
+
+						<Canvas>
+							<Canvas.Resources>
+								<Style x:Key="PreviewGridStyle"
+									   TargetType="Grid">
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopLeft}">
+											<Setter Property="Canvas.Left"
+													Value="0" />
+											<Setter Property="Canvas.Top"
+													Value="0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopCenter}">
+											<Setter Property="Canvas.Left"
+													Value="90" />
+											<Setter Property="Canvas.Top"
+													Value="0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopRight}">
+											<Setter Property="Canvas.Left"
+													Value="180" />
+											<Setter Property="Canvas.Top"
+													Value="0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.Center}">
+											<Setter Property="Canvas.Left"
+													Value="90" />
+											<Setter Property="Canvas.Top"
+													Value="110" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomLeft}">
+											<Setter Property="Canvas.Left"
+													Value="0" />
+											<Setter Property="Canvas.Top"
+													Value="205" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomCenter}">
+											<Setter Property="Canvas.Left"
+													Value="90" />
+											<Setter Property="Canvas.Top"
+													Value="205" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomRight}">
+											<Setter Property="Canvas.Left"
+													Value="180" />
+											<Setter Property="Canvas.Top"
+													Value="205" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+								<Style x:Key="PreviewBlurImageStyle"
+									   TargetType="Image">
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopLeft}">
+											<Setter Property="Margin"
+													Value="0,0,-180,-220" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopCenter}">
+											<Setter Property="Margin"
+													Value="-90,0,-90,-220" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopRight}">
+											<Setter Property="Margin"
+													Value="-180,0,0,-220" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.Center}">
+											<Setter Property="Margin"
+													Value="-90,-110,-90,-110" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomLeft}">
+											<Setter Property="Margin"
+													Value="0,-205,-180,-15" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomCenter}">
+											<Setter Property="Margin"
+													Value="-90,-205,-90,-15" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomRight}">
+											<Setter Property="Margin"
+													Value="-180,-205,0,-15" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+								<Style x:Key="PreviewBorderStyle"
+									   TargetType="Border">
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopLeft}">
+											<Setter Property="BorderThickness"
+													Value="0,0,1,1" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopCenter}">
+											<Setter Property="BorderThickness"
+													Value="1,0,1,1" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.TopRight}">
+											<Setter Property="BorderThickness"
+													Value="1,0,0,1" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.Center}">
+											<Setter Property="BorderThickness"
+													Value="1" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomLeft}">
+											<Setter Property="BorderThickness"
+													Value="0,1,1,0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomCenter}">
+											<Setter Property="BorderThickness"
+													Value="1,1,1,0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding Placement}"
+													 Value="{x:Static bindings:WindowPlacement.BottomRight}">
+											<Setter Property="BorderThickness"
+													Value="1,1,0,0" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</Canvas.Resources>
+							<Rectangle Fill="{Binding PreviewBackgroundBrush}"
+									   Width="480"
+									   Height="270" />
+							<Image Source="{Binding PreviewBackgroundPath, Converter={StaticResource UnlockImageConverter}, IsAsync=True}"
+								   Stretch="Uniform"
+								   VerticalAlignment="Top"
+								   Width="480"
+								   Height="270" />
+
+							<Grid x:Name="PreviewRoot"
+								  Width="300"
+								  Height="50"
+								  Style="{StaticResource PreviewGridStyle}">
+								<ContentControl Width="300"
+												Height="50"
+												ClipToBounds="True">
+									<ContentControl.CacheMode>
+										<BitmapCache RenderAtScale="0.2" />
+									</ContentControl.CacheMode>
+									<Image x:Name="PreviewBlurImage"
+										   Source="{Binding PreviewBackgroundPath, Converter={StaticResource UnlockImageConverter}, IsAsync=True}"
+										   Stretch="Uniform"
+										   VerticalAlignment="Top"
+										   Width="480"
+										   Height="270"
+										   Visibility="{Binding HasWallpaper, Converter={StaticResource BooleanToVisibilityConverter}}"
+										   Style="{StaticResource PreviewBlurImageStyle}">
+										<Image.Effect>
+											<BlurEffect Radius="20" />
+										</Image.Effect>
+									</Image>
+								</ContentControl>
+								<Border Background="{Binding NotificationBackground}" />
+								<DockPanel VerticalAlignment="Center"
+										   Margin="8,6">
+									<TextBlock DockPanel.Dock="Top"
+											   Text="Virtual Desktop Switched"
+											   Foreground="{Binding NotificationForeground}"
+											   FontFamily="Segoe UI Light, Meiryo UI"
+											   FontSize="11"
+											   Margin="1,0,0,-4" />
+									<TextBlock DockPanel.Dock="Top"
+											   Text="Current Desktop: Desktop 1"
+											   Foreground="{Binding NotificationForeground}"
+											   FontFamily="Segoe UI Light, Meiryo UI"
+											   FontSize="21" />
+								</DockPanel>
+								<Border BorderBrush="#AAAAAA"
+										SnapsToDevicePixels="True"
+										Style="{StaticResource PreviewBorderStyle}" />
+							</Grid>
+
+							<Rectangle Fill="{Binding TaskbarBackground}"
+									   Width="480"
+									   Height="15"
+									   Canvas.Top="255" />
+						</Canvas>
+					</StackPanel> 
+				</ScrollViewer>
+			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_ShortcutKey, StringFormat='{}{0} 1'}"
+							   Style="{DynamicResource TabitemStyleKey}" />
+				</TabItem.Header>
+
+				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+							  VerticalScrollBarVisibility="Auto">
+					<StackPanel Margin="16,0,16,16"
+								Grid.IsSharedSizeScope="True"
+								Focusable="True">
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToAdjacentDesktop}"
 								   Style="{DynamicResource HeaderStyleKey}"
 								   Margin="0,0,0,8" />
 						<Grid Margin="8,0,0,0">
@@ -209,10 +532,10 @@
 								<ColumnDefinition Width="*" />
 							</Grid.ColumnDefinitions>
 							<UniformGrid Columns="1">
-								<TextBlock Text="Left:" />
-								<TextBlock Text="Left (Switch):" />
-								<TextBlock Text="Right:" />
-								<TextBlock Text="Right (Switch):" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToAdjacentDesktop_Left}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToAdjacentDesktop_LeftAndSwitch}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToAdjacentDesktop_Right}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToAdjacentDesktop_RightAndSwitch}" />
 							</UniformGrid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
@@ -222,9 +545,9 @@
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveRightAndSwitch.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
-						<Border Height="8" />
+						<Border Height="16" />
 
-						<TextBlock Text="Move active window to created new desktop"
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToCreatedDesktop}"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<Grid Margin="8,0,0,0">
 							<Grid.ColumnDefinitions>
@@ -234,20 +557,23 @@
 								<ColumnDefinition Width="*" />
 							</Grid.ColumnDefinitions>
 							<UniformGrid Columns="1">
-								<TextBlock Text="Create only" />
-								<TextBlock Text="Move:" />
-								<TextBlock Text="Move (Switch):" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToCreatedDesktop_CreateOnly}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToCreatedDesktop_Move}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToCreatedDesktop_MoveAndSwitch}" />
 							</UniformGrid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
-								<TextBlock Text="Ctrl + Win + D (provided by Windows)" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static services:KeyHelper.VirtualDesktopCreationKey}, Mode=OneWay}"
+														 Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Common_ProvidedByWinows, StringFormat=' ({0})', Mode=OneWay}"
+														 IsReadOnly="True"
+														 IsEnabled="False" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveNew.Value, Mode=TwoWay}" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveNewAndSwitch.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
-						<Border Height="8" />
+						<Border Height="16" />
 
-						<TextBlock Text="Pin window to all desktops"
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_CloseDesktop}"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<Grid Margin="8,0,0,0">
 							<Grid.ColumnDefinitions>
@@ -256,10 +582,55 @@
 								<ColumnDefinition Width="8" />
 								<ColumnDefinition Width="*" />
 							</Grid.ColumnDefinitions>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="2*" />
+									<RowDefinition Height="*" />
+								</Grid.RowDefinitions>
+								<TextBlock Grid.Row="0"
+										   Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_CloseDesktop_CloseAndSwitchLeft}" />
+								<TextBlock Grid.Row="1"
+										   Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_CloseDesktop_CloseAndSwitchRight}" />
+							</Grid>
+							<UniformGrid Grid.Column="2"
+										 Columns="1">
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static services:KeyHelper.VirtualDesktopDeletionKey}, Mode=OneWay}"
+														 Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Common_ProvidedByWinows, StringFormat=' ({0})', Mode=OneWay}"
+														 IsReadOnly="True"
+														 IsEnabled="False" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=CloseAndSwitchLeft.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=CloseAndSwitchRight.Value, Mode=TwoWay}" />
+							</UniformGrid>
+						</Grid>
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_ShortcutKey, StringFormat='{}{0} 2'}"
+							   Style="{DynamicResource TabitemStyleKey}" />
+				</TabItem.Header>
+
+				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+							  VerticalScrollBarVisibility="Auto">
+					<StackPanel Margin="16,0,16,16"
+								Focusable="True"
+								Grid.IsSharedSizeScope="True">
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_PinWindow}"
+								   Style="{DynamicResource HeaderStyleKey}"
+								   Margin="0,0,0,8" />
+						<Grid Margin="8,0,0,0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"
+												  SharedSizeGroup="KeyHeader" />
+								<ColumnDefinition Width="8" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
 							<UniformGrid Columns="1">
-								<TextBlock Text="Pin window:" />
-								<TextBlock Text="Unpin window:" />
-								<TextBlock Text="Pin/Unpin toggle:" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Pin}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Unpin}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_PinToggle}" />
 							</UniformGrid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
@@ -268,9 +639,9 @@
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=TogglePin.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
-						<Border Height="8" />
+						<Border Height="16" />
 
-						<TextBlock Text="Pin window from app to all desktops"
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_PinWindowFromApp}"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<Grid Margin="8,0,0,0">
 							<Grid.ColumnDefinitions>
@@ -280,9 +651,9 @@
 								<ColumnDefinition Width="*" />
 							</Grid.ColumnDefinitions>
 							<UniformGrid Columns="1">
-								<TextBlock Text="Pin app:" />
-								<TextBlock Text="Unpin app:" />
-								<TextBlock Text="Pin/Unpin app:" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Pin}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Unpin}" />
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_PinToggle}" />
 							</UniformGrid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
@@ -297,13 +668,14 @@
 
 			<TabItem>
 				<TabItem.Header>
-					<TextBlock Text="Version"
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Version}"
 							   Style="{DynamicResource TabitemStyleKey}" />
 				</TabItem.Header>
 
 				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
 							  VerticalScrollBarVisibility="Auto">
 					<StackPanel Margin="16,0,16,16"
+								Focusable="True"
 								Grid.IsSharedSizeScope="True">
 						<TextBlock Text="{x:Static properties:ProductInfo.Title}"
 								   Foreground="{DynamicResource ActiveForegroundBrushKey}"
@@ -314,35 +686,40 @@
 								   FontFamily="Segoe UI Light, Meiryo UI"
 								   FontSize="20"
 								   Margin="1,6">
-							<Run Text="{x:Static properties:ProductInfo.Description}" />
-							<LineBreak />
-							<Run Text="version" />
-							<Run Text="{x:Static properties:ProductInfo.VersionString}" />
+<Run Text="{x:Static properties:ProductInfo.Description}" />
+<LineBreak />
+<Run Text="version" />
+<Run Text="{x:Static properties:ProductInfo.VersionString}" />
 						</TextBlock>
+
+						<TextBlock Text="Built using the Desktop Bridge."
+								   Foreground="{DynamicResource ForegroundBrushKey}"
+								   FontFamily="Segoe UI, Meiryo UI"
+								   Visibility="{Binding Source={x:Static root:Application.IsWindowsBridge}, Converter={StaticResource BooleanToVisibilityConverter}}"
+								   Margin="2,6" />
 
 						<TextBlock Foreground="{DynamicResource ForegroundBrushKey}"
 								   FontFamily="Segoe UI, Meiryo UI"
 								   Margin="2,6">
-							<Run Text="Source code:" />
-							<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn">
-								<Run Text="https://github.com/Grabacr07/SylphyHorn" />
-							</metro2:HyperlinkEx>
+<Run Text="Source code:" />
+<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn">
+<Run Text="https://github.com/Grabacr07/SylphyHorn" />
+</metro2:HyperlinkEx>
 
-							<LineBreak />
+<LineBreak />
 
-							<Run Text="Developer:" />
-							<metro2:HyperlinkEx Uri="https://twitter.com/Grabacr07">
-								<Run Text="@Grabacr07" />
-							</metro2:HyperlinkEx>
-							<metro2:HyperlinkEx Uri="https://twitter.com/tmyt">
-								<Run Text="@tmyt" />
-							</metro2:HyperlinkEx>
+<Run Text="Developer:" />
+<metro2:HyperlinkEx Uri="https://twitter.com/Grabacr07">
+<Run Text="@Grabacr07" />
+</metro2:HyperlinkEx>
+<metro2:HyperlinkEx Uri="https://twitter.com/tmyt">
+<Run Text="@tmyt" />
+</metro2:HyperlinkEx>
 						</TextBlock>
-
 
 						<metro:BindableTextBlock TextSource="{Binding Libraries}"
 												 TextWrapping="Wrap"
-												 Margin="1,6">
+												 Margin="2,6">
 							<metro:BindableTextBlock.TextTemplates>
 								<DataTemplate DataType="{x:Type bindings:HyperlinkViewModel}">
 									<metro:InlineHolder>
@@ -354,7 +731,7 @@
 								<DataTemplate DataType="{x:Type bindings:BindableTextViewModel}">
 									<metro:InlineHolder>
 										<Run Text="{Binding Text, Mode=OneWay}"
-											 Foreground="{DynamicResource ActiveForegroundBrushKey}" />
+											 Foreground="{DynamicResource ForegroundBrushKey}" />
 									</metro:InlineHolder>
 								</DataTemplate>
 							</metro:BindableTextBlock.TextTemplates>
@@ -363,17 +740,16 @@
 						<TextBlock Foreground="{DynamicResource ForegroundBrushKey}"
 								   FontFamily="Segoe UI, Meiryo UI"
 								   Margin="2,6">
-
-							<Run Text="{Binding Source={x:Static properties:ProductInfo.Copyright}, Mode=OneWay}" />
-							<LineBreak />
-							<Run Text="{Binding Source={x:Static properties:ProductInfo.Product}, Mode=OneWay}" />
-							<Run Text="is" />
-							<Run Text="OSS"
-								 ToolTip="Open Source Software" />
-							<Run Text="released under" />
-							<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn/blob/master/LICENSE">
-								<Run Text="The MIT License." />
-							</metro2:HyperlinkEx>
+<Run Text="{Binding Source={x:Static properties:ProductInfo.Copyright}, Mode=OneWay}" />
+<LineBreak />
+<Run Text="{Binding Source={x:Static properties:ProductInfo.Product}, Mode=OneWay}" />
+<Run Text="is" />
+<Run Text="OSS"
+							ToolTip="Open Source Software" />
+<Run Text="released under" />
+<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn/blob/master/LICENSE">
+<Run Text="The MIT License." />
+</metro2:HyperlinkEx>
 						</TextBlock>
 					</StackPanel>
 				</ScrollViewer>

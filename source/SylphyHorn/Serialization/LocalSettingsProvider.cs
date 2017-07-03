@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
-using System.Reactive.Threading.Tasks;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Xml;
@@ -12,21 +9,17 @@ using SylphyHorn.Properties;
 
 namespace SylphyHorn.Serialization
 {
-	public sealed class LocalSettingsProvider : DictionaryProvider, IDisposable
+	public sealed class LocalSettingsProvider : DictionaryProvider
 	{
 		public static TimeSpan FileSystemHandlerThrottleDueTime { get; set; } = TimeSpan.FromMilliseconds(1500);
 
 		public static LocalSettingsProvider Instance { get; } = new LocalSettingsProvider();
-
-		private readonly FileSystemWatcher _watcher;
+		
 		private readonly FileInfo _targetFile;
-		private readonly Subject<FileSystemEventArgs> _notifier;
 
 		public bool Available { get; }
 
 		public string FilePath => this._targetFile.FullName;
-
-		public IObservable<WatcherChangeTypes> FileChanged => this._notifier.Select(x => x.ChangeType);
 
 		private LocalSettingsProvider()
 		{
@@ -48,30 +41,8 @@ namespace SylphyHorn.Serialization
 				file.Directory.Create();
 			}
 
-			try
-			{
-				this._notifier = new Subject<FileSystemEventArgs>();
-				this._notifier.Throttle(FileSystemHandlerThrottleDueTime)
-					.SelectMany(_ => this.LoadAsync().ToObservable())
-					.Subscribe(_ => this.OnReloaded());
-
-				this._targetFile = file;
-				this._watcher = new FileSystemWatcher(file.DirectoryName, file.Name)
-				{
-					NotifyFilter = NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.LastWrite,
-				};
-				this._watcher.Changed += this.HandleFileChanged;
-				this._watcher.Created += this.HandleFileChanged;
-				this._watcher.Deleted += this.HandleFileChanged;
-				this._watcher.Renamed += this.HandleFileChanged;
-				this._watcher.EnableRaisingEvents = true;
-
-				this.Available = true;
-			}
-			catch (Exception)
-			{
-				this.Available = false;
-			}
+			this._targetFile = file;
+			this.Available = true;
 		}
 
 
@@ -116,24 +87,6 @@ namespace SylphyHorn.Serialization
 					return serializer.ReadObject(stream) as IDictionary<string, object>;
 				}
 			});
-		}
-
-		private void HandleFileChanged(object sender, FileSystemEventArgs args)
-		{
-			this._notifier.OnNext(args);
-		}
-
-		public void Dispose()
-		{
-			if (this._watcher != null)
-			{
-				this._watcher.EnableRaisingEvents = false;
-				this._watcher.Changed -= this.HandleFileChanged;
-				this._watcher.Created -= this.HandleFileChanged;
-				this._watcher.Deleted -= this.HandleFileChanged;
-				this._watcher.Renamed -= this.HandleFileChanged;
-				this._watcher.Dispose();
-			}
 		}
 	}
 }

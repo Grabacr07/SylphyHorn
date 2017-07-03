@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Common_ProvidedByWinows" xml:space="preserve">
+    <value>Windows が提供</value>
+  </data>
+  <data name="Common_Reference" xml:space="preserve">
+    <value>参照</value>
+  </data>
+  <data name="Settings_Background" xml:space="preserve">
+    <value>背景</value>
+  </data>
+  <data name="Settings_Background_ChangeBackground" xml:space="preserve">
+    <value>仮想デスクトップごとに背景を変更する</value>
+  </data>
+  <data name="Settings_Background_Desktop" xml:space="preserve">
+    <value>デスクトップの背景</value>
+  </data>
+  <data name="Settings_Background_Note1" xml:space="preserve">
+    <value>サポートされている画像形式: JPG, PNG, BMP</value>
+  </data>
+  <data name="Settings_Background_Note2" xml:space="preserve">
+    <value>メモ: 仮想デスクトップ番号をファイル名とした画像ファイルを用意してください (例: "1.png", "2.png", ...)。</value>
+  </data>
+  <data name="Settings_Background_SelectionDialog" xml:space="preserve">
+    <value>背景画像フォルダーを選択</value>
+  </data>
+  <data name="Settings_Background_SourceImageFolder" xml:space="preserve">
+    <value>画像フォルダー パス</value>
+  </data>
+  <data name="Settings_CloseDesktop" xml:space="preserve">
+    <value>仮想デスクトップを閉じる</value>
+  </data>
+  <data name="Settings_CloseDesktop_CloseAndSwitchLeft" xml:space="preserve">
+    <value>閉じて左へ切り替え:</value>
+  </data>
+  <data name="Settings_CloseDesktop_CloseAndSwitchRight" xml:space="preserve">
+    <value>閉じて右へ切り替え:</value>
+  </data>
+  <data name="Settings_DesktopSwitching" xml:space="preserve">
+    <value>デスクトップ切り替え</value>
+  </data>
+  <data name="Settings_DesktopSwitching_Loop" xml:space="preserve">
+    <value>仮想デスクトップをループさせる</value>
+  </data>
+  <data name="Settings_DesktopSwitching_OverrideOS" xml:space="preserve">
+    <value>OS 既定のキー コンビネーションを上書きする (Ctrl+Win+Left および Right)</value>
+  </data>
+  <data name="Settings_General" xml:space="preserve">
+    <value>一般</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="Settings_Language_RequireRestartMessage" xml:space="preserve">
+    <value>すべての表示の反映にはアプリの再起動が必要です。</value>
+  </data>
+  <data name="Settings_MoveWindowToAdjacentDesktop" xml:space="preserve">
+    <value>アクティブ ウィンドウを隣接した仮想デスクトップへ移動</value>
+  </data>
+  <data name="Settings_MoveWindowToAdjacentDesktop_Left" xml:space="preserve">
+    <value>左へ移動:</value>
+  </data>
+  <data name="Settings_MoveWindowToAdjacentDesktop_LeftAndSwitch" xml:space="preserve">
+    <value>左へ移動して切り替え:</value>
+  </data>
+  <data name="Settings_MoveWindowToAdjacentDesktop_Right" xml:space="preserve">
+    <value>右へ移動</value>
+  </data>
+  <data name="Settings_MoveWindowToAdjacentDesktop_RightAndSwitch" xml:space="preserve">
+    <value>右へ移動して切り替え:</value>
+  </data>
+  <data name="Settings_MoveWindowToCreatedDesktop" xml:space="preserve">
+    <value>アクティブ ウィンドウを新しく作成した仮想デスクトップへ移動</value>
+  </data>
+  <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly" xml:space="preserve">
+    <value>切り替えのみ</value>
+  </data>
+  <data name="Settings_MoveWindowToCreatedDesktop_Move" xml:space="preserve">
+    <value>移動</value>
+  </data>
+  <data name="Settings_MoveWindowToCreatedDesktop_MoveAndSwitch" xml:space="preserve">
+    <value>移動して切り替え</value>
+  </data>
+  <data name="Settings_MultipleDisplays" xml:space="preserve">
+    <value>通知先のディスプレイ</value>
+  </data>
+  <data name="Settings_MultipleDisplays_AllDisplays" xml:space="preserve">
+    <value>すべてのディスプレイ</value>
+  </data>
+  <data name="Settings_MultipleDisplays_CurrentDisplay" xml:space="preserve">
+    <value>作業中のディスプレイ</value>
+  </data>
+  <data name="Settings_MultipleDisplays_EachDisplay" xml:space="preserve">
+    <value>ディスプレイ {0} {1}</value>
+  </data>
+  <data name="Settings_Notification" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement" xml:space="preserve">
+    <value>通知ウィンドウの配置</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement_BottomCenter" xml:space="preserve">
+    <value>中央 下部</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement_BottomLeft" xml:space="preserve">
+    <value>左下</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement_BottomRight" xml:space="preserve">
+    <value>右下</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement_Center" xml:space="preserve">
+    <value>中央</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement_TopCenter" xml:space="preserve">
+    <value>中央 上部</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement_TopLeft" xml:space="preserve">
+    <value>左上</value>
+  </data>
+  <data name="Settings_NotificationWindowPlacement_TopRight" xml:space="preserve">
+    <value>右上</value>
+  </data>
+  <data name="Settings_Notification_Display" xml:space="preserve">
+    <value>仮想デスクトップ切り替え時に通知を表示する</value>
+  </data>
+  <data name="Settings_Notification_Display_Duration" xml:space="preserve">
+    <value>通知メッセージを表示する時間:</value>
+  </data>
+  <data name="Settings_Notification_Display_Duration_Milliseconds" xml:space="preserve">
+    <value>ミリ秒</value>
+  </data>
+  <data name="Settings_Pin" xml:space="preserve">
+    <value>ピン留め:</value>
+  </data>
+  <data name="Settings_PinToggle" xml:space="preserve">
+    <value>ピン留めの切り替え:</value>
+  </data>
+  <data name="Settings_PinWindow" xml:space="preserve">
+    <value>ウィンドウをすべてのデスクトップに表示 (ピン留め)</value>
+  </data>
+  <data name="Settings_PinWindowFromApp" xml:space="preserve">
+    <value>アプリのウィンドウをすべてのデスクトップに表示 (ピン留め)</value>
+  </data>
+  <data name="Settings_Placement" xml:space="preserve">
+    <value>配置</value>
+  </data>
+  <data name="Settings_ShortcutKey" xml:space="preserve">
+    <value>キー設定</value>
+  </data>
+  <data name="Settings_Startup" xml:space="preserve">
+    <value>起動</value>
+  </data>
+  <data name="Settings_Startup_Automaticaly" xml:space="preserve">
+    <value>ログオン時に自動的に起動する</value>
+  </data>
+  <data name="Settings_Title" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="Settings_Unpin" xml:space="preserve">
+    <value>ピン留めを外す:</value>
+  </data>
+  <data name="Settings_Version" xml:space="preserve">
+    <value>バージョン情報</value>
+  </data>
+  <data name="TaskTray_FirstTimeMessage" xml:space="preserve">
+    <value>アプリケーションはバックグラウンドで実行されています。</value>
+  </data>
+  <data name="TaskTray_Menu_Exit" xml:space="preserve">
+    <value>終了</value>
+  </data>
+  <data name="TaskTray_Menu_Settings" xml:space="preserve">
+    <value>設定</value>
+  </data>
+</root>

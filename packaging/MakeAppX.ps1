@@ -5,16 +5,23 @@
         $target = 'Release (AppX)'
         $bin = '..\source\SylphyHorn\bin'
  
-        $targetKeywords = '*.exe','*.dll','*.exe.config','*.txt','*.VisualElementsManifest.xml', '*.png', 'AppxManifest.xml'
+        $appxManifest = 'AppxManifest.xml'
+        $versionSource = 'SylphyHorn.exe'
+
+        $targetKeywords = '*.exe','*.dll','*.exe.config','*.txt','*.VisualElementsManifest.xml', '*.png', $appxManifest
         $ignoreKeyword  = '*.vshost.*'
 
-        $package = 'SylphyHorn.appx'
+        $appx = 'SylphyHorn.appx'
+        $appxBundle = 'SylphyHorn.appxbundle'
+        $storekey = 'SylphyHorn.StoreKey.pfx'
         $publisher = 'CN=33C1D2CA-4B3F-4CCA-8103-6D02939C6477'
         
-        $mapping = '_SylphyHorn.map'
-        $tempCer = '_SylphyHorn.cer'
-        $tempPvk = '_SylphyHorn.pvk'
-        $tempPfx = '_SylphyHorn.pfx'
+        $appxMapping = '_SylphyHorn.appx.map'
+        $appxBundleMapping = '_SylphyHorn.appxbundle.map'
+
+        #$tempCer = '_SylphyHorn.cer'
+        #$tempPvk = '_SylphyHorn.pvk'
+        #$tempPfx = '_SylphyHorn.pfx'
 
         $win10Sdk = 'C:\Program Files (x86)\Windows Kits\10\bin\x64' 
  
@@ -30,17 +37,29 @@
         {
             # clean up current
             Get-ChildItem -Directory | Remove-item -Recurse
-            Get-ChildItem | where { $_.Extension -eq ".appx" } | Remove-Item
+            Get-ChildItem | where { $_.Name -eq $appx -or $_.Name -eq $appxBundle } | Remove-Item
             Get-ChildItem | where Name -Like "_*" | Remove-Item
  
-            New-MappingFile -SourcePath $(Join-Path $bin $target) -Filename $mapping -Targets $targetKeywords -Exclude $ignoreKeyword
+            $source = Join-Path $bin $target -Resolve
+            $version = $(Get-ChildItem (Join-Path $source $versionSource)).VersionInfo.FileVersion
 
-            Start-SdkTool -SdkPath $win10Sdk -ToolName 'makeappx' -Arguments "pack /l /f $mapping /p $package"
-            Start-SdkTool -SdkPath $win10Sdk -ToolName 'makecert' -Arguments "/r /h 0 /n $publisher /eku `"1.3.6.1.5.5.7.3.3`" /pe /sv $tempPvk $tempCer"
-            Start-SdkTool -SdkPath $win10Sdk -ToolName 'pvk2pfx'  -Arguments "/pvk $tempPvk /spc $tempCer /pfx $tempPfx"
-            Start-SdkTool -SdkPath $win10Sdk -ToolName 'signtool' -Arguments "sign /f $tempPfx /fd SHA256 /v $package"
+            # replace version in appxmanifest with assembly version
+            $(Get-Content (Join-Path $source $appxManifest -Resolve)) -replace 'Version="0.0.0.0"', (' Version="{0}"' -f $version) | Out-File (Join-Path $source $appxManifest) -Encoding UTF8
 
-            Certutil -addStore TrustedPeople $tempCer
+            New-MappingFile -SourcePath $source -Filename $appxMapping -Targets $targetKeywords -Exclude $ignoreKeyword
+            
+            Start-SdkTool -SdkPath $win10Sdk -ToolName 'makeappx' -Arguments "pack /l /f $appxMapping /p $appx"
+            Start-SdkTool -SdkPath $win10Sdk -ToolName 'signtool' -Arguments "sign /f $storekey /fd SHA256 /v $appx"            
+            
+            # if you don't have pfx file, can create that by following commands (Administrator authority required).
+            #Start-SdkTool -SdkPath $win10Sdk -ToolName 'makecert' -Arguments "/r /h 0 /n $publisher /eku `"1.3.6.1.5.5.7.3.3`" /pe /sv $tempPvk $tempCer"
+            #Start-SdkTool -SdkPath $win10Sdk -ToolName 'pvk2pfx'  -Arguments "/pvk $tempPvk /spc $tempCer /pfx $tempPfx"
+            #Start-SdkTool -SdkPath $win10Sdk -ToolName 'signtool' -Arguments "sign /f $tempPfx /fd SHA256 /v $appx"
+            #Certutil -addStore TrustedPeople $tempCer
+
+            New-MappingFile -SourcePath '.\' -Filename $appxBundleMapping -Targets $appx
+
+            Start-SdkTool -SdkPath $win10Sdk -ToolName 'makeappx' -Arguments "bundle /f $appxBundleMapping /p $appxBundle /bv $version"
         }
         catch
         {

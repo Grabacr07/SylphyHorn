@@ -1,0 +1,144 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:controls="clr-namespace:SylphyHorn.UI.Controls">
+
+	<Style TargetType="{x:Type controls:Keytop}">
+		<Setter Property="Background"
+				Value="Transparent" />
+		<Setter Property="BorderBrush"
+				Value="{DynamicResource ForegroundBrushKey}" />
+		<Setter Property="Foreground"
+				Value="{DynamicResource ForegroundBrushKey}" />
+		<Setter Property="BorderThickness"
+				Value="1" />
+		<Setter Property="MinWidth"
+				Value="40" />
+		<Setter Property="Padding"
+				Value="8,4" />
+		<Setter Property="Margin"
+				Value="2,3" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type controls:Keytop}">
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							CornerRadius="3"
+							Padding="{TemplateBinding Padding}"
+							SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+						<StackPanel Orientation="Horizontal"
+									HorizontalAlignment="Center">
+							<TextBlock x:Name="KeyKind"
+									   FontSize="9"
+									   Margin="0,3,2,0"
+									   Visibility="Collapsed" />
+							<TextBlock x:Name="KeyText"
+									   Text="{TemplateBinding KeyText}" />
+							<Path x:Name="Arrow"
+								  Data="M7.0136719,1.2363281 L11.402344,5.625 L7.0136719,10.013672 L6.4863281,9.4863281 L9.9667969,6 L0.75,6 L0.75,5.6367188 L0.75,5.25 L9.9667969,5.25 L6.4863281,1.7636719 z"
+								  Stretch="Fill"
+								  Fill="{TemplateBinding Foreground}"
+								  Width="13"
+								  Height="13"
+								  HorizontalAlignment="Center"
+								  RenderTransformOrigin="0.5,0.5"
+								  Visibility="Collapsed">
+								<FrameworkElement.RenderTransform>
+									<RotateTransform Angle="0" />
+								</FrameworkElement.RenderTransform>
+							</Path>
+						</StackPanel>
+					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger Property="KeyKind"
+								 Value="Left">
+							<Setter TargetName="KeyKind"
+									Property="Text"
+									Value="Left" />
+							<Setter TargetName="KeyKind"
+									Property="Visibility"
+									Value="Visible" />
+						</Trigger>
+						<Trigger Property="KeyKind"
+								 Value="Right">
+							<Setter TargetName="KeyKind"
+									Property="Text"
+									Value="Right" />
+							<Setter TargetName="KeyKind"
+									Property="Visibility"
+									Value="Visible" />
+						</Trigger>
+						<Trigger Property="KeyText"
+								 Value="Left">
+							<Setter TargetName="Arrow"
+									Property="RenderTransform">
+								<Setter.Value>
+									<RotateTransform Angle="180" />
+								</Setter.Value>
+							</Setter>
+							<Setter TargetName="Arrow"
+									Property="Visibility"
+									Value="Visible" />
+							<Setter TargetName="KeyText"
+									Property="Visibility"
+									Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="KeyText"
+								 Value="Top">
+							<Setter TargetName="Arrow"
+									Property="RenderTransform">
+								<Setter.Value>
+									<RotateTransform Angle="270" />
+								</Setter.Value>
+							</Setter>
+							<Setter TargetName="Arrow"
+									Property="Visibility"
+									Value="Visible" />
+							<Setter TargetName="KeyText"
+									Property="Visibility"
+									Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="KeyText"
+								 Value="Right">
+							<Setter TargetName="Arrow"
+									Property="RenderTransform">
+								<Setter.Value>
+									<RotateTransform Angle="0" />
+								</Setter.Value>
+							</Setter>
+							<Setter TargetName="Arrow"
+									Property="Visibility"
+									Value="Visible" />
+							<Setter TargetName="KeyText"
+									Property="Visibility"
+									Value="Collapsed" />
+						</Trigger>
+						<Trigger Property="KeyText"
+								 Value="Bottom">
+							<Setter TargetName="Arrow"
+									Property="RenderTransform">
+								<Setter.Value>
+									<RotateTransform Angle="90" />
+								</Setter.Value>
+							</Setter>
+							<Setter TargetName="Arrow"
+									Property="Visibility"
+									Value="Visible" />
+							<Setter TargetName="KeyText"
+									Property="Visibility"
+									Value="Collapsed" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		<Style.Triggers>
+			<Trigger Property="IsEnabled"
+					 Value="False">
+				<Setter Property="Opacity"
+						Value="0.7" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+</ResourceDictionary>

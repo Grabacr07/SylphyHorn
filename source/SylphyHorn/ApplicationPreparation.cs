@@ -4,6 +4,7 @@ using System.Linq;
 using MetroTrilithon.Lifetime;
 using MetroTrilithon.Threading.Tasks;
 using SylphyHorn.Interop;
+using SylphyHorn.Properties;
 using SylphyHorn.Serialization;
 using SylphyHorn.Services;
 using SylphyHorn.UI;
@@ -25,65 +26,73 @@ namespace SylphyHorn
 			var settings = Settings.ShortcutKey;
 
 			this._application.HookService
-				.Register(settings.MoveLeft.ToShortcutKey(), hWnd => hWnd.MoveToLeft())
+				.Register(()=>settings.MoveLeft.ToShortcutKey(), hWnd => hWnd.MoveToLeft())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.MoveLeftAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToLeft()?.Switch())
+				.Register(() => settings.MoveLeftAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToLeft()?.Switch())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.MoveRight.ToShortcutKey(), hWnd => hWnd.MoveToRight())
+				.Register(() => settings.MoveRight.ToShortcutKey(), hWnd => hWnd.MoveToRight())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.MoveRightAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToRight()?.Switch())
+				.Register(() => settings.MoveRightAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToRight()?.Switch())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.MoveNew.ToShortcutKey(), hWnd => hWnd.MoveToNew())
+				.Register(() => settings.MoveNew.ToShortcutKey(), hWnd => hWnd.MoveToNew())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.MoveNewAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToNew()?.Switch())
+				.Register(() => settings.MoveNewAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToNew()?.Switch())
 				.AddTo(this._application);
 
 			this._application.HookService
 				.Register(
-					settings.SwitchToLeft.ToShortcutKey(),
+					() => settings.SwitchToLeft.ToShortcutKey(),
 					_ => VirtualDesktopService.GetLeft()?.Switch(),
 					() => Settings.General.OverrideWindowsDefaultKeyCombination || Settings.General.ChangeBackgroundEachDesktop)
 				.AddTo(this._application);
 
 			this._application.HookService
 				.Register(
-					settings.SwitchToRight.ToShortcutKey(),
+					() => settings.SwitchToRight.ToShortcutKey(),
 					_ => VirtualDesktopService.GetRight()?.Switch(),
 					() => Settings.General.OverrideWindowsDefaultKeyCombination || Settings.General.ChangeBackgroundEachDesktop)
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.Pin.ToShortcutKey(), hWnd => hWnd.Pin())
+				.Register(() => settings.CloseAndSwitchLeft.ToShortcutKey(), _ => VirtualDesktopService.CloseAndSwitchLeft())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.Unpin.ToShortcutKey(), hWnd => hWnd.Unpin())
+				.Register(() => settings.CloseAndSwitchRight.ToShortcutKey(), _ => VirtualDesktopService.CloseAndSwitchRight())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.TogglePin.ToShortcutKey(), hWnd => hWnd.TogglePin())
+				.Register(() => settings.Pin.ToShortcutKey(), hWnd => hWnd.Pin())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.PinApp.ToShortcutKey(), hWnd => hWnd.PinApp())
+				.Register(() => settings.Unpin.ToShortcutKey(), hWnd => hWnd.Unpin())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.UnpinApp.ToShortcutKey(), hWnd => hWnd.UnpinApp())
+				.Register(() => settings.TogglePin.ToShortcutKey(), hWnd => hWnd.TogglePin())
 				.AddTo(this._application);
 
 			this._application.HookService
-				.Register(settings.TogglePinApp.ToShortcutKey(), hWnd => hWnd.TogglePinApp())
+				.Register(() => settings.PinApp.ToShortcutKey(), hWnd => hWnd.PinApp())
+				.AddTo(this._application);
+
+			this._application.HookService
+				.Register(() => settings.UnpinApp.ToShortcutKey(), hWnd => hWnd.UnpinApp())
+				.AddTo(this._application);
+
+			this._application.HookService
+				.Register(() => settings.TogglePinApp.ToShortcutKey(), hWnd => hWnd.TogglePinApp())
 				.AddTo(this._application);
 		}
 
@@ -98,8 +107,8 @@ namespace SylphyHorn
 			var icon = IconHelper.GetIconFromResource(uri);
 			var menus = new[]
 			{
-				new TaskTrayIconItem("&Settings (S)", () => this.ShowSettings(), () => Application.Args.CanSettings),
-				new TaskTrayIconItem("E&xit (X)", () => this._application.Shutdown()),
+				new TaskTrayIconItem(Resources.TaskTray_Menu_Settings, () => this.ShowSettings(), () => Application.Args.CanSettings),
+				new TaskTrayIconItem(Resources.TaskTray_Menu_Exit, () => this._application.Shutdown()),
 			};
 
 			var taskTrayIcon = new TaskTrayIcon(icon, menus);
@@ -114,8 +123,8 @@ namespace SylphyHorn
 			if (Settings.General.FirstTime)
 			{
 				var baloon = taskTrayIcon.CreateBaloon();
-				baloon.Title = "SylphyHorn";
-				baloon.Text = "Application is running in the background.";
+				baloon.Title = ProductInfo.Title;
+				baloon.Text = Resources.TaskTray_FirstTimeMessage;
 				baloon.Timespan = TimeSpan.FromMilliseconds(5000);
 				baloon.Show();
 
@@ -128,11 +137,20 @@ namespace SylphyHorn
 		{
 			using (this._application.HookService.Suspend())
 			{
-				var window = new SettingsWindow
+				if (SettingsWindow.Instance != null)
 				{
-					DataContext = new SettingsWindowViewModel(this._application.HookService),
-				};
-				window.ShowDialog();
+					SettingsWindow.Instance.Activate();
+				}
+				else
+				{
+					SettingsWindow.Instance = new SettingsWindow
+					{
+						DataContext = new SettingsWindowViewModel(this._application.HookService),
+					};
+
+					SettingsWindow.Instance.ShowDialog();
+					SettingsWindow.Instance = null;
+				}
 			}
 		}
 	}
