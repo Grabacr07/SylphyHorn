@@ -8,9 +8,15 @@ using System.Windows;
 
 namespace SylphyHorn.Interop
 {
-    // reuse objects if possible (fontfamily, font, brush?)
     public static class IconHelper
 	{
+        private static bool _lastOrientationVertical;
+        private static Color? _lastTrayColor = null;
+
+        private static FontFamily _trayFontFamily;
+        private static Font _trayFont;
+        private static Brush _trayBrush;
+
 		public static Icon GetIconFromResource(Uri uri)
 		{
 			var streamResourceInfo = System.Windows.Application.GetResourceStream(uri);
@@ -26,12 +32,34 @@ namespace SylphyHorn.Interop
 
         public static Icon GetDesktopInfoIcon(int currentDesktop, int totalDesktopCount, Color color)
         {
-            using (var iconBitmap = totalDesktopCount < 10
-                ? DrawHorizontalInfo(currentDesktop, totalDesktopCount, color)
-                : DrawVerticalInfo(currentDesktop, totalDesktopCount, color))
+            var orientationVertical = totalDesktopCount >= 10;
+
+            if (_trayFontFamily == null)
+            {
+                _trayFontFamily = new FontFamily("Segoe UI");
+            }
+
+            if (orientationVertical != _lastOrientationVertical || _trayFont == null)
+            {
+                var size = orientationVertical ? 6 : 7;
+                _trayFont = new Font(_trayFontFamily, size, System.Drawing.FontStyle.Bold);
+            }
+
+            if (!_lastTrayColor.HasValue || _lastTrayColor != color)
+            {
+                _trayBrush?.Dispose();
+                _trayBrush = new SolidBrush(color);
+            }
+
+            _lastOrientationVertical = orientationVertical;
+
+            using (var iconBitmap = !orientationVertical
+                ? DrawHorizontalInfo(currentDesktop, totalDesktopCount)
+                : DrawVerticalInfo(currentDesktop, totalDesktopCount))
             {
                 return iconBitmap.ToIcon();
             }
+
         }
 
         private static Icon ToIcon(this Bitmap bitmap)
@@ -42,7 +70,7 @@ namespace SylphyHorn.Interop
             return icon;
         }
         
-        private static Bitmap DrawHorizontalInfo(int currentDesktop, int totalDesktopCount, Color color)
+        private static Bitmap DrawHorizontalInfo(int currentDesktop, int totalDesktopCount)
         {
             var iconSize = GetIconSize();
             var bitmap = new Bitmap((int)iconSize.Width, (int)iconSize.Height);
@@ -51,24 +79,15 @@ namespace SylphyHorn.Interop
 
             var offset = GetHorizontalStringOffset();
 
-            using (var fontFamily = new FontFamily("Segoe UI"))
+            using (var graphics = Graphics.FromImage(bitmap))
             {
-                using (var font = new Font(fontFamily, 7, System.Drawing.FontStyle.Bold))
-                {
-                    using (var graphics = Graphics.FromImage(bitmap))
-                    {
-                        using (var brush = new SolidBrush(color))
-                        {
-                            graphics.DrawString(stringToDraw, font, brush, offset);
-                        }
-                    }
-                }
+                graphics.DrawString(stringToDraw, _trayFont, _trayBrush, offset);
             }
 
             return bitmap;
         }
 
-        private static Bitmap DrawVerticalInfo(int currentDesktop, int totalDesktops, Color color)
+        private static Bitmap DrawVerticalInfo(int currentDesktop, int totalDesktops)
         {
             var iconSize = GetIconSize();
             var bitmap = new Bitmap((int)iconSize.Width, (int)iconSize.Height);
@@ -79,19 +98,10 @@ namespace SylphyHorn.Interop
             var firstString = currentDesktop.ToString();
             var secondString = totalDesktops.ToString();
 
-            using (var fontFamily = new FontFamily("Segoe UI"))
+            using (var graphics = Graphics.FromImage(bitmap))
             {
-                using (var font = new Font(fontFamily, 6, System.Drawing.FontStyle.Bold))
-                {
-                    using (var graphics = Graphics.FromImage(bitmap))
-                    {
-                        using (var brush = new SolidBrush(color))
-                        {
-                            graphics.DrawString(firstString, font, brush, firstOffset);
-                            graphics.DrawString(secondString, font, brush, secondOffset);
-                        }
-                    }
-                }
+                graphics.DrawString(firstString, _trayFont, _trayBrush, firstOffset);
+                graphics.DrawString(secondString, _trayFont, _trayBrush, secondOffset);
             }
 
             return bitmap;
