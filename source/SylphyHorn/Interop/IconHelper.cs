@@ -56,7 +56,7 @@ namespace SylphyHorn.Interop
 
             using (var fontFamily = new FontFamily("Segoe UI"))
             {
-                using (var font = new Font(fontFamily, (float)iconSize.Height * 0.375f, System.Drawing.FontStyle.Bold))
+                using (var font = new Font(fontFamily, 7, System.Drawing.FontStyle.Bold))
                 {
                     using (var graphics = Graphics.FromImage(bitmap))
                     {
