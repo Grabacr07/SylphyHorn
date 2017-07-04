@@ -16,6 +16,7 @@ namespace SylphyHorn.UI
         private readonly Icon _defaultIcon;
 		private readonly TaskTrayIconItem[] _items;
 		private NotifyIcon _notifyIcon;
+        private DynamicInfoTrayIcon _infoIcon;
 
 		public string Text { get; set; } = ProductInfo.Title;
 
@@ -63,7 +64,12 @@ namespace SylphyHorn.UI
             var currentDesktopIndex = Array.IndexOf(desktops, currentDesktop) + 1;
             var totalDesktopCount = desktops.Length;
 
-            ChangeIcon(IconHelper.GetDesktopInfoIcon(currentDesktopIndex, totalDesktopCount, Color.White));
+            if (_infoIcon == null)
+            {
+                _infoIcon = new DynamicInfoTrayIcon(totalDesktopCount);
+            }
+
+            ChangeIcon(_infoIcon.GetDesktopInfoIcon(currentDesktopIndex, totalDesktopCount));
         }
 
         private void OnCurrentDesktopChanged(object sender, VirtualDesktopChangedEventArgs e)
@@ -74,6 +80,9 @@ namespace SylphyHorn.UI
             }
             else if (_icon != _defaultIcon)
             {
+                _infoIcon?.Dispose();
+                _infoIcon = null;
+
                 ChangeIcon(_defaultIcon);
             }
         }

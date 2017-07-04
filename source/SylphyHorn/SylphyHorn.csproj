@@ -245,6 +245,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="UI\Controls\Keytop.cs" />
     <Compile Include="UI\Controls\UnlockImageConverter.cs" />
+    <Compile Include="UI\DynamicInfoTrayIcon.cs" />
     <Compile Include="UI\NotificationWindow.cs" />
     <Compile Include="UI\PinWindow.xaml.cs">
       <DependentUpon>PinWindow.xaml</DependentUpon>
