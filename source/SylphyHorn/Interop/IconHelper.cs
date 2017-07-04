@@ -17,6 +17,10 @@ namespace SylphyHorn.Interop
         private static Font _trayFont;
         private static Brush _trayBrush;
 
+        private const string TrayFontFamilyName = "Segoe UI";
+        private const float TrayHorizontalFontSize = 7;
+        private const float TrayVerticalFontSize = 6;
+
 		public static Icon GetIconFromResource(Uri uri)
 		{
 			var streamResourceInfo = System.Windows.Application.GetResourceStream(uri);
@@ -36,12 +40,13 @@ namespace SylphyHorn.Interop
 
             if (_trayFontFamily == null)
             {
-                _trayFontFamily = new FontFamily("Segoe UI");
+                _trayFontFamily = new FontFamily(TrayFontFamilyName);
             }
 
             if (orientationVertical != _lastOrientationVertical || _trayFont == null)
             {
-                var size = orientationVertical ? 6 : 7;
+                var size = orientationVertical ? TrayVerticalFontSize : TrayHorizontalFontSize;
+                _trayFont?.Dispose();
                 _trayFont = new Font(_trayFontFamily, size, System.Drawing.FontStyle.Bold);
             }
 
