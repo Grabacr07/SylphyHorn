@@ -529,6 +529,24 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show current desktop info in tray.
+        /// </summary>
+        public static string Settings_ToggleTrayIconInfo {
+            get {
+                return ResourceManager.GetString("Settings_ToggleTrayIconInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tray Icon.
+        /// </summary>
+        public static string Settings_TrayIcon {
+            get {
+                return ResourceManager.GetString("Settings_TrayIcon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unpin window:.
         /// </summary>
         public static string Settings_Unpin {

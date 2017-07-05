@@ -36,5 +36,7 @@ namespace SylphyHorn.Serialization
 		public SerializableProperty<uint> Placement => this.Cache(key => new SerializableProperty<uint>(key, this._provider, 5 /* Center */));
 
 		public SerializableProperty<uint> Display => this.Cache(key => new SerializableProperty<uint>(key, this._provider, 0));
+
+        public SerializableProperty<bool> TrayShowDesktop => this.Cache(key => new SerializableProperty<bool>(key, this._provider, false));
 	}
 }
