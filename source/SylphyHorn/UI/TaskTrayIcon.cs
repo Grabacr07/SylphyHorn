@@ -1,36 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using SylphyHorn.Properties;
-using WindowsDesktop;
-using SylphyHorn.Interop;
 using SylphyHorn.Serialization;
+using WindowsDesktop;
 
 namespace SylphyHorn.UI
 {
 	public class TaskTrayIcon : IDisposable
 	{
 		private Icon _icon;
-        private readonly Icon _defaultIcon;
+		private readonly Icon _defaultIcon;
 		private readonly TaskTrayIconItem[] _items;
 		private NotifyIcon _notifyIcon;
-        private DynamicInfoTrayIcon _infoIcon;
+		private DynamicInfoTrayIcon _infoIcon;
 
 		public string Text { get; set; } = ProductInfo.Title;
 
 		public TaskTrayIcon(Icon icon, TaskTrayIconItem[] items)
 		{
-            _defaultIcon = icon;
+			this._defaultIcon = icon;
 
 			this._icon = icon;
 			this._items = items;
 
-            VirtualDesktop.CurrentChanged += OnCurrentDesktopChanged;
+			VirtualDesktop.CurrentChanged += this.OnCurrentDesktopChanged;
 		}
 
-        public void Show()
+		public void Show()
 		{
 			var menus = this._items
 				.Where(x => x.CanDisplay())
@@ -58,52 +56,52 @@ namespace SylphyHorn.UI
 
 		}
 
-        public void UpdateWithDesktopInfo(VirtualDesktop currentDesktop)
-        {
-            var desktops = VirtualDesktop.GetDesktops();
-            var currentDesktopIndex = Array.IndexOf(desktops, currentDesktop) + 1;
-            var totalDesktopCount = desktops.Length;
+		public void UpdateWithDesktopInfo(VirtualDesktop currentDesktop)
+		{
+			var desktops = VirtualDesktop.GetDesktops();
+			var currentDesktopIndex = Array.IndexOf(desktops, currentDesktop) + 1;
+			var totalDesktopCount = desktops.Length;
 
-            if (_infoIcon == null)
-            {
-                _infoIcon = new DynamicInfoTrayIcon(totalDesktopCount);
-            }
+			if (this._infoIcon == null)
+			{
+				this._infoIcon = new DynamicInfoTrayIcon(totalDesktopCount);
+			}
 
-            ChangeIcon(_infoIcon.GetDesktopInfoIcon(currentDesktopIndex, totalDesktopCount));
-        }
+			this.ChangeIcon(this._infoIcon.GetDesktopInfoIcon(currentDesktopIndex, totalDesktopCount));
+		}
 
-        private void OnCurrentDesktopChanged(object sender, VirtualDesktopChangedEventArgs e)
-        {
-            if (Settings.General.TrayShowDesktop)
-            {
-                UpdateWithDesktopInfo(e.NewDesktop);
-            }
-            else if (_icon != _defaultIcon)
-            {
-                _infoIcon?.Dispose();
-                _infoIcon = null;
+		private void OnCurrentDesktopChanged(object sender, VirtualDesktopChangedEventArgs e)
+		{
+			if (Settings.General.TrayShowDesktop)
+			{
+				this.UpdateWithDesktopInfo(e.NewDesktop);
+			}
+			else if (this._icon != this._defaultIcon)
+			{
+				this._infoIcon?.Dispose();
+				this._infoIcon = null;
 
-                ChangeIcon(_defaultIcon);
-            }
-        }
+				this.ChangeIcon(this._defaultIcon);
+			}
+		}
 
-        private void ChangeIcon(Icon newIcon)
-        {
-            if (_icon != _defaultIcon)
-            {
-                _icon?.Dispose();
-            }
+		private void ChangeIcon(Icon newIcon)
+		{
+			if (this._icon != this._defaultIcon)
+			{
+				this._icon?.Dispose();
+			}
 
-            _icon = newIcon;
-            _notifyIcon.Icon = newIcon;
-        }
+			this._icon = newIcon;
+			this._notifyIcon.Icon = newIcon;
+		}
 
-        public void Dispose()
+		public void Dispose()
 		{
 			this._notifyIcon?.Dispose();
 			this._icon?.Dispose();
 
-            VirtualDesktop.CurrentChanged -= OnCurrentDesktopChanged;
+			VirtualDesktop.CurrentChanged -= this.OnCurrentDesktopChanged;
 		}
 	}
 

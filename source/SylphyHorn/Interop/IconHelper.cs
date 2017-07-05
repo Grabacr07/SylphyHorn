@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using MetroRadiance.Interop;
-using SylphyHorn.Services;
 using System.Windows;
+using MetroRadiance.Interop;
 
 namespace SylphyHorn.Interop
 {
-    public static class IconHelper
+	public static class IconHelper
 	{
 		public static Icon GetIconFromResource(Uri uri)
 		{
@@ -17,37 +14,37 @@ namespace SylphyHorn.Interop
 
 			using (var stream = streamResourceInfo.Stream)
 			{
-                var icon = new Icon(stream);
+				var icon = new Icon(stream);
 
-                return ScaleIconToDpi(icon);
+				return ScaleIconToDpi(icon);
 			}
 		}
 
-        public static Icon ToIcon(this Bitmap bitmap)
-        {
-            IntPtr iconHandle = bitmap.GetHicon();
-            var icon = Icon.FromHandle(iconHandle);
+		public static Icon ToIcon(this Bitmap bitmap)
+		{
+			var iconHandle = bitmap.GetHicon();
+			var icon = Icon.FromHandle(iconHandle);
 
-            return icon;
-        }
+			return icon;
+		}
 
-        private static Icon ScaleIconToDpi(Icon targetIcon)
-        {
-            var dpi = GetMonitorDpi();
+		private static Icon ScaleIconToDpi(Icon targetIcon)
+		{
+			var dpi = GetMonitorDpi();
 
-            return new Icon(targetIcon, new System.Drawing.Size((int)(16 * dpi.ScaleX), (int)(16 * dpi.ScaleY)));
-        }
+			return new Icon(targetIcon, new System.Drawing.Size((int)(16 * dpi.ScaleX), (int)(16 * dpi.ScaleY)));
+		}
 
-        public static System.Windows.Size GetIconSize()
-        {
-            var dpi = GetMonitorDpi();
+		public static System.Windows.Size GetIconSize()
+		{
+			var dpi = GetMonitorDpi();
 
-            return new System.Windows.Size(SystemParameters.SmallIconWidth * dpi.ScaleX, SystemParameters.SmallIconHeight * dpi.ScaleY);
-        }
-        
-        private static Dpi GetMonitorDpi()
-        {
-            return PerMonitorDpi.GetDpi(IntPtr.Zero);
-        }
+			return new System.Windows.Size(SystemParameters.SmallIconWidth * dpi.ScaleX, SystemParameters.SmallIconHeight * dpi.ScaleY);
+		}
+		
+		private static Dpi GetMonitorDpi()
+		{
+			return PerMonitorDpi.GetDpi(IntPtr.Zero);
+		}
 	}
 }

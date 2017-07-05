@@ -273,6 +273,12 @@
   <data name="Settings_Title" xml:space="preserve">
     <value>設定</value>
   </data>
+  <data name="Settings_ToggleTrayIconInfo" xml:space="preserve">
+    <value>デスクトップの番号をタスク トレイに表示する</value>
+  </data>
+  <data name="Settings_TrayIcon" xml:space="preserve">
+    <value>トレイ アイコン</value>
+  </data>
   <data name="Settings_Unpin" xml:space="preserve">
     <value>ピン留めを外す:</value>
   </data>

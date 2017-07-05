@@ -115,10 +115,10 @@ namespace SylphyHorn
 			taskTrayIcon.Show();
 			taskTrayIcon.AddTo(this._application);
 
-            if (Settings.General.TrayShowDesktop)
-            {
-                taskTrayIcon.UpdateWithDesktopInfo(WindowsDesktop.VirtualDesktop.Current);
-            }
+			if (Settings.General.TrayShowDesktop)
+			{
+				taskTrayIcon.UpdateWithDesktopInfo(WindowsDesktop.VirtualDesktop.Current);
+			}
 
 			if (Settings.General.FirstTime)
 			{
