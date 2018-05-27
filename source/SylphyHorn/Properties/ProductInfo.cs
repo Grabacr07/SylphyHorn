@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace SylphyHorn.Properties
 			new Library("MetroRadiance", new Uri("https://github.com/Grabacr07/MetroRadiance")),
 			new Library("MetroTrilithon", new Uri("https://github.com/Grabacr07/MetroTrilithon")),
 		});
+		private static readonly Lazy<DirectoryInfo> _localAppDataLazy = new Lazy<DirectoryInfo>(() => new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Company, Product)));
 
 
 		public static string Title => _titleLazy.Value;
@@ -44,6 +46,8 @@ namespace SylphyHorn.Properties
 		public static string VersionString => _versionLazy.Value;
 
 		public static IReadOnlyCollection<Library> Libraries => _librariesLazy.Value;
+
+		internal static DirectoryInfo LocalAppData => _localAppDataLazy.Value;
 
 
 		public static bool IsBetaRelease
@@ -72,8 +76,8 @@ namespace SylphyHorn.Properties
 
 		public class Library
 		{
-			public string Name { get; private set; }
-			public Uri Url { get; private set; }
+			public string Name { get; }
+			public Uri Url { get; }
 
 			public Library(string name, Uri url)
 			{

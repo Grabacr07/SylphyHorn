@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using WindowsDesktop;
 using MetroTrilithon.Lifetime;
 using MetroTrilithon.Threading.Tasks;
 using SylphyHorn.Interop;
@@ -101,13 +103,12 @@ namespace SylphyHorn
 		{
 			const string iconUri = "pack://application:,,,/SylphyHorn;Component/Assets/tasktray.ico";
 
-			Uri uri;
-			if (!Uri.TryCreate(iconUri, UriKind.Absolute, out uri)) return;
+			if (!Uri.TryCreate(iconUri, UriKind.Absolute, out var uri)) return;
 
 			var icon = IconHelper.GetIconFromResource(uri);
 			var menus = new[]
 			{
-				new TaskTrayIconItem(Resources.TaskTray_Menu_Settings, () => this.ShowSettings(), () => Application.Args.CanSettings),
+				new TaskTrayIconItem(Resources.TaskTray_Menu_Settings, () => ShowSettings(), () => Application.Args.CanSettings),
 				new TaskTrayIconItem(Resources.TaskTray_Menu_Exit, () => this._application.Shutdown()),
 			};
 
@@ -117,7 +118,7 @@ namespace SylphyHorn
 
 			if (Settings.General.TrayShowDesktop)
 			{
-				taskTrayIcon.UpdateWithDesktopInfo(WindowsDesktop.VirtualDesktop.Current);
+				taskTrayIcon.UpdateWithDesktopInfo(VirtualDesktop.Current);
 			}
 
 			if (Settings.General.FirstTime)
@@ -131,27 +132,38 @@ namespace SylphyHorn
 				Settings.General.FirstTime.Value = false;
 				LocalSettingsProvider.Instance.SaveAsync().Forget();
 			}
-		}
 
-		private void ShowSettings()
-		{
-			using (this._application.HookService.Suspend())
+			void ShowSettings()
 			{
-				if (SettingsWindow.Instance != null)
+				using (this._application.HookService.Suspend())
 				{
-					SettingsWindow.Instance.Activate();
-				}
-				else
-				{
-					SettingsWindow.Instance = new SettingsWindow
+					if (SettingsWindow.Instance != null)
 					{
-						DataContext = new SettingsWindowViewModel(this._application.HookService),
-					};
+						SettingsWindow.Instance.Activate();
+					}
+					else
+					{
+						SettingsWindow.Instance = new SettingsWindow
+						{
+							DataContext = new SettingsWindowViewModel(this._application.HookService),
+						};
 
-					SettingsWindow.Instance.ShowDialog();
-					SettingsWindow.Instance = null;
+						SettingsWindow.Instance.ShowDialog();
+						SettingsWindow.Instance = null;
+					}
 				}
 			}
+		}
+
+		public void PrepareVirtualDesktop()
+		{
+			var provider = new VirtualDesktopProvider()
+			{
+				ComInterfaceAssemblyPath = Path.Combine(ProductInfo.LocalAppData.FullName, "assemblies"),
+			};
+
+			VirtualDesktop.Provider = provider;
+			VirtualDesktop.Provider.Initialize().Forget();
 		}
 	}
 }

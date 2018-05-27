@@ -65,6 +65,7 @@ namespace SylphyHorn
 					var preparation = new ApplicationPreparation(this);
 					preparation.ShowTaskTrayIcon();
 					preparation.RegisterActions();
+					preparation.PrepareVirtualDesktop();
 
 					NotificationService.Instance.AddTo(this);
 					WallpaperService.Instance.AddTo(this);
