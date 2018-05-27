@@ -63,9 +63,9 @@ namespace SylphyHorn
 					this.HookService = new HookService().AddTo(this);
 
 					var preparation = new ApplicationPreparation(this);
+					preparation.PrepareVirtualDesktop();
 					preparation.ShowTaskTrayIcon();
 					preparation.RegisterActions();
-					preparation.PrepareVirtualDesktop();
 
 					NotificationService.Instance.AddTo(this);
 					WallpaperService.Instance.AddTo(this);
