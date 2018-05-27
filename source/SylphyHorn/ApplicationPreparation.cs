@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using WindowsDesktop;
 using MetroTrilithon.Lifetime;
 using MetroTrilithon.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace SylphyHorn
 	public class ApplicationPreparation
 	{
 		private readonly Application _application;
+
+		public event Action VirtualDesktopInitialized; 
 
 		public ApplicationPreparation(Application application)
 		{
@@ -99,11 +102,11 @@ namespace SylphyHorn
 		}
 
 
-		public void ShowTaskTrayIcon()
+		public TaskTrayIcon CreateTaskTrayIcon()
 		{
 			const string iconUri = "pack://application:,,,/SylphyHorn;Component/Assets/tasktray.ico";
 
-			if (!Uri.TryCreate(iconUri, UriKind.Absolute, out var uri)) return;
+			if (!Uri.TryCreate(iconUri, UriKind.Absolute, out var uri)) return null;
 
 			var icon = IconHelper.GetIconFromResource(uri);
 			var menus = new[]
@@ -113,13 +116,6 @@ namespace SylphyHorn
 			};
 
 			var taskTrayIcon = new TaskTrayIcon(icon, menus);
-			taskTrayIcon.Show();
-			taskTrayIcon.AddTo(this._application);
-
-			if (Settings.General.TrayShowDesktop)
-			{
-				taskTrayIcon.UpdateWithDesktopInfo(VirtualDesktop.Current);
-			}
 
 			if (Settings.General.FirstTime)
 			{
@@ -132,6 +128,8 @@ namespace SylphyHorn
 				Settings.General.FirstTime.Value = false;
 				LocalSettingsProvider.Instance.SaveAsync().Forget();
 			}
+
+			return taskTrayIcon;
 
 			void ShowSettings()
 			{
@@ -163,7 +161,7 @@ namespace SylphyHorn
 			};
 
 			VirtualDesktop.Provider = provider;
-			VirtualDesktop.Provider.Initialize().Forget();
+			VirtualDesktop.Provider.Initialize().ContinueWith(_ => this.VirtualDesktopInitialized(), TaskScheduler.FromCurrentSynchronizationContext());
 		}
 	}
 }

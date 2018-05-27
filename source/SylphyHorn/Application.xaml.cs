@@ -11,6 +11,7 @@ using MetroTrilithon.Linq;
 using StatefulModel;
 using SylphyHorn.Serialization;
 using SylphyHorn.Services;
+using SylphyHorn.UI;
 
 namespace SylphyHorn
 {
@@ -33,6 +34,8 @@ namespace SylphyHorn
 		private readonly MultipleDisposable _compositeDisposable = new MultipleDisposable();
 
 		internal HookService HookService { get; private set; }
+
+		internal TaskTrayIcon TaskTrayIcon { get; private set; }
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
@@ -63,8 +66,11 @@ namespace SylphyHorn
 					this.HookService = new HookService().AddTo(this);
 
 					var preparation = new ApplicationPreparation(this);
+					this.TaskTrayIcon = preparation.CreateTaskTrayIcon().AddTo(this);
+					this.TaskTrayIcon.Show();
+
+					preparation.VirtualDesktopInitialized += () => this.TaskTrayIcon.Reload();
 					preparation.PrepareVirtualDesktop();
-					preparation.ShowTaskTrayIcon();
 					preparation.RegisterActions();
 
 					NotificationService.Instance.AddTo(this);

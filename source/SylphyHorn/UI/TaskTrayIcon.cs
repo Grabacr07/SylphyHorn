@@ -53,10 +53,24 @@ namespace SylphyHorn.UI
 				baloon.Title,
 				baloon.Text,
 				ToolTipIcon.None);
-
 		}
 
-		public void UpdateWithDesktopInfo(VirtualDesktop currentDesktop)
+		public void Reload(VirtualDesktop desktop = null)
+		{
+			if (Settings.General.TrayShowDesktop)
+			{
+				this.UpdateWithDesktopInfo(desktop ?? VirtualDesktop.Current);
+			}
+			else if (this._icon != this._defaultIcon)
+			{
+				this._infoIcon?.Dispose();
+				this._infoIcon = null;
+
+				this.ChangeIcon(this._defaultIcon);
+			}
+		}
+
+		private void UpdateWithDesktopInfo(VirtualDesktop currentDesktop)
 		{
 			var desktops = VirtualDesktop.GetDesktops();
 			var currentDesktopIndex = Array.IndexOf(desktops, currentDesktop) + 1;
@@ -72,17 +86,7 @@ namespace SylphyHorn.UI
 
 		private void OnCurrentDesktopChanged(object sender, VirtualDesktopChangedEventArgs e)
 		{
-			if (Settings.General.TrayShowDesktop)
-			{
-				this.UpdateWithDesktopInfo(e.NewDesktop);
-			}
-			else if (this._icon != this._defaultIcon)
-			{
-				this._infoIcon?.Dispose();
-				this._infoIcon = null;
-
-				this.ChangeIcon(this._defaultIcon);
-			}
+			this.Reload(e.NewDesktop);
 		}
 
 		private void ChangeIcon(Icon newIcon)
