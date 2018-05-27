@@ -26,6 +26,8 @@ namespace SylphyHorn
 
 		public static CommandLineArgs Args { get; private set; }
 
+		public new static Application Current => (Application)System.Windows.Application.Current;
+
 		static Application()
 		{
 			AppDomain.CurrentDomain.UnhandledException += HandleUnhandledException;
@@ -70,6 +72,8 @@ namespace SylphyHorn
 					this.TaskTrayIcon.Show();
 
 					preparation.VirtualDesktopInitialized += () => this.TaskTrayIcon.Reload();
+					preparation.VirtualDesktopInitializationCanceled += () => { }; // ToDo
+					preparation.VirtualDesktopInitializationFailed += ex => { }; // ToDo
 					preparation.PrepareVirtualDesktop();
 					preparation.RegisterActions();
 

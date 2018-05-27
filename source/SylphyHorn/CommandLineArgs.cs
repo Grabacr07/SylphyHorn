@@ -6,13 +6,13 @@ namespace SylphyHorn
 {
 	public class CommandLineArgs : CommandLineArgsBase
 	{
-		[CommandLineOption(Key = nameof(Setup))]
+		[CommandLineOption(nameof(Setup))]
 		public bool Setup { get; private set; }
 
-		[CommandLineOption(Key = nameof(CanSettings))]
+		[CommandLineOption(nameof(CanSettings))]
 		public bool CanSettings { get; private set; } = true;
 
-		[CommandLineOption(Key = nameof(Restarted))]
+		[CommandLineOption(nameof(Restarted))]
 		public int? Restarted { get; private set; }
 
 		public CommandLineArgs()
@@ -136,6 +136,7 @@ namespace SylphyHorn
 		}
 	}
 
+	[AttributeUsage(AttributeTargets.Property)]
 	public class CommandLineOptionAttribute : Attribute
 	{
 		public string Key { get; set; }
@@ -145,5 +146,10 @@ namespace SylphyHorn
 		public string KeyPrefix { get; set; } = "-";
 
 		public string[] Separators { get; set; } = { "=" };
+
+		public CommandLineOptionAttribute(string key)
+		{
+			this.Key = key;
+		}
 	}
 }

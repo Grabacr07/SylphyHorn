@@ -19,7 +19,11 @@ namespace SylphyHorn
 	{
 		private readonly Application _application;
 
-		public event Action VirtualDesktopInitialized; 
+		public event Action VirtualDesktopInitialized;
+
+		public event Action VirtualDesktopInitializationCanceled;
+
+		public event Action<Exception> VirtualDesktopInitializationFailed;
 
 		public ApplicationPreparation(Application application)
 		{
@@ -161,7 +165,25 @@ namespace SylphyHorn
 			};
 
 			VirtualDesktop.Provider = provider;
-			VirtualDesktop.Provider.Initialize().ContinueWith(_ => this.VirtualDesktopInitialized(), TaskScheduler.FromCurrentSynchronizationContext());
+			VirtualDesktop.Provider.Initialize().ContinueWith(Continue, TaskScheduler.FromCurrentSynchronizationContext());
+
+			void Continue(Task t)
+			{
+				switch (t.Status)
+				{
+					case TaskStatus.RanToCompletion:
+						this.VirtualDesktopInitialized?.Invoke();
+						break;
+
+					case TaskStatus.Canceled:
+						this.VirtualDesktopInitializationCanceled?.Invoke();
+						break;
+
+					case TaskStatus.Faulted:
+						this.VirtualDesktopInitializationFailed?.Invoke(t.Exception);
+						break;
+				}
+			}
 		}
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Media;
+using JetBrains.Annotations;
 using Livet;
 using Livet.Messaging.IO;
 using MetroRadiance.Platform;
@@ -40,7 +41,7 @@ namespace SylphyHorn.UI.Bindings
 
 		public bool HasStartupLink
 		{
-			get { return this._HasStartupLink; }
+			get => this._HasStartupLink;
 			set
 			{
 				if (this._HasStartupLink != value)
@@ -66,7 +67,7 @@ namespace SylphyHorn.UI.Bindings
 
 		public string Culture
 		{
-			get { return Settings.General.Culture; }
+			get => Settings.General.Culture;
 			set
 			{
 				if (Settings.General.Culture != value)
@@ -86,7 +87,7 @@ namespace SylphyHorn.UI.Bindings
 
 		public WindowPlacement Placement
 		{
-			get { return (WindowPlacement)Settings.General.Placement.Value; }
+			get => (WindowPlacement)Settings.General.Placement.Value;
 			set
 			{
 				if ((WindowPlacement)Settings.General.Placement.Value != value)
@@ -104,7 +105,7 @@ namespace SylphyHorn.UI.Bindings
 
 		public uint Display
 		{
-			get { return Settings.General.Display; }
+			get => Settings.General.Display;
 			set
 			{
 				if (Settings.General.Display != value)
@@ -124,7 +125,7 @@ namespace SylphyHorn.UI.Bindings
 
 		public WallpaperFile[] Backgrounds
 		{
-			get { return this._Backgrounds; }
+			get => this._Backgrounds;
 			set
 			{
 				if (this._Backgrounds != value)
@@ -145,7 +146,7 @@ namespace SylphyHorn.UI.Bindings
 
 		public SolidColorBrush PreviewBackgroundBrush
 		{
-			get { return this._PreviewBackgroundBrush; }
+			get => this._PreviewBackgroundBrush;
 			set
 			{
 				if (this._PreviewBackgroundBrush != value)
@@ -165,7 +166,7 @@ namespace SylphyHorn.UI.Bindings
 
 		public string PreviewBackgroundPath
 		{
-			get { return this._PreviewBackgroundPath; }
+			get => this._PreviewBackgroundPath;
 			set
 			{
 				if (this._PreviewBackgroundPath != value)
@@ -271,6 +272,9 @@ namespace SylphyHorn.UI.Bindings
 
 			Disposable.Create(() => LocalSettingsProvider.Instance.SaveAsync().Wait())
 				.AddTo(this);
+
+			Disposable.Create(() => Application.Current.TaskTrayIcon.Reload())
+				.AddTo(this);
 		}
 
 		protected override void InitializeCore()
@@ -280,6 +284,7 @@ namespace SylphyHorn.UI.Bindings
 				.AddTo(this);
 		}
 
+		[UsedImplicitly]
 		public void OpenBackgroundPathDialog()
 		{
 			var message = new FolderSelectionMessage("Window.OpenBackgroundImagesDialog.Open")
@@ -305,7 +310,7 @@ namespace SylphyHorn.UI.Bindings
 
 		public string Text
 		{
-			get { return this._Text; }
+			get => this._Text;
 			set
 			{
 				if (this._Text != value)
@@ -327,7 +332,7 @@ namespace SylphyHorn.UI.Bindings
 
 		public Uri Uri
 		{
-			get { return this._Uri; }
+			get => this._Uri;
 			set
 			{
 				if (this._Uri != value)

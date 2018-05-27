@@ -133,7 +133,6 @@ namespace SylphyHorn.UI
 
 		public string Title { get; set; }
 
-
 		public string Text { get; set; }
 
 		public TimeSpan Timespan { get; set; }
