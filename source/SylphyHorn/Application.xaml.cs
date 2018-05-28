@@ -8,6 +8,7 @@ using Livet;
 using MetroRadiance.UI;
 using MetroTrilithon.Lifetime;
 using MetroTrilithon.Linq;
+using MetroTrilithon.Threading.Tasks;
 using StatefulModel;
 using SylphyHorn.Serialization;
 using SylphyHorn.Services;
@@ -56,9 +57,10 @@ namespace SylphyHorn
 				if (WindowsDesktop.VirtualDesktop.IsSupported)
 				{
 					this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
-					this.DispatcherUnhandledException += this.HandleDispatcherUnhandledException;
-
 					DispatcherHelper.UIDispatcher = this.Dispatcher;
+
+					this.DispatcherUnhandledException += this.HandleDispatcherUnhandledException;
+					TaskLog.Occured += (sender, log) => LoggingService.Instance.Register(log);
 
 					LocalSettingsProvider.Instance.LoadAsync().Wait();
 

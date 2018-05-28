@@ -193,6 +193,8 @@ namespace SylphyHorn.UI.Bindings
 			: ImmersiveColor.GetColorByTypeName(ImmersiveColorNames.DarkChromeMedium))
 		{ Opacity = WindowsTheme.Transparency.Current ? 0.8 : 1.0 };
 
+		public ReadOnlyDispatcherCollection<LogViewModel> Logs { get; }
+
 		public SettingsWindowViewModel(HookService hookService)
 		{
 			this._hookService = hookService;
@@ -256,6 +258,11 @@ namespace SylphyHorn.UI.Bindings
 			var colAndWall = WallpaperService.GetCurrentColorAndWallpaper();
 			this.PreviewBackgroundBrush = new SolidColorBrush(colAndWall.Item1);
 			this.PreviewBackgroundPath = colAndWall.Item2;
+
+			this.Logs = ViewModelHelper.CreateReadOnlyDispatcherCollection(
+				LoggingService.Instance.Logs,
+				log => new LogViewModel(log),
+				DispatcherHelper.UIDispatcher);
 
 			WindowsTheme.ColorPrevalence
 				.RegisterListener(_ => this.RaisePropertyChanged(nameof(this.NotificationBackground)))
@@ -344,5 +351,52 @@ namespace SylphyHorn.UI.Bindings
 		}
 
 		#endregion
+	}
+
+	public class LogViewModel : ViewModel
+	{
+		#region Header 変更通知プロパティ
+
+		private string _Header;
+
+		public string Header
+		{
+			get => this._Header;
+			set
+			{
+				if (this._Header != value)
+				{
+					this._Header = value;
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
+		#region Content 変更通知プロパティ
+
+		private string _Content;
+
+		public string Content
+		{
+			get => this._Content;
+			set
+			{
+				if (this._Content != value)
+				{
+					this._Content = value;
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
+		public LogViewModel(ILog log)
+		{
+			this.Header = $"{log.DateTime:G} {log.Header}";
+			this.Content = log.Content;
+		}
 	}
 }

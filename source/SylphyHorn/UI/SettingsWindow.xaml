@@ -147,17 +147,17 @@
 							<TextBlock Margin="21,0,0,0">
 								<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display_Duration, Mode=OneWay}" />
 								<InlineUIContainer>
-								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationDuration.Value, Mode=TwoWay}"
-																	Prompt=""
-																	Width="60"
-																	Margin="2,2,2,-7"
-																	IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}" />
+									<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationDuration.Value, Mode=TwoWay}"
+														 Prompt=""
+														 Width="60"
+														 Margin="2,2,2,-7"
+														 IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}" />
 								</InlineUIContainer>
 								<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display_Duration_Milliseconds, Mode=OneWay}" />
 							</TextBlock>
 						</StackPanel>
 						<Border Height="8" />
-						
+
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_TrayIcon}"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<StackPanel Margin="8,0,0,0">
@@ -506,7 +506,7 @@
 									   Height="15"
 									   Canvas.Top="255" />
 						</Canvas>
-					</StackPanel> 
+					</StackPanel>
 				</ScrollViewer>
 			</TabItem>
 
@@ -668,6 +668,76 @@
 
 			<TabItem>
 				<TabItem.Header>
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Log}"
+							   Style="{DynamicResource TabitemStyleKey}" />
+				</TabItem.Header>
+
+				<DockPanel Margin="16,0,16,16">
+					<DockPanel.Resources>
+						<ResourceDictionary>
+							<Style TargetType="{x:Type TextBox}"
+							       BasedOn="{StaticResource {x:Type TextBox}}">
+								<Setter Property="BorderThickness"
+								        Value="0"/>
+								<Setter Property="IsReadOnly"
+								        Value="True"/>
+								<Setter Property="TextWrapping"
+								        Value="Wrap"/>
+								<Setter Property="Background"
+								        Value="Transparent"/>
+								<Setter Property="Foreground"
+								        Value="{DynamicResource ForegroundBrushKey}"/>
+								<Setter Property="FontFamily" 
+								        Value="Consolas" />
+								<Setter Property="VerticalContentAlignment"
+								        Value="Center"/>
+							</Style>
+						</ResourceDictionary>
+					</DockPanel.Resources>
+
+					<TextBlock DockPanel.Dock="Top"
+							   Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_LogViewer}"
+							   Style="{DynamicResource HeaderStyleKey}"
+							   Margin="0,0,0,8" />
+					<TextBlock DockPanel.Dock="Top"
+							   Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_LogViewer_Description}"
+							   Margin="8,0,0,8" />
+					<ItemsControl ItemsSource="{Binding Logs}">
+						<ItemsControl.Template>
+							<ControlTemplate TargetType="{x:Type ItemsControl}">
+								<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+								              VerticalScrollBarVisibility="Visible">
+									<StackPanel IsItemsHost="True"
+									            Margin="4" />
+								</ScrollViewer>
+							</ControlTemplate>
+						</ItemsControl.Template>
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Expander DockPanel.Dock="Top"
+								          ExpandDirection="Down"
+								          Margin="4">
+									<Expander.Header>
+										<TextBlock Style="{DynamicResource HeaderTextStyleKey}"
+												   FontFamily="Consolas"
+										           Text="{Binding Header}"
+										           Margin="4,0" />
+									</Expander.Header>
+									<Border BorderBrush="{DynamicResource BorderBrushKey}"
+									        BorderThickness="0,.99"
+									        Padding="0,8"
+									        Margin="0,8,0,16">
+										<TextBox Text="{Binding Content}" />
+									</Border>
+								</Expander>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</DockPanel>
+			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
 					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Version}"
 							   Style="{DynamicResource TabitemStyleKey}" />
 				</TabItem.Header>
@@ -703,17 +773,17 @@
 								   Margin="2,6">
 							<Run Text="Source code:" />
 							<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn">
-							<Run Text="https://github.com/Grabacr07/SylphyHorn" />
+								<Run Text="https://github.com/Grabacr07/SylphyHorn" />
 							</metro2:HyperlinkEx>
 
 							<LineBreak />
 
 							<Run Text="Developer:" />
 							<metro2:HyperlinkEx Uri="https://twitter.com/Grabacr07">
-							<Run Text="@Grabacr07" />
+								<Run Text="@Grabacr07" />
 							</metro2:HyperlinkEx>
 							<metro2:HyperlinkEx Uri="https://twitter.com/tmyt">
-							<Run Text="@tmyt" />
+								<Run Text="@tmyt" />
 							</metro2:HyperlinkEx>
 						</TextBlock>
 
@@ -745,10 +815,10 @@
 							<Run Text="{Binding Source={x:Static properties:ProductInfo.Product}, Mode=OneWay}" />
 							<Run Text="is" />
 							<Run Text="OSS"
-														ToolTip="Open Source Software" />
+								 ToolTip="Open Source Software" />
 							<Run Text="released under" />
 							<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn/blob/master/LICENSE">
-							<Run Text="The MIT License." />
+								<Run Text="The MIT License." />
 							</metro2:HyperlinkEx>
 						</TextBlock>
 					</StackPanel>

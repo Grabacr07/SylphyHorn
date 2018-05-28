@@ -223,6 +223,33 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
+        ///   App log に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Settings_Log {
+            get {
+                return ResourceManager.GetString("Settings_Log", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Event viewer に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Settings_LogViewer {
+            get {
+                return ResourceManager.GetString("Settings_LogViewer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Events that occurred during execution are displayed here. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Settings_LogViewer_Description {
+            get {
+                return ResourceManager.GetString("Settings_LogViewer_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Move active window to adjacent desktop に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Settings_MoveWindowToAdjacentDesktop {

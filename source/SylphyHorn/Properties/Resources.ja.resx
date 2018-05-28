@@ -171,6 +171,15 @@
   <data name="Settings_Language_RequireRestartMessage" xml:space="preserve">
     <value>すべての表示の反映にはアプリの再起動が必要です。</value>
   </data>
+  <data name="Settings_Log" xml:space="preserve">
+    <value>アプリ ログ</value>
+  </data>
+  <data name="Settings_LogViewer" xml:space="preserve">
+    <value>イベント ビューアー</value>
+  </data>
+  <data name="Settings_LogViewer_Description" xml:space="preserve">
+    <value>アプリ実行中に発生したイベントが表示されます。</value>
+  </data>
   <data name="Settings_MoveWindowToAdjacentDesktop" xml:space="preserve">
     <value>アクティブ ウィンドウを隣接した仮想デスクトップへ移動</value>
   </data>
