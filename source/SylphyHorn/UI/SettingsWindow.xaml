@@ -272,7 +272,7 @@
 
 			<TabItem>
 				<TabItem.Header>
-					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Placement}"
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification}"
 							   Style="{DynamicResource TabitemStyleKey}" />
 				</TabItem.Header>
 
@@ -705,7 +705,7 @@
 					<ItemsControl ItemsSource="{Binding Logs}">
 						<ItemsControl.Template>
 							<ControlTemplate TargetType="{x:Type ItemsControl}">
-								<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+								<ScrollViewer HorizontalScrollBarVisibility="Auto"
 								              VerticalScrollBarVisibility="Visible">
 									<StackPanel IsItemsHost="True"
 									            Margin="4" />
