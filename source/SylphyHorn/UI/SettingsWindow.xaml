@@ -817,7 +817,7 @@
 							<Run Text="OSS"
 								 ToolTip="Open Source Software" />
 							<Run Text="released under" />
-							<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn/blob/master/LICENSE">
+							<metro2:HyperlinkEx Uri="https://github.com/Grabacr07/SylphyHorn/blob/master/LICENSE.txt">
 								<Run Text="The MIT License." />
 							</metro2:HyperlinkEx>
 						</TextBlock>

@@ -6,7 +6,7 @@ using System.Windows;
 [assembly: AssemblyDescription("Virtual Desktop Tools for Windows 10")]
 [assembly: AssemblyCompany("grabacr.net")]
 [assembly: AssemblyProduct("SylphyHorn")]
-[assembly: AssemblyCopyright("Copyright © 2018 Manato KAMEYA")]
+[assembly: AssemblyCopyright("Copyright © 2015 - 2018 Manato KAMEYA")]
 [assembly: Guid("20C87E1A-AF2A-486F-84BF-7D4FD19CF716")]
 
 [assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]
