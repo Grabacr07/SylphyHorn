@@ -30,13 +30,13 @@ Please download from [Windows app store](https://www.microsoft.com/store/apps/9n
 
 * Pin window to all desktops ... It is more convenient than using the task view  
 (default key combination: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Win</kbd> + <kbd>P</kbd>)  
-![](https://cloud.githubusercontent.com/assets/1779073/19052776/10050fbc-89f3-11e6-8aa9-6725424d5fca.gif)
+![](https://user-images.githubusercontent.com/1779073/40626965-e400321e-62f6-11e8-8947-b2ded3ed8c77.gif)
 
 * Settings GUI (call from tasktray)  
-![](https://cloud.githubusercontent.com/assets/1779073/21098204/639a2c0e-c0ab-11e6-84f4-effa78b06bee.png)
+![](https://user-images.githubusercontent.com/1779073/40626983-01d4467c-62f7-11e8-8d2f-b9655fa666a5.png)
 
 * Change the background for each desktop  
-![](https://cloud.githubusercontent.com/assets/1779073/21098210/6c4ada92-c0ab-11e6-93e8-9c7eb21faf3d.png)
+![](https://user-images.githubusercontent.com/1779073/40626992-14589938-62f7-11e8-9568-fd956d499500.png)
 
 
 ## Credits
