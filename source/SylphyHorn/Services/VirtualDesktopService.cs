@@ -161,6 +161,8 @@ namespace SylphyHorn.Services
 		public static void PinApp(this IntPtr hWnd)
 		{
 			var appId = ApplicationHelper.GetAppId(hWnd);
+			if (appId == null) return;
+
 			VirtualDesktop.PinApplication(appId);
 			RaisePinnedEvent(hWnd, PinOperations.PinApp);
 		}
@@ -168,6 +170,8 @@ namespace SylphyHorn.Services
 		public static void UnpinApp(this IntPtr hWnd)
 		{
 			var appId = ApplicationHelper.GetAppId(hWnd);
+			if (appId == null) return;
+
 			VirtualDesktop.UnpinApplication(appId);
 			RaisePinnedEvent(hWnd, PinOperations.UnpinApp);
 		}
@@ -175,6 +179,7 @@ namespace SylphyHorn.Services
 		public static void TogglePinApp(this IntPtr hWnd)
 		{
 			var appId = ApplicationHelper.GetAppId(hWnd);
+			if (appId == null) return;
 
 			if (VirtualDesktop.IsPinnedApplication(appId))
 			{

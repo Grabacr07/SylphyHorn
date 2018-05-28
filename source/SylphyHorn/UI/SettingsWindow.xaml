@@ -643,10 +643,6 @@
 
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_PinWindowFromApp}"
 								   Style="{DynamicResource HeaderStyleKey}" />
-						<TextBlock Text="This function is currently suspended. Please wait for a recovery."
-								   Margin="8,0,0,10" />
-						<StackPanel IsEnabled="False"
-									Opacity="0.5">
 						<Grid Margin="8,0,0,0">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"
@@ -666,7 +662,6 @@
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=TogglePinApp.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
-						</StackPanel>
 					</StackPanel>
 				</ScrollViewer>
 			</TabItem>
