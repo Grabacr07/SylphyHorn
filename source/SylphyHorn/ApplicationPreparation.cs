@@ -108,7 +108,7 @@ namespace SylphyHorn
 
 		public TaskTrayIcon CreateTaskTrayIcon()
 		{
-			const string iconUri = "pack://application:,,,/SylphyHorn;Component/Assets/tasktray.ico";
+			const string iconUri = "pack://application:,,,/SylphyHorn;Component/_assets/tasktray.ico";
 
 			if (!Uri.TryCreate(iconUri, UriKind.Absolute, out var uri)) return null;
 
@@ -161,7 +161,7 @@ namespace SylphyHorn
 		{
 			var provider = new VirtualDesktopProvider()
 			{
-				ComInterfaceAssemblyPath = Path.Combine(ProductInfo.LocalAppData.FullName, "assemblies"),
+				ComInterfaceAssemblyPath = Path.Combine(Directories.LocalAppData.FullName, "assemblies"),
 			};
 
 			VirtualDesktop.Provider = provider;

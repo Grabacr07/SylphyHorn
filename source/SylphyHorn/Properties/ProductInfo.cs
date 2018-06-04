@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace SylphyHorn.Properties
 {
@@ -17,16 +13,6 @@ namespace SylphyHorn.Properties
 		private static readonly Lazy<string> _copyrightLazy = new Lazy<string>(() => ((AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(_assembly, typeof(AssemblyCopyrightAttribute))).Copyright);
 		private static readonly Lazy<string> _trademarkLazy = new Lazy<string>(() => ((AssemblyTrademarkAttribute)Attribute.GetCustomAttribute(_assembly, typeof(AssemblyTrademarkAttribute))).Trademark);
 		private static readonly Lazy<string> _versionLazy = new Lazy<string>(() => $"{Version.ToString(3)}{(IsBetaRelease ? " β" : "")}{(Version.Revision == 0 ? "" : " rev." + Version.Revision)}");
-		private static readonly Lazy<IReadOnlyCollection<Library>> _librariesLazy = new Lazy<IReadOnlyCollection<Library>>(() => new List<Library>
-		{
-			new Library("VirtualDesktop", new Uri("https://github.com/Grabacr07/VirtualDesktop")),
-			new Library("Open.WinKeyboardHook", new Uri("https://github.com/lontivero/Open.WinKeyboardHook")),
-			new Library("StatefulModel", new Uri("http://ugaya40.hateblo.jp/entry/StatefulModel")),
-			new Library("Livet", new Uri("http://ugaya40.hateblo.jp/entry/Livet")),
-			new Library("MetroRadiance", new Uri("https://github.com/Grabacr07/MetroRadiance")),
-			new Library("MetroTrilithon", new Uri("https://github.com/Grabacr07/MetroTrilithon")),
-		});
-		private static readonly Lazy<DirectoryInfo> _localAppDataLazy = new Lazy<DirectoryInfo>(() => new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Company, Product)));
 
 
 		public static string Title => _titleLazy.Value;
@@ -44,10 +30,6 @@ namespace SylphyHorn.Properties
 		public static Version Version => _assembly.GetName().Version;
 
 		public static string VersionString => _versionLazy.Value;
-
-		public static IReadOnlyCollection<Library> Libraries => _librariesLazy.Value;
-
-		internal static DirectoryInfo LocalAppData => _localAppDataLazy.Value;
 
 
 		public static bool IsBetaRelease
@@ -71,18 +53,6 @@ namespace SylphyHorn.Properties
 #else
 				return false;
 #endif
-			}
-		}
-
-		public class Library
-		{
-			public string Name { get; }
-			public Uri Url { get; }
-
-			public Library(string name, Uri url)
-			{
-				this.Name = name;
-				this.Url = url;
 			}
 		}
 	}

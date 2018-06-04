@@ -79,7 +79,7 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>assets\app.green.ico</ApplicationIcon>
+    <ApplicationIcon>_assets\app.green.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release %28AppX%29|AnyCPU'">
     <OutputPath>bin\Release %28AppX%29\</OutputPath>
@@ -231,11 +231,15 @@
     <Compile Include="Interop\MonitorInfoEx.cs" />
     <Compile Include="Interop\PhysicalMonitor.cs" />
     <Compile Include="Interop\Platform.cs" />
+    <Compile Include="Properties\Directories.cs" />
+    <Compile Include="Properties\LicenseInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\Bindings\BindableTextViewModel.cs" />
+    <Compile Include="UI\Bindings\HeaderContentViewModel.cs" />
     <Compile Include="UI\Bindings\WindowPlacement.cs" />
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\MonitorService.cs" />
@@ -341,10 +345,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\tasktray.ico" />
+    <Resource Include="_assets\tasktray.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\app.white.ico" />
+    <Resource Include="_assets\app.white.ico" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -354,42 +358,48 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <EmbeddedResource Include="_licenses\MetroTrilithon.txt" />
+    <EmbeddedResource Include="_licenses\MetroRadiance.txt" />
+    <EmbeddedResource Include="_licenses\Livet.txt" />
+    <EmbeddedResource Include="_licenses\StatefulModel.txt" />
+    <EmbeddedResource Include="_licenses\Open.WinKeyboardHook.txt" />
+    <EmbeddedResource Include="_licenses\VirtualDesktop.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\Square150x150Logo.scale-200.png">
+    <None Include="_assets\Square150x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="assets\Square44x44Logo.scale-200.png">
+    <None Include="_assets\Square44x44Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+    <None Include="_assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="assets\StoreLogo.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\BadgeLogo.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="assets\SplashScreen.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="assets\Wide310x150Logo.scale-200.png">
+    <None Include="_assets\StoreLogo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\app.green.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\Square44x44Logo.scale-100.png">
+    <None Include="_assets\BadgeLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_assets\SplashScreen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_assets\Wide310x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\Square150x150Logo.scale-100.png">
+    <Resource Include="_assets\app.green.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_assets\Square44x44Logo.scale-100.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_assets\Square150x150Logo.scale-100.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

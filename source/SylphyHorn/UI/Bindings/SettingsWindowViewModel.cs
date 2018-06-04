@@ -31,7 +31,7 @@ namespace SylphyHorn.UI.Bindings
 
 		public IReadOnlyCollection<DisplayViewModel<uint>> Displays { get; }
 
-		public IReadOnlyCollection<BindableTextViewModel> Libraries { get; }
+		public IReadOnlyCollection<LicenseViewModel> Licenses { get; }
 
 		public bool RestartRequired => _restartRequired;
 
@@ -235,19 +235,7 @@ namespace SylphyHorn.UI.Bindings
 				.ToList();
 			if (this.Displays.Count > 3) this.IsDisplayEnabled = true;
 
-			this.Libraries = ProductInfo.Libraries.Aggregate(
-				new List<BindableTextViewModel>(),
-				(list, lib) =>
-				{
-					list.Add(new BindableTextViewModel { Text = list.Count == 0 ? "Build with " : ", ", });
-					list.Add(new HyperlinkViewModel { Text = lib.Name.Replace(' ', Convert.ToChar(160)), Uri = lib.Url, });
-					return list;
-				},
-				list =>
-				{
-					list.Add(new BindableTextViewModel() { Text = ".", });
-					return list;
-				});
+			this.Licenses = LicenseInfo.All.Select(x => new LicenseViewModel(x)).ToArray();
 
 			this._HasStartupLink = this._startup.IsExists;
 
@@ -306,97 +294,6 @@ namespace SylphyHorn.UI.Bindings
 			{
 				Settings.General.DesktopBackgroundFolderPath.Value = message.Response;
 			}
-		}
-	}
-
-	public class BindableTextViewModel : ViewModel
-	{
-		#region Text 変更通知プロパティ
-
-		private string _Text;
-
-		public string Text
-		{
-			get => this._Text;
-			set
-			{
-				if (this._Text != value)
-				{
-					this._Text = value;
-					this.RaisePropertyChanged();
-				}
-			}
-		}
-
-		#endregion
-	}
-
-	public class HyperlinkViewModel : BindableTextViewModel
-	{
-		#region Uri 変更通知プロパティ
-
-		private Uri _Uri;
-
-		public Uri Uri
-		{
-			get => this._Uri;
-			set
-			{
-				if (this._Uri != value)
-				{
-					this._Uri = value;
-					this.RaisePropertyChanged();
-				}
-			}
-		}
-
-		#endregion
-	}
-
-	public class LogViewModel : ViewModel
-	{
-		#region Header 変更通知プロパティ
-
-		private string _Header;
-
-		public string Header
-		{
-			get => this._Header;
-			set
-			{
-				if (this._Header != value)
-				{
-					this._Header = value;
-					this.RaisePropertyChanged();
-				}
-			}
-		}
-
-		#endregion
-
-		#region Content 変更通知プロパティ
-
-		private string _Content;
-
-		public string Content
-		{
-			get => this._Content;
-			set
-			{
-				if (this._Content != value)
-				{
-					this._Content = value;
-					this.RaisePropertyChanged();
-				}
-			}
-		}
-
-		#endregion
-
-		public LogViewModel(ILog log)
-		{
-			this.Header = $"{log.DateTime:G} {log.Header}";
-			this.Content = log.Content;
 		}
 	}
 }

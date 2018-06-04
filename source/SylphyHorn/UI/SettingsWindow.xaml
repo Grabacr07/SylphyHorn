@@ -15,7 +15,7 @@
 				   xmlns:services="clr-namespace:SylphyHorn.Services"
 				   mc:Ignorable="d"
 				   d:DataContext="{d:DesignInstance bindings:SettingsWindowViewModel}"
-				   Icon="/SylphyHorn;component/assets/app.white.ico"
+				   Icon="/SylphyHorn;component/_assets/app.white.ico"
 				   Title="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Title}"
 				   Width="720"
 				   Height="600"
@@ -110,6 +110,25 @@
 							Value="Segoe UI Light, Meiryo UI" />
 					<Setter Property="FontSize"
 							Value="16" />
+				</Style>
+
+				<Style x:Key="ReadOnlyConsoleTextBoxStyle"
+					   TargetType="{x:Type TextBox}"
+					   BasedOn="{StaticResource {x:Type TextBox}}">
+					<Setter Property="BorderThickness"
+							Value="0" />
+					<Setter Property="IsReadOnly"
+							Value="True" />
+					<Setter Property="TextWrapping"
+							Value="Wrap" />
+					<Setter Property="Background"
+							Value="Transparent" />
+					<Setter Property="Foreground"
+							Value="{DynamicResource ForegroundBrushKey}" />
+					<Setter Property="FontFamily"
+							Value="Consolas" />
+					<Setter Property="VerticalContentAlignment"
+							Value="Center" />
 				</Style>
 			</TabControl.Resources>
 
@@ -673,28 +692,6 @@
 				</TabItem.Header>
 
 				<DockPanel Margin="16,0,16,16">
-					<DockPanel.Resources>
-						<ResourceDictionary>
-							<Style TargetType="{x:Type TextBox}"
-							       BasedOn="{StaticResource {x:Type TextBox}}">
-								<Setter Property="BorderThickness"
-								        Value="0"/>
-								<Setter Property="IsReadOnly"
-								        Value="True"/>
-								<Setter Property="TextWrapping"
-								        Value="Wrap"/>
-								<Setter Property="Background"
-								        Value="Transparent"/>
-								<Setter Property="Foreground"
-								        Value="{DynamicResource ForegroundBrushKey}"/>
-								<Setter Property="FontFamily" 
-								        Value="Consolas" />
-								<Setter Property="VerticalContentAlignment"
-								        Value="Center"/>
-							</Style>
-						</ResourceDictionary>
-					</DockPanel.Resources>
-
 					<TextBlock DockPanel.Dock="Top"
 							   Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_LogViewer}"
 							   Style="{DynamicResource HeaderStyleKey}"
@@ -706,28 +703,29 @@
 						<ItemsControl.Template>
 							<ControlTemplate TargetType="{x:Type ItemsControl}">
 								<ScrollViewer HorizontalScrollBarVisibility="Auto"
-								              VerticalScrollBarVisibility="Visible">
+											  VerticalScrollBarVisibility="Visible">
 									<StackPanel IsItemsHost="True"
-									            Margin="4" />
+												Margin="4" />
 								</ScrollViewer>
 							</ControlTemplate>
 						</ItemsControl.Template>
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
 								<Expander DockPanel.Dock="Top"
-								          ExpandDirection="Down"
-								          Margin="4">
+										  ExpandDirection="Down"
+										  Margin="4">
 									<Expander.Header>
 										<TextBlock Style="{DynamicResource HeaderTextStyleKey}"
 												   FontFamily="Consolas"
-										           Text="{Binding Header}"
-										           Margin="4,0" />
+												   Text="{Binding Header}"
+												   Margin="4,0" />
 									</Expander.Header>
 									<Border BorderBrush="{DynamicResource BorderBrushKey}"
-									        BorderThickness="0,.99"
-									        Padding="0,8"
-									        Margin="0,8,0,16">
-										<TextBox Text="{Binding Content}" />
+											BorderThickness="0,.99"
+											Padding="0,8"
+											Margin="0,8,0,16">
+										<TextBox Style="{DynamicResource ReadOnlyConsoleTextBoxStyle}"
+												 Text="{Binding Content}" />
 									</Border>
 								</Expander>
 							</DataTemplate>
@@ -787,26 +785,6 @@
 							</metro2:HyperlinkEx>
 						</TextBlock>
 
-						<metro:BindableTextBlock TextSource="{Binding Libraries}"
-												 TextWrapping="Wrap"
-												 Margin="2,6">
-							<metro:BindableTextBlock.TextTemplates>
-								<DataTemplate DataType="{x:Type bindings:HyperlinkViewModel}">
-									<metro:InlineHolder>
-										<metro2:HyperlinkEx Uri="{Binding Uri}">
-											<Run Text="{Binding Text, Mode=OneWay}" />
-										</metro2:HyperlinkEx>
-									</metro:InlineHolder>
-								</DataTemplate>
-								<DataTemplate DataType="{x:Type bindings:BindableTextViewModel}">
-									<metro:InlineHolder>
-										<Run Text="{Binding Text, Mode=OneWay}"
-											 Foreground="{DynamicResource ForegroundBrushKey}" />
-									</metro:InlineHolder>
-								</DataTemplate>
-							</metro:BindableTextBlock.TextTemplates>
-						</metro:BindableTextBlock>
-
 						<TextBlock Foreground="{DynamicResource ForegroundBrushKey}"
 								   FontFamily="Segoe UI, Meiryo UI"
 								   Margin="2,6">
@@ -821,6 +799,156 @@
 								<Run Text="The MIT License." />
 							</metro2:HyperlinkEx>
 						</TextBlock>
+
+						<Border Background="{DynamicResource BorderBrushKey}"
+								Height=".99"
+								Margin="2,12,0,6" />
+
+						<TextBlock Text="Licenses"
+								   Style="{DynamicResource HeaderTextStyleKey}"
+								   FontSize="16"
+								   Margin="2,6" />
+
+						<ItemsControl ItemsSource="{Binding Licenses}">
+							<ItemsControl.Template>
+								<ControlTemplate TargetType="{x:Type ItemsControl}">
+									<StackPanel IsItemsHost="True"
+												Margin="4,0" />
+								</ControlTemplate>
+							</ItemsControl.Template>
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<Expander DockPanel.Dock="Top"
+											  ExpandDirection="Down"
+											  Margin="4,2"
+											  Style="{DynamicResource SimpleExpanderStyle}">
+										<Expander.Resources>
+											<Style x:Key="SimpleExpanderStyle"
+												   TargetType="{x:Type Expander}">
+												<Setter Property="OverridesDefaultStyle"
+														Value="True" />
+												<Setter Property="Template">
+													<Setter.Value>
+														<ControlTemplate TargetType="{x:Type Expander}">
+															<Grid>
+																<Grid.RowDefinitions>
+																	<RowDefinition Height="Auto" />
+																	<RowDefinition Height="Auto" />
+																</Grid.RowDefinitions>
+																<metro:ExpanderButton x:Name="ExpanderButton"
+																					  Direction="Right"
+																					  IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+																					  Template="{DynamicResource SimpleExpanderButtonStyle}">
+																	<metro:ExpanderButton.Resources>
+																		<ControlTemplate x:Key="SimpleExpanderButtonStyle"
+																						 TargetType="{x:Type metro:ExpanderButton}">
+																			<Border Background="Transparent">
+																				<Grid SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+																					<Grid.ColumnDefinitions>
+																						<ColumnDefinition Width="Auto" />
+																						<ColumnDefinition Width="*" />
+																						<ColumnDefinition Width="Auto" />
+																					</Grid.ColumnDefinitions>
+																					<ContentPresenter x:Name="content"
+																									  ContentTemplate="{TemplateBinding ContentTemplate}"
+																									  Content="{TemplateBinding Content}"
+																									  Grid.Column="1"
+																									  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+																									  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+																									  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+																					<Grid x:Name="expander"
+																						  Grid.Column="2"
+																						  Height="16"
+																						  Margin="5,0,0,0"
+																						  Width="16">
+																						<Path x:Name="arrow"
+																							  Data="M1,1.5L4.5,5 8,1.5"
+																							  HorizontalAlignment="Center"
+																							  Stroke="{DynamicResource ForegroundBrushKey}"
+																							  StrokeThickness="2"
+																							  VerticalAlignment="Center" />
+																					</Grid>
+																				</Grid>
+																			</Border>
+																			<ControlTemplate.Triggers>
+																				<Trigger Property="Direction"
+																						 Value="Right">
+																					<Setter Property="Grid.Column"
+																							TargetName="expander"
+																							Value="0" />
+																					<Setter Property="Margin"
+																							TargetName="expander"
+																							Value="0,0,5,0" />
+																				</Trigger>
+																				<Trigger Property="IsMouseOver"
+																						 Value="True">
+																				</Trigger>
+																				<Trigger Property="IsPressed"
+																						 Value="True">
+																					<Setter Property="Stroke"
+																							TargetName="arrow"
+																							Value="{DynamicResource HighlightForegroundBrushKey}" />
+																				</Trigger>
+																				<Trigger Property="IsChecked"
+																						 Value="True">
+																					<Setter Property="Data"
+																							TargetName="arrow"
+																							Value="M1,4.5L4.5,1 8,4.5" />
+																				</Trigger>
+																				<Trigger Property="IsEnabled"
+																						 Value="False">
+																					<Setter Property="Stroke"
+																							TargetName="arrow"
+																							Value="{DynamicResource InactiveForegroundBrushKey}" />
+																					<Setter Property="Opacity"
+																							TargetName="content"
+																							Value="0.5" />
+																				</Trigger>
+																			</ControlTemplate.Triggers>
+																		</ControlTemplate>
+																	</metro:ExpanderButton.Resources>
+																	<ContentPresenter ContentTemplate="{TemplateBinding HeaderTemplate}"
+																					  Content="{TemplateBinding Header}"
+																					  ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+																					  ContentSource="Header"
+																					  RecognizesAccessKey="True" />
+																</metro:ExpanderButton>
+																<ContentPresenter x:Name="Content"
+																				  ContentTemplate="{TemplateBinding ContentTemplate}"
+																				  Content="{TemplateBinding Content}"
+																				  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+																				  Margin="{TemplateBinding Padding}"
+																				  Grid.Row="1" />
+															</Grid>
+															<ControlTemplate.Triggers>
+																<Trigger Property="IsExpanded"
+																		 Value="False">
+																	<Setter Property="Visibility"
+																			TargetName="Content"
+																			Value="Collapsed" />
+																</Trigger>
+															</ControlTemplate.Triggers>
+														</ControlTemplate>
+													</Setter.Value>
+												</Setter>
+											</Style>
+										</Expander.Resources>
+										<Expander.Header>
+											<TextBlock Style="{DynamicResource DefaultTextStyleKey}"
+													   Text="{Binding Header}"
+													   Margin="0,0" />
+										</Expander.Header>
+										<Border BorderBrush="{DynamicResource BorderBrushKey}"
+												BorderThickness="0,.99"
+												Padding="0,8"
+												Margin="0,8,0,16">
+											<TextBox Style="{DynamicResource ReadOnlyConsoleTextBoxStyle}"
+													 Text="{Binding Content}" />
+										</Border>
+									</Expander>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
 					</StackPanel>
 				</ScrollViewer>
 			</TabItem>
