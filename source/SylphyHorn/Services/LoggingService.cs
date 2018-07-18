@@ -26,9 +26,18 @@ namespace SylphyHorn.Services
 			this.Logs.Add(log);
 		}
 
-		public void Register(Exception ex)
+		public void Register(Exception exception)
 		{
-			this.Register(new Log(ex.GetType().Name, ex.ToString()));
+			if (exception is AggregateException aggregateException)
+			{
+				foreach (var innnerException in aggregateException.InnerExceptions) this.Register(CreateLog(innnerException));
+			}
+			else
+			{
+				this.Register(CreateLog(exception));
+			}
+
+			ILog CreateLog(Exception ex) => new Log(ex.GetType().Name, ex.ToString());
 		}
 
 		public void Register(TaskLog log)
