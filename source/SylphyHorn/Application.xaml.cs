@@ -73,6 +73,14 @@ namespace SylphyHorn
 					this.TaskTrayIcon = preparation.CreateTaskTrayIcon().AddTo(this);
 					this.TaskTrayIcon.Show();
 
+					if (Settings.General.FirstTime)
+					{
+						preparation.CreateFirstTimeBaloon().Show();
+
+						Settings.General.FirstTime.Value = false;
+						LocalSettingsProvider.Instance.SaveAsync().Forget();
+					}
+
 					preparation.VirtualDesktopInitialized += () => this.TaskTrayIcon.Reload();
 					preparation.VirtualDesktopInitializationCanceled += () => { }; // ToDo
 					preparation.VirtualDesktopInitializationFailed += ex => { }; // ToDo

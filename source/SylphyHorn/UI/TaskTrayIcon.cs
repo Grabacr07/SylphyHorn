@@ -30,6 +30,8 @@ namespace SylphyHorn.UI
 
 		public void Show()
 		{
+			if (this._notifyIcon != null) return;
+
 			var menus = this._items
 				.Where(x => x.CanDisplay())
 				.Select(x => new MenuItem(x.Text, (sender, args) => x.ClickAction()))
@@ -48,6 +50,8 @@ namespace SylphyHorn.UI
 
 		internal void ShowBaloon(TaskTrayBaloon baloon)
 		{
+			if (this._notifyIcon == null) this.Show();
+
 			this._notifyIcon.ShowBalloonTip(
 				(int)baloon.Timespan.TotalMilliseconds,
 				baloon.Title,

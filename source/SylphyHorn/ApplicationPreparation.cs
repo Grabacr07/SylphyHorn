@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using WindowsDesktop;
 using MetroTrilithon.Lifetime;
-using MetroTrilithon.Threading.Tasks;
 using SylphyHorn.Interop;
 using SylphyHorn.Properties;
 using SylphyHorn.Serialization;
@@ -18,6 +17,7 @@ namespace SylphyHorn
 	public class ApplicationPreparation
 	{
 		private readonly Application _application;
+		private TaskTrayIcon _taskTrayIcon;
 
 		public event Action VirtualDesktopInitialized;
 
@@ -105,35 +105,25 @@ namespace SylphyHorn
 				.AddTo(this._application);
 		}
 
-
 		public TaskTrayIcon CreateTaskTrayIcon()
 		{
-			const string iconUri = "pack://application:,,,/SylphyHorn;Component/_assets/tasktray.ico";
-
-			if (!Uri.TryCreate(iconUri, UriKind.Absolute, out var uri)) return null;
-
-			var icon = IconHelper.GetIconFromResource(uri);
-			var menus = new[]
+			if (this._taskTrayIcon == null)
 			{
-				new TaskTrayIconItem(Resources.TaskTray_Menu_Settings, () => ShowSettings(), () => Application.Args.CanSettings),
-				new TaskTrayIconItem(Resources.TaskTray_Menu_Exit, () => this._application.Shutdown()),
-			};
+				const string iconUri = "pack://application:,,,/SylphyHorn;Component/_assets/tasktray.ico";
 
-			var taskTrayIcon = new TaskTrayIcon(icon, menus);
+				if (!Uri.TryCreate(iconUri, UriKind.Absolute, out var uri)) return null;
 
-			if (Settings.General.FirstTime)
-			{
-				var baloon = taskTrayIcon.CreateBaloon();
-				baloon.Title = ProductInfo.Title;
-				baloon.Text = Resources.TaskTray_FirstTimeMessage;
-				baloon.Timespan = TimeSpan.FromMilliseconds(5000);
-				baloon.Show();
+				var icon = IconHelper.GetIconFromResource(uri);
+				var menus = new[]
+				{
+					new TaskTrayIconItem(Resources.TaskTray_Menu_Settings, () => ShowSettings(), () => Application.Args.CanSettings),
+					new TaskTrayIconItem(Resources.TaskTray_Menu_Exit, () => this._application.Shutdown()),
+				};
 
-				Settings.General.FirstTime.Value = false;
-				LocalSettingsProvider.Instance.SaveAsync().Forget();
+				this._taskTrayIcon = new TaskTrayIcon(icon, menus);
 			}
 
-			return taskTrayIcon;
+			return this._taskTrayIcon;
 
 			void ShowSettings()
 			{
@@ -155,6 +145,16 @@ namespace SylphyHorn
 					}
 				}
 			}
+		}
+
+		public TaskTrayBaloon CreateFirstTimeBaloon()
+		{
+			var baloon = this.CreateTaskTrayIcon().CreateBaloon();
+			baloon.Title = ProductInfo.Title;
+			baloon.Text = Resources.TaskTray_FirstTimeMessage;
+			baloon.Timespan = TimeSpan.FromMilliseconds(5000);
+
+			return baloon;
 		}
 
 		public void PrepareVirtualDesktop()
