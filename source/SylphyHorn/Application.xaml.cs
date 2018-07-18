@@ -83,7 +83,7 @@ namespace SylphyHorn
 
 					preparation.VirtualDesktopInitialized += () => this.TaskTrayIcon.Reload();
 					preparation.VirtualDesktopInitializationCanceled += () => { }; // ToDo
-					preparation.VirtualDesktopInitializationFailed += ex => { }; // ToDo
+					preparation.VirtualDesktopInitializationFailed += ex => LoggingService.Instance.Register(ex);
 					preparation.PrepareVirtualDesktop();
 					preparation.RegisterActions();
 
