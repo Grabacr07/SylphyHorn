@@ -69,7 +69,7 @@ namespace SylphyHorn
 
 					this.HookService = new HookService().AddTo(this);
 
-					var preparation = new ApplicationPreparation(this);
+					var preparation = new ApplicationPreparation(this.HookService, this.Shutdown, this);
 					this.TaskTrayIcon = preparation.CreateTaskTrayIcon().AddTo(this);
 					this.TaskTrayIcon.Show();
 

@@ -16,7 +16,9 @@ namespace SylphyHorn
 {
 	public class ApplicationPreparation
 	{
-		private readonly Application _application;
+		private readonly HookService _hookService;
+		private readonly Action _shutdownAction;
+		private readonly IDisposableHolder _disposable;
 		private TaskTrayIcon _taskTrayIcon;
 
 		public event Action VirtualDesktopInitialized;
@@ -25,84 +27,86 @@ namespace SylphyHorn
 
 		public event Action<Exception> VirtualDesktopInitializationFailed;
 
-		public ApplicationPreparation(Application application)
+		public ApplicationPreparation(HookService hookService, Action shutdownAction, IDisposableHolder disposable)
 		{
-			this._application = application;
+			this._hookService = hookService;
+			this._shutdownAction = shutdownAction;
+			this._disposable = disposable;
 		}
 
 		public void RegisterActions()
 		{
 			var settings = Settings.ShortcutKey;
 
-			this._application.HookService
+			this._hookService
 				.Register(()=>settings.MoveLeft.ToShortcutKey(), hWnd => hWnd.MoveToLeft())
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 
-			this._application.HookService
+			this._hookService
 				.Register(() => settings.MoveLeftAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToLeft()?.Switch())
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 
-			this._application.HookService
+			this._hookService
 				.Register(() => settings.MoveRight.ToShortcutKey(), hWnd => hWnd.MoveToRight())
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 
-			this._application.HookService
+			this._hookService
 				.Register(() => settings.MoveRightAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToRight()?.Switch())
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 
-			this._application.HookService
+			this._hookService
 				.Register(() => settings.MoveNew.ToShortcutKey(), hWnd => hWnd.MoveToNew())
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 
-			this._application.HookService
+			this._hookService
 				.Register(() => settings.MoveNewAndSwitch.ToShortcutKey(), hWnd => hWnd.MoveToNew()?.Switch())
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 
-			this._application.HookService
+			this._hookService
 				.Register(
 					() => settings.SwitchToLeft.ToShortcutKey(),
 					_ => VirtualDesktopService.GetLeft()?.Switch(),
 					() => Settings.General.OverrideWindowsDefaultKeyCombination || Settings.General.ChangeBackgroundEachDesktop)
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 
-			this._application.HookService
+			this._hookService
 				.Register(
 					() => settings.SwitchToRight.ToShortcutKey(),
 					_ => VirtualDesktopService.GetRight()?.Switch(),
 					() => Settings.General.OverrideWindowsDefaultKeyCombination || Settings.General.ChangeBackgroundEachDesktop)
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 
-			this._application.HookService
+			this._hookService
 				.Register(() => settings.CloseAndSwitchLeft.ToShortcutKey(), _ => VirtualDesktopService.CloseAndSwitchLeft())
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 
-			this._application.HookService
+			this._hookService
 				.Register(() => settings.CloseAndSwitchRight.ToShortcutKey(), _ => VirtualDesktopService.CloseAndSwitchRight())
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 
-			this._application.HookService
+			this._hookService
 				.Register(() => settings.Pin.ToShortcutKey(), hWnd => hWnd.Pin())
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 
-			this._application.HookService
+			this._hookService
 				.Register(() => settings.Unpin.ToShortcutKey(), hWnd => hWnd.Unpin())
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 
-			this._application.HookService
+			this._hookService
 				.Register(() => settings.TogglePin.ToShortcutKey(), hWnd => hWnd.TogglePin())
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 
-			this._application.HookService
+			this._hookService
 				.Register(() => settings.PinApp.ToShortcutKey(), hWnd => hWnd.PinApp())
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 
-			this._application.HookService
+			this._hookService
 				.Register(() => settings.UnpinApp.ToShortcutKey(), hWnd => hWnd.UnpinApp())
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 
-			this._application.HookService
+			this._hookService
 				.Register(() => settings.TogglePinApp.ToShortcutKey(), hWnd => hWnd.TogglePinApp())
-				.AddTo(this._application);
+				.AddTo(this._disposable);
 		}
 
 		public TaskTrayIcon CreateTaskTrayIcon()
@@ -116,8 +120,8 @@ namespace SylphyHorn
 				var icon = IconHelper.GetIconFromResource(uri);
 				var menus = new[]
 				{
-					new TaskTrayIconItem(Resources.TaskTray_Menu_Settings, () => ShowSettings(), () => Application.Args.CanSettings),
-					new TaskTrayIconItem(Resources.TaskTray_Menu_Exit, () => this._application.Shutdown()),
+					new TaskTrayIconItem(Resources.TaskTray_Menu_Settings, ShowSettings, () => Application.Args.CanSettings),
+					new TaskTrayIconItem(Resources.TaskTray_Menu_Exit, this._shutdownAction),
 				};
 
 				this._taskTrayIcon = new TaskTrayIcon(icon, menus);
@@ -127,7 +131,7 @@ namespace SylphyHorn
 
 			void ShowSettings()
 			{
-				using (this._application.HookService.Suspend())
+				using (this._hookService.Suspend())
 				{
 					if (SettingsWindow.Instance != null)
 					{
@@ -137,7 +141,7 @@ namespace SylphyHorn
 					{
 						SettingsWindow.Instance = new SettingsWindow
 						{
-							DataContext = new SettingsWindowViewModel(this._application.HookService),
+							DataContext = new SettingsWindowViewModel(this._hookService),
 						};
 
 						SettingsWindow.Instance.ShowDialog();
