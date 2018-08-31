@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".settings", ".settings", "{
 		SylphyHorn.sln.DotSettings = SylphyHorn.sln.DotSettings
 	EndProjectSection
 EndProject
-Project("{365BE41E-7993-430D-A5E6-1381A54BC077}") = "SylphyHorn.Debugging", "SylphyHorn.Debugging\SylphyHorn.Debugging.vsdproj", "{0076FD7F-5286-4CC1-B57C-721EBCEE8AA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SylphyHorn.Debugging", "SylphyHorn.Debugging\SylphyHorn.Debugging.vsdproj", "{0076FD7F-5286-4CC1-B57C-721EBCEE8AA3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5B1F3C87-DE54-4BFD-86C9-87181F7FDC2D} = {5B1F3C87-DE54-4BFD-86C9-87181F7FDC2D}
 	EndProjectSection
@@ -164,12 +164,12 @@ Global
 		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Debug|x86.Build.0 = Debug|Any CPU
 		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release (AppX)|Any CPU.ActiveCfg = Release|Any CPU
 		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release (AppX)|Any CPU.Build.0 = Release|Any CPU
-		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release (AppX)|ARM.ActiveCfg = Release (AppX)|Any CPU
-		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release (AppX)|ARM.Build.0 = Release (AppX)|Any CPU
-		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release (AppX)|x64.ActiveCfg = Release (AppX)|Any CPU
-		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release (AppX)|x64.Build.0 = Release (AppX)|Any CPU
-		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release (AppX)|x86.ActiveCfg = Release (AppX)|Any CPU
-		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release (AppX)|x86.Build.0 = Release (AppX)|Any CPU
+		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release (AppX)|ARM.ActiveCfg = Release|Any CPU
+		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release (AppX)|ARM.Build.0 = Release|Any CPU
+		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release (AppX)|x64.ActiveCfg = Release|Any CPU
+		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release (AppX)|x64.Build.0 = Release|Any CPU
+		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release (AppX)|x86.ActiveCfg = Release|Any CPU
+		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release (AppX)|x86.Build.0 = Release|Any CPU
 		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9F0EB092-DDFC-492E-9266-EF208C8E4D83}.Release|ARM.ActiveCfg = Release|Any CPU
@@ -227,5 +227,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{AB848ECD-76AA-41C0-B63D-86A8591B25AA} = {65847316-DFF7-497E-8542-B1F5E75803A1}
 		{9DD597C6-065A-4764-A96C-1B18C4EDED78} = {65847316-DFF7-497E-8542-B1F5E75803A1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A20A4BF8-F8F7-43AE-A4A4-293F37E6D90F}
 	EndGlobalSection
 EndGlobal

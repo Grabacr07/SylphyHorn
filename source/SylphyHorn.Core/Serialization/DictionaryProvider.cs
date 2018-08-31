@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using MetroTrilithon.Serialization;
 
@@ -32,10 +31,9 @@ namespace SylphyHorn.Serialization
 		{
 			lock (this._sync)
 			{
-				object obj;
-				if (this._settings.TryGetValue(key, out obj) && obj is T)
+				if (this._settings.TryGetValue(key, out var obj) && obj is T t)
 				{
-					value = (T)obj;
+					value = t;
 					return true;
 				}
 			}
