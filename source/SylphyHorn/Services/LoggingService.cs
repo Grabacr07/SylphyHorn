@@ -30,23 +30,17 @@ namespace SylphyHorn.Services
 		{
 			if (exception is AggregateException aggregateException)
 			{
-				foreach (var innnerException in aggregateException.InnerExceptions) this.Register(CreateLog(innnerException));
+				foreach (var innerException in aggregateException.InnerExceptions) this.Register(new Log(innerException));
 			}
 			else
 			{
-				this.Register(CreateLog(exception));
+				this.Register(new Log(exception));
 			}
-
-			ILog CreateLog(Exception ex) => new Log(ex.GetType().Name, ex.ToString());
 		}
 
 		public void Register(TaskLog log)
 		{
-			var content = $@"Unhandled exception was thrown by Task<T>.
-{log.CallerMemberName} ({System.IO.Path.GetFileName(log.CallerFilePath)}#{log.CallerLineNumber})
------
-{log.Exception}";
-			this.Register(new Log(log.Exception.GetType().Name, content));
+			this.Register(new Log(log));
 		}
 
 		private class Log : ILog
@@ -57,10 +51,29 @@ namespace SylphyHorn.Services
 
 			public string Content { get; }
 
-			public Log(string header, string content)
+			public Log(Exception ex)
 			{
-				this.Header = header;
-				this.Content = content;
+				this.Header = ex.GetType().Name;
+				this.Content = ex.ToString();
+
+				Application.TelemetryClient.TrackException(ex);
+			}
+
+			public Log(TaskLog log)
+			{
+				this.Header = log.Exception.GetType().Name;
+				this.Content = $@"Unhandled exception was thrown by Task<T>.
+{log.CallerMemberName} ({System.IO.Path.GetFileName(log.CallerFilePath)}#{log.CallerLineNumber})
+-----
+{log.Exception}";
+
+				Application.TelemetryClient.TrackException(
+					log.Exception,
+					properties: new Dictionary<string, string>()
+					{
+						{ "CallerMemberName", log.CallerMemberName },
+						{ "CallerFilePath&LineNumber", $"{log.CallerFilePath}#{log.CallerLineNumber}" },
+					});
 			}
 		}
 	}
