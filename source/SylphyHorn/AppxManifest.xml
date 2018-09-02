@@ -11,7 +11,7 @@
   <Properties>
     <DisplayName>SylphyHorn</DisplayName>
     <PublisherDisplayName>grabacr.net</PublisherDisplayName>
-    <Logo>_assets\StoreLogo.png</Logo>
+    <Logo>.assets\StoreLogo.png</Logo>
   </Properties>
   <Resources>
     <Resource Language="en-us" />
@@ -29,8 +29,8 @@
                  Executable="SylphyHorn.exe"
                  EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements DisplayName="SylphyHorn"
-                          Square150x150Logo="_assets\Square150x150Logo.scale-100.png"
-                          Square44x44Logo="_assets\Square44x44Logo.scale-100.png"
+                          Square150x150Logo=".assets\Square150x150Logo.scale-100.png"
+                          Square44x44Logo=".assets\Square44x44Logo.scale-100.png"
                           Description="Virtual Desktop Tools for Windows 10."
                           BackgroundColor="transparent" />
       <Extensions>

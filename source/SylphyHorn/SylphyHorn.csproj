@@ -79,7 +79,7 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>_assets\app.green.ico</ApplicationIcon>
+    <ApplicationIcon>.assets\app.green.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release %28AppX%29|AnyCPU'">
     <OutputPath>bin\Release %28AppX%29\</OutputPath>
@@ -317,6 +317,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <None Include=".build\post-build.ps1" />
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
@@ -343,10 +344,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="_assets\tasktray.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="_assets\app.white.ico" />
+    <Resource Include=".assets\tasktray.ico" />
+    <Resource Include=".assets\app.white.ico" />
+    <Resource Include=".assets\app.green.ico" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -356,48 +356,39 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <EmbeddedResource Include="_licenses\MetroTrilithon.txt" />
-    <EmbeddedResource Include="_licenses\MetroRadiance.txt" />
-    <EmbeddedResource Include="_licenses\Livet.txt" />
-    <EmbeddedResource Include="_licenses\StatefulModel.txt" />
-    <EmbeddedResource Include="_licenses\Open.WinKeyboardHook.txt" />
-    <EmbeddedResource Include="_licenses\VirtualDesktop.txt" />
+    <EmbeddedResource Include=".licenses\MetroTrilithon.txt" />
+    <EmbeddedResource Include=".licenses\MetroRadiance.txt" />
+    <EmbeddedResource Include=".licenses\Livet.txt" />
+    <EmbeddedResource Include=".licenses\StatefulModel.txt" />
+    <EmbeddedResource Include=".licenses\Open.WinKeyboardHook.txt" />
+    <EmbeddedResource Include=".licenses\VirtualDesktop.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="_assets\Square150x150Logo.scale-200.png">
+    <None Include=".assets\Square150x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_assets\Square44x44Logo.scale-200.png">
+    <None Include=".assets\Square44x44Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+    <None Include=".assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_assets\StoreLogo.png">
+    <None Include=".assets\StoreLogo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="_assets\BadgeLogo.png">
+    <None Include=".assets\BadgeLogo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_assets\SplashScreen.png">
+    <None Include=".assets\SplashScreen.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="_assets\Wide310x150Logo.scale-200.png">
+    <None Include=".assets\Wide310x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="_assets\app.green.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="_assets\Square44x44Logo.scale-100.png">
+    <None Include=".assets\Square44x44Logo.scale-100.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="_assets\Square150x150Logo.scale-100.png">
+    <None Include=".assets\Square150x150Logo.scale-100.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -410,7 +401,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>powershell -ExecutionPolicy RemoteSigned -File "$(ProjectDir).build\post-build.ps1" "$(TargetDir)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

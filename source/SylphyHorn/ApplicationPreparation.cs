@@ -113,7 +113,7 @@ namespace SylphyHorn
 		{
 			if (this._taskTrayIcon == null)
 			{
-				const string iconUri = "pack://application:,,,/SylphyHorn;Component/_assets/tasktray.ico";
+				const string iconUri = "pack://application:,,,/SylphyHorn;Component/.assets/tasktray.ico";
 
 				if (!Uri.TryCreate(iconUri, UriKind.Absolute, out var uri)) return null;
 

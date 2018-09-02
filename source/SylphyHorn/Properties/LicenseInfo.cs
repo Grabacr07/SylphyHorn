@@ -26,11 +26,11 @@ namespace SylphyHorn.Properties
 		{
 			this.ProductName = productName;
 
-			var path = $@"SylphyHorn._licenses.{resourceName ?? $"{productName}.txt"}";
+			var path = $@"SylphyHorn..licenses.{resourceName ?? $"{productName}.txt"}";
 			var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(path);
 			if (stream == null) return;
-			
-			using (var reader = new StreamReader(stream ,Encoding.UTF8))
+
+			using (var reader = new StreamReader(stream, Encoding.UTF8))
 			{
 				this.LicenseBody = reader.ReadToEnd();
 			}

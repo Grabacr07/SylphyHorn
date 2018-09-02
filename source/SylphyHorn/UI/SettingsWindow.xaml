@@ -15,7 +15,7 @@
 				   xmlns:services="clr-namespace:SylphyHorn.Services"
 				   mc:Ignorable="d"
 				   d:DataContext="{d:DesignInstance bindings:SettingsWindowViewModel}"
-				   Icon="/SylphyHorn;component/_assets/app.white.ico"
+				   Icon="/SylphyHorn;component/.assets/app.white.ico"
 				   Title="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Title}"
 				   Width="720"
 				   Height="600"
