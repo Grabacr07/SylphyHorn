@@ -14,6 +14,10 @@ namespace SylphyHorn.Serialization
 		{
 			this._provider = provider;
 		}
+		
+		public ShortcutkeyProperty MoveDesktopLeft => this.Cache(key => new ShortcutkeyProperty(key, this._provider, MoveDesktopLeftDefaultValue));
+		
+		public ShortcutkeyProperty MoveDesktopRight => this.Cache(key => new ShortcutkeyProperty(key, this._provider, MoveDesktopRightDefaultValue));
 
 		public ShortcutkeyProperty MoveLeft => this.Cache(key => new ShortcutkeyProperty(key, this._provider));
 
@@ -49,6 +53,20 @@ namespace SylphyHorn.Serialization
 
 		#region default values
 
+		private static int[] MoveDesktopLeftDefaultValue { get; } =
+		{
+			037, // <=
+			162, // Left Ctrl
+			164, // Left Alt
+		};
+
+		private static int[] MoveDesktopRightDefaultValue { get; } =
+		{
+			039, // =>
+			162, // Left Ctrl
+			164, // Left Alt
+		};
+		
 		private static int[] SwitchToLeftDefaultValue { get; } =
 			{
 				037, // <=

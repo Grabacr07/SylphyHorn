@@ -245,6 +245,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\VirtualDesktopMoveService.cs" />
     <Compile Include="UI\Bindings\BindableTextViewModel.cs" />
     <Compile Include="UI\Bindings\HeaderContentViewModel.cs" />
     <Compile Include="UI\Bindings\WindowPlacement.cs" />

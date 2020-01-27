@@ -279,6 +279,15 @@
   <data name="Settings_Startup_Automaticaly" xml:space="preserve">
     <value>Automaticaly start at logon</value>
   </data>
+  <data name="Settings_MoveDesktop" xml:space="preserve">
+    <value>Move desktop</value>
+  </data>
+  <data name="Settings_MoveDesktop_Left" xml:space="preserve">
+    <value>Left:</value>
+  </data>
+  <data name="Settings_MoveDesktop_Right" xml:space="preserve">
+    <value>Right:</value>
+  </data>
   <data name="Settings_Title" xml:space="preserve">
     <value>Settings</value>
   </data>

@@ -250,6 +250,33 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move desktop.
+        /// </summary>
+        public static string Settings_MoveDesktop {
+            get {
+                return ResourceManager.GetString("Settings_MoveDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left:.
+        /// </summary>
+        public static string Settings_MoveDesktop_Left {
+            get {
+                return ResourceManager.GetString("Settings_MoveDesktop_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right:.
+        /// </summary>
+        public static string Settings_MoveDesktop_Right {
+            get {
+                return ResourceManager.GetString("Settings_MoveDesktop_Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Move active window to adjacent desktop に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Settings_MoveWindowToAdjacentDesktop {

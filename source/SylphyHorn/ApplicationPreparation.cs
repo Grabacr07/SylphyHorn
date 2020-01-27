@@ -39,6 +39,14 @@ namespace SylphyHorn
 			var settings = Settings.ShortcutKey;
 
 			this._hookService
+				.Register(()=>settings.MoveDesktopLeft.ToShortcutKey(), hWnd => VirtualDesktopMoveService.MoveLeft())
+				.AddTo(this._disposable);
+			
+			this._hookService
+				.Register(()=>settings.MoveDesktopRight.ToShortcutKey(), hWnd => VirtualDesktopMoveService.MoveRight())
+				.AddTo(this._disposable);
+			
+			this._hookService
 				.Register(()=>settings.MoveLeft.ToShortcutKey(), hWnd => hWnd.MoveToLeft())
 				.AddTo(this._disposable);
 
