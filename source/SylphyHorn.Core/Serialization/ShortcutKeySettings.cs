@@ -56,14 +56,14 @@ namespace SylphyHorn.Serialization
 		private static int[] MoveDesktopLeftDefaultValue { get; } =
 		{
 			037, // <=
-			162, // Left Ctrl
+			091, // Left Windows
 			164, // Left Alt
 		};
 
 		private static int[] MoveDesktopRightDefaultValue { get; } =
 		{
 			039, // =>
-			162, // Left Ctrl
+			091, // Left Windows
 			164, // Left Alt
 		};
 		

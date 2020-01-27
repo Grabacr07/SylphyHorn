@@ -21,7 +21,7 @@ Please download from [Windows app store](https://www.microsoft.com/store/apps/9n
 ## Features
 
 * __Reorder virtual desktops__  
-(default key combination: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd><-</kbd> or <kbd>-></kbd>)
+(default key combination: <kbd>Win</kbd> + <kbd>Alt</kbd> + <kbd><-</kbd> or <kbd>-></kbd>)
 
 * Switching notification
 <!-- ![](https://cloud.githubusercontent.com/assets/1779073/19052151/a6be54ac-89f0-11e6-8936-9bcc2aafc1d5.gif) -->
