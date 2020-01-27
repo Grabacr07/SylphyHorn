@@ -10,7 +10,7 @@ This app is Windows Desktop application running on .NET Framework, however built
 
 ## Installations
 
-Please download from [Windows app store](https://www.microsoft.com/store/apps/9nblggh58t01) and install.
+Please download from [Releases](https://github.com/ViRb3/SylphyHornEx/releases).
 
 
 ## Requirements
