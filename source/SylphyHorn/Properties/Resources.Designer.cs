@@ -19,7 +19,7 @@ namespace SylphyHorn.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -246,6 +246,33 @@ namespace SylphyHorn.Properties {
         public static string Settings_LogViewer_Description {
             get {
                 return ResourceManager.GetString("Settings_LogViewer_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move desktop.
+        /// </summary>
+        public static string Settings_MoveDesktop {
+            get {
+                return ResourceManager.GetString("Settings_MoveDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left:.
+        /// </summary>
+        public static string Settings_MoveDesktop_Left {
+            get {
+                return ResourceManager.GetString("Settings_MoveDesktop_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right:.
+        /// </summary>
+        public static string Settings_MoveDesktop_Right {
+            get {
+                return ResourceManager.GetString("Settings_MoveDesktop_Right", resourceCulture);
             }
         }
         
