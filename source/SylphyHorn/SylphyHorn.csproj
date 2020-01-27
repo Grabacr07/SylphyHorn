@@ -213,9 +213,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Windows.ApplicationModel" />
-    <Reference Include="Windows.Foundation" />
-    <Reference Include="Windows.System" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -281,7 +278,6 @@
     <Compile Include="UI\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interop\UwpBridge.cs" />
     <Page Include="Styles\Controls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -304,10 +300,10 @@
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Application.iKey.cs" >
+    <Compile Include="Application.iKey.cs">
       <DependentUpon>Application.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Application.Static.cs" >
+    <Compile Include="Application.Static.cs">
       <DependentUpon>Application.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\HookService.cs" />
