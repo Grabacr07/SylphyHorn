@@ -12,6 +12,8 @@ namespace SylphyHorn.Services
 		public static void MoveLeft()
 		{
 			var target = VirtualDesktop.Current.GetLeft();
+			if (target == null)
+				return;
 			SwapDesktops(VirtualDesktop.Current, target);
 			target.Switch();
 		}
@@ -19,6 +21,8 @@ namespace SylphyHorn.Services
 		public static void MoveRight()
 		{
 			var target = VirtualDesktop.Current.GetRight();
+			if (target == null)
+				return;
 			SwapDesktops(VirtualDesktop.Current, target);
 			target.Switch();
 		}
