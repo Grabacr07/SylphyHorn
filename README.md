@@ -1,5 +1,7 @@
 # SylphyHorn
 
+> This is a fork of [SylphyHorn](https://github.com/Grabacr07/SylphyHorn) which adds desktop reordering functionality
+
 SylphyHorn is Virtual Desktop Tools for Windows 10.  
 Provides global hotkeys, switching notification, change background and several functions to virtual desktop.
 
@@ -17,6 +19,9 @@ Please download from [Windows app store](https://www.microsoft.com/store/apps/9n
 
 
 ## Features
+
+* __Reorder virtual desktops (move left and right)__  
+(default key combination: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd><-</kbd> or <kbd>-></kbd>)
 
 * Switching notification
 <!-- ![](https://cloud.githubusercontent.com/assets/1779073/19052151/a6be54ac-89f0-11e6-8936-9bcc2aafc1d5.gif) -->
