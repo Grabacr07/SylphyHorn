@@ -1,4 +1,4 @@
-# SylphyHorn
+# SylphyHornEx
 
 > This is a fork of [SylphyHorn](https://github.com/Grabacr07/SylphyHorn) which adds desktop reordering functionality
 
@@ -20,7 +20,7 @@ Please download from [Windows app store](https://www.microsoft.com/store/apps/9n
 
 ## Features
 
-* __Reorder virtual desktops (move left and right)__  
+* __Reorder virtual desktops__  
 (default key combination: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd><-</kbd> or <kbd>-></kbd>)
 
 * Switching notification
