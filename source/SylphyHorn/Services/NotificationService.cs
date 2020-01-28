@@ -50,8 +50,7 @@ namespace SylphyHorn.Services
 			var vmodel = new NotificationWindowViewModel
 			{
 				Title = ProductInfo.Title,
-				Header = "Virtual Desktop Switched",
-				Body = "Current Desktop: Desktop " + index,
+				Body = $"Desktop {index}",
 			};
 			var source = new CancellationTokenSource();
 
@@ -94,8 +93,7 @@ namespace SylphyHorn.Services
 			var vmodel = new NotificationWindowViewModel
 			{
 				Title = ProductInfo.Title,
-				Header = "Virtual Desktop",
-				Body = $"{(operation.HasFlag(PinOperations.Pin) ? "Pinned" : "Unpinned")} this {(operation.HasFlag(PinOperations.Window) ? "window" : "application")}",
+				Body = $"{(operation.HasFlag(PinOperations.Window) ? "Window" : "Application")} {(operation.HasFlag(PinOperations.Pin) ? "Pinned" : "Unpinned")}",
 			};
 			var source = new CancellationTokenSource();
 			var window = new PinWindow(hWnd)
