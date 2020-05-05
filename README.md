@@ -1,6 +1,6 @@
 # SylphyHornEx
 
-> This is a fork of [SylphyHorn](https://github.com/Grabacr07/SylphyHorn) which adds desktop reordering functionality
+> This is a fork of [SylphyHorn](https://github.com/Grabacr07/SylphyHorn) which adds desktop reordering functionality, ability to rename desktops and switch/move to specific desktops with number keys (Customizable).
 
 SylphyHorn is Virtual Desktop Tools for Windows 10.  
 Provides global hotkeys, switching notification, change background and several functions to virtual desktop.
