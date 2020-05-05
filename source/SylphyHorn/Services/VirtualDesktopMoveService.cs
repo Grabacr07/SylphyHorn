@@ -4,6 +4,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using WindowsDesktop;
 using SylphyHorn.Interop;
+using SylphyHorn.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace SylphyHorn.Services
 {
@@ -44,6 +46,14 @@ namespace SylphyHorn.Services
 				VirtualDesktopHelper.MoveToDesktop(window, target);
 			foreach (var window in dstWindows)
 				VirtualDesktopHelper.MoveToDesktop(window, source);
+
+			// Swap the names as well
+			int sourceIndex = DesktopHelper.GetIndex(source);
+			int targetIndex = DesktopHelper.GetIndex(target);
+			var sourceName = SettingsHelper.GetDesktopName(sourceIndex);
+			var targetName = SettingsHelper.GetDesktopName(targetIndex);
+			SettingsHelper.SetDesktopName(sourceIndex, targetName);
+			SettingsHelper.SetDesktopName(targetIndex, sourceName);
 		}
 
 		private static IEnumerable<IntPtr> GetAllWindows()
