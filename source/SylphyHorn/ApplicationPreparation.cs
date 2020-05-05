@@ -115,6 +115,127 @@ namespace SylphyHorn
 			this._hookService
 				.Register(() => settings.TogglePinApp.ToShortcutKey(), hWnd => hWnd.TogglePinApp())
 				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.SwitchTo1.ToShortcutKey(), _ => VirtualDesktopService.Get(1)?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.SwitchTo2.ToShortcutKey(), _ => VirtualDesktopService.Get(2)?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.SwitchTo3.ToShortcutKey(), _ => VirtualDesktopService.Get(3)?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.SwitchTo4.ToShortcutKey(), _ => VirtualDesktopService.Get(4)?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.SwitchTo5.ToShortcutKey(), _ => VirtualDesktopService.Get(5)?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.SwitchTo6.ToShortcutKey(), _ => VirtualDesktopService.Get(6)?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.SwitchTo7.ToShortcutKey(), _ => VirtualDesktopService.Get(7)?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.SwitchTo8.ToShortcutKey(), _ => VirtualDesktopService.Get(8)?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.SwitchTo9.ToShortcutKey(), _ => VirtualDesktopService.Get(9)?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.SwitchTo10.ToShortcutKey(), _ => VirtualDesktopService.Get(10)?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveTo1.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(1)))
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveTo2.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(2)))
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveTo3.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(3)))
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveTo4.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(4)))
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveTo5.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(5)))
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveTo6.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(6)))
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveTo7.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(7)))
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveTo8.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(8)))
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveTo9.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(9)))
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveTo10.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(10)))
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveAndSwitchTo1.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(1))?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveAndSwitchTo2.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(2))?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveAndSwitchTo3.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(3))?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveAndSwitchTo4.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(4))?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveAndSwitchTo5.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(5))?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveAndSwitchTo6.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(6))?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveAndSwitchTo7.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(7))?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveAndSwitchTo8.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(8))?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveAndSwitchTo9.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(9))?.Switch())
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.MoveAndSwitchTo10.ToShortcutKey(), hWnd => hWnd.MoveTo(VirtualDesktopService.Get(10))?.Switch())
+				.AddTo(this._disposable);
+
 		}
 
 		public TaskTrayIcon CreateTaskTrayIcon()

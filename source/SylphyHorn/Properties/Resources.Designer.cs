@@ -19,7 +19,7 @@ namespace SylphyHorn.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -250,6 +250,24 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move &amp; Switch to {0}.
+        /// </summary>
+        public static string Settings_MoveAndSwitchTo {
+            get {
+                return ResourceManager.GetString("Settings_MoveAndSwitchTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move active window to a specific desktop and switch to it.
+        /// </summary>
+        public static string Settings_MoveAndSwitchToTitle {
+            get {
+                return ResourceManager.GetString("Settings_MoveAndSwitchToTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move desktop.
         /// </summary>
         public static string Settings_MoveDesktop {
@@ -273,6 +291,24 @@ namespace SylphyHorn.Properties {
         public static string Settings_MoveDesktop_Right {
             get {
                 return ResourceManager.GetString("Settings_MoveDesktop_Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to {0}.
+        /// </summary>
+        public static string Settings_MoveTo {
+            get {
+                return ResourceManager.GetString("Settings_MoveTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move active window to a specific desktop.
+        /// </summary>
+        public static string Settings_MoveToTitle {
+            get {
+                return ResourceManager.GetString("Settings_MoveToTitle", resourceCulture);
             }
         }
         
@@ -547,7 +583,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shortcut key.
+        ///   Looks up a localized string similar to Shortcuts.
         /// </summary>
         public static string Settings_ShortcutKey {
             get {
@@ -570,6 +606,24 @@ namespace SylphyHorn.Properties {
         public static string Settings_Startup_Automaticaly {
             get {
                 return ResourceManager.GetString("Settings_Startup_Automaticaly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch to {0}.
+        /// </summary>
+        public static string Settings_SwitchTo {
+            get {
+                return ResourceManager.GetString("Settings_SwitchTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch to a specific desktop.
+        /// </summary>
+        public static string Settings_SwitchToTitle {
+            get {
+                return ResourceManager.GetString("Settings_SwitchToTitle", resourceCulture);
             }
         }
         

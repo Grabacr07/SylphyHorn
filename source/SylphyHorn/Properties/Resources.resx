@@ -271,7 +271,7 @@
     <value>Placement</value>
   </data>
   <data name="Settings_ShortcutKey" xml:space="preserve">
-    <value>Shortcut key</value>
+    <value>Shortcuts</value>
   </data>
   <data name="Settings_Startup" xml:space="preserve">
     <value>Startup</value>
@@ -311,5 +311,23 @@
   </data>
   <data name="TaskTray_Menu_Settings" xml:space="preserve">
     <value>&amp;Settings (S)</value>
+  </data>
+  <data name="Settings_MoveAndSwitchToTitle" xml:space="preserve">
+    <value>Move active window to a specific desktop and switch to it</value>
+  </data>
+  <data name="Settings_MoveAndSwitchTo" xml:space="preserve">
+    <value>Move &amp; Switch to {0}</value>
+  </data>
+  <data name="Settings_MoveToTitle" xml:space="preserve">
+    <value>Move active window to a specific desktop</value>
+  </data>
+  <data name="Settings_MoveTo" xml:space="preserve">
+    <value>Move to {0}</value>
+  </data>
+  <data name="Settings_SwitchToTitle" xml:space="preserve">
+    <value>Switch to a specific desktop</value>
+  </data>
+  <data name="Settings_SwitchTo" xml:space="preserve">
+    <value>Switch to {0}</value>
   </data>
 </root>

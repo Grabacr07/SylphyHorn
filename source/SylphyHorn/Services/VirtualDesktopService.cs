@@ -9,6 +9,15 @@ namespace SylphyHorn.Services
 	internal static class VirtualDesktopService
 	{
 		#region Get
+		public static VirtualDesktop Get(int index)
+		{
+			var desktops = VirtualDesktop.GetDesktops();
+
+			if (index < 1 || index > desktops.Length)
+				return null;
+
+			return desktops[index-1];
+		}
 
 		public static VirtualDesktop GetLeft()
 		{
@@ -33,6 +42,17 @@ namespace SylphyHorn.Services
 		#endregion
 
 		#region Move
+		public static VirtualDesktop MoveTo(this IntPtr hWnd, VirtualDesktop target)
+		{
+			if (target == null)
+			{
+				SystemSounds.Asterisk.Play();
+				return null;
+			}
+
+			VirtualDesktopHelper.MoveToDesktop(hWnd, target);
+			return target;
+		}
 
 		public static VirtualDesktop MoveToLeft(this IntPtr hWnd)
 		{
@@ -197,6 +217,12 @@ namespace SylphyHorn.Services
 		{
 			WindowPinned?.Invoke(typeof(VirtualDesktopService), new WindowPinnedEventArgs(target, operation));
 		}
+
+		#endregion
+
+		#region Pin / Unpin
+
+
 
 		#endregion
 	}
