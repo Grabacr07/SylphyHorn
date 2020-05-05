@@ -430,6 +430,24 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Names.
+        /// </summary>
+        public static string Settings_NamesTab {
+            get {
+                return ResourceManager.GetString("Settings_NamesTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set names for desktops.
+        /// </summary>
+        public static string Settings_NamesTitle {
+            get {
+                return ResourceManager.GetString("Settings_NamesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notification.
         /// </summary>
         public static string Settings_Notification {

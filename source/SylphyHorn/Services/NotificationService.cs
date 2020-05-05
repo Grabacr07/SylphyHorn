@@ -45,12 +45,35 @@ namespace SylphyHorn.Services
 			});
 		}
 
+		private static string GetDesktopName(int index)
+		{
+			string setting = null;
+			switch(index)
+			{
+				case 1: setting = Settings.General.DesktopName1.Value; break;
+				case 2: setting = Settings.General.DesktopName2.Value; break;
+				case 3: setting = Settings.General.DesktopName3.Value; break;
+				case 4: setting = Settings.General.DesktopName4.Value; break;
+				case 5: setting = Settings.General.DesktopName5.Value; break;
+				case 6: setting = Settings.General.DesktopName6.Value; break;
+				case 7: setting = Settings.General.DesktopName7.Value; break;
+				case 8: setting = Settings.General.DesktopName8.Value; break;
+				case 9: setting = Settings.General.DesktopName9.Value; break;
+				case 10: setting = Settings.General.DesktopName10.Value; break;
+			}
+			if(setting != null && setting != "")
+			{
+				return $"{index}: {setting}";
+			}
+			return $"Desktop {index}";
+		}
+
 		private static IDisposable ShowDesktopWindow(int index)
 		{
 			var vmodel = new NotificationWindowViewModel
 			{
 				Title = ProductInfo.Title,
-				Body = $"Desktop {index}",
+				Body = GetDesktopName(index),
 			};
 			var source = new CancellationTokenSource();
 

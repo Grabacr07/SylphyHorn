@@ -38,5 +38,25 @@ namespace SylphyHorn.Serialization
 		public SerializableProperty<uint> Display => this.Cache(key => new SerializableProperty<uint>(key, this._provider, 0));
 
 		public SerializableProperty<bool> TrayShowDesktop => this.Cache(key => new SerializableProperty<bool>(key, this._provider, false));
+
+		public SerializableProperty<string> DesktopName1 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
+
+		public SerializableProperty<string> DesktopName2 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
+
+		public SerializableProperty<string> DesktopName3 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
+
+		public SerializableProperty<string> DesktopName4 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
+
+		public SerializableProperty<string> DesktopName5 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
+
+		public SerializableProperty<string> DesktopName6 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
+
+		public SerializableProperty<string> DesktopName7 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
+
+		public SerializableProperty<string> DesktopName8 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
+
+		public SerializableProperty<string> DesktopName9 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
+
+		public SerializableProperty<string> DesktopName10 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
 	}
 }

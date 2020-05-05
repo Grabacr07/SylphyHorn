@@ -330,4 +330,10 @@
   <data name="Settings_SwitchTo" xml:space="preserve">
     <value>Switch to {0}</value>
   </data>
+  <data name="Settings_NamesTab" xml:space="preserve">
+    <value>Names</value>
+  </data>
+  <data name="Settings_NamesTitle" xml:space="preserve">
+    <value>Set names for desktops</value>
+  </data>
 </root>

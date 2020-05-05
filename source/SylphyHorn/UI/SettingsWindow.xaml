@@ -217,6 +217,59 @@
 
 			<TabItem>
 				<TabItem.Header>
+					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_NamesTab}"
+							   Style="{DynamicResource TabitemStyleKey}" />
+				</TabItem.Header>
+
+
+				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+							  VerticalScrollBarVisibility="Auto">
+					<StackPanel Margin="16,0,16,16"
+								Grid.IsSharedSizeScope="True"
+								Focusable="True">
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_NamesTitle}"
+								   Style="{DynamicResource HeaderStyleKey}"
+								   Margin="0,0,0,8" />
+						<Grid Margin="8,0,0,0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"
+												  SharedSizeGroup="KeyHeader" />
+								<ColumnDefinition Width="8" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							<UniformGrid Columns="1">
+								<TextBlock Text="1:" />
+								<TextBlock Text="2:" />
+								<TextBlock Text="3:" />
+								<TextBlock Text="4:" />
+								<TextBlock Text="5:" />
+								<TextBlock Text="6:" />
+								<TextBlock Text="7:" />
+								<TextBlock Text="8:" />
+								<TextBlock Text="9:" />
+								<TextBlock Text="10:" />
+							</UniformGrid>
+							<UniformGrid Grid.Column="2"
+										 Columns="1">
+								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName1.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
+								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName2.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
+								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName3.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
+								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName4.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
+								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName5.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
+								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName6.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
+								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName7.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
+								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName8.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
+								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName9.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
+								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName10.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
+							</UniformGrid>
+						</Grid>
+
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
 					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background}"
 							   Style="{DynamicResource TabitemStyleKey}" />
 				</TabItem.Header>
