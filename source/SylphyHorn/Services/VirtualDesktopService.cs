@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Media;
 using SylphyHorn.Serialization;
+using SylphyHorn.UI;
+using SylphyHorn.UI.Bindings;
 using WindowsDesktop;
 
 namespace SylphyHorn.Services
@@ -220,9 +222,14 @@ namespace SylphyHorn.Services
 
 		#endregion
 
-		#region Pin / Unpin
+		#region Rename
 
+		public static event EventHandler<RenameEventArgs> RenameCurrent;
 
+		public static void RaiseRenameEvent()
+		{
+			RenameCurrent?.Invoke(typeof(VirtualDesktopService), new RenameEventArgs());
+		}
 
 		#endregion
 	}
@@ -236,6 +243,13 @@ namespace SylphyHorn.Services
 		{
 			this.Target = target;
 			this.PinOperation = operation;
+		}
+	}
+
+	internal class RenameEventArgs : EventArgs
+	{
+		public RenameEventArgs()
+		{
 		}
 	}
 

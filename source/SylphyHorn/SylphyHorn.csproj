@@ -242,9 +242,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\RenameService.cs" />
     <Compile Include="Services\VirtualDesktopMoveService.cs" />
     <Compile Include="UI\Bindings\BindableTextViewModel.cs" />
     <Compile Include="UI\Bindings\HeaderContentViewModel.cs" />
+    <Compile Include="UI\Bindings\RenameWindowViewModel.cs" />
     <Compile Include="UI\Bindings\WindowPlacement.cs" />
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\MonitorService.cs" />
@@ -256,6 +258,10 @@
     <Compile Include="UI\NotificationWindow.cs" />
     <Compile Include="UI\PinWindow.xaml.cs">
       <DependentUpon>PinWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\InteractableNotificationWindow.cs" />
+    <Compile Include="UI\RenameWindow.xaml.cs">
+      <DependentUpon>RenameWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\TaskTrayIcon.cs" />
     <Compile Include="Services\Helpers.cs" />
@@ -312,6 +318,10 @@
     <Page Include="UI\PinWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\RenameWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\SwitchWindow.xaml">
       <SubType>Designer</SubType>
@@ -408,6 +418,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.ja.resx">
       <DependentUpon>Resources.resx</DependentUpon>

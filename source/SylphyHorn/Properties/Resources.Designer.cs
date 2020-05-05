@@ -601,6 +601,24 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        public static string Settings_Rename {
+            get {
+                return ResourceManager.GetString("Settings_Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename current desktop.
+        /// </summary>
+        public static string Settings_RenameCurrentDesktop {
+            get {
+                return ResourceManager.GetString("Settings_RenameCurrentDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shortcuts.
         /// </summary>
         public static string Settings_ShortcutKey {

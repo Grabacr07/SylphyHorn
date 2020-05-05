@@ -1,4 +1,4 @@
-﻿<ui:NotificationWindow x:Class="SylphyHorn.UI.SwitchWindow"
+﻿<ui:InteractableNotificationWindow x:Class="SylphyHorn.UI.RenameWindow"
 					   x:Name="Window"
 					   x:FieldModifier="private"
 					   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -11,12 +11,12 @@
 					   xmlns:bindings="clr-namespace:SylphyHorn.UI.Bindings"
 					   xmlns:controls="clr-namespace:SylphyHorn.UI.Controls"
 					   mc:Ignorable="d"
-					   d:DataContext="{d:DesignInstance bindings:NotificationWindowViewModel}"
+					   d:DataContext="{d:DesignInstance bindings:RenameWindowViewModel}"
 					   Title="{Binding Title}"
-					   Width="211.476"
+					   Width="140"
+					   SizeToContent="Width"
 					   Height="100"
 					   ResizeMode="NoResize"
-					   SizeToContent="Width"
 					   Topmost="True"
 					   ShowInTaskbar="False"
 					   SnapsToDevicePixels="True">
@@ -67,9 +67,22 @@
 
 	<DockPanel VerticalAlignment="Center"
 			   Margin="16,12">
-        <TextBlock DockPanel.Dock="Top"
-				   Text="{Binding Body}"
+		<Grid Margin="8,0,0,0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"
+												  SharedSizeGroup="KeyHeader" />
+				<ColumnDefinition Width="8" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<UniformGrid Columns="1">
+				<TextBlock DockPanel.Dock="Top"
+				   Text="{Binding Index, StringFormat={}{0}:}"
 				   FontFamily="Segoe UI Light, Meiryo UI"
 				   FontSize="32" HorizontalAlignment="Center" />
+			</UniformGrid>
+			<UniformGrid Grid.Column="2" Columns="1">
+				<TextBox Name="NameBox" Text="{Binding Name, Mode=TwoWay}" Margin="0,0,0,0" FontSize="32" KeyDown="NameBox_KeyDown"/>
+			</UniformGrid>
+		</Grid>
 	</DockPanel>
-</ui:NotificationWindow>
+</ui:InteractableNotificationWindow>

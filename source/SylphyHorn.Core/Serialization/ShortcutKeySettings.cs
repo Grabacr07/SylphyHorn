@@ -51,6 +51,8 @@ namespace SylphyHorn.Serialization
 
 		public ShortcutkeyProperty TogglePinApp => this.Cache(key => new ShortcutkeyProperty(key, this._provider));
 
+		public ShortcutkeyProperty RenameCurrent => this.Cache(key => new ShortcutkeyProperty(key, this._provider, RenameCurrentDefaultValue));
+
 		public ShortcutkeyProperty SwitchTo1 => this.Cache(key => new ShortcutkeyProperty(key, this._provider, SwitchTo1DefaultValue));
 
 		public ShortcutkeyProperty SwitchTo2 => this.Cache(key => new ShortcutkeyProperty(key, this._provider, SwitchTo2DefaultValue));
@@ -170,6 +172,13 @@ namespace SylphyHorn.Serialization
 				080, // P
 				162, // Left Ctrl
 				164, // Left Alt
+				091, // Left Windows
+			};
+
+		private static int[] RenameCurrentDefaultValue { get; } =
+			{
+				082, // R
+				162, // Left Ctrl
 				091, // Left Windows
 			};
 

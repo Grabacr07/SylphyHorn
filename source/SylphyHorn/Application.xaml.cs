@@ -77,6 +77,7 @@ namespace SylphyHorn
 					preparation.RegisterActions();
 
 					NotificationService.Instance.AddTo(this);
+					RenameService.Instance.AddTo(this);
 					WallpaperService.Instance.AddTo(this);
 
 #if !DEBUG

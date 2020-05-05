@@ -336,4 +336,10 @@
   <data name="Settings_NamesTitle" xml:space="preserve">
     <value>Set names for desktops</value>
   </data>
+  <data name="Settings_Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="Settings_RenameCurrentDesktop" xml:space="preserve">
+    <value>Rename current desktop</value>
+  </data>
 </root>

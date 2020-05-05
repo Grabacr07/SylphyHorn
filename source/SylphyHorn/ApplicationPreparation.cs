@@ -117,6 +117,10 @@ namespace SylphyHorn
 				.AddTo(this._disposable);
 
 			this._hookService
+				.Register(() => settings.RenameCurrent.ToShortcutKey(), _ => VirtualDesktopService.RaiseRenameEvent())
+				.AddTo(this._disposable);
+
+			this._hookService
 				.Register(() => settings.SwitchTo1.ToShortcutKey(), _ => VirtualDesktopService.Get(1)?.Switch())
 				.AddTo(this._disposable);
 
