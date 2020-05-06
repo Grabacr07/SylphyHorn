@@ -95,7 +95,7 @@
 				<Style x:Key="HeaderStyleKey"
 					   TargetType="{x:Type TextBlock}">
 					<Setter Property="Foreground"
-							Value="{DynamicResource AccentBrushKey}" />
+							Value="{DynamicResource ForegroundBrushKey}" />
 					<Setter Property="FontFamily"
 							Value="Segoe UI Light, Meiryo UI" />
 					<Setter Property="FontSize"
@@ -106,6 +106,8 @@
 				<Style x:Key="TabitemStyleKey"
 					   TargetType="{x:Type TextBlock}"
 					   BasedOn="{StaticResource VerticalTabHeaderTextStyleKey}">
+					<Setter Property="Foreground"
+							Value="{DynamicResource ForegroundBrushKey}" />
 					<Setter Property="FontFamily"
 							Value="Segoe UI Light, Meiryo UI" />
 					<Setter Property="FontSize"
@@ -135,7 +137,7 @@
 			<TabItem>
 				<TabItem.Header>
 					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_General}"
-							   Style="{DynamicResource TabitemStyleKey}" />
+							   Style="{DynamicResource TabitemStyleKey}"/>
 				</TabItem.Header>
 
 				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
@@ -235,7 +237,7 @@
 			<TabItem>
 				<TabItem.Header>
 					<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_NamesTab}"
-							   Style="{DynamicResource TabitemStyleKey}" />
+							   Style="{DynamicResource TabitemStyleKey}"/>
 				</TabItem.Header>
 
 				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
