@@ -20,6 +20,7 @@ namespace SylphyHorn.UI
 
 			this.PreviewKeyDown += new KeyEventHandler(PreviewKeyDownHandler);
 			this.Closed += new EventHandler(ClosedHandler);
+			this.Activated += new EventHandler(ActivatedHandler);
 		}
 
 		protected override void OnSourceInitialized(EventArgs e)
@@ -71,7 +72,10 @@ namespace SylphyHorn.UI
 					this.Top = (area.Top + (area.Height - height) / 2) / dpi.ScaleY;
 					break;
 			}
+		}
 
+		private void ActivatedHandler(object sender, EventArgs e)
+		{
 			NameBox.Focus();
 			NameBox.SelectAll();
 		}
