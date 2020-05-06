@@ -77,6 +77,23 @@ namespace SylphyHorn
 						SettingsHelper.ResizeSettingsProperties();
 						VirtualDesktop.Created += (sender, args) => SettingsHelper.ResizeSettingsProperties();
 						VirtualDesktop.Destroyed += (sender, args) => SettingsHelper.ResizeSettingsProperties();
+
+						VirtualDesktop.Created += (sender, args) =>
+						{
+							VirtualDesktopService.CachedCount = VirtualDesktopService.Count();
+						};
+						VirtualDesktop.Destroyed += (sender, args) =>
+						{
+							VirtualDesktopService.CachedCount = VirtualDesktopService.Count();
+						};
+						VirtualDesktop.CurrentChanged += (sender, args) =>
+						{
+							var tDesktops = VirtualDesktop.GetDesktops();
+							VirtualDesktopService.CachedIndex = Array.IndexOf(tDesktops, args.NewDesktop) + 1;
+						};
+						VirtualDesktopService.CachedCount = VirtualDesktopService.Count();
+						var desktops = VirtualDesktop.GetDesktops();
+						VirtualDesktopService.CachedIndex = Array.IndexOf(desktops, VirtualDesktop.Current) + 1;
 					};
 					preparation.VirtualDesktopInitializationCanceled += () => { }; // ToDo
 					preparation.VirtualDesktopInitializationFailed += ex => LoggingService.Instance.Register(ex);

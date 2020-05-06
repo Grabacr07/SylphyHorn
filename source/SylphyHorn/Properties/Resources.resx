@@ -159,8 +159,8 @@
   <data name="Settings_DesktopSwitching_Loop" xml:space="preserve">
     <value>Loop virtual desktops</value>
   </data>
-  <data name="Settings_DesktopSwitching_OverrideOS" xml:space="preserve">
-    <value>Override OS default key combination (Ctrl+Win+Left and Right)</value>
+  <data name="Settings_DesktopSwitching_SkipDefault" xml:space="preserve">
+    <value>Skip default animation of switching (Ctrl+Win+Left and Right)</value>
   </data>
   <data name="Settings_General" xml:space="preserve">
     <value>General</value>
@@ -279,13 +279,13 @@
   <data name="Settings_Startup_Automaticaly" xml:space="preserve">
     <value>Automaticaly start at logon</value>
   </data>
-  <data name="Settings_MoveDesktop" xml:space="preserve">
-    <value>Move desktop</value>
+  <data name="Settings_SwapDesktop" xml:space="preserve">
+    <value>Swap desktop</value>
   </data>
-  <data name="Settings_MoveDesktop_Left" xml:space="preserve">
+  <data name="Settings_SwapDesktop_Left" xml:space="preserve">
     <value>Left:</value>
   </data>
-  <data name="Settings_MoveDesktop_Right" xml:space="preserve">
+  <data name="Settings_SwapDesktop_Right" xml:space="preserve">
     <value>Right:</value>
   </data>
   <data name="Settings_Title" xml:space="preserve">
@@ -341,5 +341,14 @@
   </data>
   <data name="Settings_RenameCurrentDesktop" xml:space="preserve">
     <value>Rename current desktop</value>
+  </data>
+  <data name="Settings_SwitchDesktop" xml:space="preserve">
+    <value>Switch Desktop</value>
+  </data>
+  <data name="Settings_SwitchDesktopLeft" xml:space="preserve">
+    <value>Left:</value>
+  </data>
+  <data name="Settings_SwitchDesktopRight" xml:space="preserve">
+    <value>Right:</value>
   </data>
 </root>

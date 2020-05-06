@@ -15,6 +15,8 @@ namespace SylphyHorn.Services
 		{
 			return VirtualDesktop.GetDesktops().Length;
 		}
+		public static int CachedIndex = 0;
+		public static int CachedCount = 0;
 		#endregion
 		#region Get
 		public static VirtualDesktop Get(int index)

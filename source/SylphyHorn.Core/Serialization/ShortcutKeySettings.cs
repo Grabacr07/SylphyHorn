@@ -14,26 +14,22 @@ namespace SylphyHorn.Serialization
 		{
 			this._provider = provider;
 		}
-		
-		public ShortcutkeyProperty MoveDesktopLeft => this.Cache(key => new ShortcutkeyProperty(key, this._provider, MoveDesktopLeftDefaultValue));
-		
-		public ShortcutkeyProperty MoveDesktopRight => this.Cache(key => new ShortcutkeyProperty(key, this._provider, MoveDesktopRightDefaultValue));
 
-		public ShortcutkeyProperty MoveLeft => this.Cache(key => new ShortcutkeyProperty(key, this._provider));
+		public ShortcutkeyProperty SwitchToLeft => this.Cache(key => new ShortcutkeyProperty(key, this._provider, SwitchToLeftDefaultValue));
+
+		public ShortcutkeyProperty SwitchToRight => this.Cache(key => new ShortcutkeyProperty(key, this._provider, SwitchToRightDefaultValue));
+
+		public ShortcutkeyProperty MoveLeft => this.Cache(key => new ShortcutkeyProperty(key, this._provider, MoveLeftDefaultValue));
 
 		public ShortcutkeyProperty MoveLeftAndSwitch => this.Cache(key => new ShortcutkeyProperty(key, this._provider, MoveLeftAndSwitchDefaultValue));
 
-		public ShortcutkeyProperty MoveRight => this.Cache(key => new ShortcutkeyProperty(key, this._provider));
+		public ShortcutkeyProperty MoveRight => this.Cache(key => new ShortcutkeyProperty(key, this._provider, MoveRightDefaultValue));
 
 		public ShortcutkeyProperty MoveRightAndSwitch => this.Cache(key => new ShortcutkeyProperty(key, this._provider, MoveRightAndSwitchDefaultValue));
 
 		public ShortcutkeyProperty MoveNew => this.Cache(key => new ShortcutkeyProperty(key, this._provider));
 
 		public ShortcutkeyProperty MoveNewAndSwitch => this.Cache(key => new ShortcutkeyProperty(key, this._provider, MoveNewAndSwitchDefaultValue));
-
-		public ShortcutkeyProperty SwitchToLeft => this.Cache(key => new ShortcutkeyProperty(key, this._provider, SwitchToLeftDefaultValue));
-
-		public ShortcutkeyProperty SwitchToRight => this.Cache(key => new ShortcutkeyProperty(key, this._provider, SwitchToRightDefaultValue));
 
 		public ShortcutkeyProperty CloseAndSwitchLeft => this.Cache(key => new ShortcutkeyProperty(key, this._provider));
 
@@ -52,6 +48,10 @@ namespace SylphyHorn.Serialization
 		public ShortcutkeyProperty TogglePinApp => this.Cache(key => new ShortcutkeyProperty(key, this._provider));
 
 		public ShortcutkeyProperty RenameCurrent => this.Cache(key => new ShortcutkeyProperty(key, this._provider, RenameCurrentDefaultValue));
+
+		public ShortcutkeyProperty SwapDesktopLeft => this.Cache(key => new ShortcutkeyProperty(key, this._provider, SwapDesktopLeftDefaultValue));
+
+		public ShortcutkeyProperty SwapDesktopRight => this.Cache(key => new ShortcutkeyProperty(key, this._provider, SwapDesktopRightDefaultValue));
 
 		public ShortcutkeyProperty SwitchTo1 => this.Cache(key => new ShortcutkeyProperty(key, this._provider, SwitchTo1DefaultValue));
 
@@ -115,19 +115,37 @@ namespace SylphyHorn.Serialization
 
 		#region default values
 
-		private static int[] MoveDesktopLeftDefaultValue { get; } =
-		{
-			037, // <=
-			091, // Left Windows
-			164, // Left Alt
-		};
+		private static int[] MoveLeftDefaultValue { get; } =
+			{
+				037, // <=
+				164, // Left Alt
+				091, // Left Windows
+			};
 
-		private static int[] MoveDesktopRightDefaultValue { get; } =
-		{
-			039, // =>
-			091, // Left Windows
-			164, // Left Alt
-		};
+		private static int[] MoveRightDefaultValue { get; } =
+			{
+				039, // =>
+				164, // Left Alt
+				091, // Left Windows
+			};
+
+		private static int[] SwapDesktopLeftDefaultValue { get; } =
+			{
+				037, // <=
+				160, // Left Shift
+				162, // Left Ctrl
+				164, // Left Alt
+				091, // Left Windows
+			};
+
+		private static int[] SwapDesktopRightDefaultValue { get; } =
+			{
+				039, // =>
+				160, // Left Shift
+				162, // Left Ctrl
+				164, // Left Alt
+				091, // Left Windows
+			};
 		
 		private static int[] SwitchToLeftDefaultValue { get; } =
 			{
@@ -171,7 +189,6 @@ namespace SylphyHorn.Serialization
 			{
 				080, // P
 				162, // Left Ctrl
-				164, // Left Alt
 				091, // Left Windows
 			};
 

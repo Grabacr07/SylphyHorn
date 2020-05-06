@@ -187,11 +187,11 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Override OS default key combination (Ctrl+Win+Left and Right).
+        ///   Looks up a localized string similar to Skip default animation of switching (Ctrl+Win+Left and Right).
         /// </summary>
-        public static string Settings_DesktopSwitching_OverrideOS {
+        public static string Settings_DesktopSwitching_SkipDefault {
             get {
-                return ResourceManager.GetString("Settings_DesktopSwitching_OverrideOS", resourceCulture);
+                return ResourceManager.GetString("Settings_DesktopSwitching_SkipDefault", resourceCulture);
             }
         }
         
@@ -264,33 +264,6 @@ namespace SylphyHorn.Properties {
         public static string Settings_MoveAndSwitchToTitle {
             get {
                 return ResourceManager.GetString("Settings_MoveAndSwitchToTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move desktop.
-        /// </summary>
-        public static string Settings_MoveDesktop {
-            get {
-                return ResourceManager.GetString("Settings_MoveDesktop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Left:.
-        /// </summary>
-        public static string Settings_MoveDesktop_Left {
-            get {
-                return ResourceManager.GetString("Settings_MoveDesktop_Left", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Right:.
-        /// </summary>
-        public static string Settings_MoveDesktop_Right {
-            get {
-                return ResourceManager.GetString("Settings_MoveDesktop_Right", resourceCulture);
             }
         }
         
@@ -642,6 +615,60 @@ namespace SylphyHorn.Properties {
         public static string Settings_Startup_Automaticaly {
             get {
                 return ResourceManager.GetString("Settings_Startup_Automaticaly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Swap desktop.
+        /// </summary>
+        public static string Settings_SwapDesktop {
+            get {
+                return ResourceManager.GetString("Settings_SwapDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left:.
+        /// </summary>
+        public static string Settings_SwapDesktop_Left {
+            get {
+                return ResourceManager.GetString("Settings_SwapDesktop_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right:.
+        /// </summary>
+        public static string Settings_SwapDesktop_Right {
+            get {
+                return ResourceManager.GetString("Settings_SwapDesktop_Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch Desktop.
+        /// </summary>
+        public static string Settings_SwitchDesktop {
+            get {
+                return ResourceManager.GetString("Settings_SwitchDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left:.
+        /// </summary>
+        public static string Settings_SwitchDesktopLeft {
+            get {
+                return ResourceManager.GetString("Settings_SwitchDesktopLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right:.
+        /// </summary>
+        public static string Settings_SwitchDesktopRight {
+            get {
+                return ResourceManager.GetString("Settings_SwitchDesktopRight", resourceCulture);
             }
         }
         

@@ -11,6 +11,7 @@ using SylphyHorn.Serialization;
 using SylphyHorn.Services;
 using SylphyHorn.UI;
 using SylphyHorn.UI.Bindings;
+using VirtualKey = System.Windows.Forms.Keys;
 
 namespace SylphyHorn
 {
@@ -34,16 +35,49 @@ namespace SylphyHorn
 			this._disposable = disposable;
 		}
 
+		public bool IsDefaultLeft(ShortcutKey key)
+		{
+			if (key.Key != VirtualKey.Left)
+				return false;
+			if (key.ModifiersInternal == null || key.ModifiersInternal.Count != 2)
+				return false;
+			if (key.ModifiersInternal.Contains(VirtualKey.RControlKey) || key.ModifiersInternal.Contains(VirtualKey.LControlKey))
+			{
+				if (key.ModifiersInternal.Contains(VirtualKey.LWin) || key.ModifiersInternal.Contains(VirtualKey.RWin))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public bool IsDefaultRight(ShortcutKey key)
+		{
+			if (key.Key != VirtualKey.Right)
+				return false;
+			if (key.ModifiersInternal == null || key.ModifiersInternal.Count != 2)
+				return false;
+			if (key.ModifiersInternal.Contains(VirtualKey.RControlKey) || key.ModifiersInternal.Contains(VirtualKey.LControlKey))
+			{
+				if (key.ModifiersInternal.Contains(VirtualKey.LWin) || key.ModifiersInternal.Contains(VirtualKey.RWin))
+				{
+					return true;
+				}
+			}
+			return false;
+
+		}
+
 		public void RegisterActions()
 		{
 			var settings = Settings.ShortcutKey;
 
 			this._hookService
-				.Register(()=>settings.MoveDesktopLeft.ToShortcutKey(), hWnd => VirtualDesktopMoveService.MoveLeft())
+				.Register(()=>settings.SwapDesktopLeft.ToShortcutKey(), hWnd => VirtualDesktopMoveService.MoveLeft())
 				.AddTo(this._disposable);
 			
 			this._hookService
-				.Register(()=>settings.MoveDesktopRight.ToShortcutKey(), hWnd => VirtualDesktopMoveService.MoveRight())
+				.Register(()=>settings.SwapDesktopRight.ToShortcutKey(), hWnd => VirtualDesktopMoveService.MoveRight())
 				.AddTo(this._disposable);
 			
 			this._hookService
@@ -72,16 +106,30 @@ namespace SylphyHorn
 
 			this._hookService
 				.Register(
-					() => settings.SwitchToLeft.ToShortcutKey(),
-					_ => VirtualDesktopService.GetLeft()?.Switch(),
-					() => Settings.General.OverrideWindowsDefaultKeyCombination || Settings.General.ChangeBackgroundEachDesktop)
+					() => settings.SwitchToLeft.ToShortcutKey(), _ => VirtualDesktopService.GetLeft()?.Switch(),
+					(ShortcutKeyPressedEventArgs args) => {
+						if (Settings.General.SkipDefaultAnimation || Settings.General.ChangeBackgroundEachDesktop)
+							return true;
+						if (Settings.General.LoopDesktop && VirtualDesktopService.CachedIndex == 1)
+							return true;
+						if (IsDefaultLeft(args.ShortcutKey))
+							return false;
+						return true;
+					})
 				.AddTo(this._disposable);
 
 			this._hookService
 				.Register(
-					() => settings.SwitchToRight.ToShortcutKey(),
-					_ => VirtualDesktopService.GetRight()?.Switch(),
-					() => Settings.General.OverrideWindowsDefaultKeyCombination || Settings.General.ChangeBackgroundEachDesktop)
+					() => settings.SwitchToRight.ToShortcutKey(), _ => VirtualDesktopService.GetRight()?.Switch(),
+					(ShortcutKeyPressedEventArgs args) => {
+						if (Settings.General.SkipDefaultAnimation || Settings.General.ChangeBackgroundEachDesktop)
+							return true;
+						if (Settings.General.LoopDesktop && VirtualDesktopService.CachedIndex == VirtualDesktopService.CachedCount)
+							return true;
+						if (IsDefaultRight(args.ShortcutKey))
+							return false;
+						return true;
+					})
 				.AddTo(this._disposable);
 
 			this._hookService
