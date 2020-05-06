@@ -215,6 +215,19 @@
 									   Visibility="{Binding RestartRequired, Converter={StaticResource BooleanToVisibilityConverter}}"
 									   Margin="3,2,0,0" />
 						</StackPanel>
+						<Border Height="8" />
+
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_ResetTitle}"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<StackPanel Margin="8,0,0,0">
+							<metro2:CallMethodButton Grid.Column="1"
+															 Content="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_ResetButton}"
+															 MethodTarget="{Binding}"
+															 MethodName="ResetSettings"
+															 Width="100"
+															 HorizontalAlignment="Left"
+															 Margin="2" />
+						</StackPanel>
 					</StackPanel>
 				</ScrollViewer>
 			</TabItem>

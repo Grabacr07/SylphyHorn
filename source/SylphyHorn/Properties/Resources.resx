@@ -351,4 +351,13 @@
   <data name="Settings_SwitchDesktopRight" xml:space="preserve">
     <value>Right:</value>
   </data>
+  <data name="Settings_ResetTitle" xml:space="preserve">
+    <value>Reset Settings to Default</value>
+  </data>
+  <data name="Settings_ResetButton" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Dialog_AreYouSure" xml:space="preserve">
+    <value>This will delete all settings. Are you sure?</value>
+  </data>
 </root>

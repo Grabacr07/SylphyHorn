@@ -351,4 +351,13 @@
   <data name="Settings_SwitchDesktopRight" xml:space="preserve">
     <value>右へ:</value>
   </data>
+  <data name="Settings_ResetTitle" xml:space="preserve">
+    <value>リセット</value>
+  </data>
+  <data name="Settings_ResetButton" xml:space="preserve">
+    <value>設定をデフォルトにリセット</value>
+  </data>
+  <data name="Dialog_AreYouSure" xml:space="preserve">
+    <value>すべての設定が削除されます。 削除してもよろしいですか？</value>
+  </data>
 </root>

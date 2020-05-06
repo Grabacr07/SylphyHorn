@@ -51,6 +51,10 @@ namespace SylphyHorn.Serialization
 			}
 		}
 
+		public void Clear()
+		{
+			this._settings.Clear();
+		}
 
 		void ISerializationProvider.Save()
 		{

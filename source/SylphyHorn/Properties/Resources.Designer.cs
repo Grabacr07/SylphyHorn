@@ -79,6 +79,15 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This will delete all settings. Are you sure?.
+        /// </summary>
+        public static string Dialog_AreYouSure {
+            get {
+                return ResourceManager.GetString("Dialog_AreYouSure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Background.
         /// </summary>
         public static string Settings_Background {
@@ -588,6 +597,24 @@ namespace SylphyHorn.Properties {
         public static string Settings_RenameCurrentDesktop {
             get {
                 return ResourceManager.GetString("Settings_RenameCurrentDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string Settings_ResetButton {
+            get {
+                return ResourceManager.GetString("Settings_ResetButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset Settings to Default.
+        /// </summary>
+        public static string Settings_ResetTitle {
+            get {
+                return ResourceManager.GetString("Settings_ResetTitle", resourceCulture);
             }
         }
         
