@@ -10,6 +10,7 @@ using MetroRadiance.Interop.Win32;
 using SylphyHorn.Interop;
 using SylphyHorn.Serialization;
 using WindowsDesktop;
+using System.Collections.ObjectModel;
 
 namespace SylphyHorn.Services
 {
@@ -69,39 +70,52 @@ namespace SylphyHorn.Services
 
 	internal static class SettingsHelper
 	{
+		public static void ResizeSettingsProperties()
+		{
+			var desktopCount = VirtualDesktopService.Count();
+			var desktopNames = Settings.General.DesktopNames.Value;
+			if (desktopNames == null)
+			{
+				var temp = new StringHolder[desktopCount];
+				for(int i = 0; i < desktopCount; ++i)
+				{
+					temp[i] = new StringHolder();
+				}
+				desktopNames = new ObservableCollection<StringHolder>(temp);
+				Settings.General.DesktopNames.Value = desktopNames;
+			}
+			else if (desktopNames.Count != desktopCount)
+			{
+				var temp = new StringHolder[desktopNames.Count];
+				desktopNames.CopyTo(temp, 0);
+				Array.Resize<StringHolder>(ref temp, desktopCount);
+				for (int i = desktopNames.Count; i < temp.Length; i++)
+				{
+					temp[i] = new StringHolder();
+				}
+				Settings.General.DesktopNames.Value = new ObservableCollection<StringHolder>(temp);
+			}
+		}
+
 		public static string GetDesktopName(int index)
 		{
-			switch(index)
-			{
-				case 1: return Settings.General.DesktopName1.Value;
-				case 2: return Settings.General.DesktopName2.Value;
-				case 3: return Settings.General.DesktopName3.Value;
-				case 4: return Settings.General.DesktopName4.Value;
-				case 5: return Settings.General.DesktopName5.Value;
-				case 6: return Settings.General.DesktopName6.Value;
-				case 7: return Settings.General.DesktopName7.Value;
-				case 8: return Settings.General.DesktopName8.Value;
-				case 9: return Settings.General.DesktopName9.Value;
-				case 10: return Settings.General.DesktopName10.Value;
-			}
-			return null;
+			var desktopNames = Settings.General.DesktopNames.Value;
+			if (desktopNames == null || index < 1 || index > desktopNames.Count)
+				return "";
+			return desktopNames[index - 1];
 		}
 
 		public static void SetDesktopName(int index, string name)
 		{
-			switch (index)
-			{
-				case 1: Settings.General.DesktopName1.Value = name; break;
-				case 2: Settings.General.DesktopName2.Value = name; break;
-				case 3: Settings.General.DesktopName3.Value = name; break;
-				case 4: Settings.General.DesktopName4.Value = name; break;
-				case 5: Settings.General.DesktopName5.Value = name; break;
-				case 6: Settings.General.DesktopName6.Value = name; break;
-				case 7: Settings.General.DesktopName7.Value = name; break;
-				case 8: Settings.General.DesktopName8.Value = name; break;
-				case 9: Settings.General.DesktopName9.Value = name; break;
-				case 10: Settings.General.DesktopName10.Value = name; break;
-			}
+			ResizeSettingsProperties();
+			var desktopNames = Settings.General.DesktopNames.Value;
+			if (desktopNames == null)
+				return;
+
+			if (index < 1 || index > desktopNames.Count)
+				return;
+			desktopNames[index - 1] = name;
+			Settings.General.DesktopNames.Value = desktopNames;
 		}
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MetroTrilithon.Serialization;
+using System.Collections.ObjectModel;
 
 namespace SylphyHorn.Serialization
 {
@@ -39,24 +40,7 @@ namespace SylphyHorn.Serialization
 
 		public SerializableProperty<bool> TrayShowDesktop => this.Cache(key => new SerializableProperty<bool>(key, this._provider, false));
 
-		public SerializableProperty<string> DesktopName1 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
+		public SerializableProperty<ObservableCollection<StringHolder>> DesktopNames => this.Cache(key => new SerializableProperty<ObservableCollection<StringHolder>>(key, this._provider));
 
-		public SerializableProperty<string> DesktopName2 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
-
-		public SerializableProperty<string> DesktopName3 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
-
-		public SerializableProperty<string> DesktopName4 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
-
-		public SerializableProperty<string> DesktopName5 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
-
-		public SerializableProperty<string> DesktopName6 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
-
-		public SerializableProperty<string> DesktopName7 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
-
-		public SerializableProperty<string> DesktopName8 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
-
-		public SerializableProperty<string> DesktopName9 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
-
-		public SerializableProperty<string> DesktopName10 => this.Cache(key => new SerializableProperty<string>(key, this._provider, null));
 	}
 }

@@ -221,49 +221,55 @@
 							   Style="{DynamicResource TabitemStyleKey}" />
 				</TabItem.Header>
 
-
 				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
 							  VerticalScrollBarVisibility="Auto">
 					<StackPanel Margin="16,0,16,16"
-								Grid.IsSharedSizeScope="True"
 								Focusable="True">
-						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_NamesTitle}"
+						<StackPanel Margin="8,0,0,0">
+							<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_NamesTitle}"
 								   Style="{DynamicResource HeaderStyleKey}"
 								   Margin="0,0,0,8" />
-						<Grid Margin="8,0,0,0">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto"
-												  SharedSizeGroup="KeyHeader" />
-								<ColumnDefinition Width="8" />
-								<ColumnDefinition Width="*" />
-							</Grid.ColumnDefinitions>
-							<UniformGrid Columns="1">
-								<TextBlock Text="1:" />
-								<TextBlock Text="2:" />
-								<TextBlock Text="3:" />
-								<TextBlock Text="4:" />
-								<TextBlock Text="5:" />
-								<TextBlock Text="6:" />
-								<TextBlock Text="7:" />
-								<TextBlock Text="8:" />
-								<TextBlock Text="9:" />
-								<TextBlock Text="10:" />
-							</UniformGrid>
-							<UniformGrid Grid.Column="2"
-										 Columns="1">
-								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName1.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
-								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName2.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
-								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName3.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
-								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName4.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
-								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName5.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
-								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName6.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
-								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName7.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
-								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName8.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
-								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName9.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
-								<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopName10.Value, Mode=TwoWay}" Prompt="" Margin="2,2,2,2"/>
-							</UniformGrid>
-						</Grid>
-
+							<Grid Margin="8,0,0,0">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto"
+													  SharedSizeGroup="KeyHeader" />
+									<ColumnDefinition Width="8" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<ItemsControl ItemsSource="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopNames.Value, Mode=TwoWay}"
+											  Grid.Column="0"
+											  AlternationCount="1000">
+									<ItemsControl.ItemsPanel>
+										<ItemsPanelTemplate>
+											<UniformGrid Columns="1" />
+										</ItemsPanelTemplate>
+									</ItemsControl.ItemsPanel>
+									<ItemsControl.ItemTemplate>
+										<DataTemplate>
+											<TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}, Path=(ItemsControl.AlternationIndex), Converter={StaticResource IndexConverter}}"
+													   VerticalAlignment="Center"
+													   Foreground="{DynamicResource ForegroundBrushKey}"/>
+										</DataTemplate>
+									</ItemsControl.ItemTemplate>
+								</ItemsControl>
+								<ItemsControl ItemsSource="{Binding Source={x:Static serialization:Settings.General}, Path=DesktopNames.Value, Mode=TwoWay}"
+											  Grid.Column="2">
+									<ItemsControl.ItemsPanel>
+										<ItemsPanelTemplate>
+											<UniformGrid Columns="1" />
+										</ItemsPanelTemplate>
+									</ItemsControl.ItemsPanel>
+									<ItemsControl.ItemTemplate>
+										<DataTemplate>
+											<metro:PromptTextBox Text="{Binding Path=Value, Mode=TwoWay}"
+																 Prompt=""
+																 Margin="2" />
+										</DataTemplate>
+									</ItemsControl.ItemTemplate>
+								</ItemsControl>
+							</Grid>
+						</StackPanel>
+						<Border Height="8" />
 					</StackPanel>
 				</ScrollViewer>
 			</TabItem>
@@ -613,6 +619,8 @@
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveDesktopRight.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
+						<Border Height="16" />
+
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveWindowToAdjacentDesktop}"
 								   Style="{DynamicResource HeaderStyleKey}"
 								   Margin="0,0,0,8" />
@@ -757,6 +765,7 @@
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=RenameCurrent.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
+						<Border Height="16" />
 
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_SwitchToTitle}"
 								   Style="{DynamicResource HeaderStyleKey}"
@@ -794,6 +803,8 @@
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=SwitchTo10.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
+						<Border Height="16" />
+
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveToTitle}"
 								   Style="{DynamicResource HeaderStyleKey}"
 								   Margin="0,0,0,8" />
@@ -830,6 +841,8 @@
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo10.Value, Mode=TwoWay}" />
 							</UniformGrid>
 						</Grid>
+						<Border Height="16" />
+
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveAndSwitchToTitle}"
 								   Style="{DynamicResource HeaderStyleKey}"
 								   Margin="0,0,0,8" />

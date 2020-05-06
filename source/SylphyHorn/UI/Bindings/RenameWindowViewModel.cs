@@ -29,11 +29,7 @@ namespace SylphyHorn.UI.Bindings
 		public string Name
 		{
 			get => SettingsHelper.GetDesktopName(this._Index);
-			set
-			{
-				SettingsHelper.SetDesktopName(this._Index, value);
-				this.Close();
-			}
+			set => SettingsHelper.SetDesktopName(this._Index, value);
 		}
 
 		#endregion

@@ -10,6 +10,12 @@ namespace SylphyHorn.Services
 {
 	internal static class VirtualDesktopService
 	{
+		#region Count
+		public static int Count()
+		{
+			return VirtualDesktop.GetDesktops().Length;
+		}
+		#endregion
 		#region Get
 		public static VirtualDesktop Get(int index)
 		{

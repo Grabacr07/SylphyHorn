@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MetroTrilithon.Serialization;
+using System.Collections.ObjectModel;
 
 namespace SylphyHorn.Serialization
 {
@@ -15,7 +16,7 @@ namespace SylphyHorn.Serialization
 
 		public virtual string Filename { get; } = "Settings.xml";
 
-		public virtual Type[] KnownTypes { get; } = { typeof(bool), typeof(int[]), };
+		public virtual Type[] KnownTypes { get; } = { typeof(bool), typeof(int[]), typeof(ObservableCollection<StringHolder>) };
 
 		public event EventHandler Reloaded;
 

@@ -12,7 +12,7 @@
 					   xmlns:controls="clr-namespace:SylphyHorn.UI.Controls"
 					   mc:Ignorable="d"
 					   d:DataContext="{d:DesignInstance bindings:RenameWindowViewModel}"
-					   Title="{Binding Title}"
+					   Title=""
 					   Width="140"
 					   SizeToContent="Width"
 					   Height="100"

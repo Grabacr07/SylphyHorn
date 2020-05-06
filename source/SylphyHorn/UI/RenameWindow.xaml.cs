@@ -5,6 +5,7 @@ using System.Windows.Interop;
 using MetroRadiance.Interop;
 using SylphyHorn.Serialization;
 using SylphyHorn.UI.Bindings;
+using MetroTrilithon.Threading.Tasks;
 
 namespace SylphyHorn.UI
 {
@@ -17,7 +18,8 @@ namespace SylphyHorn.UI
 			this._area = area;
 			this.InitializeComponent();
 
-			this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+			this.PreviewKeyDown += new KeyEventHandler(PreviewKeyDownHandler);
+			this.Closed += new EventHandler(ClosedHandler);
 		}
 
 		protected override void OnSourceInitialized(EventArgs e)
@@ -74,16 +76,23 @@ namespace SylphyHorn.UI
 			NameBox.SelectAll();
 		}
 
-		private void HandleEsc(object sender, KeyEventArgs e)
+		private void PreviewKeyDownHandler(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Escape)
+			{
 				Close();
+			}
 		}
-
 		private void NameBox_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Enter)
+			{
 				Close();
+			}
+		}
+		private void ClosedHandler(object sender, EventArgs e)
+		{
+			LocalSettingsProvider.Instance.SaveAsync().Forget();
 		}
 	}
 }

@@ -50,7 +50,7 @@ namespace SylphyHorn.Services
 			string name = SettingsHelper.GetDesktopName(index);
 			if(name != null && name != "")
 			{
-				return $"{index}: {name}";
+				return $"{index}. {name}";
 			}
 			return $"Desktop {index}";
 		}
