@@ -7,6 +7,7 @@
 					   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 					   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 					   xmlns:livet="http://schemas.livet-mvvm.net/2011/wpf"
+					   xmlns:metro="http://schemes.grabacr.net/winfx/2014/controls"
 					   xmlns:ui="clr-namespace:SylphyHorn.UI"
 					   xmlns:bindings="clr-namespace:SylphyHorn.UI.Bindings"
 					   xmlns:controls="clr-namespace:SylphyHorn.UI.Controls"
@@ -67,22 +68,19 @@
 
 	<DockPanel VerticalAlignment="Center"
 			   Margin="16,12">
-		<Grid Margin="8,0,0,0">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto"
-												  SharedSizeGroup="KeyHeader" />
-				<ColumnDefinition Width="8" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
-			<UniformGrid Columns="1">
-				<TextBlock DockPanel.Dock="Top"
-				   Text="{Binding Index, StringFormat={}{0}:}"
-				   FontFamily="Segoe UI Light, Meiryo UI"
-				   FontSize="32" HorizontalAlignment="Center" />
-			</UniformGrid>
-			<UniformGrid Grid.Column="2" Columns="1">
-				<TextBox Name="NameBox" Text="{Binding Name, Mode=TwoWay}" Margin="0,0,0,0" FontSize="32" KeyDown="NameBox_KeyDown"/>
-			</UniformGrid>
-		</Grid>
+		<StackPanel Orientation="Horizontal">
+			<!--{Binding Index, StringFormat={}{0}:}-->
+			<TextBlock DockPanel.Dock="Top"
+					   Text="{Binding Number, StringFormat={}{0}:}"
+					   FontFamily="Segoe UI Light, Meiryo UI"
+					   FontSize="32"
+					   Margin="0,3,10,0"/>
+			<metro:PromptTextBox Text="{Binding Name, Mode=TwoWay}"
+								 Name="NameBox"
+								 Prompt=""
+								 FontSize="32"
+								 Margin="0,0,0,0"
+								 KeyDown="NameBox_KeyDown"/>
+		</StackPanel>
 	</DockPanel>
 </ui:InteractableNotificationWindow>
