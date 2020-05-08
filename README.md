@@ -43,6 +43,9 @@ Please download from [Releases](https://github.com/ViRb3/SylphyHornEx/releases).
 
 * Switch to specific desktop  
 (default key combination: <kbd>Ctrl</kbd> + <kbd>Win</kbd> + <kbd>1</kbd> to <kbd>0</kbd>)
+ 
+* Move active window to specific desktop  
+(default key combination: <kbd>Alt</kbd> + <kbd>Win</kbd> + <kbd>1</kbd> to <kbd>0</kbd>)
 
 * Pin window to all desktops ... It is more convenient than using the task view  
 (default key combination: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Win</kbd> + <kbd>P</kbd>)  
