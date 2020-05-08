@@ -25,18 +25,24 @@ Please download from [Releases](https://github.com/ViRb3/SylphyHornEx/releases).
 
 ## Features
 
-* __Reorder virtual desktops__  
-(default key combination: <kbd>Win</kbd> + <kbd>Alt</kbd> + <kbd><-</kbd> or <kbd>-></kbd>)
-
 * Switching notification
 <!-- ![](https://cloud.githubusercontent.com/assets/1779073/19052151/a6be54ac-89f0-11e6-8936-9bcc2aafc1d5.gif) -->
 
 * Move active window to adjacent desktop  
-(default key combination: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Win</kbd> + <kbd><-</kbd> or <kbd>-></kbd>)
+(default key combination: <kbd>Alt</kbd> + <kbd>Win</kbd> + <kbd><-</kbd> or <kbd>-></kbd>)
 <!-- ![](https://cloud.githubusercontent.com/assets/1779073/19051476/22e49daa-89ee-11e6-8fe2-9734f2714871.gif) -->
 
 * Move active window to create new desktop  
 (default key combination: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Win</kbd> + <kbd>D</kbd>)
+
+* Reorder virtual desktops
+(default key combination: <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>Win</kbd> + <kbd><-</kbd> or <kbd>-></kbd>)
+
+* Rename desktops from settings or with hotkey
+(default key combination: <kbd>Ctrl</kbd> + <kbd>Win</kbd> + <kbd>R</kbd>)
+
+* Switch to specific desktop
+(default key combination: <kbd>Ctrl</kbd> + <kbd>Win</kbd> + <kbd>1</kbd> to <kbd>0</kbd>)
 
 * Pin window to all desktops ... It is more convenient than using the task view  
 (default key combination: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Win</kbd> + <kbd>P</kbd>)  
@@ -48,6 +54,7 @@ Please download from [Releases](https://github.com/ViRb3/SylphyHornEx/releases).
 * Change the background for each desktop  
 ![](https://user-images.githubusercontent.com/1779073/40626992-14589938-62f7-11e8-9568-fd956d499500.png)
 
+* More...
 
 ## Credits
 
