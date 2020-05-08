@@ -35,13 +35,13 @@ Please download from [Releases](https://github.com/ViRb3/SylphyHornEx/releases).
 * Move active window to create new desktop  
 (default key combination: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Win</kbd> + <kbd>D</kbd>)
 
-* Reorder virtual desktops
+* Reorder virtual desktops 
 (default key combination: <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>Win</kbd> + <kbd><-</kbd> or <kbd>-></kbd>)
 
-* Rename desktops from settings or with hotkey
+* Rename desktops from settings or with hotkey 
 (default key combination: <kbd>Ctrl</kbd> + <kbd>Win</kbd> + <kbd>R</kbd>)
 
-* Switch to specific desktop
+* Switch to specific desktop 
 (default key combination: <kbd>Ctrl</kbd> + <kbd>Win</kbd> + <kbd>1</kbd> to <kbd>0</kbd>)
 
 * Pin window to all desktops ... It is more convenient than using the task view  
