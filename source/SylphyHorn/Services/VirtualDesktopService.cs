@@ -10,23 +10,28 @@ namespace SylphyHorn.Services
 {
 	internal static class VirtualDesktopService
 	{
+		public static int CachedNumber { get; set; } = 0;
+		public static int CachedCount { get; set; } = 0;
+		public static int CachedPreviousNumber { get; set; } = 0;
+
 		#region Count
+
 		public static int Count()
 		{
 			return VirtualDesktop.GetDesktops().Length;
 		}
-		public static int CachedIndex = 0;
-		public static int CachedCount = 0;
 		#endregion
+
 		#region Get
-		public static VirtualDesktop Get(int index)
+
+		public static VirtualDesktop Get(int number)
 		{
 			var desktops = VirtualDesktop.GetDesktops();
 
-			if (index < 1 || index > desktops.Length)
+			if (number < 1 || number > desktops.Length)
 				return null;
 
-			return desktops[index-1];
+			return desktops[number-1];
 		}
 
 		public static VirtualDesktop GetLeft()
@@ -52,6 +57,7 @@ namespace SylphyHorn.Services
 		#endregion
 
 		#region Move
+
 		public static VirtualDesktop MoveTo(this IntPtr hWnd, VirtualDesktop target)
 		{
 			if (target == null)
@@ -157,6 +163,15 @@ namespace SylphyHorn.Services
 
 		#endregion
 
+		#region SwitchToPrevious
+
+		public static void SwitchToPrevious()
+		{
+			Get(CachedPreviousNumber)?.Switch();
+		}
+
+		#endregion
+
 		#region Pin / Unpin
 
 		public static event EventHandler<WindowPinnedEventArgs> WindowPinned;
@@ -221,6 +236,34 @@ namespace SylphyHorn.Services
 				VirtualDesktop.PinApplication(appId);
 				RaisePinnedEvent(hWnd, PinOperations.PinApp);
 			}
+		}
+
+		#endregion
+
+		#region VirtualDesktop even handlers
+
+		public static void DesktopCreatedHandler(object sender, VirtualDesktop args)
+		{
+			CachedCount = Count();
+		}
+
+		public static void DesktopDestroyedHandler(object sender, VirtualDesktopDestroyEventArgs args)
+		{
+			CachedCount = Count();
+		}
+
+		public static void DesktopSwitchedHandler(object sender, VirtualDesktopChangedEventArgs args)
+		{
+			var tDesktops = VirtualDesktop.GetDesktops();
+			CachedPreviousNumber = Array.IndexOf(tDesktops, args.OldDesktop) + 1;
+			CachedNumber = Array.IndexOf(tDesktops, args.NewDesktop) + 1;
+		}
+
+		public static void VirtualDesktopInitializedHandler()
+		{
+			CachedCount = Count();
+			var desktops = VirtualDesktop.GetDesktops();
+			CachedNumber = Array.IndexOf(desktops, VirtualDesktop.Current) + 1;
 		}
 
 		private static void RaisePinnedEvent(IntPtr target, PinOperations operation)

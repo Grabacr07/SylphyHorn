@@ -360,4 +360,7 @@
   <data name="Dialog_AreYouSure" xml:space="preserve">
     <value>すべての設定が削除されます。 削除してもよろしいですか？</value>
   </data>
+  <data name="Settings_SwitchDesktopPrevious" xml:space="preserve">
+    <value>先へ:</value>
+  </data>
 </root>

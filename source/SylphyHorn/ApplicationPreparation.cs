@@ -110,7 +110,7 @@ namespace SylphyHorn
 					(ShortcutKeyPressedEventArgs args) => {
 						if (Settings.General.SkipDefaultAnimation || Settings.General.ChangeBackgroundEachDesktop)
 							return true;
-						if (Settings.General.LoopDesktop && VirtualDesktopService.CachedIndex == 1)
+						if (Settings.General.LoopDesktop && VirtualDesktopService.CachedNumber == 1)
 							return true;
 						if (IsDefaultLeft(args.ShortcutKey))
 							return false;
@@ -124,12 +124,16 @@ namespace SylphyHorn
 					(ShortcutKeyPressedEventArgs args) => {
 						if (Settings.General.SkipDefaultAnimation || Settings.General.ChangeBackgroundEachDesktop)
 							return true;
-						if (Settings.General.LoopDesktop && VirtualDesktopService.CachedIndex == VirtualDesktopService.CachedCount)
+						if (Settings.General.LoopDesktop && VirtualDesktopService.CachedNumber == VirtualDesktopService.CachedCount)
 							return true;
 						if (IsDefaultRight(args.ShortcutKey))
 							return false;
 						return true;
 					})
+				.AddTo(this._disposable);
+
+			this._hookService
+				.Register(() => settings.SwitchToPrevious.ToShortcutKey(), _ => VirtualDesktopService.SwitchToPrevious())
 				.AddTo(this._disposable);
 
 			this._hookService

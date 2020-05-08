@@ -691,6 +691,15 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Previous:.
+        /// </summary>
+        public static string Settings_SwitchDesktopPrevious {
+            get {
+                return ResourceManager.GetString("Settings_SwitchDesktopPrevious", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Right:.
         /// </summary>
         public static string Settings_SwitchDesktopRight {

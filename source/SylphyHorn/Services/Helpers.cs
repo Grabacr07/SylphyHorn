@@ -53,7 +53,7 @@ namespace SylphyHorn.Services
 
 	internal static class DesktopHelper
 	{
-		public static int GetIndex(VirtualDesktop desktop)
+		public static int GetNumber(VirtualDesktop desktop)
 		{
 			int i = 1;
 			foreach (var iDesktop in VirtualDesktop.GetDesktops())
@@ -97,24 +97,24 @@ namespace SylphyHorn.Services
 			}
 		}
 
-		public static string GetDesktopName(int index)
+		public static string GetDesktopName(int number)
 		{
 			var desktopNames = Settings.General.DesktopNames.Value;
-			if (desktopNames == null || index < 1 || index > desktopNames.Count)
+			if (desktopNames == null || number < 1 || number > desktopNames.Count)
 				return "";
-			return desktopNames[index - 1];
+			return desktopNames[number - 1];
 		}
 
-		public static void SetDesktopName(int index, string name)
+		public static void SetDesktopName(int number, string name)
 		{
 			ResizeSettingsProperties();
 			var desktopNames = Settings.General.DesktopNames.Value;
 			if (desktopNames == null)
 				return;
 
-			if (index < 1 || index > desktopNames.Count)
+			if (number < 1 || number > desktopNames.Count)
 				return;
-			desktopNames[index - 1] = name;
+			desktopNames[number - 1] = name;
 			Settings.General.DesktopNames.Value = desktopNames;
 		}
 	}

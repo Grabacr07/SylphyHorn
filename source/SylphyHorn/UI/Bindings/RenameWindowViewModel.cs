@@ -5,18 +5,18 @@ namespace SylphyHorn.UI.Bindings
 {
 	public class RenameWindowViewModel : WindowViewModel
 	{
-		#region Index
+		#region Number
 
-		private int _Index;
+		private int _Number;
 
-		public int Index
+		public int Number
 		{
-			get { return this._Index; }
+			get { return this._Number; }
 			set
 			{
-				if (this._Index != value)
+				if (this._Number != value)
 				{
-					this._Index = value;
+					this._Number = value;
 					this.RaisePropertyChanged();
 				}
 			}
@@ -28,8 +28,8 @@ namespace SylphyHorn.UI.Bindings
 
 		public string Name
 		{
-			get => SettingsHelper.GetDesktopName(this._Index);
-			set => SettingsHelper.SetDesktopName(this._Index, value);
+			get => SettingsHelper.GetDesktopName(this._Number);
+			set => SettingsHelper.SetDesktopName(this._Number, value);
 		}
 
 		#endregion

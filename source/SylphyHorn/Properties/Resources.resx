@@ -360,4 +360,7 @@
   <data name="Dialog_AreYouSure" xml:space="preserve">
     <value>This will delete all settings. Are you sure?</value>
   </data>
+  <data name="Settings_SwitchDesktopPrevious" xml:space="preserve">
+    <value>Previous:</value>
+  </data>
 </root>

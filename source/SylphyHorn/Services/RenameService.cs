@@ -26,13 +26,13 @@ namespace SylphyHorn.Services
 		private static IDisposable ShowRenameWindow()
 		{
 			var current = VirtualDesktop.Current;
-			int index = DesktopHelper.GetIndex(current);
+			int number = DesktopHelper.GetNumber(current);
 
 			var source = new CancellationTokenSource();
 
 			var vmodel = new RenameWindowViewModel
 			{
-				Index = index,
+				Number = number,
 			};
 			var window = new RenameWindow(MonitorService.GetCurrentArea().WorkArea)
 			{

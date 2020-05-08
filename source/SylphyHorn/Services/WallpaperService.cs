@@ -29,10 +29,10 @@ namespace SylphyHorn.Services
 				if (!Settings.General.ChangeBackgroundEachDesktop) return;
 
 				var desktops = VirtualDesktop.GetDesktops();
-				var newIndex = Array.IndexOf(desktops, e.NewDesktop) + 1;
+				var newNumber = Array.IndexOf(desktops, e.NewDesktop) + 1;
 
 				var wallpapers = this.GetWallpaperFiles(Settings.General.DesktopBackgroundFolderPath);
-				var files = wallpapers.Where(x => x.DesktopIndex == newIndex).ToArray();
+				var files = wallpapers.Where(x => x.DesktopNumber == newNumber).ToArray();
 				if (files.Length == 0)
 				{
 					var file = wallpapers.SingleOrDefault(x => x.Number == 0);
@@ -117,25 +117,25 @@ namespace SylphyHorn.Services
 	public class WallpaperFile
 	{
 		/// <summary>
-		/// {desktopIndex}-{monitorIndex}-{modeOptions}.{ext}
+		/// {desktopNumber}-{monitorIndex}-{modeOptions}.{ext}
 		/// </summary>
 		public string Filepath { get; }
 
-		public ushort DesktopIndex { get; }
+		public ushort DesktopNumber { get; }
 
 		public ushort MonitorIndex { get; }
 
 		public WallpaperPosition Position { get; }
 
-		public uint Number => (uint)(this.DesktopIndex << 16 | this.MonitorIndex);
+		public uint Number => (uint)(this.DesktopNumber << 16 | this.MonitorIndex);
 
-		public string DesktopMonitorText => this.MonitorIndex == 0 ? this.DesktopIndex.ToString() : $"{this.DesktopIndex}-{this.MonitorIndex}";
+		public string DesktopMonitorText => this.MonitorIndex == 0 ? this.DesktopNumber.ToString() : $"{this.DesktopNumber}-{this.MonitorIndex}";
 
-		private WallpaperFile(string path, ushort desktopIndex, ushort monitorIndex, WallpaperPosition position)
+		private WallpaperFile(string path, ushort desktopNumber, ushort monitorNumber, WallpaperPosition position)
 		{
 			this.Filepath = path;
-			this.DesktopIndex = desktopIndex;
-			this.MonitorIndex = monitorIndex;
+			this.DesktopNumber = desktopNumber;
+			this.MonitorIndex = monitorNumber;
 			this.Position = position;
 		}
 

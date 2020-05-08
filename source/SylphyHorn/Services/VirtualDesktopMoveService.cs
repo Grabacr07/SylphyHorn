@@ -48,12 +48,12 @@ namespace SylphyHorn.Services
 				VirtualDesktopHelper.MoveToDesktop(window, source);
 
 			// Swap the names as well
-			int sourceIndex = DesktopHelper.GetIndex(source);
-			int targetIndex = DesktopHelper.GetIndex(target);
-			var sourceName = SettingsHelper.GetDesktopName(sourceIndex);
-			var targetName = SettingsHelper.GetDesktopName(targetIndex);
-			SettingsHelper.SetDesktopName(sourceIndex, targetName);
-			SettingsHelper.SetDesktopName(targetIndex, sourceName);
+			int sourceNumber = DesktopHelper.GetNumber(source);
+			int targetNumber = DesktopHelper.GetNumber(target);
+			var sourceName = SettingsHelper.GetDesktopName(sourceNumber);
+			var targetName = SettingsHelper.GetDesktopName(targetNumber);
+			SettingsHelper.SetDesktopName(sourceNumber, targetName);
+			SettingsHelper.SetDesktopName(targetNumber, sourceName);
 		}
 
 		private static IEnumerable<IntPtr> GetAllWindows()

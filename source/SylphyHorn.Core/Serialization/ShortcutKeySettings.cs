@@ -19,6 +19,8 @@ namespace SylphyHorn.Serialization
 
 		public ShortcutkeyProperty SwitchToRight => this.Cache(key => new ShortcutkeyProperty(key, this._provider, SwitchToRightDefaultValue));
 
+		public ShortcutkeyProperty SwitchToPrevious => this.Cache(key => new ShortcutkeyProperty(key, this._provider, SwitchToPreviousDefaultValue));
+
 		public ShortcutkeyProperty MoveLeft => this.Cache(key => new ShortcutkeyProperty(key, this._provider, MoveLeftDefaultValue));
 
 		public ShortcutkeyProperty MoveLeftAndSwitch => this.Cache(key => new ShortcutkeyProperty(key, this._provider, MoveLeftAndSwitchDefaultValue));
@@ -155,6 +157,13 @@ namespace SylphyHorn.Serialization
 		private static int[] SwitchToRightDefaultValue { get; } =
 			{
 				039, // =>
+				162, // Left Ctrl
+				091, // Left Windows
+			};
+
+		private static int[] SwitchToPreviousDefaultValue { get; } =
+			{
+				088, // X
 				162, // Left Ctrl
 				091, // Left Windows
 			};
