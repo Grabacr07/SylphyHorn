@@ -1,25 +1,18 @@
 # SylphyHornEx
+> This is a fork of [SylphyHorn](https://github.com/Grabacr07/SylphyHorn) with new features and better optimization
 
-> This is a fork of [SylphyHorn](https://github.com/Grabacr07/SylphyHorn) with new features and better optimization.
+SylphyHorn is a collection of virtual desktop tools for Windows 10.  
+It provides global hotkeys, switching notification, different background per virtual desktop, and many more features to improve your experience.
 
-SylphyHorn is Virtual Desktop Tools for Windows 10.  
-Provides global hotkeys, switching notification, change background and several functions to virtual desktop.
-
-This app is Windows Desktop application running on .NET Framework, however built using the Desktop Bridge and published in Windows Store as UWP application.
-
-
-## Installations
-
+## Installation
 Please download from [Releases](https://github.com/ViRb3/SylphyHornEx/releases).
 
 
 ## Requirements
-
 * Windows 10 build 14393 (Anniversary Update) or later
 
 
 ## Features
-
 * Switching notification
 
 * Move active window to adjacent desktop  
@@ -47,14 +40,10 @@ Please download from [Releases](https://github.com/ViRb3/SylphyHornEx/releases).
 
 * Change the background for each desktop  
 
-* More...
-
 ## Credits
-
 * Manato KAMEYA [@Grabacr07](https://twitter.com/Grabacr07) (Author, Developer)
 * Yutaka TSUMORI [@tmyt](https://twitter.com/tmyt) (Developer)
 
 
 ## License
-
 SylphyHorn is licensed under [the MIT License](LICENSE.txt).
