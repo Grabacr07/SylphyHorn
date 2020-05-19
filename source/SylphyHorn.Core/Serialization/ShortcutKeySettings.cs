@@ -135,7 +135,7 @@ namespace SylphyHorn.Serialization
 			{
 				037, // <=
 				160, // Left Shift
-				164, // Left Alt
+				162, // Left Ctrl
 				091, // Left Windows
 			};
 
@@ -143,7 +143,7 @@ namespace SylphyHorn.Serialization
 			{
 				039, // =>
 				160, // Left Shift
-				164, // Left Alt
+				162, // Left Ctrl
 				091, // Left Windows
 			};
 		
