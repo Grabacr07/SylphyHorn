@@ -14,7 +14,7 @@
 					   mc:Ignorable="d"
 					   d:DataContext="{d:DesignInstance bindings:RenameWindowViewModel}"
 					   Title=""
-					   MinWidth="130"
+					   MinWidth="210"
 					   SizeToContent="Width"
 					   Height="100"
 					   ResizeMode="NoResize"

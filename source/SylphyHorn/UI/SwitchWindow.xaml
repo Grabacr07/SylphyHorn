@@ -13,10 +13,10 @@
 					   mc:Ignorable="d"
 					   d:DataContext="{d:DesignInstance bindings:NotificationWindowViewModel}"
 					   Title="{Binding Title}"
-					   Width="211.476"
+					   MinWidth="210"
+					   SizeToContent="Width"
 					   Height="100"
 					   ResizeMode="NoResize"
-					   SizeToContent="Width"
 					   Topmost="True"
 					   ShowInTaskbar="False"
 					   SnapsToDevicePixels="True">

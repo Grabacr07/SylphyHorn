@@ -557,10 +557,10 @@
 
 							<Grid x:Name="PreviewRoot"
 								  Width="170"
-								  Height="100"
+								  Height="80"
 								  Style="{StaticResource PreviewGridStyle}">
 								<ContentControl Width="170"
-												Height="100"
+												Height="80"
 												ClipToBounds="True">
 									<ContentControl.CacheMode>
 										<BitmapCache RenderAtScale="0.2" />
@@ -585,7 +585,7 @@
 											   Text="Desktop 1"
 											   Foreground="{Binding NotificationForeground}"
 											   FontFamily="Segoe UI Light, Meiryo UI"
-											   FontSize="32"
+											   FontSize="28"
 											   HorizontalAlignment="Center" />
 								</DockPanel>
 								<Border BorderBrush="#444444"
