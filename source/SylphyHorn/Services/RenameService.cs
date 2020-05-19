@@ -39,7 +39,6 @@ namespace SylphyHorn.Services
 				DataContext = vmodel,
 			};
 			window.Show();
-			window.Activate();
 
 			Task.Delay(TimeSpan.FromMilliseconds(30000), source.Token)
 			.ContinueWith(_ => window.Close(), TaskScheduler.FromCurrentSynchronizationContext());
