@@ -31,9 +31,9 @@ namespace SylphyHorn.Services
 			VisualHelper.InvokeOnUIDispatcher(() =>
 			{
 				var desktops = VirtualDesktop.GetDesktops();
-				var newIndex = Array.IndexOf(desktops, e.NewDesktop) + 1;
+				var newNumber = Array.IndexOf(desktops, e.NewDesktop) + 1;
 
-				this._notificationWindow.Disposable = ShowDesktopWindow(newIndex);
+				this._notificationWindow.Disposable = ShowDesktopWindow(newNumber);
 			});
 		}
 
@@ -45,12 +45,22 @@ namespace SylphyHorn.Services
 			});
 		}
 
-		private static IDisposable ShowDesktopWindow(int index)
+		private static string GetDesktopName(int number)
+		{
+			string name = SettingsHelper.GetDesktopName(number);
+			if(name != null && name != "")
+			{
+				return $"{number}. {name}";
+			}
+			return $"Desktop {number}";
+		}
+
+		private static IDisposable ShowDesktopWindow(int number)
 		{
 			var vmodel = new NotificationWindowViewModel
 			{
 				Title = ProductInfo.Title,
-				Body = $"Desktop {index}",
+				Body = GetDesktopName(number),
 			};
 			var source = new CancellationTokenSource();
 

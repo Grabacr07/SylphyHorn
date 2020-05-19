@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MetroTrilithon.Linq;
 using MetroTrilithon.Serialization;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace SylphyHorn.Serialization
 {
@@ -12,6 +14,29 @@ namespace SylphyHorn.Serialization
 	{
 		public SerializableProperty(string key, ISerializationProvider provider) : base(key, provider) { }
 		public SerializableProperty(string key, ISerializationProvider provider, T defaultValue) : base(key, provider, defaultValue) { }
+	}
+
+	public class StringHolder : INotifyPropertyChanged
+	{
+		private string _value;
+
+		public string Value
+		{
+			get => _value; set
+			{
+				if (_value == value) return;
+				_value = value;
+				NotifyOfPropertyChange();
+			}
+		}
+
+		public static implicit operator string(StringHolder stringHolder) => stringHolder.Value;
+
+		public static implicit operator StringHolder(string s) => new StringHolder { Value = s };
+
+		public void NotifyOfPropertyChange([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+		public event PropertyChangedEventHandler PropertyChanged;
 	}
 
 

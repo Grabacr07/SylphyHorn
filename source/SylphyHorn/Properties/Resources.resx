@@ -159,8 +159,8 @@
   <data name="Settings_DesktopSwitching_Loop" xml:space="preserve">
     <value>Loop virtual desktops</value>
   </data>
-  <data name="Settings_DesktopSwitching_OverrideOS" xml:space="preserve">
-    <value>Override OS default key combination (Ctrl+Win+Left and Right)</value>
+  <data name="Settings_DesktopSwitching_SkipDefault" xml:space="preserve">
+    <value>Skip default animation of switching (Ctrl+Win+Left and Right)</value>
   </data>
   <data name="Settings_General" xml:space="preserve">
     <value>General</value>
@@ -187,25 +187,25 @@
     <value>Left:</value>
   </data>
   <data name="Settings_MoveWindowToAdjacentDesktop_LeftAndSwitch" xml:space="preserve">
-    <value>Left (Switch):</value>
+    <value>Left (switch):</value>
   </data>
   <data name="Settings_MoveWindowToAdjacentDesktop_Right" xml:space="preserve">
     <value>Right:</value>
   </data>
   <data name="Settings_MoveWindowToAdjacentDesktop_RightAndSwitch" xml:space="preserve">
-    <value>Right (Switch):</value>
+    <value>Right (switch):</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop" xml:space="preserve">
     <value>Move active window to created new desktop</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly" xml:space="preserve">
-    <value>Switch only</value>
+    <value>Switch only:</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_Move" xml:space="preserve">
     <value>Move:</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_MoveAndSwitch" xml:space="preserve">
-    <value>Move (Switch):</value>
+    <value>Move (switch):</value>
   </data>
   <data name="Settings_MultipleDisplays" xml:space="preserve">
     <value>Destination displays</value>
@@ -271,7 +271,7 @@
     <value>Placement</value>
   </data>
   <data name="Settings_ShortcutKey" xml:space="preserve">
-    <value>Shortcut key</value>
+    <value>Shortcuts</value>
   </data>
   <data name="Settings_Startup" xml:space="preserve">
     <value>Startup</value>
@@ -279,13 +279,13 @@
   <data name="Settings_Startup_Automaticaly" xml:space="preserve">
     <value>Automaticaly start at logon</value>
   </data>
-  <data name="Settings_MoveDesktop" xml:space="preserve">
-    <value>Move desktop</value>
+  <data name="Settings_SwapDesktop" xml:space="preserve">
+    <value>Swap desktop</value>
   </data>
-  <data name="Settings_MoveDesktop_Left" xml:space="preserve">
+  <data name="Settings_SwapDesktop_Left" xml:space="preserve">
     <value>Left:</value>
   </data>
-  <data name="Settings_MoveDesktop_Right" xml:space="preserve">
+  <data name="Settings_SwapDesktop_Right" xml:space="preserve">
     <value>Right:</value>
   </data>
   <data name="Settings_Title" xml:space="preserve">
@@ -311,5 +311,56 @@
   </data>
   <data name="TaskTray_Menu_Settings" xml:space="preserve">
     <value>&amp;Settings (S)</value>
+  </data>
+  <data name="Settings_MoveAndSwitchToTitle" xml:space="preserve">
+    <value>Move active window to a specific desktop and switch to it</value>
+  </data>
+  <data name="Settings_MoveAndSwitchTo" xml:space="preserve">
+    <value>Move to desktop {0} (switch):</value>
+  </data>
+  <data name="Settings_MoveToTitle" xml:space="preserve">
+    <value>Move active window to a specific desktop</value>
+  </data>
+  <data name="Settings_MoveTo" xml:space="preserve">
+    <value>Move to desktop {0}:</value>
+  </data>
+  <data name="Settings_SwitchToTitle" xml:space="preserve">
+    <value>Switch to a specific desktop</value>
+  </data>
+  <data name="Settings_SwitchTo" xml:space="preserve">
+    <value>Switch to desktop {0}:</value>
+  </data>
+  <data name="Settings_NamesTab" xml:space="preserve">
+    <value>Names</value>
+  </data>
+  <data name="Settings_NamesTitle" xml:space="preserve">
+    <value>Set names for desktops</value>
+  </data>
+  <data name="Settings_Rename" xml:space="preserve">
+    <value>Rename:</value>
+  </data>
+  <data name="Settings_RenameCurrentDesktop" xml:space="preserve">
+    <value>Rename desktop</value>
+  </data>
+  <data name="Settings_SwitchDesktop" xml:space="preserve">
+    <value>Switch desktop</value>
+  </data>
+  <data name="Settings_SwitchDesktopLeft" xml:space="preserve">
+    <value>Left:</value>
+  </data>
+  <data name="Settings_SwitchDesktopRight" xml:space="preserve">
+    <value>Right:</value>
+  </data>
+  <data name="Settings_ResetTitle" xml:space="preserve">
+    <value>Reset Settings to Default</value>
+  </data>
+  <data name="Settings_ResetButton" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Dialog_AreYouSure" xml:space="preserve">
+    <value>This will delete all settings. Are you sure?</value>
+  </data>
+  <data name="Settings_SwitchDesktopPrevious" xml:space="preserve">
+    <value>Previous:</value>
   </data>
 </root>

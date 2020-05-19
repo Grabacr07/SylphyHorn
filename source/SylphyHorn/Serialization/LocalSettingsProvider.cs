@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -45,6 +46,14 @@ namespace SylphyHorn.Serialization
 			this.Available = true;
 		}
 
+		public void Reset()
+		{
+			Clear();
+			SaveAsync().Wait();
+			LoadAsync().Wait();
+			Settings.General = new GeneralSettings(Instance);
+			Settings.ShortcutKey = new ShortcutKeySettings(Instance);
+		}
 
 		protected override Task SaveAsyncCore(IDictionary<string, object> dic)
 		{

@@ -11,6 +11,7 @@ using StatefulModel;
 using SylphyHorn.Serialization;
 using SylphyHorn.Services;
 using SylphyHorn.UI;
+using WindowsDesktop;
 
 namespace SylphyHorn
 {
@@ -71,12 +72,25 @@ namespace SylphyHorn
 					}
 
 					preparation.VirtualDesktopInitialized += () => this.TaskTrayIcon.Reload();
+					preparation.VirtualDesktopInitialized += () =>
+					{
+						SettingsHelper.ResizeSettingsProperties();
+						VirtualDesktop.Created += (sender, args) => SettingsHelper.ResizeSettingsProperties();
+						VirtualDesktop.Destroyed += (sender, args) => SettingsHelper.ResizeSettingsProperties();
+
+						VirtualDesktop.Created += VirtualDesktopService.DesktopCreatedHandler;
+						VirtualDesktop.Destroyed += VirtualDesktopService.DesktopDestroyedHandler;
+						VirtualDesktop.CurrentChanged += VirtualDesktopService.DesktopSwitchedHandler;
+
+						VirtualDesktopService.VirtualDesktopInitializedHandler();
+					};
 					preparation.VirtualDesktopInitializationCanceled += () => { }; // ToDo
 					preparation.VirtualDesktopInitializationFailed += ex => LoggingService.Instance.Register(ex);
 					preparation.PrepareVirtualDesktop();
 					preparation.RegisterActions();
 
 					NotificationService.Instance.AddTo(this);
+					RenameService.Instance.AddTo(this);
 					WallpaperService.Instance.AddTo(this);
 
 #if !DEBUG

@@ -159,8 +159,8 @@
   <data name="Settings_DesktopSwitching_Loop" xml:space="preserve">
     <value>仮想デスクトップをループさせる</value>
   </data>
-  <data name="Settings_DesktopSwitching_OverrideOS" xml:space="preserve">
-    <value>OS 既定のキー コンビネーションを上書きする (Ctrl+Win+Left および Right)</value>
+  <data name="Settings_DesktopSwitching_SkipDefault" xml:space="preserve">
+    <value>既定のアニメーションをスキップ(Ctrl+Win+Left および Right)</value>
   </data>
   <data name="Settings_General" xml:space="preserve">
     <value>一般</value>
@@ -190,7 +190,7 @@
     <value>左へ移動して切り替え:</value>
   </data>
   <data name="Settings_MoveWindowToAdjacentDesktop_Right" xml:space="preserve">
-    <value>右へ移動</value>
+    <value>右へ移動:</value>
   </data>
   <data name="Settings_MoveWindowToAdjacentDesktop_RightAndSwitch" xml:space="preserve">
     <value>右へ移動して切り替え:</value>
@@ -202,10 +202,10 @@
     <value>切り替えのみ</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_Move" xml:space="preserve">
-    <value>移動</value>
+    <value>移動:</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_MoveAndSwitch" xml:space="preserve">
-    <value>移動して切り替え</value>
+    <value>移動して切り替え:</value>
   </data>
   <data name="Settings_MultipleDisplays" xml:space="preserve">
     <value>通知先のディスプレイ</value>
@@ -302,5 +302,65 @@
   </data>
   <data name="TaskTray_Menu_Settings" xml:space="preserve">
     <value>設定</value>
+  </data>
+  <data name="Settings_MoveAndSwitchTo" xml:space="preserve">
+    <value>{0}へ移動して切り替え</value>
+  </data>
+  <data name="Settings_SwapDesktop" xml:space="preserve">
+    <value>デスクトップを取り替え</value>
+  </data>
+  <data name="Settings_SwapDesktop_Left" xml:space="preserve">
+    <value>左へ移動:</value>
+  </data>
+  <data name="Settings_SwapDesktop_Right" xml:space="preserve">
+    <value>右へ移動:</value>
+  </data>
+  <data name="Settings_MoveTo" xml:space="preserve">
+    <value>{0}へ移動</value>
+  </data>
+  <data name="Settings_MoveToTitle" xml:space="preserve">
+    <value>アクティブ ウィンドウを特定デスクトップへ移動</value>
+  </data>
+  <data name="Settings_MoveAndSwitchToTitle" xml:space="preserve">
+    <value>アクティブ ウィンドウを特定デスクトップへ移動して切り替え</value>
+  </data>
+  <data name="Settings_NamesTab" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="Settings_NamesTitle" xml:space="preserve">
+    <value>デスクトップの名前を設定</value>
+  </data>
+  <data name="Settings_Rename" xml:space="preserve">
+    <value>リネーム</value>
+  </data>
+  <data name="Settings_RenameCurrentDesktop" xml:space="preserve">
+    <value>作業中のデスクトップをリネーム</value>
+  </data>
+  <data name="Settings_SwitchTo" xml:space="preserve">
+    <value>{0}に切り替え</value>
+  </data>
+  <data name="Settings_SwitchToTitle" xml:space="preserve">
+    <value>特定デスクトップに切り替え</value>
+  </data>
+  <data name="Settings_SwitchDesktop" xml:space="preserve">
+    <value>デスクトップ切り替え</value>
+  </data>
+  <data name="Settings_SwitchDesktopLeft" xml:space="preserve">
+    <value>左へ:</value>
+  </data>
+  <data name="Settings_SwitchDesktopRight" xml:space="preserve">
+    <value>右へ:</value>
+  </data>
+  <data name="Settings_ResetTitle" xml:space="preserve">
+    <value>リセット</value>
+  </data>
+  <data name="Settings_ResetButton" xml:space="preserve">
+    <value>設定をデフォルトにリセット</value>
+  </data>
+  <data name="Dialog_AreYouSure" xml:space="preserve">
+    <value>すべての設定が削除されます。 削除してもよろしいですか？</value>
+  </data>
+  <data name="Settings_SwitchDesktopPrevious" xml:space="preserve">
+    <value>先へ:</value>
   </data>
 </root>

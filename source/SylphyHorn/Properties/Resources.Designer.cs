@@ -19,7 +19,7 @@ namespace SylphyHorn.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -75,6 +75,15 @@ namespace SylphyHorn.Properties {
         public static string Common_Reference {
             get {
                 return ResourceManager.GetString("Common_Reference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will delete all settings. Are you sure?.
+        /// </summary>
+        public static string Dialog_AreYouSure {
+            get {
+                return ResourceManager.GetString("Dialog_AreYouSure", resourceCulture);
             }
         }
         
@@ -187,11 +196,11 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Override OS default key combination (Ctrl+Win+Left and Right).
+        ///   Looks up a localized string similar to Skip default animation of switching (Ctrl+Win+Left and Right).
         /// </summary>
-        public static string Settings_DesktopSwitching_OverrideOS {
+        public static string Settings_DesktopSwitching_SkipDefault {
             get {
-                return ResourceManager.GetString("Settings_DesktopSwitching_OverrideOS", resourceCulture);
+                return ResourceManager.GetString("Settings_DesktopSwitching_SkipDefault", resourceCulture);
             }
         }
         
@@ -250,29 +259,38 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move desktop.
+        ///   Looks up a localized string similar to Move to desktop {0} (switch):.
         /// </summary>
-        public static string Settings_MoveDesktop {
+        public static string Settings_MoveAndSwitchTo {
             get {
-                return ResourceManager.GetString("Settings_MoveDesktop", resourceCulture);
+                return ResourceManager.GetString("Settings_MoveAndSwitchTo", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Left:.
+        ///   Looks up a localized string similar to Move active window to a specific desktop and switch to it.
         /// </summary>
-        public static string Settings_MoveDesktop_Left {
+        public static string Settings_MoveAndSwitchToTitle {
             get {
-                return ResourceManager.GetString("Settings_MoveDesktop_Left", resourceCulture);
+                return ResourceManager.GetString("Settings_MoveAndSwitchToTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Right:.
+        ///   Looks up a localized string similar to Move to desktop {0}:.
         /// </summary>
-        public static string Settings_MoveDesktop_Right {
+        public static string Settings_MoveTo {
             get {
-                return ResourceManager.GetString("Settings_MoveDesktop_Right", resourceCulture);
+                return ResourceManager.GetString("Settings_MoveTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move active window to a specific desktop.
+        /// </summary>
+        public static string Settings_MoveToTitle {
+            get {
+                return ResourceManager.GetString("Settings_MoveToTitle", resourceCulture);
             }
         }
         
@@ -295,7 +313,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Left (Switch):.
+        ///   Looks up a localized string similar to Left (switch):.
         /// </summary>
         public static string Settings_MoveWindowToAdjacentDesktop_LeftAndSwitch {
             get {
@@ -313,7 +331,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Right (Switch):.
+        ///   Looks up a localized string similar to Right (switch):.
         /// </summary>
         public static string Settings_MoveWindowToAdjacentDesktop_RightAndSwitch {
             get {
@@ -331,7 +349,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Switch only.
+        ///   Looks up a localized string similar to Switch only:.
         /// </summary>
         public static string Settings_MoveWindowToCreatedDesktop_CreateOnly {
             get {
@@ -349,7 +367,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move (Switch):.
+        ///   Looks up a localized string similar to Move (switch):.
         /// </summary>
         public static string Settings_MoveWindowToCreatedDesktop_MoveAndSwitch {
             get {
@@ -390,6 +408,24 @@ namespace SylphyHorn.Properties {
         public static string Settings_MultipleDisplays_EachDisplay {
             get {
                 return ResourceManager.GetString("Settings_MultipleDisplays_EachDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Names.
+        /// </summary>
+        public static string Settings_NamesTab {
+            get {
+                return ResourceManager.GetString("Settings_NamesTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set names for desktops.
+        /// </summary>
+        public static string Settings_NamesTitle {
+            get {
+                return ResourceManager.GetString("Settings_NamesTitle", resourceCulture);
             }
         }
         
@@ -547,7 +583,43 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shortcut key.
+        ///   Looks up a localized string similar to Rename:.
+        /// </summary>
+        public static string Settings_Rename {
+            get {
+                return ResourceManager.GetString("Settings_Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename desktop.
+        /// </summary>
+        public static string Settings_RenameCurrentDesktop {
+            get {
+                return ResourceManager.GetString("Settings_RenameCurrentDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string Settings_ResetButton {
+            get {
+                return ResourceManager.GetString("Settings_ResetButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset Settings to Default.
+        /// </summary>
+        public static string Settings_ResetTitle {
+            get {
+                return ResourceManager.GetString("Settings_ResetTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shortcuts.
         /// </summary>
         public static string Settings_ShortcutKey {
             get {
@@ -570,6 +642,87 @@ namespace SylphyHorn.Properties {
         public static string Settings_Startup_Automaticaly {
             get {
                 return ResourceManager.GetString("Settings_Startup_Automaticaly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Swap desktop.
+        /// </summary>
+        public static string Settings_SwapDesktop {
+            get {
+                return ResourceManager.GetString("Settings_SwapDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left:.
+        /// </summary>
+        public static string Settings_SwapDesktop_Left {
+            get {
+                return ResourceManager.GetString("Settings_SwapDesktop_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right:.
+        /// </summary>
+        public static string Settings_SwapDesktop_Right {
+            get {
+                return ResourceManager.GetString("Settings_SwapDesktop_Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch desktop.
+        /// </summary>
+        public static string Settings_SwitchDesktop {
+            get {
+                return ResourceManager.GetString("Settings_SwitchDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left:.
+        /// </summary>
+        public static string Settings_SwitchDesktopLeft {
+            get {
+                return ResourceManager.GetString("Settings_SwitchDesktopLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous:.
+        /// </summary>
+        public static string Settings_SwitchDesktopPrevious {
+            get {
+                return ResourceManager.GetString("Settings_SwitchDesktopPrevious", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right:.
+        /// </summary>
+        public static string Settings_SwitchDesktopRight {
+            get {
+                return ResourceManager.GetString("Settings_SwitchDesktopRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch to desktop {0}:.
+        /// </summary>
+        public static string Settings_SwitchTo {
+            get {
+                return ResourceManager.GetString("Settings_SwitchTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch to a specific desktop.
+        /// </summary>
+        public static string Settings_SwitchToTitle {
+            get {
+                return ResourceManager.GetString("Settings_SwitchToTitle", resourceCulture);
             }
         }
         
