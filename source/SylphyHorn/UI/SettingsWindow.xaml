@@ -424,44 +424,44 @@
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.TopCenter}">
 											<Setter Property="Canvas.Left"
-													Value="90" />
+													Value="155" />
 											<Setter Property="Canvas.Top"
 													Value="0" />
 										</DataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.TopRight}">
 											<Setter Property="Canvas.Left"
-													Value="180" />
+													Value="310" />
 											<Setter Property="Canvas.Top"
 													Value="0" />
 										</DataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.Center}">
 											<Setter Property="Canvas.Left"
-													Value="90" />
+													Value="155" />
 											<Setter Property="Canvas.Top"
-													Value="110" />
+													Value="85" />
 										</DataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.BottomLeft}">
 											<Setter Property="Canvas.Left"
 													Value="0" />
 											<Setter Property="Canvas.Top"
-													Value="205" />
+													Value="155" />
 										</DataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.BottomCenter}">
 											<Setter Property="Canvas.Left"
-													Value="90" />
+													Value="155" />
 											<Setter Property="Canvas.Top"
-													Value="205" />
+													Value="155" />
 										</DataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.BottomRight}">
 											<Setter Property="Canvas.Left"
-													Value="180" />
+													Value="310" />
 											<Setter Property="Canvas.Top"
-													Value="205" />
+													Value="155" />
 										</DataTrigger>
 									</Style.Triggers>
 								</Style>
@@ -471,37 +471,37 @@
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.TopLeft}">
 											<Setter Property="Margin"
-													Value="0,0,-180,-220" />
+													Value="0,0,-310,-170" />
 										</DataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.TopCenter}">
 											<Setter Property="Margin"
-													Value="-90,0,-90,-220" />
+													Value="-155,0,-155,-170" />
 										</DataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.TopRight}">
 											<Setter Property="Margin"
-													Value="-180,0,0,-220" />
+													Value="-310,0,0,-170" />
 										</DataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.Center}">
 											<Setter Property="Margin"
-													Value="-90,-110,-90,-110" />
+													Value="-155,-85,-155,-85" />
 										</DataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.BottomLeft}">
 											<Setter Property="Margin"
-													Value="0,-205,-180,-15" />
+													Value="0,-155,-310,-15" />
 										</DataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.BottomCenter}">
 											<Setter Property="Margin"
-													Value="-90,-205,-90,-15" />
+													Value="-155,-155,-155,-15" />
 										</DataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.BottomRight}">
 											<Setter Property="Margin"
-													Value="-180,-205,0,-15" />
+													Value="-310,-155,0,-15" />
 										</DataTrigger>
 									</Style.Triggers>
 								</Style>
@@ -556,11 +556,11 @@
 								   Height="270" />
 
 							<Grid x:Name="PreviewRoot"
-								  Width="300"
-								  Height="50"
+								  Width="170"
+								  Height="100"
 								  Style="{StaticResource PreviewGridStyle}">
-								<ContentControl Width="300"
-												Height="50"
+								<ContentControl Width="170"
+												Height="100"
 												ClipToBounds="True">
 									<ContentControl.CacheMode>
 										<BitmapCache RenderAtScale="0.2" />
@@ -582,18 +582,13 @@
 								<DockPanel VerticalAlignment="Center"
 										   Margin="8,6">
 									<TextBlock DockPanel.Dock="Top"
-											   Text="Virtual Desktop Switched"
+											   Text="Desktop 1"
 											   Foreground="{Binding NotificationForeground}"
 											   FontFamily="Segoe UI Light, Meiryo UI"
-											   FontSize="11"
-											   Margin="1,0,0,-4" />
-									<TextBlock DockPanel.Dock="Top"
-											   Text="Current Desktop: Desktop 1"
-											   Foreground="{Binding NotificationForeground}"
-											   FontFamily="Segoe UI Light, Meiryo UI"
-											   FontSize="21" />
+											   FontSize="32"
+											   HorizontalAlignment="Center" />
 								</DockPanel>
-								<Border BorderBrush="#AAAAAA"
+								<Border BorderBrush="#444444"
 										SnapsToDevicePixels="True"
 										Style="{StaticResource PreviewBorderStyle}" />
 							</Grid>
