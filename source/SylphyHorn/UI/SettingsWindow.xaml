@@ -866,34 +866,6 @@
 								<TextBlock Text="{Binding Source=8, StringFormat='{x:Static properties:Resources.Settings_MoveTo}'}" />
 								<TextBlock Text="{Binding Source=9, StringFormat='{x:Static properties:Resources.Settings_MoveTo}'}" />
 								<TextBlock Text="{Binding Source=10, StringFormat='{x:Static properties:Resources.Settings_MoveTo}'}" />
-							</UniformGrid>
-							<UniformGrid Grid.Column="2"
-										 Columns="1">
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo1.Value, Mode=TwoWay}" />
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo2.Value, Mode=TwoWay}" />
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo3.Value, Mode=TwoWay}" />
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo4.Value, Mode=TwoWay}" />
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo5.Value, Mode=TwoWay}" />
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo6.Value, Mode=TwoWay}" />
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo7.Value, Mode=TwoWay}" />
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo8.Value, Mode=TwoWay}" />
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo9.Value, Mode=TwoWay}" />
-								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo10.Value, Mode=TwoWay}" />
-							</UniformGrid>
-						</Grid>
-						<Border Height="16" />
-
-						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveAndSwitchToTitle}"
-								   Style="{DynamicResource HeaderStyleKey}"
-								   Margin="0,0,0,8" />
-						<Grid Margin="8,0,0,0">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto"
-												  SharedSizeGroup="KeyHeader" />
-								<ColumnDefinition Width="8" />
-								<ColumnDefinition Width="*" />
-							</Grid.ColumnDefinitions>
-							<UniformGrid Columns="1">
 								<TextBlock Text="{Binding Source=1, StringFormat='{x:Static properties:Resources.Settings_MoveAndSwitchTo}'}" />
 								<TextBlock Text="{Binding Source=2, StringFormat='{x:Static properties:Resources.Settings_MoveAndSwitchTo}'}" />
 								<TextBlock Text="{Binding Source=3, StringFormat='{x:Static properties:Resources.Settings_MoveAndSwitchTo}'}" />
@@ -907,6 +879,16 @@
 							</UniformGrid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo1.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo2.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo3.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo4.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo5.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo6.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo7.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo8.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo9.Value, Mode=TwoWay}" />
+								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveTo10.Value, Mode=TwoWay}" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveAndSwitchTo1.Value, Mode=TwoWay}" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveAndSwitchTo2.Value, Mode=TwoWay}" />
 								<controls:ShortcutKeyBox Current="{Binding Source={x:Static serialization:Settings.ShortcutKey}, Path=MoveAndSwitchTo3.Value, Mode=TwoWay}" />
