@@ -187,25 +187,25 @@
     <value>Left:</value>
   </data>
   <data name="Settings_MoveWindowToAdjacentDesktop_LeftAndSwitch" xml:space="preserve">
-    <value>Left (Switch):</value>
+    <value>Left (switch):</value>
   </data>
   <data name="Settings_MoveWindowToAdjacentDesktop_Right" xml:space="preserve">
     <value>Right:</value>
   </data>
   <data name="Settings_MoveWindowToAdjacentDesktop_RightAndSwitch" xml:space="preserve">
-    <value>Right (Switch):</value>
+    <value>Right (switch):</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop" xml:space="preserve">
     <value>Move active window to created new desktop</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly" xml:space="preserve">
-    <value>Switch only</value>
+    <value>Switch only:</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_Move" xml:space="preserve">
     <value>Move:</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_MoveAndSwitch" xml:space="preserve">
-    <value>Move (Switch):</value>
+    <value>Move (switch):</value>
   </data>
   <data name="Settings_MultipleDisplays" xml:space="preserve">
     <value>Destination displays</value>
@@ -316,19 +316,19 @@
     <value>Move active window to a specific desktop and switch to it</value>
   </data>
   <data name="Settings_MoveAndSwitchTo" xml:space="preserve">
-    <value>Move &amp; Switch to {0}</value>
+    <value>Move to desktop {0} (switch):</value>
   </data>
   <data name="Settings_MoveToTitle" xml:space="preserve">
     <value>Move active window to a specific desktop</value>
   </data>
   <data name="Settings_MoveTo" xml:space="preserve">
-    <value>Move to {0}</value>
+    <value>Move to desktop {0}:</value>
   </data>
   <data name="Settings_SwitchToTitle" xml:space="preserve">
     <value>Switch to a specific desktop</value>
   </data>
   <data name="Settings_SwitchTo" xml:space="preserve">
-    <value>Switch to {0}</value>
+    <value>Switch to desktop {0}:</value>
   </data>
   <data name="Settings_NamesTab" xml:space="preserve">
     <value>Names</value>
@@ -337,13 +337,13 @@
     <value>Set names for desktops</value>
   </data>
   <data name="Settings_Rename" xml:space="preserve">
-    <value>Rename</value>
+    <value>Rename:</value>
   </data>
   <data name="Settings_RenameCurrentDesktop" xml:space="preserve">
-    <value>Rename current desktop</value>
+    <value>Rename desktop</value>
   </data>
   <data name="Settings_SwitchDesktop" xml:space="preserve">
-    <value>Switch Desktop</value>
+    <value>Switch desktop</value>
   </data>
   <data name="Settings_SwitchDesktopLeft" xml:space="preserve">
     <value>Left:</value>

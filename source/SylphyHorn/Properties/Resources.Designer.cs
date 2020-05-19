@@ -259,7 +259,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move &amp; Switch to {0}.
+        ///   Looks up a localized string similar to Move to desktop {0} (switch):.
         /// </summary>
         public static string Settings_MoveAndSwitchTo {
             get {
@@ -277,7 +277,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move to {0}.
+        ///   Looks up a localized string similar to Move to desktop {0}:.
         /// </summary>
         public static string Settings_MoveTo {
             get {
@@ -313,7 +313,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Left (Switch):.
+        ///   Looks up a localized string similar to Left (switch):.
         /// </summary>
         public static string Settings_MoveWindowToAdjacentDesktop_LeftAndSwitch {
             get {
@@ -331,7 +331,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Right (Switch):.
+        ///   Looks up a localized string similar to Right (switch):.
         /// </summary>
         public static string Settings_MoveWindowToAdjacentDesktop_RightAndSwitch {
             get {
@@ -349,7 +349,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Switch only.
+        ///   Looks up a localized string similar to Switch only:.
         /// </summary>
         public static string Settings_MoveWindowToCreatedDesktop_CreateOnly {
             get {
@@ -367,7 +367,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move (Switch):.
+        ///   Looks up a localized string similar to Move (switch):.
         /// </summary>
         public static string Settings_MoveWindowToCreatedDesktop_MoveAndSwitch {
             get {
@@ -583,7 +583,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rename.
+        ///   Looks up a localized string similar to Rename:.
         /// </summary>
         public static string Settings_Rename {
             get {
@@ -592,7 +592,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rename current desktop.
+        ///   Looks up a localized string similar to Rename desktop.
         /// </summary>
         public static string Settings_RenameCurrentDesktop {
             get {
@@ -673,7 +673,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Switch Desktop.
+        ///   Looks up a localized string similar to Switch desktop.
         /// </summary>
         public static string Settings_SwitchDesktop {
             get {
@@ -709,7 +709,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Switch to {0}.
+        ///   Looks up a localized string similar to Switch to desktop {0}:.
         /// </summary>
         public static string Settings_SwitchTo {
             get {
