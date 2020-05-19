@@ -618,7 +618,6 @@
 					<StackPanel Margin="16,0,16,16"
 								Grid.IsSharedSizeScope="True"
 								Focusable="True">
-
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_SwitchDesktop}"
 								   Style="{DynamicResource HeaderStyleKey}"
 								   Margin="0,0,0,8" />
@@ -824,16 +823,16 @@
 								<ColumnDefinition Width="*" />
 							</Grid.ColumnDefinitions>
 							<UniformGrid Columns="1">
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_SwitchTo, StringFormat='{}{0} 1'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_SwitchTo, StringFormat='{}{0} 2'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_SwitchTo, StringFormat='{}{0} 3'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_SwitchTo, StringFormat='{}{0} 4'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_SwitchTo, StringFormat='{}{0} 5'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_SwitchTo, StringFormat='{}{0} 6'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_SwitchTo, StringFormat='{}{0} 7'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_SwitchTo, StringFormat='{}{0} 8'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_SwitchTo, StringFormat='{}{0} 9'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_SwitchTo, StringFormat='{}{0} 10'}" />
+								<TextBlock Text="{Binding Source=1, StringFormat='{x:Static properties:Resources.Settings_SwitchTo}'}" />
+								<TextBlock Text="{Binding Source=2, StringFormat='{x:Static properties:Resources.Settings_SwitchTo}'}" />
+								<TextBlock Text="{Binding Source=3, StringFormat='{x:Static properties:Resources.Settings_SwitchTo}'}" />
+								<TextBlock Text="{Binding Source=4, StringFormat='{x:Static properties:Resources.Settings_SwitchTo}'}" />
+								<TextBlock Text="{Binding Source=5, StringFormat='{x:Static properties:Resources.Settings_SwitchTo}'}" />
+								<TextBlock Text="{Binding Source=6, StringFormat='{x:Static properties:Resources.Settings_SwitchTo}'}" />
+								<TextBlock Text="{Binding Source=7, StringFormat='{x:Static properties:Resources.Settings_SwitchTo}'}" />
+								<TextBlock Text="{Binding Source=8, StringFormat='{x:Static properties:Resources.Settings_SwitchTo}'}" />
+								<TextBlock Text="{Binding Source=9, StringFormat='{x:Static properties:Resources.Settings_SwitchTo}'}" />
+								<TextBlock Text="{Binding Source=10, StringFormat='{x:Static properties:Resources.Settings_SwitchTo}'}" />
 							</UniformGrid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
@@ -862,16 +861,16 @@
 								<ColumnDefinition Width="*" />
 							</Grid.ColumnDefinitions>
 							<UniformGrid Columns="1">
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveTo, StringFormat='{}{0} 1'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveTo, StringFormat='{}{0} 2'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveTo, StringFormat='{}{0} 3'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveTo, StringFormat='{}{0} 4'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveTo, StringFormat='{}{0} 5'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveTo, StringFormat='{}{0} 6'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveTo, StringFormat='{}{0} 7'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveTo, StringFormat='{}{0} 8'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveTo, StringFormat='{}{0} 9'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveTo, StringFormat='{}{0} 10'}" />
+								<TextBlock Text="{Binding Source=1, StringFormat='{x:Static properties:Resources.Settings_MoveTo}'}" />
+								<TextBlock Text="{Binding Source=2, StringFormat='{x:Static properties:Resources.Settings_MoveTo}'}" />
+								<TextBlock Text="{Binding Source=3, StringFormat='{x:Static properties:Resources.Settings_MoveTo}'}" />
+								<TextBlock Text="{Binding Source=4, StringFormat='{x:Static properties:Resources.Settings_MoveTo}'}" />
+								<TextBlock Text="{Binding Source=5, StringFormat='{x:Static properties:Resources.Settings_MoveTo}'}" />
+								<TextBlock Text="{Binding Source=6, StringFormat='{x:Static properties:Resources.Settings_MoveTo}'}" />
+								<TextBlock Text="{Binding Source=7, StringFormat='{x:Static properties:Resources.Settings_MoveTo}'}" />
+								<TextBlock Text="{Binding Source=8, StringFormat='{x:Static properties:Resources.Settings_MoveTo}'}" />
+								<TextBlock Text="{Binding Source=9, StringFormat='{x:Static properties:Resources.Settings_MoveTo}'}" />
+								<TextBlock Text="{Binding Source=10, StringFormat='{x:Static properties:Resources.Settings_MoveTo}'}" />
 							</UniformGrid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
@@ -900,16 +899,16 @@
 								<ColumnDefinition Width="*" />
 							</Grid.ColumnDefinitions>
 							<UniformGrid Columns="1">
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveAndSwitchTo, StringFormat='{}{0} 1'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveAndSwitchTo, StringFormat='{}{0} 2'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveAndSwitchTo, StringFormat='{}{0} 3'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveAndSwitchTo, StringFormat='{}{0} 4'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveAndSwitchTo, StringFormat='{}{0} 5'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveAndSwitchTo, StringFormat='{}{0} 6'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveAndSwitchTo, StringFormat='{}{0} 7'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveAndSwitchTo, StringFormat='{}{0} 8'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveAndSwitchTo, StringFormat='{}{0} 9'}" />
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MoveAndSwitchTo, StringFormat='{}{0} 10'}" />
+								<TextBlock Text="{Binding Source=1, StringFormat='{x:Static properties:Resources.Settings_MoveAndSwitchTo}'}" />
+								<TextBlock Text="{Binding Source=2, StringFormat='{x:Static properties:Resources.Settings_MoveAndSwitchTo}'}" />
+								<TextBlock Text="{Binding Source=3, StringFormat='{x:Static properties:Resources.Settings_MoveAndSwitchTo}'}" />
+								<TextBlock Text="{Binding Source=4, StringFormat='{x:Static properties:Resources.Settings_MoveAndSwitchTo}'}" />
+								<TextBlock Text="{Binding Source=5, StringFormat='{x:Static properties:Resources.Settings_MoveAndSwitchTo}'}" />
+								<TextBlock Text="{Binding Source=6, StringFormat='{x:Static properties:Resources.Settings_MoveAndSwitchTo}'}" />
+								<TextBlock Text="{Binding Source=7, StringFormat='{x:Static properties:Resources.Settings_MoveAndSwitchTo}'}" />
+								<TextBlock Text="{Binding Source=8, StringFormat='{x:Static properties:Resources.Settings_MoveAndSwitchTo}'}" />
+								<TextBlock Text="{Binding Source=9, StringFormat='{x:Static properties:Resources.Settings_MoveAndSwitchTo}'}" />
+								<TextBlock Text="{Binding Source=10, StringFormat='{x:Static properties:Resources.Settings_MoveAndSwitchTo}'}" />
 							</UniformGrid>
 							<UniformGrid Grid.Column="2"
 										 Columns="1">
