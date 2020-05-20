@@ -1,0 +1,33 @@
+---
+branches:
+  - develop
+plugins:
+  - "@semantic-release/commit-analyzer"
+
+  - #
+    - "@google/semantic-release-replace-plugin"
+    - replacements:
+        - files:
+            - source/SylphyHorn/Properties/AssemblyInfo.cs
+          from: '\[assembly: AssemblyVersion\(".+"\)\]'
+          to: '[assembly: AssemblyVersion("${nextRelease.version}")]'
+          results:
+            - file: source/SylphyHorn/Properties/AssemblyInfo.cs
+              hasChanged: true
+              numMatches: 1
+              numReplacements: 1
+          countMatches: true
+
+  - #
+    - "@semantic-release/git"
+    - assets:
+        - source/SylphyHorn/Properties/AssemblyInfo.cs
+      message: "chore(release): ${nextRelease.version} [skip ci]"
+  - "@semantic-release/release-notes-generator"
+
+  - #
+    - "@semantic-release/github"
+    - successComment: false
+      failComment: false
+      assets:
+        - path: SylphyHornEx.zip
