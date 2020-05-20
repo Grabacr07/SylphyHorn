@@ -1,36 +1,49 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [develop]
 
 jobs:
   build:
-
     runs-on: [windows-2019]
 
     steps:
-    - name: Setup MSBuild.exe
-      uses: warrenbuckley/Setup-MSBuild@v1
+      - name: Setup MSBuild.exe
+        uses: warrenbuckley/Setup-MSBuild@v1
 
-    - name: Setup Nuget.exe
-      uses: warrenbuckley/Setup-Nuget@v1
+      - name: Setup Nuget.exe
+        if: success()
+        uses: warrenbuckley/Setup-Nuget@v1
 
-    - uses: actions/checkout@v1
-    - name: Build
-      run: |
-        cd source
-        git submodule update --init --recursive
-        nuget restore SylphyHorn.sln
-        msbuild SylphyHorn.sln /p:Configuration=Release /m /verbosity:normal /p:WarningLevel=0
-    - name: Create ZIP
-      if: startsWith(github.ref, 'refs/tags/')
-      run: |
-        Rename-Item -Path "source/SylphyHorn/bin/Release" -NewName "SylphyHornEx"
-        Compress-Archive -Path "source/SylphyHorn/bin/SylphyHornEx" -DestinationPath SylphyHornEx.zip
+      - name: Checkout
+        if: success()
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.API_GITHUB_TOKEN }}
 
-    - name: Release
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-          files: SylphyHornEx.zip
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build
+        if: success()
+        run: |
+          cd source
+          git submodule update --init --recursive
+          nuget restore SylphyHorn.sln
+          msbuild SylphyHorn.sln /p:Configuration=Release /m /verbosity:normal /p:WarningLevel=0
+
+      - name: Create ZIP
+        if: success()
+        run: |
+          Rename-Item -Path "source/SylphyHorn/bin/Release" -NewName "SylphyHornEx"
+          Compress-Archive -Path "source/SylphyHorn/bin/SylphyHornEx" -DestinationPath SylphyHornEx.zip
+
+      - name: Release
+        if: success()
+        uses: cycjimmy/semantic-release-action@v2.3.0
+        with:
+          extra_plugins: |
+            @semantic-release/git@9.0.0
+            @google/semantic-release-replace-plugin@1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.API_GITHUB_TOKEN }}
