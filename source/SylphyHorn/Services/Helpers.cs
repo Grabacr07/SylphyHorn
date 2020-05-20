@@ -117,5 +117,15 @@ namespace SylphyHorn.Services
 			desktopNames[number - 1] = name;
 			Settings.General.DesktopNames.Value = desktopNames;
 		}
+
+		public static void RemoveDesktopNameEntry(int number)
+		{
+			var desktopNames = Settings.General.DesktopNames.Value;
+			if (desktopNames == null)
+				return;
+
+			desktopNames.RemoveAt(number - 1);
+			Settings.General.DesktopNames.Value = desktopNames;
+		}
 	}
 }

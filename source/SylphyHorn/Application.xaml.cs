@@ -76,7 +76,7 @@ namespace SylphyHorn
 					{
 						SettingsHelper.ResizeSettingsProperties();
 						VirtualDesktop.Created += (sender, args) => SettingsHelper.ResizeSettingsProperties();
-						VirtualDesktop.Destroyed += (sender, args) => SettingsHelper.ResizeSettingsProperties();
+						VirtualDesktop.DestroyBegin += (sender, args) => SettingsHelper.RemoveDesktopNameEntry(VirtualDesktopService.CachedNumber);
 
 						VirtualDesktop.Created += VirtualDesktopService.DesktopCreatedHandler;
 						VirtualDesktop.Destroyed += VirtualDesktopService.DesktopDestroyedHandler;
