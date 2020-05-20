@@ -16,7 +16,7 @@ namespace SylphyHorn.Serialization
 			this._provider = provider;
 		}
 
-		public SerializableProperty<bool> LoopDesktop => this.Cache(key => new SerializableProperty<bool>(key, this._provider, true));
+		public SerializableProperty<bool> LoopDesktop => this.Cache(key => new SerializableProperty<bool>(key, this._provider, false));
 
 		public SerializableProperty<bool> SkipDefaultAnimation => this.Cache(key => new SerializableProperty<bool>(key, this._provider, false));
 
