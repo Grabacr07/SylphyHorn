@@ -23,6 +23,11 @@ plugins:
     - assets:
         - source/SylphyHorn/Properties/AssemblyInfo.cs
       message: "chore(release): ${nextRelease.version} [skip ci]"
+
+  - #
+    - "@semantic-release/exec"
+    - prepareCmd: "powershell -ep bypass -file build.ps1"
+
   - "@semantic-release/release-notes-generator"
 
   - #
