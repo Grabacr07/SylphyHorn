@@ -1,4 +1,4 @@
-﻿<ui:NotificationWindow x:Class="SylphyHorn.UI.SwitchWindow"
+﻿<ui:InteractableNotificationWindow x:Class="SylphyHorn.UI.RenameWindow"
 					   x:Name="Window"
 					   x:FieldModifier="private"
 					   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -7,12 +7,13 @@
 					   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 					   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 					   xmlns:livet="http://schemas.livet-mvvm.net/2011/wpf"
+					   xmlns:metro="http://schemes.grabacr.net/winfx/2014/controls"
 					   xmlns:ui="clr-namespace:SylphyHorn.UI"
 					   xmlns:bindings="clr-namespace:SylphyHorn.UI.Bindings"
 					   xmlns:controls="clr-namespace:SylphyHorn.UI.Controls"
 					   mc:Ignorable="d"
-					   d:DataContext="{d:DesignInstance bindings:NotificationWindowViewModel}"
-					   Title="{Binding Title}"
+					   d:DataContext="{d:DesignInstance bindings:RenameWindowViewModel}"
+					   Title=""
 					   MinWidth="210"
 					   SizeToContent="Width"
 					   Height="100"
@@ -67,9 +68,19 @@
 
 	<DockPanel VerticalAlignment="Center"
 			   Margin="16,12">
-        <TextBlock DockPanel.Dock="Top"
-				   Text="{Binding Body}"
-				   FontFamily="Segoe UI Light, Meiryo UI"
-				   FontSize="32" HorizontalAlignment="Center" />
+		<StackPanel Orientation="Horizontal">
+			<!--{Binding Index, StringFormat={}{0}:}-->
+			<TextBlock DockPanel.Dock="Top"
+					   Text="{Binding Number, StringFormat={}{0}:}"
+					   FontFamily="Segoe UI Light, Meiryo UI"
+					   FontSize="32"
+					   Margin="0,3,10,0"/>
+			<metro:PromptTextBox Text="{Binding Name, Mode=TwoWay}"
+								 Name="NameBox"
+								 Prompt=""
+								 FontSize="32"
+								 Margin="0,0,0,0"
+								 KeyDown="NameBox_KeyDown"/>
+		</StackPanel>
 	</DockPanel>
-</ui:NotificationWindow>
+</ui:InteractableNotificationWindow>

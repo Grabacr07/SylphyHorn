@@ -22,6 +22,7 @@
 			<converters:ReverseBooleanConverter x:Key="ReverseBooleanConverter" />
 			<converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
 			<controls:UnlockImageConverter x:Key="UnlockImageConverter" />
+			<controls:IndexConverter x:Key="IndexConverter" />
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

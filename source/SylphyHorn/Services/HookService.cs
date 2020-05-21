@@ -35,10 +35,10 @@ namespace SylphyHorn.Services
 
 		public IDisposable Register(Func<ShortcutKey> getShortcutKey, Action<IntPtr> action)
 		{
-			return this.Register(getShortcutKey, action, () => true);
+			return this.Register(getShortcutKey, action, (ShortcutKeyPressedEventArgs args) => true);
 		}
 
-		public IDisposable Register(Func<ShortcutKey> getShortcutKey, Action<IntPtr> action, Func<bool> canExecute)
+		public IDisposable Register(Func<ShortcutKey> getShortcutKey, Action<IntPtr> action, Func<ShortcutKeyPressedEventArgs, bool> canExecute)
 		{
 			var hook = new HookAction(getShortcutKey, action, canExecute);
 			this._hookActions.Add(hook);
@@ -51,7 +51,7 @@ namespace SylphyHorn.Services
 			if (args.ShortcutKey == ShortcutKey.None) return;
 
 			var target = this._hookActions.FirstOrDefault(x => x.GetShortcutKey() == args.ShortcutKey);
-			if (target != null && target.CanExecute())
+			if (target != null && target.CanExecute(args))
 			{
 				VisualHelper.InvokeOnUIDispatcher(() => target.Action(InteropHelper.GetForegroundWindowEx()));
 				args.Handled = true;
@@ -69,9 +69,9 @@ namespace SylphyHorn.Services
 
 			public Action<IntPtr> Action { get; }
 
-			public Func<bool> CanExecute { get; }
+			public Func<ShortcutKeyPressedEventArgs, bool> CanExecute { get; }
 
-			public HookAction(Func<ShortcutKey> getShortcutKey, Action<IntPtr> action, Func<bool> canExecute)
+			public HookAction(Func<ShortcutKey> getShortcutKey, Action<IntPtr> action, Func<ShortcutKeyPressedEventArgs, bool> canExecute)
 			{
 				this.GetShortcutKey = getShortcutKey;
 				this.Action = action;

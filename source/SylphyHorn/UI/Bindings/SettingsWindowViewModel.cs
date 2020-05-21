@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Media;
 using JetBrains.Annotations;
 using Livet;
@@ -294,6 +295,21 @@ namespace SylphyHorn.UI.Bindings
 			{
 				Settings.General.DesktopBackgroundFolderPath.Value = message.Response;
 			}
+		}
+
+		[UsedImplicitly]
+		public void ResetSettings()
+		{
+			MessageBoxButton btnMessageBox = MessageBoxButton.YesNo;
+			MessageBoxImage icnMessageBox = MessageBoxImage.Warning;
+
+			MessageBoxResult rsltMessageBox = MessageBox.Show(Resources.Dialog_AreYouSure, "SylphyHorn", btnMessageBox, icnMessageBox);
+
+			if(rsltMessageBox == MessageBoxResult.Yes)
+			{
+				LocalSettingsProvider.Instance.Reset();
+			}
+			Close();
 		}
 	}
 }

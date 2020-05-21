@@ -2,13 +2,37 @@
 using System.Linq;
 using System.Media;
 using SylphyHorn.Serialization;
+using SylphyHorn.UI;
+using SylphyHorn.UI.Bindings;
 using WindowsDesktop;
 
 namespace SylphyHorn.Services
 {
 	internal static class VirtualDesktopService
 	{
+		public static int CachedNumber { get; set; } = 0;
+		public static int CachedCount { get; set; } = 0;
+		public static int CachedPreviousNumber { get; set; } = 0;
+
+		#region Count
+
+		public static int Count()
+		{
+			return VirtualDesktop.GetDesktops().Length;
+		}
+		#endregion
+
 		#region Get
+
+		public static VirtualDesktop Get(int number)
+		{
+			var desktops = VirtualDesktop.GetDesktops();
+
+			if (number < 1 || number > desktops.Length)
+				return null;
+
+			return desktops[number-1];
+		}
 
 		public static VirtualDesktop GetLeft()
 		{
@@ -33,6 +57,18 @@ namespace SylphyHorn.Services
 		#endregion
 
 		#region Move
+
+		public static VirtualDesktop MoveTo(this IntPtr hWnd, VirtualDesktop target)
+		{
+			if (target == null)
+			{
+				SystemSounds.Asterisk.Play();
+				return null;
+			}
+
+			VirtualDesktopHelper.MoveToDesktop(hWnd, target);
+			return target;
+		}
 
 		public static VirtualDesktop MoveToLeft(this IntPtr hWnd)
 		{
@@ -127,6 +163,15 @@ namespace SylphyHorn.Services
 
 		#endregion
 
+		#region SwitchToPrevious
+
+		public static void SwitchToPrevious()
+		{
+			Get(CachedPreviousNumber)?.Switch();
+		}
+
+		#endregion
+
 		#region Pin / Unpin
 
 		public static event EventHandler<WindowPinnedEventArgs> WindowPinned;
@@ -193,9 +238,48 @@ namespace SylphyHorn.Services
 			}
 		}
 
+		#endregion
+
+		#region VirtualDesktop even handlers
+
+		public static void DesktopCreatedHandler(object sender, VirtualDesktop args)
+		{
+			CachedCount = Count();
+		}
+
+		public static void DesktopDestroyedHandler(object sender, VirtualDesktopDestroyEventArgs args)
+		{
+			CachedCount = Count();
+		}
+
+		public static void DesktopSwitchedHandler(object sender, VirtualDesktopChangedEventArgs args)
+		{
+			var tDesktops = VirtualDesktop.GetDesktops();
+			CachedPreviousNumber = Array.IndexOf(tDesktops, args.OldDesktop) + 1;
+			CachedNumber = Array.IndexOf(tDesktops, args.NewDesktop) + 1;
+		}
+
+		public static void VirtualDesktopInitializedHandler()
+		{
+			CachedCount = Count();
+			var desktops = VirtualDesktop.GetDesktops();
+			CachedNumber = Array.IndexOf(desktops, VirtualDesktop.Current) + 1;
+		}
+
 		private static void RaisePinnedEvent(IntPtr target, PinOperations operation)
 		{
 			WindowPinned?.Invoke(typeof(VirtualDesktopService), new WindowPinnedEventArgs(target, operation));
+		}
+
+		#endregion
+
+		#region Rename
+
+		public static event EventHandler<RenameEventArgs> RenameCurrent;
+
+		public static void RaiseRenameEvent()
+		{
+			RenameCurrent?.Invoke(typeof(VirtualDesktopService), new RenameEventArgs());
 		}
 
 		#endregion
@@ -210,6 +294,13 @@ namespace SylphyHorn.Services
 		{
 			this.Target = target;
 			this.PinOperation = operation;
+		}
+	}
+
+	internal class RenameEventArgs : EventArgs
+	{
+		public RenameEventArgs()
+		{
 		}
 	}
 

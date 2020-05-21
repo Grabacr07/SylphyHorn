@@ -77,7 +77,7 @@ namespace SylphyHorn.UI
 		private void UpdateWithDesktopInfo(VirtualDesktop currentDesktop)
 		{
 			var desktops = VirtualDesktop.GetDesktops();
-			var currentDesktopIndex = Array.IndexOf(desktops, currentDesktop) + 1;
+			var currentDesktopNumber = Array.IndexOf(desktops, currentDesktop) + 1;
 			var totalDesktopCount = desktops.Length;
 
 			if (this._infoIcon == null)
@@ -85,7 +85,7 @@ namespace SylphyHorn.UI
 				this._infoIcon = new DynamicInfoTrayIcon(totalDesktopCount);
 			}
 
-			this.ChangeIcon(this._infoIcon.GetDesktopInfoIcon(currentDesktopIndex, totalDesktopCount));
+			this.ChangeIcon(this._infoIcon.GetDesktopInfoIcon(currentDesktopNumber, totalDesktopCount));
 		}
 
 		private void OnCurrentDesktopChanged(object sender, VirtualDesktopChangedEventArgs e)

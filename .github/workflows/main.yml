@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [develop]
+
+jobs:
+  build:
+    runs-on: [windows-2019]
+
+    steps:
+      - name: Setup MSBuild.exe
+        uses: warrenbuckley/Setup-MSBuild@v1
+
+      - name: Setup Nuget.exe
+        if: success()
+        uses: warrenbuckley/Setup-Nuget@v1
+
+      - name: Checkout
+        if: success()
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.API_GITHUB_TOKEN }}
+
+      - name: Release
+        if: success()
+        uses: cycjimmy/semantic-release-action@v2.3.0
+        with:
+          extra_plugins: |
+            @semantic-release/exec@5.0.0
+            @semantic-release/git@9.0.0
+            @google/semantic-release-replace-plugin@1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.API_GITHUB_TOKEN }}
