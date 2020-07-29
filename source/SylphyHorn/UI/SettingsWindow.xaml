@@ -249,9 +249,11 @@
 															 MethodName="OpenBackgroundPathDialog"
 															 Margin="2" />
 								</Grid>
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_Note1}"
-										   TextWrapping="Wrap"
-										   Margin="4,0,0,0" />
+								<TextBlock TextWrapping="Wrap"
+										   Margin="4,0,0,0">
+									<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_Note1, Mode=OneWay}" />
+									<Run Text="{Binding Source={x:Static services:WallpaperService.SupportedFileTypes}, Mode=OneWay, Converter={StaticResource ArrayToStringConverter}}" />
+								</TextBlock>
 								<Border Height="4" />
 								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_Note2}"
 										   TextWrapping="Wrap"

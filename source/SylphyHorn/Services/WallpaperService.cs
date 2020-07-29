@@ -13,7 +13,25 @@ namespace SylphyHorn.Services
 {
 	public class WallpaperService : IDisposable
 	{
-		private static readonly string[] _supportedExtensions = { ".png", ".jpg", ".jpeg", ".bmp", };
+		private static readonly ImageFormatSupportDetector[] detectors =
+		{
+			new JpegXrSupportDetector(),
+			new WebPSupportDetector(),
+			new HEIFSupportDetector(),
+		};
+
+		private static readonly string[] _defaultSupportedExtensions = { ".bmp", ".dib", ".gif", ".png", ".tif", ".tiff", ".jpe", ".jpg", ".jpeg", ".jfif" };
+		private static readonly string[] _supportedExtensions;
+
+		private static readonly string[] _defaultSupportedFileTypes = { "BMP", "GIF", "PNG", "TIFF", "JPEG" };
+
+		public static string[] SupportedFileTypes { get; }
+
+		static WallpaperService()
+		{
+			_supportedExtensions = _defaultSupportedExtensions.Concat(detectors.Where(d => d.IsSupported).SelectMany(d => d.Extensions)).ToArray();
+			SupportedFileTypes = _defaultSupportedFileTypes.Concat(detectors.Where(d => d.IsSupported).Select(d => d.FileType)).ToArray();
+		}
 
 		public static WallpaperService Instance { get; } = new WallpaperService();
 
