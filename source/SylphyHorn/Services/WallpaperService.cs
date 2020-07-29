@@ -52,7 +52,7 @@ namespace SylphyHorn.Services
 					var col = new Collection<WallpaperFile>();
 					foreach (var file in directoryInfo.GetFiles())
 					{
-						if (_supportedExtensions.Any(x => x == file.Extension))
+						if (_supportedExtensions.Any(x => string.Equals(x, file.Extension, StringComparison.OrdinalIgnoreCase)))
 						{
 							var wallpaper = WallpaperFile.CreateFromFile(file);
 							col.Add(wallpaper);
