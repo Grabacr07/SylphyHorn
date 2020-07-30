@@ -9,6 +9,18 @@ namespace SylphyHorn.UI.Controls
 	{
 		private bool _canClose;
 
+		#region IsEnabled 依存関係プロパティ
+
+		public bool IsEnabled
+		{
+			get { return (bool)this.GetValue(IsEnabledProperty); }
+			set { this.SetValue(IsEnabledProperty, value); }
+		}
+		public static readonly DependencyProperty IsEnabledProperty =
+			DependencyProperty.Register(nameof(IsEnabled), typeof(bool), typeof(ClosingStoryboardBehavior), new UIPropertyMetadata(true));
+
+		#endregion
+
 		#region Storyboard 依存関係プロパティ
 
 		public Storyboard Storyboard
@@ -42,7 +54,7 @@ namespace SylphyHorn.UI.Controls
 			base.OnAttached();
 			this.AssociatedObject.Closing += (sender, args) =>
 			{
-				if (this.Storyboard == null || args.Cancel || this._canClose) return;
+				if (this.Storyboard == null || args.Cancel || this._canClose || !this.IsEnabled) return;
 
 				args.Cancel = true;
 				this.Storyboard.Begin();

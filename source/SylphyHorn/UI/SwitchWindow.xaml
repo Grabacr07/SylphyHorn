@@ -52,7 +52,8 @@
 		<livet:WindowCloseCancelBehavior CloseCanceledCallbackMethodTarget="{Binding}"
 										 CloseCanceledCallbackMethodName="CloseCanceledCallback"
 										 CanClose="{Binding CanClose}" />
-		<controls:ClosingStoryboardBehavior Storyboard="{StaticResource FadeOut}" />
+		<controls:ClosingStoryboardBehavior Storyboard="{StaticResource FadeOut}"
+											IsEnabled="{DynamicResource {x:Static SystemParameters.MinimizeAnimationKey}}" />
 	</i:Interaction.Behaviors>
 	<i:Interaction.Triggers>
 		<i:EventTrigger EventName="ContentRendered">
