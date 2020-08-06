@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Windows;
 using System.Windows.Forms;
+using MetroRadiance.Platform;
 using SylphyHorn.Properties;
 using SylphyHorn.Serialization;
 using WindowsDesktop;
@@ -12,19 +14,22 @@ namespace SylphyHorn.UI
 	{
 		private Icon _icon;
 		private readonly Icon _defaultIcon;
+		private readonly Icon _lightIcon;
 		private readonly TaskTrayIconItem[] _items;
 		private NotifyIcon _notifyIcon;
 		private DynamicInfoTrayIcon _infoIcon;
 
 		public string Text { get; set; } = ProductInfo.Title;
 
-		public TaskTrayIcon(Icon icon, TaskTrayIconItem[] items)
+		public TaskTrayIcon(Icon icon, Icon lightIcon, TaskTrayIconItem[] items)
 		{
 			this._defaultIcon = icon;
+			this._lightIcon = lightIcon;
 
-			this._icon = icon;
+			this._icon = WindowsTheme.SystemTheme.Current == Theme.Light ? this._lightIcon : this._defaultIcon;
 			this._items = items;
 
+			WindowsTheme.SystemTheme.Changed += this.OnSystemThemeChanged;
 			VirtualDesktop.CurrentChanged += this.OnCurrentDesktopChanged;
 		}
 
@@ -65,12 +70,14 @@ namespace SylphyHorn.UI
 			{
 				this.UpdateWithDesktopInfo(desktop ?? VirtualDesktop.Current);
 			}
-			else if (this._icon != this._defaultIcon)
+			else if (this._icon != this._defaultIcon && this._icon != this._lightIcon)
 			{
 				this._infoIcon?.Dispose();
 				this._infoIcon = null;
 
-				this.ChangeIcon(this._defaultIcon);
+				this.ChangeIcon(WindowsTheme.SystemTheme.Current == Theme.Light
+					? this._lightIcon
+					: this._defaultIcon);
 			}
 		}
 
@@ -82,7 +89,7 @@ namespace SylphyHorn.UI
 
 			if (this._infoIcon == null)
 			{
-				this._infoIcon = new DynamicInfoTrayIcon(totalDesktopCount);
+				this._infoIcon = new DynamicInfoTrayIcon(totalDesktopCount, WindowsTheme.SystemTheme.Current);
 			}
 
 			this.ChangeIcon(this._infoIcon.GetDesktopInfoIcon(currentDesktopIndex, totalDesktopCount));
@@ -93,9 +100,24 @@ namespace SylphyHorn.UI
 			this.Reload(e.NewDesktop);
 		}
 
+		private void OnSystemThemeChanged(object sender, Theme e)
+		{
+			if (Settings.General.TrayShowDesktop)
+			{
+				this._infoIcon.UpdateBrush(e);
+				this.UpdateWithDesktopInfo(VirtualDesktop.Current);
+			}
+			else
+			{
+				this.ChangeIcon(e == Theme.Light
+					? this._lightIcon
+					: this._defaultIcon);
+			}
+		}
+
 		private void ChangeIcon(Icon newIcon)
 		{
-			if (this._icon != this._defaultIcon)
+			if (this._icon != this._defaultIcon && this._icon != this._lightIcon)
 			{
 				this._icon?.Dispose();
 			}
@@ -107,8 +129,10 @@ namespace SylphyHorn.UI
 		public void Dispose()
 		{
 			this._notifyIcon?.Dispose();
+			this._lightIcon?.Dispose();
 			this._icon?.Dispose();
 
+			WindowsTheme.SystemTheme.Changed -= this.OnSystemThemeChanged;
 			VirtualDesktop.CurrentChanged -= this.OnCurrentDesktopChanged;
 		}
 	}

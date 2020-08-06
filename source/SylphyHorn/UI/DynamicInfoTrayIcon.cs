@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Controls;
+using MetroRadiance.Platform;
 using SylphyHorn.Interop;
 
 namespace SylphyHorn.UI
@@ -12,11 +13,12 @@ namespace SylphyHorn.UI
 		private const float _verticalFontSize = 6;
 
 		private readonly FontFamily _fontFamily;
-		private readonly Brush _brush;
+		private readonly Color? _color;
 		private Font _font;
+		private Brush _brush;
 		private Orientation _lastOrientation;
 
-		public DynamicInfoTrayIcon(int totalDesktopCount, FontFamily fontFamily = null, Color? color = null)
+		public DynamicInfoTrayIcon(int totalDesktopCount, Theme theme, FontFamily fontFamily = null, Color? color = null)
 		{
 			var currentOrientation = this._lastOrientation = GetOrientation(totalDesktopCount);
 			var fontSize = GetFontSize(currentOrientation);
@@ -24,12 +26,8 @@ namespace SylphyHorn.UI
 			this._fontFamily = fontFamily ?? new FontFamily(_defaultFontFamilyName);
 			this._font = new Font(this._fontFamily, fontSize, FontStyle.Bold);
 
-			if (!color.HasValue)
-			{
-				color = Color.White;
-			}
-
-			this._brush = new SolidBrush(color.Value);
+			this._color = color;
+			this._brush = new SolidBrush(color.GetValueOrDefault(GetForegroundColor(theme)));
 		}
 
 		public Icon GetDesktopInfoIcon(int currentDesktop, int totalDesktopCount)
@@ -59,6 +57,12 @@ namespace SylphyHorn.UI
 			this._font = new Font(this._fontFamily, fontSize, FontStyle.Bold);
 		}
 
+		public void UpdateBrush(Theme theme)
+		{
+			this._brush?.Dispose();
+			this._brush = new SolidBrush(this._color.GetValueOrDefault(GetForegroundColor(theme)));
+		}
+
 		// consolidate two methods below?
 		private Bitmap DrawHorizontalInfo(int currentDesktop, int totalDesktopCount)
 		{
@@ -71,6 +75,7 @@ namespace SylphyHorn.UI
 
 			using (var graphics = Graphics.FromImage(bitmap))
 			{
+				graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
 				graphics.DrawString(stringToDraw, this._font, this._brush, offset);
 			}
 
@@ -112,6 +117,11 @@ namespace SylphyHorn.UI
 		private static float GetFontSize(Orientation orientation)
 		{
 			return orientation == Orientation.Horizontal ? _horizontalFontSize : _verticalFontSize;
+		}
+
+		private static Color GetForegroundColor(Theme theme)
+		{
+			return theme == Theme.Light ? Color.Black : Color.White;
 		}
 
 		private static PointF GetHorizontalStringOffset()
