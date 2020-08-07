@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using MetroRadiance.Platform;
 using SylphyHorn.Properties;
 using SylphyHorn.Serialization;
+using SylphyHorn.Services;
 using WindowsDesktop;
 
 namespace SylphyHorn.UI
@@ -30,6 +31,8 @@ namespace SylphyHorn.UI
 			this._items = items;
 
 			WindowsTheme.SystemTheme.Changed += this.OnSystemThemeChanged;
+			WindowsTheme.Accent.Changed += this.OnAccentChanged;
+			WindowsTheme.ColorPrevalence.Changed += this.OnColorPrevalenceChanged;
 			VirtualDesktop.CurrentChanged += this.OnCurrentDesktopChanged;
 		}
 
@@ -68,11 +71,10 @@ namespace SylphyHorn.UI
 		{
 			if (Settings.General.TrayShowDesktop)
 			{
-				this.UpdateWithDesktopInfo(desktop ?? VirtualDesktop.Current);
+				VisualHelper.InvokeOnUIDispatcher(() => this.UpdateWithDesktopInfo(desktop ?? VirtualDesktop.Current));
 			}
 			else if (this._icon != this._defaultIcon && this._icon != this._lightIcon)
 			{
-				this._infoIcon?.Dispose();
 				this._infoIcon = null;
 
 				this.ChangeIcon(WindowsTheme.SystemTheme.Current == Theme.Light
@@ -89,7 +91,9 @@ namespace SylphyHorn.UI
 
 			if (this._infoIcon == null)
 			{
-				this._infoIcon = new DynamicInfoTrayIcon(totalDesktopCount, WindowsTheme.SystemTheme.Current);
+				this._infoIcon = new DynamicInfoTrayIcon(
+					WindowsTheme.SystemTheme.Current,
+					WindowsTheme.ColorPrevalence.Current);
 			}
 
 			this.ChangeIcon(this._infoIcon.GetDesktopInfoIcon(currentDesktopIndex, totalDesktopCount));
@@ -100,12 +104,31 @@ namespace SylphyHorn.UI
 			this.Reload(e.NewDesktop);
 		}
 
+		private void OnAccentChanged(object sender, System.Windows.Media.Color e)
+		{
+			var colorPrevalence = WindowsTheme.ColorPrevalence.Current;
+			if (Settings.General.TrayShowDesktop && colorPrevalence)
+			{
+				this._infoIcon.UpdateBrush(WindowsTheme.SystemTheme.Current, colorPrevalence);
+				VisualHelper.InvokeOnUIDispatcher(() => this.UpdateWithDesktopInfo(VirtualDesktop.Current));
+			}
+		}
+
+		private void OnColorPrevalenceChanged(object sender, bool e)
+		{
+			if (Settings.General.TrayShowDesktop)
+			{
+				this._infoIcon.UpdateBrush(WindowsTheme.SystemTheme.Current, e);
+				VisualHelper.InvokeOnUIDispatcher(() => this.UpdateWithDesktopInfo(VirtualDesktop.Current));
+			}
+		}
+
 		private void OnSystemThemeChanged(object sender, Theme e)
 		{
 			if (Settings.General.TrayShowDesktop)
 			{
-				this._infoIcon.UpdateBrush(e);
-				this.UpdateWithDesktopInfo(VirtualDesktop.Current);
+				this._infoIcon.UpdateBrush(e, WindowsTheme.ColorPrevalence.Current);
+				VisualHelper.InvokeOnUIDispatcher(() => this.UpdateWithDesktopInfo(VirtualDesktop.Current));
 			}
 			else
 			{
@@ -128,12 +151,14 @@ namespace SylphyHorn.UI
 
 		public void Dispose()
 		{
+			WindowsTheme.SystemTheme.Changed -= this.OnSystemThemeChanged;
+			WindowsTheme.Accent.Changed -= this.OnAccentChanged;
+			WindowsTheme.ColorPrevalence.Changed -= this.OnColorPrevalenceChanged;
+			VirtualDesktop.CurrentChanged -= this.OnCurrentDesktopChanged;
+
 			this._notifyIcon?.Dispose();
 			this._lightIcon?.Dispose();
 			this._icon?.Dispose();
-
-			WindowsTheme.SystemTheme.Changed -= this.OnSystemThemeChanged;
-			VirtualDesktop.CurrentChanged -= this.OnCurrentDesktopChanged;
 		}
 	}
 

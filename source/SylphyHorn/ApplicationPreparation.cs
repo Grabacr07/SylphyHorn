@@ -127,6 +127,9 @@ namespace SylphyHorn
 				{
 					new TaskTrayIconItem(Resources.TaskTray_Menu_Settings, ShowSettings, () => Application.Args.CanSettings),
 					new TaskTrayIconItem(Resources.TaskTray_Menu_Exit, this._shutdownAction),
+#if DEBUG
+					new TaskTrayIconItem("Tasktray Icon Test", () => new TaskTrayTestWindow().Show()),
+#endif
 				};
 
 				this._taskTrayIcon = new TaskTrayIcon(icon, lightIcon, menus);
