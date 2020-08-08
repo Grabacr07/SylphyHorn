@@ -20,8 +20,6 @@ namespace SylphyHorn.UI
 		private NotifyIcon _notifyIcon;
 		private DynamicInfoTrayIcon _infoIcon;
 
-		public string Text { get; set; } = ProductInfo.Title;
-
 		public TaskTrayIcon(Icon icon, Icon lightIcon, TaskTrayIconItem[] items)
 		{
 			this._defaultIcon = icon;
@@ -47,7 +45,7 @@ namespace SylphyHorn.UI
 
 			this._notifyIcon = new NotifyIcon()
 			{
-				Text = this.Text,
+				Text = ProductInfo.Title,
 				Icon = this._icon,
 				Visible = true,
 				ContextMenu = new ContextMenu(menus),
@@ -88,6 +86,12 @@ namespace SylphyHorn.UI
 			var desktops = VirtualDesktop.GetDesktops();
 			var currentDesktopIndex = Array.IndexOf(desktops, currentDesktop) + 1;
 			var totalDesktopCount = desktops.Length;
+
+			var text = string.Format(
+				Resources.TaskTray_TooltipText_DesktopCount + "\n" + ProductInfo.Title,
+				currentDesktopIndex,
+				totalDesktopCount);
+			this.ChangeText(text);
 
 			if (this._infoIcon == null)
 			{
@@ -136,6 +140,11 @@ namespace SylphyHorn.UI
 					? this._lightIcon
 					: this._defaultIcon);
 			}
+		}
+
+		private void ChangeText(string newText)
+		{
+			this._notifyIcon.Text = newText;
 		}
 
 		private void ChangeIcon(Icon newIcon)
