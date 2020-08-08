@@ -1,6 +1,11 @@
-﻿using System;
+﻿using SylphyHorn.Interop;
+using SylphyHorn.Serialization;
+using SylphyHorn.Services;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using VirtualKey = System.Windows.Forms.Keys;
@@ -12,6 +17,7 @@ namespace SylphyHorn.UI.Controls
 		Normal,
 		Left,
 		Right,
+		NumPad,
 	}
 
 	public class Keytop : Control
@@ -120,9 +126,74 @@ namespace SylphyHorn.UI.Controls
 					kind = KeyKind.Normal;
 					break;
 				
+				case VirtualKey.Return:
+					text = "Enter";
+					kind = KeyKind.Normal;
+					break;
 				case VirtualKey.NoName:
 					// shoddy construction :(
 					text = "Win";
+					kind = KeyKind.Normal;
+					break;
+
+				case VirtualKey numKey when numKey >= VirtualKey.D0 && numKey <= VirtualKey.D9:
+					text = (numKey - VirtualKey.D0).ToString();
+					kind = KeyKind.Normal;
+					break;
+
+				case VirtualKey numpadKey when numpadKey >= VirtualKey.NumPad0 && numpadKey <= VirtualKey.NumPad9:
+					text = (numpadKey - VirtualKey.NumPad0).ToString();
+					kind = KeyKind.NumPad;
+					break;
+
+				case VirtualKey.Multiply:
+					text = "*";
+					kind = KeyKind.NumPad;
+					break;
+				case VirtualKey.Add:
+					text = "+";
+					kind = KeyKind.NumPad;
+					break;
+				case VirtualKey.Subtract:
+					text = "-";
+					kind = KeyKind.NumPad;
+					break;
+				case VirtualKey.Decimal:
+					text = ".";
+					kind = KeyKind.NumPad;
+					break;
+				case VirtualKey.Divide:
+					text = "/";
+					kind = KeyKind.NumPad;
+					break;
+
+				case VirtualKey.Prior:
+					text = "Page Up";
+					kind = KeyKind.Normal;
+					break;
+				case VirtualKey.Next:
+					text = "Page Down";
+					kind = KeyKind.Normal;
+					break;
+
+				case VirtualKey.Oem1:
+				case VirtualKey.Oemplus:
+				case VirtualKey.Oemcomma:
+				case VirtualKey.OemMinus:
+				case VirtualKey.OemPeriod:
+				case VirtualKey.Oem2:
+				case VirtualKey.Oem3:
+				case VirtualKey.Oem4:
+				case VirtualKey.Oem5:
+				case VirtualKey.Oem6:
+				case VirtualKey.Oem7:
+				case VirtualKey.Oem8:
+				case VirtualKey.Oem102:
+					text = ((VirtualKeys)key).ToChar().ToString();
+					if (Thread.CurrentThread.CurrentUICulture.Name == "ja" && text == "\\")
+					{
+						text = "¥";
+					}
 					kind = KeyKind.Normal;
 					break;
 
