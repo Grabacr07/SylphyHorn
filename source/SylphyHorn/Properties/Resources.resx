@@ -199,7 +199,7 @@
     <value>Move active window to created new desktop</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly" xml:space="preserve">
-    <value>Switch only</value>
+    <value>Switch only:</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_Move" xml:space="preserve">
     <value>Move:</value>

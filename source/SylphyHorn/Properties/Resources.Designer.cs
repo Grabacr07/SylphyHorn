@@ -304,7 +304,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Switch only に類似しているローカライズされた文字列を検索します。
+        ///   Switch only: に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Settings_MoveWindowToCreatedDesktop_CreateOnly {
             get {

@@ -190,7 +190,7 @@
     <value>左へ移動して切り替え:</value>
   </data>
   <data name="Settings_MoveWindowToAdjacentDesktop_Right" xml:space="preserve">
-    <value>右へ移動</value>
+    <value>右へ移動:</value>
   </data>
   <data name="Settings_MoveWindowToAdjacentDesktop_RightAndSwitch" xml:space="preserve">
     <value>右へ移動して切り替え:</value>
@@ -199,13 +199,13 @@
     <value>アクティブ ウィンドウを新しく作成した仮想デスクトップへ移動</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_CreateOnly" xml:space="preserve">
-    <value>切り替えのみ</value>
+    <value>切り替えのみ:</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_Move" xml:space="preserve">
-    <value>移動</value>
+    <value>移動:</value>
   </data>
   <data name="Settings_MoveWindowToCreatedDesktop_MoveAndSwitch" xml:space="preserve">
-    <value>移動して切り替え</value>
+    <value>移動して切り替え:</value>
   </data>
   <data name="Settings_MultipleDisplays" xml:space="preserve">
     <value>通知先のディスプレイ</value>
