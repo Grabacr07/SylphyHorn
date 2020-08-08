@@ -32,6 +32,7 @@ namespace SylphyHorn.UI
 			WindowsTheme.Accent.Changed += this.OnAccentChanged;
 			WindowsTheme.ColorPrevalence.Changed += this.OnColorPrevalenceChanged;
 			VirtualDesktop.CurrentChanged += this.OnCurrentDesktopChanged;
+			VirtualDesktop.Destroyed += this.OnDesktopDestroyed;
 		}
 
 		public void Show()
@@ -108,6 +109,11 @@ namespace SylphyHorn.UI
 			this.Reload(e.NewDesktop);
 		}
 
+		private void OnDesktopDestroyed(object sender, VirtualDesktopDestroyEventArgs e)
+		{
+			this.Reload();
+		}
+
 		private void OnAccentChanged(object sender, System.Windows.Media.Color e)
 		{
 			var colorPrevalence = WindowsTheme.ColorPrevalence.Current;
@@ -164,6 +170,7 @@ namespace SylphyHorn.UI
 			WindowsTheme.Accent.Changed -= this.OnAccentChanged;
 			WindowsTheme.ColorPrevalence.Changed -= this.OnColorPrevalenceChanged;
 			VirtualDesktop.CurrentChanged -= this.OnCurrentDesktopChanged;
+			VirtualDesktop.Destroyed -= this.OnDesktopDestroyed;
 
 			this._notifyIcon?.Dispose();
 			this._lightIcon?.Dispose();
