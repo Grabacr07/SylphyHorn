@@ -181,6 +181,26 @@ namespace SylphyHorn.UI.Bindings
 
 		#endregion
 
+		#region PreviewBackgroundPosition notification property
+
+		private WallpaperPosition _PreviewBackgroundPosition = WallpaperPosition.Fill;
+
+		public WallpaperPosition PreviewBackgroundPosition
+		{
+			get => this._PreviewBackgroundPosition;
+			set
+			{
+				if (this._PreviewBackgroundPosition != value)
+				{
+					this._PreviewBackgroundPosition = value;
+
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
 		public Brush NotificationBackground => new SolidColorBrush(WindowsTheme.ColorPrevalence.Current
 			? ImmersiveColor.GetColorByTypeName(ImmersiveColorNames.SystemAccentDark1)
 			: ImmersiveColor.GetColorByTypeName(ImmersiveColorNames.DarkChromeMedium))
@@ -243,9 +263,10 @@ namespace SylphyHorn.UI.Bindings
 				.Subscribe(path => this.Backgrounds = WallpaperService.Instance.GetWallpaperFiles(path))
 				.AddTo(this);
 
-			var colAndWall = WallpaperService.GetCurrentColorAndWallpaper();
-			this.PreviewBackgroundBrush = new SolidColorBrush(colAndWall.Item1);
-			this.PreviewBackgroundPath = colAndWall.Item2;
+			var colAndWall = WallpaperService.GetCurrentColorAndWallpaperAndPosition();
+			this.PreviewBackgroundBrush = new SolidColorBrush(colAndWall.BackgroundColor);
+			this.PreviewBackgroundPath = colAndWall.Path;
+			this.PreviewBackgroundPosition = colAndWall.Position;
 
 			this.Logs = ViewModelHelper.CreateReadOnlyDispatcherCollection(
 				LoggingService.Instance.Logs,

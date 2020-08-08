@@ -23,6 +23,7 @@
 			<converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
 			<controls:UnlockImageConverter x:Key="UnlockImageConverter" />
 			<controls:MultiBooleanAndConverter x:Key="MultiBooleanAndConverter" />
+			<controls:WallpaperPositionConverter x:Key="WallpaperPositionConverter" />
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

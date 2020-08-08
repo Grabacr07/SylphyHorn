@@ -498,8 +498,7 @@
 									   Width="480"
 									   Height="270" />
 							<Image Source="{Binding PreviewBackgroundPath, Converter={StaticResource UnlockImageConverter}, IsAsync=True}"
-								   Stretch="Uniform"
-								   VerticalAlignment="Top"
+								   Stretch="{Binding PreviewBackgroundPosition, Converter={StaticResource WallpaperPositionConverter}, Mode=OneWay}"
 								   Width="480"
 								   Height="270" />
 
@@ -516,8 +515,7 @@
 									</ContentControl.CacheMode>
 									<Image x:Name="PreviewBlurImage"
 										   Source="{Binding PreviewBackgroundPath, Converter={StaticResource UnlockImageConverter}, IsAsync=True}"
-										   Stretch="Uniform"
-										   VerticalAlignment="Top"
+										   Stretch="{Binding PreviewBackgroundPosition, Converter={StaticResource WallpaperPositionConverter}, Mode=OneWay}"
 										   Width="480"
 										   Height="270"
 										   Visibility="{Binding HasWallpaper, Converter={StaticResource BooleanToVisibilityConverter}}"
