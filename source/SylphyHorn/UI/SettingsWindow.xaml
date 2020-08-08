@@ -169,28 +169,6 @@
 						</StackPanel>
 						<Border Height="8" />
 
-						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification}"
-								   Style="{DynamicResource HeaderStyleKey}" />
-						<StackPanel Margin="8,0,0,0">
-							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}">
-								<TextBlock>
-									<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display, Mode=OneWay}" />
-								</TextBlock>
-							</CheckBox>
-							<TextBlock Margin="21,0,0,0">
-								<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display_Duration, Mode=OneWay}" />
-								<InlineUIContainer>
-									<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationDuration.Value, Mode=TwoWay}"
-														 Prompt=""
-														 Width="60"
-														 Margin="2,2,2,-7"
-														 IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}" />
-								</InlineUIContainer>
-								<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display_Duration_Milliseconds, Mode=OneWay}" />
-							</TextBlock>
-						</StackPanel>
-						<Border Height="8" />
-
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_TrayIcon}"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<StackPanel Margin="8,0,0,0">
@@ -313,9 +291,32 @@
 							  VerticalScrollBarVisibility="Auto">
 					<StackPanel Margin="16,0,16,16"
 								Focusable="True">
-						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MultipleDisplays}"
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification}"
 								   Style="{DynamicResource HeaderStyleKey}"
 								   Margin="0,0,0,8" />
+						<StackPanel Margin="8,0,0,0">
+							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=TwoWay}">
+								<TextBlock>
+									<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display, Mode=OneWay}" />
+								</TextBlock>
+							</CheckBox>
+							<TextBlock Margin="21,0,0,0"
+									   IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=OneWay}">
+								<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display_Duration, Mode=OneWay}" />
+								<InlineUIContainer>
+									<metro:PromptTextBox Text="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationDuration.Value, Mode=TwoWay}"
+														 Prompt=""
+														 Width="60"
+														 Margin="2,2,2,-7" />
+								</InlineUIContainer>
+								<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_Display_Duration_Milliseconds, Mode=OneWay}" />
+							</TextBlock>
+						</StackPanel>
+						<Border Height="8" />
+
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_MultipleDisplays}"
+								   Style="{DynamicResource HeaderStyleKey}"
+								   IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=OneWay}" />
 						<StackPanel Margin="8,0,0,0">
 							<metro:PromptComboBox ItemsSource="{Binding Displays}"
 												  DisplayMemberPath="Display"
@@ -323,15 +324,25 @@
 												  SelectedValue="{Binding Display, Mode=TwoWay}"
 												  Prompt=""
 												  IsReadOnly="True"
-												  IsEnabled="{Binding IsDisplayEnabled}"
 												  MinWidth="250"
 												  Margin="1,0,0,0"
-												  HorizontalAlignment="Left" />
+												  HorizontalAlignment="Left">
+								<metro:PromptComboBox.IsEnabled>
+									<MultiBinding Converter="{StaticResource MultiBooleanAndConverter}">
+										<Binding Source="{x:Static serialization:Settings.General}"
+												 Path="NotificationWhenSwitchedDesktop.Value"
+												 Mode="OneWay" />
+										<Binding Path="IsDisplayEnabled"
+												 Mode="OneWay" />
+									</MultiBinding>
+								</metro:PromptComboBox.IsEnabled>
+							</metro:PromptComboBox>
 						</StackPanel>
 						<Border Height="8" />
 
 						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_NotificationWindowPlacement}"
-								   Style="{DynamicResource HeaderStyleKey}" />
+								   Style="{DynamicResource HeaderStyleKey}"
+								   IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=OneWay}" />
 						<StackPanel Margin="8,0,0,0">
 							<metro:PromptComboBox ItemsSource="{Binding Placements}"
 												  DisplayMemberPath="Display"
@@ -339,13 +350,14 @@
 												  SelectedValue="{Binding Placement, Mode=TwoWay}"
 												  Prompt=""
 												  IsReadOnly="True"
+												  IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Mode=OneWay}"
 												  MinWidth="250"
 												  Margin="1,0,0,0"
 												  HorizontalAlignment="Left" />
 						</StackPanel>
 						<Border Height="32" />
 
-						<Canvas>
+						<Canvas Height="270">
 							<Canvas.Resources>
 								<Style x:Key="PreviewGridStyle"
 									   TargetType="Grid">
@@ -494,7 +506,8 @@
 							<Grid x:Name="PreviewRoot"
 								  Width="300"
 								  Height="50"
-								  Style="{StaticResource PreviewGridStyle}">
+								  Style="{StaticResource PreviewGridStyle}"
+								  Visibility="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
 								<ContentControl Width="300"
 												Height="50"
 												ClipToBounds="True">

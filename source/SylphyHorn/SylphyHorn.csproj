@@ -253,6 +253,7 @@
     <Compile Include="Services\ResourceService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="UI\Controls\Keytop.cs" />
+    <Compile Include="UI\Controls\MultiBooleanAndConverter.cs" />
     <Compile Include="UI\Controls\UnlockImageConverter.cs" />
     <Compile Include="UI\DynamicInfoTrayIcon.cs" />
     <Compile Include="UI\NotificationWindow.cs" />

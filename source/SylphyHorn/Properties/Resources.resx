@@ -247,7 +247,7 @@
     <value>Top right</value>
   </data>
   <data name="Settings_Notification_Display" xml:space="preserve">
-    <value>Display a notification when switched virtual desktop</value>
+    <value>Enable notifications when switched virtual desktop</value>
   </data>
   <data name="Settings_Notification_Display_Duration" xml:space="preserve">
     <value>Time Duration for Notification Messages:</value>
