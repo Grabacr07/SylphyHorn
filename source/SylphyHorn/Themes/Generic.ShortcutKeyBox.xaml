@@ -21,6 +21,8 @@
 				Value="" />
 		<Setter Property="FocusVisualStyle"
 				Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
+		<Setter Property="InputMethod.IsInputMethodEnabled"
+				Value="False" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type controls:ShortcutKeyBox}">
