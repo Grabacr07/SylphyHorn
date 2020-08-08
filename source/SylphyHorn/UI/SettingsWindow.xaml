@@ -91,6 +91,13 @@
 							Value="Center" />
 					<Setter Property="Margin"
 							Value="0,2" />
+					<Style.Triggers>
+						<Trigger Property="IsEnabled"
+								 Value="False">
+							<Setter Property="Foreground"
+									Value="{DynamicResource InactiveForegroundBrushKey}" />
+						</Trigger>
+					</Style.Triggers>
 				</Style>
 				<Style x:Key="HeaderStyleKey"
 					   TargetType="{x:Type TextBlock}">
@@ -102,6 +109,13 @@
 							Value="18" />
 					<Setter Property="Margin"
 							Value="0,8" />
+					<Style.Triggers>
+						<Trigger Property="IsEnabled"
+								 Value="False">
+							<Setter Property="Opacity"
+									Value="0.3"/>
+						</Trigger>
+					</Style.Triggers>
 				</Style>
 				<Style x:Key="TabitemStyleKey"
 					   TargetType="{x:Type TextBlock}"
