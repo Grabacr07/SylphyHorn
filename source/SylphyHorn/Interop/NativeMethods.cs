@@ -33,8 +33,11 @@ namespace SylphyHorn.Interop
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFOEX lpmi);
 
-		[DllImport("user32.dll", SetLastError = true)]
+		[DllImport("user32.dll", ExactSpelling = true)]
 		public static extern IntPtr MonitorFromPoint(POINT pt, MonitorDefaultTo dwFlags);
+
+		[DllImport("user32.dll", ExactSpelling = true)]
+		public static extern IntPtr MonitorFromWindow(IntPtr hWnd, MonitorDefaultTo dwFlags);
 
 		[DllImport("User32.dll", ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
 		public static extern bool SetLayeredWindowAttributes(IntPtr hwnd, int crKey, byte bAlpha, LayeredWindowAttributes dwFlags);

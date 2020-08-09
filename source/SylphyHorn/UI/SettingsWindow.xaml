@@ -357,7 +357,10 @@
 						</StackPanel>
 						<Border Height="32" />
 
-						<Canvas Height="270">
+						<Canvas x:Name="CanvasRoot"
+								HorizontalAlignment="Left"
+								Width="480"
+								Height="270">
 							<Canvas.Resources>
 								<Style x:Key="PreviewGridStyle"
 									   TargetType="Grid">
@@ -369,6 +372,26 @@
 											<Setter Property="Canvas.Top"
 													Value="0" />
 										</DataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.TopLeft}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Top" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Top"
+													Value="15" />
+										</MultiDataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.TopLeft}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Left" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Left"
+													Value="20" />
+										</MultiDataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.TopCenter}">
 											<Setter Property="Canvas.Left"
@@ -376,6 +399,36 @@
 											<Setter Property="Canvas.Top"
 													Value="0" />
 										</DataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.TopCenter}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Top" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Top"
+													Value="15" />
+										</MultiDataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.TopCenter}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Left" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Left"
+													Value="100" />
+										</MultiDataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.TopCenter}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Right" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Left"
+													Value="80" />
+										</MultiDataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.TopRight}">
 											<Setter Property="Canvas.Left"
@@ -383,6 +436,26 @@
 											<Setter Property="Canvas.Top"
 													Value="0" />
 										</DataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.TopRight}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Top" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Top"
+													Value="15" />
+										</MultiDataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.TopRight}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Right" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Left"
+													Value="160" />
+										</MultiDataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.Center}">
 											<Setter Property="Canvas.Left"
@@ -390,67 +463,137 @@
 											<Setter Property="Canvas.Top"
 													Value="110" />
 										</DataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.Center}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Top" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Top"
+													Value="117.5" />
+										</MultiDataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.Center}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Left" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Left"
+													Value="100" />
+										</MultiDataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.Center}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Bottom" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Top"
+													Value="102.5" />
+										</MultiDataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.Center}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Right" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Left"
+													Value="80" />
+										</MultiDataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.BottomLeft}">
 											<Setter Property="Canvas.Left"
 													Value="0" />
 											<Setter Property="Canvas.Top"
-													Value="205" />
+													Value="220" />
 										</DataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.BottomLeft}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Bottom" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Top"
+													Value="205" />
+										</MultiDataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.BottomLeft}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Left" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Left"
+													Value="20" />
+										</MultiDataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.BottomCenter}">
 											<Setter Property="Canvas.Left"
 													Value="90" />
 											<Setter Property="Canvas.Top"
-													Value="205" />
+													Value="220" />
 										</DataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.BottomCenter}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Bottom" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Top"
+													Value="205" />
+										</MultiDataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.BottomCenter}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Left" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Left"
+													Value="100" />
+										</MultiDataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.BottomCenter}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Right" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Left"
+													Value="80" />
+										</MultiDataTrigger>
 										<DataTrigger Binding="{Binding Placement}"
 													 Value="{x:Static bindings:WindowPlacement.BottomRight}">
 											<Setter Property="Canvas.Left"
 													Value="180" />
 											<Setter Property="Canvas.Top"
+													Value="220" />
+										</DataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.BottomRight}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Bottom" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Top"
 													Value="205" />
-										</DataTrigger>
-									</Style.Triggers>
-								</Style>
-								<Style x:Key="PreviewBlurImageStyle"
-									   TargetType="Image">
-									<Style.Triggers>
-										<DataTrigger Binding="{Binding Placement}"
-													 Value="{x:Static bindings:WindowPlacement.TopLeft}">
-											<Setter Property="Margin"
-													Value="0,0,-180,-220" />
-										</DataTrigger>
-										<DataTrigger Binding="{Binding Placement}"
-													 Value="{x:Static bindings:WindowPlacement.TopCenter}">
-											<Setter Property="Margin"
-													Value="-90,0,-90,-220" />
-										</DataTrigger>
-										<DataTrigger Binding="{Binding Placement}"
-													 Value="{x:Static bindings:WindowPlacement.TopRight}">
-											<Setter Property="Margin"
-													Value="-180,0,0,-220" />
-										</DataTrigger>
-										<DataTrigger Binding="{Binding Placement}"
-													 Value="{x:Static bindings:WindowPlacement.Center}">
-											<Setter Property="Margin"
-													Value="-90,-110,-90,-110" />
-										</DataTrigger>
-										<DataTrigger Binding="{Binding Placement}"
-													 Value="{x:Static bindings:WindowPlacement.BottomLeft}">
-											<Setter Property="Margin"
-													Value="0,-205,-180,-15" />
-										</DataTrigger>
-										<DataTrigger Binding="{Binding Placement}"
-													 Value="{x:Static bindings:WindowPlacement.BottomCenter}">
-											<Setter Property="Margin"
-													Value="-90,-205,-90,-15" />
-										</DataTrigger>
-										<DataTrigger Binding="{Binding Placement}"
-													 Value="{x:Static bindings:WindowPlacement.BottomRight}">
-											<Setter Property="Margin"
-													Value="-180,-205,0,-15" />
-										</DataTrigger>
+										</MultiDataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{Binding Placement}"
+														   Value="{x:Static bindings:WindowPlacement.BottomRight}" />
+												<Condition Binding="{Binding PreviewTaskbarPosition}"
+														   Value="Right" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Canvas.Left"
+													Value="160" />
+										</MultiDataTrigger>
 									</Style.Triggers>
 								</Style>
 								<Style x:Key="PreviewBorderStyle"
@@ -493,6 +636,60 @@
 										</DataTrigger>
 									</Style.Triggers>
 								</Style>
+								<Style x:Key="PreviewTaskbarStyle"
+									   TargetType="Rectangle">
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding PreviewTaskbarPosition}"
+													 Value="AutoHide">
+											<Setter Property="Visibility"
+													Value="Collapsed" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding PreviewTaskbarPosition}"
+													 Value="Top">
+											<Setter Property="Width"
+													Value="480" />
+											<Setter Property="Height"
+													Value="15" />
+											<Setter Property="Canvas.Left"
+													Value="0" />
+											<Setter Property="Canvas.Top"
+													Value="0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding PreviewTaskbarPosition}"
+													 Value="Left">
+											<Setter Property="Width"
+													Value="20" />
+											<Setter Property="Height"
+													Value="270" />
+											<Setter Property="Canvas.Left"
+													Value="0" />
+											<Setter Property="Canvas.Top"
+													Value="0" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding PreviewTaskbarPosition}"
+													 Value="Bottom">
+											<Setter Property="Width"
+													Value="480" />
+											<Setter Property="Height"
+													Value="15" />
+											<Setter Property="Canvas.Left"
+													Value="0" />
+											<Setter Property="Canvas.Top"
+													Value="255" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding PreviewTaskbarPosition}"
+													 Value="Right">
+											<Setter Property="Width"
+													Value="20" />
+											<Setter Property="Height"
+													Value="270" />
+											<Setter Property="Canvas.Left"
+													Value="460" />
+											<Setter Property="Canvas.Top"
+													Value="0" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
 							</Canvas.Resources>
 							<Rectangle Fill="{Binding PreviewBackgroundBrush}"
 									   Width="480"
@@ -507,25 +704,24 @@
 								  Height="50"
 								  Style="{StaticResource PreviewGridStyle}"
 								  Visibility="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
-								<ContentControl Width="300"
-												Height="50"
-												ClipToBounds="True">
-									<ContentControl.CacheMode>
+								<Border Width="300"
+										Height="50"
+										ClipToBounds="True">
+									<Border.CacheMode>
 										<BitmapCache RenderAtScale="0.2" />
-									</ContentControl.CacheMode>
+									</Border.CacheMode>
 									<Image x:Name="PreviewBlurImage"
 										   Source="{Binding PreviewBackgroundPath, Converter={StaticResource UnlockImageConverter}, IsAsync=True}"
 										   Stretch="{Binding PreviewBackgroundPosition, Converter={StaticResource WallpaperPositionConverter}, Mode=OneWay}"
 										   Width="480"
 										   Height="270"
-										   Visibility="{Binding HasWallpaper, Converter={StaticResource BooleanToVisibilityConverter}}"
-										   Style="{StaticResource PreviewBlurImageStyle}">
+										   Visibility="{Binding HasWallpaper, Converter={StaticResource BooleanToVisibilityConverter}}">
 										<Image.Effect>
 											<BlurEffect Radius="20" />
 										</Image.Effect>
 									</Image>
-								</ContentControl>
-								<Border Background="{Binding NotificationBackground}" />
+								</Border>
+								<Rectangle Fill="{Binding NotificationBackground}" />
 								<DockPanel VerticalAlignment="Center"
 										   Margin="8,6">
 									<TextBlock DockPanel.Dock="Top"
@@ -546,9 +742,7 @@
 							</Grid>
 
 							<Rectangle Fill="{Binding TaskbarBackground}"
-									   Width="480"
-									   Height="15"
-									   Canvas.Top="255" />
+									   Style="{StaticResource PreviewTaskbarStyle}" />
 						</Canvas>
 					</StackPanel>
 				</ScrollViewer>

@@ -201,6 +201,26 @@ namespace SylphyHorn.UI.Bindings
 
 		#endregion
 
+		#region PreviewTaskbarPosition notification property
+
+		private string _PreviewTaskbarPosition = "Bottom";
+
+		public string PreviewTaskbarPosition
+		{
+			get => this._PreviewTaskbarPosition;
+			set
+			{
+				if (this._PreviewTaskbarPosition != value)
+				{
+					this._PreviewTaskbarPosition = value;
+
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
 		public Brush NotificationBackground => new SolidColorBrush(WindowsTheme.ColorPrevalence.Current
 			? ImmersiveColor.GetColorByTypeName(ImmersiveColorNames.SystemAccentDark1)
 			: ImmersiveColor.GetColorByTypeName(ImmersiveColorNames.DarkChromeMedium))
@@ -267,6 +287,7 @@ namespace SylphyHorn.UI.Bindings
 			this.PreviewBackgroundBrush = new SolidColorBrush(colAndWall.BackgroundColor);
 			this.PreviewBackgroundPath = colAndWall.Path;
 			this.PreviewBackgroundPosition = colAndWall.Position;
+			this.PreviewTaskbarPosition = GetTaskbarPosition();
 
 			this.Logs = ViewModelHelper.CreateReadOnlyDispatcherCollection(
 				LoggingService.Instance.Logs,
@@ -315,6 +336,18 @@ namespace SylphyHorn.UI.Bindings
 			{
 				Settings.General.DesktopBackgroundFolderPath.Value = message.Response;
 			}
+		}
+
+		private static string GetTaskbarPosition()
+		{
+			var workspace = MonitorService.GetPrimaryArea();
+			var monitorArea = workspace.MonitorArea;
+			var workArea = workspace.WorkArea;
+			if (monitorArea.Top < workArea.Top) return "Top";
+			if (monitorArea.Left < workArea.Left) return "Left";
+			if (monitorArea.Height > workArea.Height) return "Bottom";
+			if (monitorArea.Width > workArea.Width) return "Right";
+			return "AutoHide";
 		}
 	}
 }
