@@ -27,9 +27,29 @@ namespace SylphyHorn.UI.Bindings
 
 		public IReadOnlyCollection<DisplayViewModel<WindowPlacement>> Placements { get; }
 
-		public bool IsDisplayEnabled { get; }
+		public bool IsDisplayEnabled => this.Displays.Count > 3;
 
-		public IReadOnlyCollection<DisplayViewModel<uint>> Displays { get; }
+		#region Displays notification property
+
+		public IReadOnlyCollection<DisplayViewModel<uint>> _Displays;
+
+		public IReadOnlyCollection<DisplayViewModel<uint>> Displays
+		{
+			get => this._Displays;
+			set
+			{
+				if (this._Displays != value)
+				{
+					this._Displays = value;
+
+					this.RaisePropertyChanged();
+					this.RaisePropertyChanged(nameof(this.Display));
+					this.RaisePropertyChanged(nameof(this.IsDisplayEnabled));
+				}
+			}
+		}
+
+		#endregion
 
 		public IReadOnlyCollection<LicenseViewModel> Licenses { get; }
 
@@ -257,23 +277,7 @@ namespace SylphyHorn.UI.Bindings
 				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomRight, Value = WindowPlacement.BottomRight, },
 			}.ToList();
 
-			this.Displays = new[] { new DisplayViewModel<uint> { Display = Resources.Settings_MultipleDisplays_CurrentDisplay, Value = 0, } }
-				.Concat(MonitorService.GetMonitors()
-					.Select((m, i) => new DisplayViewModel<uint>
-					{
-						Display = string.Format(Resources.Settings_MultipleDisplays_EachDisplay, i + 1, m.Name),
-						Value = (uint)(i + 1),
-					}))
-				.Concat(new[]
-				{
-					new DisplayViewModel<uint>
-					{
-						Display = Resources.Settings_MultipleDisplays_AllDisplays,
-						Value = uint.MaxValue,
-					}
-				})
-				.ToList();
-			if (this.Displays.Count > 3) this.IsDisplayEnabled = true;
+			this.UpdateDisplays();
 
 			this.Licenses = LicenseInfo.All.Select(x => new LicenseViewModel(x)).ToArray();
 
@@ -287,7 +291,7 @@ namespace SylphyHorn.UI.Bindings
 			this.PreviewBackgroundBrush = new SolidColorBrush(colAndWall.BackgroundColor);
 			this.PreviewBackgroundPath = colAndWall.Path;
 			this.PreviewBackgroundPosition = colAndWall.Position;
-			this.PreviewTaskbarPosition = GetTaskbarPosition();
+			this.UpdateTaskbarPosition();
 
 			this.Logs = ViewModelHelper.CreateReadOnlyDispatcherCollection(
 				LoggingService.Instance.Logs,
@@ -312,6 +316,31 @@ namespace SylphyHorn.UI.Bindings
 
 			Disposable.Create(() => Application.Current.TaskTrayIcon.Reload())
 				.AddTo(this);
+		}
+
+		public void UpdateDisplays()
+		{
+			this.Displays = new[] { new DisplayViewModel<uint> { Display = Resources.Settings_MultipleDisplays_CurrentDisplay, Value = 0, } }
+				.Concat(MonitorService.GetMonitors()
+					.Select((m, i) => new DisplayViewModel<uint>
+					{
+						Display = string.Format(Resources.Settings_MultipleDisplays_EachDisplay, i + 1, m.Name),
+						Value = (uint)(i + 1),
+					}))
+				.Concat(new[]
+				{
+					new DisplayViewModel<uint>
+					{
+						Display = Resources.Settings_MultipleDisplays_AllDisplays,
+						Value = uint.MaxValue,
+					}
+				})
+				.ToList();
+		}
+
+		public void UpdateTaskbarPosition()
+		{
+			this.PreviewTaskbarPosition = GetTaskbarPosition();
 		}
 
 		protected override void InitializeCore()

@@ -1,9 +1,11 @@
-﻿using SylphyHorn.UI.Bindings;
+﻿using MetroRadiance.Interop.Win32;
+using SylphyHorn.UI.Bindings;
 using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 using WindowsDesktop;
 
 namespace SylphyHorn.UI
@@ -11,6 +13,8 @@ namespace SylphyHorn.UI
 	partial class SettingsWindow
 	{
 		public static SettingsWindow Instance { get; set; }
+
+		private HwndSource _source;
 
 		public SettingsWindow()
 		{
@@ -28,10 +32,54 @@ namespace SylphyHorn.UI
 				.AddValueChanged(this.PreviewRoot, this.OnPreviewRootCanvasPositionChanged);
 		}
 
+		protected override void OnSourceInitialized(EventArgs e)
+		{
+			base.OnSourceInitialized(e);
+
+			this._source = PresentationSource.FromVisual(this) as HwndSource;
+			if (this._source == null) return;
+			this._source.AddHook(this.WndProc);
+		}
+
+		protected override void OnClosed(EventArgs e)
+		{
+			base.OnClosed(e);
+
+			this._source?.RemoveHook(this.WndProc);
+		}
+
 		protected override void OnContentRendered(EventArgs e)
 		{
 			base.OnContentRendered(e);
 			this.Pin();
+		}
+
+		private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		{
+			// Note: "Duplicated" and "Extended" change notification events will be received.
+			if (msg == (int)WindowsMessages.WM_SETTINGCHANGE)
+			{
+				if (wParam == new IntPtr(47) /* SPI_SETWORKAREA */)
+				{
+					this.UpdateViewModel(ref handled, taskbarPosition: true);
+				}
+			}
+			else if (msg == (int)WindowsMessages.WM_DEVICECHANGE)
+			{
+				this.UpdateViewModel(ref handled);
+			}
+			return IntPtr.Zero;
+		}
+
+		private void UpdateViewModel(ref bool handled, bool taskbarPosition = false)
+		{
+			var viewModel = this.DataContext as SettingsWindowViewModel;
+			if (viewModel != null)
+			{
+				viewModel.UpdateDisplays();
+				if (taskbarPosition) viewModel.UpdateTaskbarPosition();
+				handled = true;
+			}
 		}
 
 		private void OnPreviewRootCanvasPositionChanged(object sender, EventArgs e)
