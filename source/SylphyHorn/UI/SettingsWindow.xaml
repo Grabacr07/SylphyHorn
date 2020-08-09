@@ -360,7 +360,10 @@
 						<Canvas x:Name="CanvasRoot"
 								HorizontalAlignment="Left"
 								Width="480"
-								Height="270">
+								Height="270"
+								MouseMove="OnCanvasRootMouseMove"
+								MouseLeave="OnCanvasRootMouseLeave"
+								MouseUp="OnCanvasRootMouseUp">
 							<Canvas.Resources>
 								<Style x:Key="PreviewGridStyle"
 									   TargetType="Grid">
@@ -703,7 +706,9 @@
 								  Width="300"
 								  Height="50"
 								  Style="{StaticResource PreviewGridStyle}"
-								  Visibility="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+								  Visibility="{Binding Source={x:Static serialization:Settings.General}, Path=NotificationWhenSwitchedDesktop.Value, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+								  MouseDown="OnPreviewRootMouseDown"
+								  Cursor="SizeAll">
 								<Border Width="300"
 										Height="50"
 										ClipToBounds="True">
@@ -741,7 +746,8 @@
 										Style="{StaticResource PreviewBorderStyle}" />
 							</Grid>
 
-							<Rectangle Fill="{Binding TaskbarBackground}"
+							<Rectangle x:Name="PreviewTaskbar"
+									   Fill="{Binding TaskbarBackground}"
 									   Style="{StaticResource PreviewTaskbarStyle}" />
 						</Canvas>
 					</StackPanel>
