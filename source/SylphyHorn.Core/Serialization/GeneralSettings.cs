@@ -33,6 +33,8 @@ namespace SylphyHorn.Serialization
 
 		public SerializableProperty<string> Culture => this.Cache(key => new SerializableProperty<string>(key, this._provider));
 
+		public SerializableProperty<byte> Position => this.Cache(key => new SerializableProperty<byte>(key, this._provider, 4 /* Fill */));
+
 		public SerializableProperty<uint> Placement => this.Cache(key => new SerializableProperty<uint>(key, this._provider, 5 /* Center */));
 
 		public SerializableProperty<uint> Display => this.Cache(key => new SerializableProperty<uint>(key, this._provider, 0));

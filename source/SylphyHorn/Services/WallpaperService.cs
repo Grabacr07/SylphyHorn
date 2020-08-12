@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using SylphyHorn.Interop;
 using SylphyHorn.Serialization;
+using SylphyHorn.UI.Bindings;
 using WindowsDesktop;
 
 namespace SylphyHorn.Services
@@ -49,7 +50,7 @@ namespace SylphyHorn.Services
 				var desktops = VirtualDesktop.GetDesktops();
 				var newIndex = Array.IndexOf(desktops, e.NewDesktop) + 1;
 
-				var wallpapers = this.GetWallpaperFiles(Settings.General.DesktopBackgroundFolderPath);
+				var wallpapers = this.GetWallpaperFiles(Settings.General.DesktopBackgroundFolderPath, (WallpaperPosition)Settings.General.Position.Value);
 				var files = wallpapers.Where(x => x.DesktopIndex == newIndex).ToArray();
 				if (files.Length == 0)
 				{
@@ -60,7 +61,7 @@ namespace SylphyHorn.Services
 			});
 		}
 
-		public WallpaperFile[] GetWallpaperFiles(string directoryPath)
+		public WallpaperFile[] GetWallpaperFiles(string directoryPath, WallpaperPosition defaultPosition)
 		{
 			try
 			{
@@ -72,7 +73,7 @@ namespace SylphyHorn.Services
 					{
 						if (_supportedExtensions.Any(x => string.Equals(x, file.Extension, StringComparison.OrdinalIgnoreCase)))
 						{
-							var wallpaper = WallpaperFile.CreateFromFile(file);
+							var wallpaper = WallpaperFile.CreateFromFile(file, defaultPosition);
 							col.Add(wallpaper);
 						}
 					}
@@ -122,16 +123,6 @@ namespace SylphyHorn.Services
 		}
 	}
 
-	public enum WallpaperPosition : byte
-	{
-		Center = 0,
-		Tile,
-		Stretch,
-		Fit,
-		Fill,
-		Span,
-	}
-
 	public class WallpaperFile
 	{
 		/// <summary>
@@ -147,7 +138,9 @@ namespace SylphyHorn.Services
 
 		public uint Number => (uint)(this.DesktopIndex << 16 | this.MonitorIndex);
 
-		public string DesktopMonitorText => this.MonitorIndex == 0 ? this.DesktopIndex.ToString() : $"{this.DesktopIndex}-{this.MonitorIndex}";
+		public string DesktopMonitorText => (WallpaperPosition)Settings.General.Position.Value != this.Position
+			? this.MonitorIndex == 0 ? $"{this.DesktopIndex} ({this.Position})" : $"{this.DesktopIndex}-{this.MonitorIndex} ({this.Position})"
+			: this.MonitorIndex == 0 ? this.DesktopIndex.ToString() : $"{this.DesktopIndex}-{this.MonitorIndex}";
 
 		private WallpaperFile(string path, ushort desktopIndex, ushort monitorIndex, WallpaperPosition position)
 		{
@@ -157,13 +150,13 @@ namespace SylphyHorn.Services
 			this.Position = position;
 		}
 
-		public static WallpaperFile CreateFromFile(FileInfo file)
+		public static WallpaperFile CreateFromFile(FileInfo file, WallpaperPosition defaultPosition)
 		{
 			var identifiers = Path.GetFileNameWithoutExtension(file.Name).Split('-');
 
 			ushort desktop = 0;
 			ushort monitor = 0;
-			var position = WallpaperPosition.Fit;
+			var position = defaultPosition;
 
 			if (identifiers.Length > 0 && ushort.TryParse(identifiers[0], out desktop))
 			{
