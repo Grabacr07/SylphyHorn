@@ -182,12 +182,12 @@ namespace SylphyHorn.Services
 		private static WallpaperPosition Parse(string options)
 		{
 			var options2 = options.ToLower();
+			if (options2.StartsWith("fil")) return WallpaperPosition.Fill;
+			if (options2.StartsWith("sp")) return WallpaperPosition.Span;
 			if (options2[0] == 'c') return WallpaperPosition.Center;
 			if (options2[0] == 't') return WallpaperPosition.Tile;
 			if (options2[0] == 's') return WallpaperPosition.Stretch;
 			if (options2[0] == 'f') return WallpaperPosition.Fit;
-			if (options2.StartsWith("fil")) return WallpaperPosition.Fill;
-			if (options2.StartsWith("sp")) return WallpaperPosition.Span;
 			return WallpaperPosition.Fit;
 		}
 	}
