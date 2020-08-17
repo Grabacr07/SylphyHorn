@@ -18,7 +18,7 @@
 					   SnapsToDevicePixels="True">
 	<Window.Resources>
 		<Storyboard x:Key="FadeIn">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="NativeOpacity"
 										   Storyboard.TargetName="Window">
 				<!--<EasingDoubleKeyFrame KeyTime="0"
 									  Value=".0" />
@@ -30,7 +30,7 @@
 		</Storyboard>
 
 		<Storyboard x:Key="FadeOut">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="NativeOpacity"
 										   Storyboard.TargetName="Window">
 				<EasingDoubleKeyFrame KeyTime="0"
 									  Value="1" />
