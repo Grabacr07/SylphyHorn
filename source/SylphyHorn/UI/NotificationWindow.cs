@@ -11,6 +11,13 @@ namespace SylphyHorn.UI
 {
 	public class NotificationWindow : BlurWindow
 	{
+		static NotificationWindow()
+		{
+			ResizeModeProperty.OverrideMetadata(typeof(NotificationWindow), new FrameworkPropertyMetadata(ResizeMode.NoResize));
+			ShowInTaskbarProperty.OverrideMetadata(typeof(NotificationWindow), new FrameworkPropertyMetadata(false));
+			TopmostProperty.OverrideMetadata(typeof(NotificationWindow), new FrameworkPropertyMetadata(true));
+		}
+
 		#region NativeOpacity dependency property
 
 		public static readonly DependencyProperty NativeOpacityProperty = DependencyProperty.Register(

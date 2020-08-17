@@ -15,9 +15,6 @@
 					   Title="{Binding Title}"
 					   Width="500"
 					   Height="100"
-					   ResizeMode="NoResize"
-					   Topmost="True"
-					   ShowInTaskbar="False"
 					   SnapsToDevicePixels="True">
 	<Window.Resources>
 		<Storyboard x:Key="FadeIn">
