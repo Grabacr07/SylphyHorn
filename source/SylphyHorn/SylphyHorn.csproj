@@ -249,7 +249,7 @@
     <Compile Include="UI\Bindings\HeaderContentViewModel.cs" />
     <Compile Include="UI\Bindings\WindowPlacement.cs" />
     <Compile Include="Services\LoggingService.cs" />
-    <Compile Include="Services\MonitorService.cs" />
+    <Compile Include="Services\MonitorHelper.cs" />
     <Compile Include="Services\ResourceService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="UI\Controls\Keytop.cs" />

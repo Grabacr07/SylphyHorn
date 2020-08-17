@@ -250,7 +250,7 @@ namespace SylphyHorn.UI.Bindings
 			}.ToList();
 
 			this.Displays = new[] { new DisplayViewModel<uint> { Display = Resources.Settings_MultipleDisplays_CurrentDisplay, Value = 0, } }
-				.Concat(MonitorService.GetMonitors()
+				.Concat(MonitorHelper.GetMonitors()
 					.Select((m, i) => new DisplayViewModel<uint>
 					{
 						Display = string.Format(Resources.Settings_MultipleDisplays_EachDisplay, i + 1, m.Name),

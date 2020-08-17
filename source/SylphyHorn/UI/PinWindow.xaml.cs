@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Interop;
 using MetroRadiance.Interop;
 using MetroRadiance.Interop.Win32;
-using SylphyHorn.Interop;
+using SylphyHorn.UI.Bindings;
 
 namespace SylphyHorn.UI
 {
@@ -11,29 +9,18 @@ namespace SylphyHorn.UI
 	{
 		private readonly IntPtr _target;
 
-		public PinWindow(IntPtr target)
+		public PinWindow(IntPtr target, WindowPlacement placement)
+			: base(placement)
 		{
 			this._target = target;
 			this.InitializeComponent();
 		}
 
-		protected override void OnSourceInitialized(EventArgs e)
+		protected override bool TryGetTargetRect(out RECT rect)
 		{
-			base.OnSourceInitialized(e);
-
-			RECT rect;
-			if (NativeMethods.GetWindowRect(this._target, out rect))
-			{
-				var targetWidth = rect.Right - rect.Left;
-				var targetHeight = rect.Bottom - rect.Top;
-
-				var dpi = PerMonitorDpi.GetDpi(this._target);
-				var width = this.ActualWidth * dpi.ScaleX;
-				var height = this.ActualHeight * dpi.ScaleY;
-
-				this.Left = (rect.Left + (targetWidth - width) / 2) / dpi.ScaleX;
-				this.Top = (rect.Top + (targetHeight - height) / 2) / dpi.ScaleY;
-			}
+			return User32.IsZoomed(this._target)
+				? TryGetWorkAreaFromHwnd(this._target, out rect)
+				: TryGetWindowRectFromHwnd(this._target, out rect);
 		}
 	}
 }
