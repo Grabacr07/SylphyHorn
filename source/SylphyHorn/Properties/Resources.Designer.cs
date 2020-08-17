@@ -403,74 +403,92 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Notification window placement に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string Settings_NotificationWindowPlacement {
-            get {
-                return ResourceManager.GetString("Settings_NotificationWindowPlacement", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Bottom center に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string Settings_NotificationWindowPlacement_BottomCenter {
+        public static string Settings_Notification_WindowPlacement_BottomCenter {
             get {
-                return ResourceManager.GetString("Settings_NotificationWindowPlacement_BottomCenter", resourceCulture);
+                return ResourceManager.GetString("Settings_Notification_WindowPlacement_BottomCenter", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Bottom left に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string Settings_NotificationWindowPlacement_BottomLeft {
+        public static string Settings_Notification_WindowPlacement_BottomLeft {
             get {
-                return ResourceManager.GetString("Settings_NotificationWindowPlacement_BottomLeft", resourceCulture);
+                return ResourceManager.GetString("Settings_Notification_WindowPlacement_BottomLeft", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Bottom right に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string Settings_NotificationWindowPlacement_BottomRight {
+        public static string Settings_Notification_WindowPlacement_BottomRight {
             get {
-                return ResourceManager.GetString("Settings_NotificationWindowPlacement_BottomRight", resourceCulture);
+                return ResourceManager.GetString("Settings_Notification_WindowPlacement_BottomRight", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Center に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string Settings_NotificationWindowPlacement_Center {
+        public static string Settings_Notification_WindowPlacement_Center {
             get {
-                return ResourceManager.GetString("Settings_NotificationWindowPlacement_Center", resourceCulture);
+                return ResourceManager.GetString("Settings_Notification_WindowPlacement_Center", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Pin window placement に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Settings_Notification_WindowPlacement_PinWindow {
+            get {
+                return ResourceManager.GetString("Settings_Notification_WindowPlacement_PinWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Same as switch window placement に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Settings_Notification_WindowPlacement_SameAsSwitchWindow {
+            get {
+                return ResourceManager.GetString("Settings_Notification_WindowPlacement_SameAsSwitchWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Switch window placement に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Settings_Notification_WindowPlacement_SwitchWindow {
+            get {
+                return ResourceManager.GetString("Settings_Notification_WindowPlacement_SwitchWindow", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Top center に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string Settings_NotificationWindowPlacement_TopCenter {
+        public static string Settings_Notification_WindowPlacement_TopCenter {
             get {
-                return ResourceManager.GetString("Settings_NotificationWindowPlacement_TopCenter", resourceCulture);
+                return ResourceManager.GetString("Settings_Notification_WindowPlacement_TopCenter", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Top left に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string Settings_NotificationWindowPlacement_TopLeft {
+        public static string Settings_Notification_WindowPlacement_TopLeft {
             get {
-                return ResourceManager.GetString("Settings_NotificationWindowPlacement_TopLeft", resourceCulture);
+                return ResourceManager.GetString("Settings_Notification_WindowPlacement_TopLeft", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Top right に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string Settings_NotificationWindowPlacement_TopRight {
+        public static string Settings_Notification_WindowPlacement_TopRight {
             get {
-                return ResourceManager.GetString("Settings_NotificationWindowPlacement_TopRight", resourceCulture);
+                return ResourceManager.GetString("Settings_Notification_WindowPlacement_TopRight", resourceCulture);
             }
         }
         

@@ -1,7 +1,8 @@
 ﻿namespace SylphyHorn.UI.Bindings
 {
-	public enum WindowPlacement : uint
+	public enum WindowPlacement : byte
 	{
+		Default,
 		TopLeft = 1,
 		TopCenter,
 		TopRight,
