@@ -10,10 +10,12 @@ namespace SylphyHorn.UI
 	partial class SwitchWindow
 	{
 		private readonly Rect _area;
+		private readonly WindowPlacement _placement;
 
-		public SwitchWindow(Rect area)
+		public SwitchWindow(Rect area, WindowPlacement placement)
 		{
 			this._area = area;
+			this._placement = placement;
 			this.InitializeComponent();
 		}
 
@@ -29,7 +31,7 @@ namespace SylphyHorn.UI
 			var height = this.ActualHeight * dpi.ScaleY;
 			var area = this._area;
 
-			switch ((WindowPlacement)Settings.General.Placement.Value)
+			switch (this._placement)
 			{
 				case WindowPlacement.TopLeft:
 				case WindowPlacement.BottomLeft:
@@ -47,7 +49,7 @@ namespace SylphyHorn.UI
 					break;
 			}
 
-			switch ((WindowPlacement)Settings.General.Placement.Value)
+			switch (this._placement)
 			{
 				case WindowPlacement.TopLeft:
 				case WindowPlacement.TopCenter:

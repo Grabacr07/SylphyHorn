@@ -73,9 +73,10 @@ namespace SylphyHorn.Services
 					targets = new[] { monitors[settings - 1] };
 				}
 			}
+			var placement = (WindowPlacement)Settings.General.Placement.Value;
 			var windows = targets.Select(area =>
 			{
-				var window = new SwitchWindow(area.WorkArea)
+				var window = new SwitchWindow(area.WorkArea, placement)
 				{
 					DataContext = vmodel,
 				};
