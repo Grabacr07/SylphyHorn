@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using MetroRadiance.Interop;
@@ -185,7 +186,19 @@ namespace SylphyHorn.UI
 
 		protected static bool TryGetWindowRectFromHwnd(IntPtr hWnd, out RECT rect)
 		{
-			return NativeMethods.GetWindowRect(hWnd, out rect);
+			try
+			{
+				Dwmapi.DwmGetWindowAttribute(
+					hWnd,
+					DWMWINDOWATTRIBUTE.DWMWA_EXTENDED_FRAME_BOUNDS,
+					out rect,
+					Marshal.SizeOf(typeof(RECT)));
+				return true;
+			}
+			catch (Exception)
+			{
+				return NativeMethods.GetWindowRect(hWnd, out rect);
+			}
 		}
 
 		private void ChangeOpacity(double opacity)
