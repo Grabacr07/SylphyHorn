@@ -16,8 +16,9 @@ namespace SylphyHorn.UI
 			this.InitializeComponent();
 		}
 
-		protected override bool TryGetTargetRect(out RECT rect)
+		protected override bool TryGetTargetRect(out RECT rect, out RECT? capableRect)
 		{
+			capableRect = null;
 			return TryGetWorkAreaFromHmonitor(this._target, out rect);
 		}
 	}

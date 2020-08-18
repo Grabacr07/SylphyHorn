@@ -448,6 +448,15 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
+        ///   Show on the outside of the window. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Settings_Notification_WindowPlacement_PinWindow_Outside {
+            get {
+                return ResourceManager.GetString("Settings_Notification_WindowPlacement_PinWindow_Outside", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Same as switch window placement に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Settings_Notification_WindowPlacement_SameAsSwitchWindow {

@@ -76,17 +76,19 @@ namespace SylphyHorn.UI
 			this.UpdateWindowPosition();
 		}
 
-		protected virtual bool TryGetTargetRect(out RECT rect)
+		protected virtual bool TryGetTargetRect(out RECT rect, out RECT? capableRect)
 			=> throw new NotImplementedException();
 
 		private void UpdateWindowPosition()
 		{
 			if (this._hWnd == IntPtr.Zero) return;
 			if (!NativeMethods.GetWindowRect(this._hWnd, out var rect)) return;
-			if (!TryGetTargetRect(out var area)) return;
+			if (!TryGetTargetRect(out var area, out var outside)) return;
+
+			var placementWithoutFlags = this.Placement & ~WindowPlacement.OutsideY;
 
 			int left;
-			switch (this.Placement)
+			switch (placementWithoutFlags)
 			{
 				case WindowPlacement.TopLeft:
 				case WindowPlacement.BottomLeft:
@@ -107,18 +109,32 @@ namespace SylphyHorn.UI
 			}
 
 			int top;
-			switch (this.Placement)
+			switch (placementWithoutFlags)
 			{
 				case WindowPlacement.TopLeft:
 				case WindowPlacement.TopCenter:
 				case WindowPlacement.TopRight:
-					top = area.Top;
+					if (outside.HasValue)
+					{
+						top = Math.Max(outside.Value.Top, area.Top - (rect.Bottom - rect.Top));
+					}
+					else
+					{
+						top = area.Top;
+					}
 					break;
 
 				case WindowPlacement.BottomLeft:
 				case WindowPlacement.BottomCenter:
 				case WindowPlacement.BottomRight:
-					top = area.Bottom - (rect.Bottom - rect.Top);
+					if (outside.HasValue)
+					{
+						top = Math.Min(outside.Value.Bottom - (rect.Bottom - rect.Top), area.Bottom);
+					}
+					else
+					{
+						top = area.Bottom - (rect.Bottom - rect.Top);
+					}
 					break;
 
 				case WindowPlacement.Center:

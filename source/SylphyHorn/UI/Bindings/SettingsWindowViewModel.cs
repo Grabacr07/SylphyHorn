@@ -115,9 +115,38 @@ namespace SylphyHorn.UI.Bindings
 					Settings.General.PinPlacement.Value = (byte)value;
 
 					this.RaisePropertyChanged();
+					this.RaisePropertyChanged(nameof(this.PinPlacementWithoutFlags));
+					this.RaisePropertyChanged(nameof(this.IsPinWindowOutsideY));
+					this.RaisePropertyChanged(nameof(this.CanPinWindowOutsideY));
 				}
 			}
 		}
+
+		public WindowPlacement PinPlacementWithoutFlags
+		{
+			get => this.PinPlacement & ~WindowPlacement.OutsideY;
+			set
+			{
+				if (value == WindowPlacement.Default || value == WindowPlacement.Center)
+				{
+					this.PinPlacement = value;
+				}
+				else
+				{
+					this.PinPlacement = (value & ~WindowPlacement.OutsideY) | (this.PinPlacement & WindowPlacement.OutsideY);
+				}
+			}
+		}
+
+		public bool IsPinWindowOutsideY
+		{
+			get => this.PinPlacement.HasFlag(WindowPlacement.OutsideY);
+			set => this.PinPlacement = value
+				? this.PinPlacement | WindowPlacement.OutsideY
+				: this.PinPlacement & ~WindowPlacement.OutsideY;
+		}
+
+		public bool CanPinWindowOutsideY => this.PinPlacement != WindowPlacement.Default && this.PinPlacement != WindowPlacement.Center;
 
 		#endregion
 

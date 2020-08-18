@@ -337,12 +337,17 @@
 							<metro:PromptComboBox ItemsSource="{Binding PinPlacements, Mode=OneTime}"
 												  DisplayMemberPath="Display"
 												  SelectedValuePath="Value"
-												  SelectedValue="{Binding PinPlacement, Mode=TwoWay}"
+												  SelectedValue="{Binding PinPlacementWithoutFlags, Mode=TwoWay}"
 												  Prompt=""
 												  IsReadOnly="True"
 												  MinWidth="250"
 												  Margin="1,0,0,0"
 												  HorizontalAlignment="Left" />
+							<CheckBox Margin="0,4,0,0"
+									  IsChecked="{Binding IsPinWindowOutsideY, Mode=TwoWay}"
+									  IsEnabled="{Binding CanPinWindowOutsideY}">
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_WindowPlacement_PinWindow_Outside}" />
+							</CheckBox>
 						</StackPanel>
 						<Border Height="32" />
 

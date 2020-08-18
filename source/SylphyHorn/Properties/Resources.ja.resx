@@ -246,6 +246,9 @@
   <data name="Settings_Notification_WindowPlacement_PinWindow" xml:space="preserve">
     <value>ピン留めウィンドウの配置</value>
   </data>
+  <data name="Settings_Notification_WindowPlacement_PinWindow_Outside" xml:space="preserve">
+    <value>ウィンドウの外周に表示する</value>
+  </data>
   <data name="Settings_Notification_WindowPlacement_SameAsSwitchWindow" xml:space="preserve">
     <value>切り替えウィンドウと同じ配置</value>
   </data>
