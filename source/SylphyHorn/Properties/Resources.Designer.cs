@@ -304,7 +304,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Switch only に類似しているローカライズされた文字列を検索します。
+        ///   Switch only: に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Settings_MoveWindowToCreatedDesktop_CreateOnly {
             get {
@@ -376,7 +376,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Display a notification when switched virtual desktop に類似しているローカライズされた文字列を検索します。
+        ///   Enable notifications when switched virtual desktop に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Settings_Notification_Display {
             get {

@@ -68,6 +68,15 @@
 									Property="Visibility"
 									Value="Visible" />
 						</Trigger>
+						<Trigger Property="KeyKind"
+								 Value="NumPad">
+							<Setter TargetName="KeyKind"
+									Property="Text"
+									Value="NumPad" />
+							<Setter TargetName="KeyKind"
+									Property="Visibility"
+									Value="Visible" />
+						</Trigger>
 						<Trigger Property="KeyText"
 								 Value="Left">
 							<Setter TargetName="Arrow"
@@ -84,7 +93,7 @@
 									Value="Collapsed" />
 						</Trigger>
 						<Trigger Property="KeyText"
-								 Value="Top">
+								 Value="Up">
 							<Setter TargetName="Arrow"
 									Property="RenderTransform">
 								<Setter.Value>
@@ -114,7 +123,7 @@
 									Value="Collapsed" />
 						</Trigger>
 						<Trigger Property="KeyText"
-								 Value="Bottom">
+								 Value="Down">
 							<Setter TargetName="Arrow"
 									Property="RenderTransform">
 								<Setter.Value>

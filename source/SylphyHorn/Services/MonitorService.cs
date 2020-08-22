@@ -31,9 +31,19 @@ namespace SylphyHorn.Services
 
 		public static Monitor[] GetAreas() => GetMonitorsInternal();
 
+		public static Monitor GetPrimaryMonitor() => GetPrimaryMonitorInternal();
+
+		public static Monitor GetPrimaryArea() => GetPrimaryMonitorInternal();
+
 		public static Monitor GetCurrentMonitor() => GetCurrentMonitorInternal(true);
 
 		public static Monitor GetCurrentArea() => GetCurrentMonitorInternal();
+
+		public static IntPtr GetPrimaryHMonitor()
+		{
+			var hPrimaryMonitor = NativeMethods.MonitorFromWindow(IntPtr.Zero, MonitorDefaultTo.MONITOR_DEFAULTTOPRIMARY);
+			return hPrimaryMonitor;
+		}
 
 		public static IntPtr GetCurrentHMonitor()
 		{
@@ -63,6 +73,12 @@ namespace SylphyHorn.Services
 			if (!ret) throw new Win32Exception(Marshal.GetLastWin32Error());
 
 			return list.ToArray();
+		}
+
+		private static Monitor GetPrimaryMonitorInternal(bool additionalRetrive = false)
+		{
+			var hPrimaryMonitor = GetPrimaryHMonitor();
+			return GetMonitorInternal(hPrimaryMonitor, additionalRetrive);
 		}
 
 		private static Monitor GetCurrentMonitorInternal(bool additionalRetrive = false)

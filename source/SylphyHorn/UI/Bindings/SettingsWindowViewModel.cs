@@ -27,9 +27,29 @@ namespace SylphyHorn.UI.Bindings
 
 		public IReadOnlyCollection<DisplayViewModel<WindowPlacement>> Placements { get; }
 
-		public bool IsDisplayEnabled { get; }
+		public bool IsDisplayEnabled => this.Displays.Count > 3;
 
-		public IReadOnlyCollection<DisplayViewModel<uint>> Displays { get; }
+		#region Displays notification property
+
+		public IReadOnlyCollection<DisplayViewModel<uint>> _Displays;
+
+		public IReadOnlyCollection<DisplayViewModel<uint>> Displays
+		{
+			get => this._Displays;
+			set
+			{
+				if (this._Displays != value)
+				{
+					this._Displays = value;
+
+					this.RaisePropertyChanged();
+					this.RaisePropertyChanged(nameof(this.Display));
+					this.RaisePropertyChanged(nameof(this.IsDisplayEnabled));
+				}
+			}
+		}
+
+		#endregion
 
 		public IReadOnlyCollection<LicenseViewModel> Licenses { get; }
 
@@ -181,6 +201,46 @@ namespace SylphyHorn.UI.Bindings
 
 		#endregion
 
+		#region PreviewBackgroundPosition notification property
+
+		private WallpaperPosition _PreviewBackgroundPosition = WallpaperPosition.Fill;
+
+		public WallpaperPosition PreviewBackgroundPosition
+		{
+			get => this._PreviewBackgroundPosition;
+			set
+			{
+				if (this._PreviewBackgroundPosition != value)
+				{
+					this._PreviewBackgroundPosition = value;
+
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
+		#region PreviewTaskbarPosition notification property
+
+		private string _PreviewTaskbarPosition = "Bottom";
+
+		public string PreviewTaskbarPosition
+		{
+			get => this._PreviewTaskbarPosition;
+			set
+			{
+				if (this._PreviewTaskbarPosition != value)
+				{
+					this._PreviewTaskbarPosition = value;
+
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
 		public Brush NotificationBackground => new SolidColorBrush(WindowsTheme.ColorPrevalence.Current
 			? ImmersiveColor.GetColorByTypeName(ImmersiveColorNames.SystemAccentDark1)
 			: ImmersiveColor.GetColorByTypeName(ImmersiveColorNames.DarkChromeMedium))
@@ -217,23 +277,7 @@ namespace SylphyHorn.UI.Bindings
 				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomRight, Value = WindowPlacement.BottomRight, },
 			}.ToList();
 
-			this.Displays = new[] { new DisplayViewModel<uint> { Display = Resources.Settings_MultipleDisplays_CurrentDisplay, Value = 0, } }
-				.Concat(MonitorService.GetMonitors()
-					.Select((m, i) => new DisplayViewModel<uint>
-					{
-						Display = string.Format(Resources.Settings_MultipleDisplays_EachDisplay, i + 1, m.Name),
-						Value = (uint)(i + 1),
-					}))
-				.Concat(new[]
-				{
-					new DisplayViewModel<uint>
-					{
-						Display = Resources.Settings_MultipleDisplays_AllDisplays,
-						Value = uint.MaxValue,
-					}
-				})
-				.ToList();
-			if (this.Displays.Count > 3) this.IsDisplayEnabled = true;
+			this.UpdateDisplays();
 
 			this.Licenses = LicenseInfo.All.Select(x => new LicenseViewModel(x)).ToArray();
 
@@ -243,9 +287,11 @@ namespace SylphyHorn.UI.Bindings
 				.Subscribe(path => this.Backgrounds = WallpaperService.Instance.GetWallpaperFiles(path))
 				.AddTo(this);
 
-			var colAndWall = WallpaperService.GetCurrentColorAndWallpaper();
-			this.PreviewBackgroundBrush = new SolidColorBrush(colAndWall.Item1);
-			this.PreviewBackgroundPath = colAndWall.Item2;
+			var colAndWall = WallpaperService.GetCurrentColorAndWallpaperAndPosition();
+			this.PreviewBackgroundBrush = new SolidColorBrush(colAndWall.BackgroundColor);
+			this.PreviewBackgroundPath = colAndWall.Path;
+			this.PreviewBackgroundPosition = colAndWall.Position;
+			this.UpdateTaskbarPosition();
 
 			this.Logs = ViewModelHelper.CreateReadOnlyDispatcherCollection(
 				LoggingService.Instance.Logs,
@@ -272,6 +318,31 @@ namespace SylphyHorn.UI.Bindings
 				.AddTo(this);
 		}
 
+		public void UpdateDisplays()
+		{
+			this.Displays = new[] { new DisplayViewModel<uint> { Display = Resources.Settings_MultipleDisplays_CurrentDisplay, Value = 0, } }
+				.Concat(MonitorService.GetMonitors()
+					.Select((m, i) => new DisplayViewModel<uint>
+					{
+						Display = string.Format(Resources.Settings_MultipleDisplays_EachDisplay, i + 1, m.Name),
+						Value = (uint)(i + 1),
+					}))
+				.Concat(new[]
+				{
+					new DisplayViewModel<uint>
+					{
+						Display = Resources.Settings_MultipleDisplays_AllDisplays,
+						Value = uint.MaxValue,
+					}
+				})
+				.ToList();
+		}
+
+		public void UpdateTaskbarPosition()
+		{
+			this.PreviewTaskbarPosition = GetTaskbarPosition();
+		}
+
 		protected override void InitializeCore()
 		{
 			base.InitializeCore();
@@ -294,6 +365,18 @@ namespace SylphyHorn.UI.Bindings
 			{
 				Settings.General.DesktopBackgroundFolderPath.Value = message.Response;
 			}
+		}
+
+		private static string GetTaskbarPosition()
+		{
+			var workspace = MonitorService.GetPrimaryArea();
+			var monitorArea = workspace.MonitorArea;
+			var workArea = workspace.WorkArea;
+			if (monitorArea.Top < workArea.Top) return "Top";
+			if (monitorArea.Left < workArea.Left) return "Left";
+			if (monitorArea.Height > workArea.Height) return "Bottom";
+			if (monitorArea.Width > workArea.Width) return "Right";
+			return "AutoHide";
 		}
 	}
 }

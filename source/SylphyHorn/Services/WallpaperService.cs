@@ -88,7 +88,7 @@ namespace SylphyHorn.Services
 			if (first != null) dw.SetPosition((DesktopWallpaperPosition)first.Item2.Position);
 		}
 
-		public static Tuple<Color, string> GetCurrentColorAndWallpaper()
+		public static (Color BackgroundColor, string Path, WallpaperPosition Position) GetCurrentColorAndWallpaperAndPosition()
 		{
 			var dw = DesktopWallpaperFactory.Create();
 			var colorref = dw.GetBackgroundColor();
@@ -100,7 +100,9 @@ namespace SylphyHorn.Services
 				path = dw.GetWallpaper(monitorId);
 			}
 
-			return Tuple.Create(Color.FromRgb(colorref.R, colorref.G, colorref.B), path);
+			var position = (WallpaperPosition)dw.GetPosition();
+
+			return (Color.FromRgb(colorref.R, colorref.G, colorref.B), path, position);
 		}
 	}
 
