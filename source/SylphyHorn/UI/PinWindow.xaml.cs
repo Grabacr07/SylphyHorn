@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Interop;
 using MetroRadiance.Interop;
 using MetroRadiance.Interop.Win32;
-using SylphyHorn.Interop;
+using SylphyHorn.UI.Bindings;
 
 namespace SylphyHorn.UI
 {
@@ -11,28 +9,28 @@ namespace SylphyHorn.UI
 	{
 		private readonly IntPtr _target;
 
-		public PinWindow(IntPtr target)
+		public PinWindow(IntPtr target, WindowPlacement placement)
+			: base(placement)
 		{
 			this._target = target;
 			this.InitializeComponent();
 		}
 
-		protected override void OnSourceInitialized(EventArgs e)
+		protected override bool TryGetTargetRect(out RECT rect, out RECT? capableRect)
 		{
-			base.OnSourceInitialized(e);
-
-			RECT rect;
-			if (NativeMethods.GetWindowRect(this._target, out rect))
+			capableRect = null;
+			if (User32.IsZoomed(this._target))
 			{
-				var targetWidth = rect.Right - rect.Left;
-				var targetHeight = rect.Bottom - rect.Top;
+				return TryGetWorkAreaFromHwnd(this._target, out rect);
+			}
+			else
+			{
+				if (!TryGetWindowRectFromHwnd(this._target, out rect)) return false;
+				if (!this.Placement.HasFlag(WindowPlacement.OutsideY)) return true;
+				if (!TryGetWorkAreaFromHwnd(this._target, out var temp)) return false;
 
-				var dpi = PerMonitorDpi.GetDpi(this._target);
-				var width = this.ActualWidth * dpi.ScaleX;
-				var height = this.ActualHeight * dpi.ScaleY;
-
-				this.Left = (rect.Left + (targetWidth - width) / 2) / dpi.ScaleX;
-				this.Top = (rect.Top + (targetHeight - height) / 2) / dpi.ScaleY;
+				capableRect = temp;
+				return true;
 			}
 		}
 	}

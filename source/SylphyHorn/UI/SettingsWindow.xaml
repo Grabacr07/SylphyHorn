@@ -316,10 +316,10 @@
 						</StackPanel>
 						<Border Height="8" />
 
-						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_NotificationWindowPlacement}"
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_WindowPlacement_SwitchWindow}"
 								   Style="{DynamicResource HeaderStyleKey}" />
 						<StackPanel Margin="8,0,0,0">
-							<metro:PromptComboBox ItemsSource="{Binding Placements}"
+							<metro:PromptComboBox ItemsSource="{Binding Placements, Mode=OneTime}"
 												  DisplayMemberPath="Display"
 												  SelectedValuePath="Value"
 												  SelectedValue="{Binding Placement, Mode=TwoWay}"
@@ -328,6 +328,26 @@
 												  MinWidth="250"
 												  Margin="1,0,0,0"
 												  HorizontalAlignment="Left" />
+						</StackPanel>
+						<Border Height="8" />
+
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_WindowPlacement_PinWindow}"
+								   Style="{DynamicResource HeaderStyleKey}" />
+						<StackPanel Margin="8,0,0,0">
+							<metro:PromptComboBox ItemsSource="{Binding PinPlacements, Mode=OneTime}"
+												  DisplayMemberPath="Display"
+												  SelectedValuePath="Value"
+												  SelectedValue="{Binding PinPlacementWithoutFlags, Mode=TwoWay}"
+												  Prompt=""
+												  IsReadOnly="True"
+												  MinWidth="250"
+												  Margin="1,0,0,0"
+												  HorizontalAlignment="Left" />
+							<CheckBox Margin="0,4,0,0"
+									  IsChecked="{Binding IsPinWindowOutsideY, Mode=TwoWay}"
+									  IsEnabled="{Binding CanPinWindowOutsideY}">
+								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Notification_WindowPlacement_PinWindow_Outside}" />
+							</CheckBox>
 						</StackPanel>
 						<Border Height="32" />
 

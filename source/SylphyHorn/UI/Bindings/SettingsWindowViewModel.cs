@@ -27,6 +27,8 @@ namespace SylphyHorn.UI.Bindings
 
 		public IReadOnlyCollection<DisplayViewModel<WindowPlacement>> Placements { get; }
 
+		public IReadOnlyCollection<DisplayViewModel<WindowPlacement>> PinPlacements { get; }
+
 		public bool IsDisplayEnabled { get; }
 
 		public IReadOnlyCollection<DisplayViewModel<uint>> Displays { get; }
@@ -98,6 +100,53 @@ namespace SylphyHorn.UI.Bindings
 				}
 			}
 		}
+
+		#endregion
+
+		#region PinPlacement notification property
+
+		public WindowPlacement PinPlacement
+		{
+			get => (WindowPlacement)Settings.General.PinPlacement.Value;
+			set
+			{
+				if ((WindowPlacement)Settings.General.PinPlacement.Value != value)
+				{
+					Settings.General.PinPlacement.Value = (byte)value;
+
+					this.RaisePropertyChanged();
+					this.RaisePropertyChanged(nameof(this.PinPlacementWithoutFlags));
+					this.RaisePropertyChanged(nameof(this.IsPinWindowOutsideY));
+					this.RaisePropertyChanged(nameof(this.CanPinWindowOutsideY));
+				}
+			}
+		}
+
+		public WindowPlacement PinPlacementWithoutFlags
+		{
+			get => this.PinPlacement & ~WindowPlacement.OutsideY;
+			set
+			{
+				if (value == WindowPlacement.Default || value == WindowPlacement.Center)
+				{
+					this.PinPlacement = value;
+				}
+				else
+				{
+					this.PinPlacement = (value & ~WindowPlacement.OutsideY) | (this.PinPlacement & WindowPlacement.OutsideY);
+				}
+			}
+		}
+
+		public bool IsPinWindowOutsideY
+		{
+			get => this.PinPlacement.HasFlag(WindowPlacement.OutsideY);
+			set => this.PinPlacement = value
+				? this.PinPlacement | WindowPlacement.OutsideY
+				: this.PinPlacement & ~WindowPlacement.OutsideY;
+		}
+
+		public bool CanPinWindowOutsideY => this.PinPlacement != WindowPlacement.Default && this.PinPlacement != WindowPlacement.Center;
 
 		#endregion
 
@@ -208,17 +257,29 @@ namespace SylphyHorn.UI.Bindings
 
 			this.Placements = new[]
 			{
-				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopLeft, Value = WindowPlacement.TopLeft, },
-				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopCenter, Value = WindowPlacement.TopCenter, },
-				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopRight, Value = WindowPlacement.TopRight, },
-				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_Center, Value = WindowPlacement.Center, },
-				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomLeft, Value = WindowPlacement.BottomLeft, },
-				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomCenter, Value = WindowPlacement.BottomCenter, },
-				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_BottomRight, Value = WindowPlacement.BottomRight, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_Notification_WindowPlacement_TopLeft, Value = WindowPlacement.TopLeft, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_Notification_WindowPlacement_TopCenter, Value = WindowPlacement.TopCenter, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_Notification_WindowPlacement_TopRight, Value = WindowPlacement.TopRight, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_Notification_WindowPlacement_Center, Value = WindowPlacement.Center, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_Notification_WindowPlacement_BottomLeft, Value = WindowPlacement.BottomLeft, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_Notification_WindowPlacement_BottomCenter, Value = WindowPlacement.BottomCenter, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_Notification_WindowPlacement_BottomRight, Value = WindowPlacement.BottomRight, },
+			}.ToList();
+
+			this.PinPlacements = new[]
+			{
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_Notification_WindowPlacement_SameAsSwitchWindow, Value = WindowPlacement.Default, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_Notification_WindowPlacement_TopLeft, Value = WindowPlacement.TopLeft, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_Notification_WindowPlacement_TopCenter, Value = WindowPlacement.TopCenter, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_Notification_WindowPlacement_TopRight, Value = WindowPlacement.TopRight, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_Notification_WindowPlacement_Center, Value = WindowPlacement.Center, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_Notification_WindowPlacement_BottomLeft, Value = WindowPlacement.BottomLeft, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_Notification_WindowPlacement_BottomCenter, Value = WindowPlacement.BottomCenter, },
+				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_Notification_WindowPlacement_BottomRight, Value = WindowPlacement.BottomRight, },
 			}.ToList();
 
 			this.Displays = new[] { new DisplayViewModel<uint> { Display = Resources.Settings_MultipleDisplays_CurrentDisplay, Value = 0, } }
-				.Concat(MonitorService.GetMonitors()
+				.Concat(MonitorHelper.GetMonitors()
 					.Select((m, i) => new DisplayViewModel<uint>
 					{
 						Display = string.Format(Resources.Settings_MultipleDisplays_EachDisplay, i + 1, m.Name),

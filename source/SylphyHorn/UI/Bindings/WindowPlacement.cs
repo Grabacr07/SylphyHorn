@@ -1,7 +1,11 @@
-﻿namespace SylphyHorn.UI.Bindings
+﻿using System;
+
+namespace SylphyHorn.UI.Bindings
 {
-	public enum WindowPlacement : uint
+	[Flags]
+	public enum WindowPlacement : byte
 	{
+		Default,
 		TopLeft = 1,
 		TopCenter,
 		TopRight,
@@ -9,5 +13,7 @@
 		BottomLeft = 7,
 		BottomCenter,
 		BottomRight,
+
+		OutsideY = 0b0010_0000,
 	}
 }

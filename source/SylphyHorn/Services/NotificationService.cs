@@ -56,35 +56,32 @@ namespace SylphyHorn.Services
 			var source = new CancellationTokenSource();
 
 			var settings = Settings.General.Display.Value;
-			Monitor[] targets;
+			IntPtr[] targets;
 			if (settings == 0)
 			{
-				targets = new[] { MonitorService.GetCurrentArea() };
+				targets = new[] { MonitorHelper.GetCurrentHmonitor() };
+			}
+			else if (settings == uint.MaxValue)
+			{
+				targets = MonitorHelper.GetHmonitors();
 			}
 			else
 			{
-				var monitors = MonitorService.GetAreas();
-				if (settings == uint.MaxValue)
-				{
-					targets = monitors;
-				}
-				else
-				{
-					targets = new[] { monitors[settings - 1] };
-				}
+				targets = new[] { MonitorHelper.GetHmonitorFromIndex((int)settings - 1) };
 			}
-			var windows = targets.Select(area =>
+			var placement = (WindowPlacement)Settings.General.Placement.Value;
+			var windows = targets.Select(hMonitor =>
 			{
-				var window = new SwitchWindow(area.WorkArea)
+				var window = new SwitchWindow(hMonitor, placement)
 				{
 					DataContext = vmodel,
 				};
 				window.Show();
 				return window;
-			}).ToList();
+			}).ToArray();
 
 			Task.Delay(TimeSpan.FromMilliseconds(Settings.General.NotificationDuration), source.Token)
-				.ContinueWith(_ => windows.ForEach(window => window.Close()), TaskScheduler.FromCurrentSynchronizationContext());
+				.ContinueWith(_ => Array.ForEach(windows, window => window.Close()), TaskScheduler.FromCurrentSynchronizationContext());
 
 			return Disposable.Create(() => source.Cancel());
 		}
@@ -98,7 +95,12 @@ namespace SylphyHorn.Services
 				Body = $"{(operation.HasFlag(PinOperations.Pin) ? "Pinned" : "Unpinned")} this {(operation.HasFlag(PinOperations.Window) ? "window" : "application")}",
 			};
 			var source = new CancellationTokenSource();
-			var window = new PinWindow(hWnd)
+			var placement = (WindowPlacement)Settings.General.PinPlacement.Value;
+			if (placement == WindowPlacement.Default)
+			{
+				placement = (WindowPlacement)Settings.General.Placement.Value;
+			}
+			var window = new PinWindow(hWnd, placement)
 			{
 				DataContext = vmodel,
 			};

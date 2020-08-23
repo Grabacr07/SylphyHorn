@@ -222,30 +222,6 @@
   <data name="Settings_Notification" xml:space="preserve">
     <value>通知</value>
   </data>
-  <data name="Settings_NotificationWindowPlacement" xml:space="preserve">
-    <value>通知ウィンドウの配置</value>
-  </data>
-  <data name="Settings_NotificationWindowPlacement_BottomCenter" xml:space="preserve">
-    <value>中央 下部</value>
-  </data>
-  <data name="Settings_NotificationWindowPlacement_BottomLeft" xml:space="preserve">
-    <value>左下</value>
-  </data>
-  <data name="Settings_NotificationWindowPlacement_BottomRight" xml:space="preserve">
-    <value>右下</value>
-  </data>
-  <data name="Settings_NotificationWindowPlacement_Center" xml:space="preserve">
-    <value>中央</value>
-  </data>
-  <data name="Settings_NotificationWindowPlacement_TopCenter" xml:space="preserve">
-    <value>中央 上部</value>
-  </data>
-  <data name="Settings_NotificationWindowPlacement_TopLeft" xml:space="preserve">
-    <value>左上</value>
-  </data>
-  <data name="Settings_NotificationWindowPlacement_TopRight" xml:space="preserve">
-    <value>右上</value>
-  </data>
   <data name="Settings_Notification_Display" xml:space="preserve">
     <value>仮想デスクトップ切り替え時に通知を表示する</value>
   </data>
@@ -254,6 +230,39 @@
   </data>
   <data name="Settings_Notification_Display_Duration_Milliseconds" xml:space="preserve">
     <value>ミリ秒</value>
+  </data>
+  <data name="Settings_Notification_WindowPlacement_BottomCenter" xml:space="preserve">
+    <value>中央 下部</value>
+  </data>
+  <data name="Settings_Notification_WindowPlacement_BottomLeft" xml:space="preserve">
+    <value>左下</value>
+  </data>
+  <data name="Settings_Notification_WindowPlacement_BottomRight" xml:space="preserve">
+    <value>右下</value>
+  </data>
+  <data name="Settings_Notification_WindowPlacement_Center" xml:space="preserve">
+    <value>中央</value>
+  </data>
+  <data name="Settings_Notification_WindowPlacement_PinWindow" xml:space="preserve">
+    <value>ピン留めウィンドウの配置</value>
+  </data>
+  <data name="Settings_Notification_WindowPlacement_PinWindow_Outside" xml:space="preserve">
+    <value>ウィンドウの外周に表示する</value>
+  </data>
+  <data name="Settings_Notification_WindowPlacement_SameAsSwitchWindow" xml:space="preserve">
+    <value>切り替えウィンドウと同じ配置</value>
+  </data>
+  <data name="Settings_Notification_WindowPlacement_SwitchWindow" xml:space="preserve">
+    <value>切り替えウィンドウの配置</value>
+  </data>
+  <data name="Settings_Notification_WindowPlacement_TopCenter" xml:space="preserve">
+    <value>中央 上部</value>
+  </data>
+  <data name="Settings_Notification_WindowPlacement_TopLeft" xml:space="preserve">
+    <value>左上</value>
+  </data>
+  <data name="Settings_Notification_WindowPlacement_TopRight" xml:space="preserve">
+    <value>右上</value>
   </data>
   <data name="Settings_Pin" xml:space="preserve">
     <value>ピン留め:</value>
