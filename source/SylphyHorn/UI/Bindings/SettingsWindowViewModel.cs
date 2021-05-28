@@ -25,6 +25,8 @@ namespace SylphyHorn.UI.Bindings
 
 		public IReadOnlyCollection<DisplayViewModel<string>> Cultures { get; }
 
+		public IReadOnlyCollection<DisplayViewModel<WallpaperPosition>> Positions { get; }
+
 		public IReadOnlyCollection<DisplayViewModel<WindowPlacement>> Placements { get; }
 
 		public bool IsDisplayEnabled { get; }
@@ -77,6 +79,24 @@ namespace SylphyHorn.UI.Bindings
 
 					this.RaisePropertyChanged();
 					this.RaisePropertyChanged(nameof(this.RestartRequired));
+				}
+			}
+		}
+
+		#endregion
+
+		#region Position notification property
+
+		public WallpaperPosition Position
+		{
+			get => (WallpaperPosition)Settings.General.Position.Value;
+			set
+			{
+				if ((WallpaperPosition)Settings.General.Position.Value != value)
+				{
+					Settings.General.Position.Value = (byte)value;
+
+					this.RaisePropertyChanged();
 				}
 			}
 		}
@@ -206,6 +226,16 @@ namespace SylphyHorn.UI.Bindings
 					.OrderBy(x => x.Display))
 				.ToList();
 
+			this.Positions = new[]
+			{
+				new DisplayViewModel<WallpaperPosition> { Display = Resources.Settings_Background_Position_Fill, Value = WallpaperPosition.Fill },
+				new DisplayViewModel<WallpaperPosition> { Display = Resources.Settings_Background_Position_Fit, Value = WallpaperPosition.Fit },
+				new DisplayViewModel<WallpaperPosition> { Display = Resources.Settings_Background_Position_Stretch, Value = WallpaperPosition.Stretch },
+				new DisplayViewModel<WallpaperPosition> { Display = Resources.Settings_Background_Position_Tile, Value = WallpaperPosition.Tile },
+				new DisplayViewModel<WallpaperPosition> { Display = Resources.Settings_Background_Position_Center, Value = WallpaperPosition.Center },
+				new DisplayViewModel<WallpaperPosition> { Display = Resources.Settings_Background_Position_Span, Value = WallpaperPosition.Span },
+			};
+
 			this.Placements = new[]
 			{
 				new DisplayViewModel<WindowPlacement> { Display = Resources.Settings_NotificationWindowPlacement_TopLeft, Value = WindowPlacement.TopLeft, },
@@ -240,7 +270,7 @@ namespace SylphyHorn.UI.Bindings
 			this._HasStartupLink = this._startup.IsExists;
 
 			Settings.General.DesktopBackgroundFolderPath
-				.Subscribe(path => this.Backgrounds = WallpaperService.Instance.GetWallpaperFiles(path))
+				.Subscribe(path => this.Backgrounds = WallpaperService.Instance.GetWallpaperFiles(path, (WallpaperPosition)Settings.General.Position.Value))
 				.AddTo(this);
 
 			var colAndWall = WallpaperService.GetCurrentColorAndWallpaper();

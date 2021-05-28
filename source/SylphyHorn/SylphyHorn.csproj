@@ -245,8 +245,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\ImageFormatSupportDetectors.cs" />
+    <Compile Include="Services\ImageFormatSupportDetector.cs" />
     <Compile Include="UI\Bindings\BindableTextViewModel.cs" />
     <Compile Include="UI\Bindings\HeaderContentViewModel.cs" />
+    <Compile Include="UI\Bindings\WallpaperPosition.cs" />
     <Compile Include="UI\Bindings\WindowPlacement.cs" />
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\MonitorService.cs" />
@@ -254,6 +257,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="UI\Controls\Keytop.cs" />
     <Compile Include="UI\Controls\UnlockImageConverter.cs" />
+    <Compile Include="UI\Controls\ArrayToStringConverter.cs" />
     <Compile Include="UI\DynamicInfoTrayIcon.cs" />
     <Compile Include="UI\NotificationWindow.cs" />
     <Compile Include="UI\PinWindow.xaml.cs">

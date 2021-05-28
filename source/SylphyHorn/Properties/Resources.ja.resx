@@ -133,10 +133,31 @@
     <value>デスクトップの背景</value>
   </data>
   <data name="Settings_Background_Note1" xml:space="preserve">
-    <value>サポートされている画像形式: JPG, PNG, BMP</value>
+    <value>サポートされている画像形式:</value>
   </data>
   <data name="Settings_Background_Note2" xml:space="preserve">
     <value>メモ: 仮想デスクトップ番号をファイル名とした画像ファイルを用意してください (例: "1.png", "2.png", ...)。</value>
+  </data>
+  <data name="Settings_Background_Position" xml:space="preserve">
+    <value>既定の配置方法を選ぶ</value>
+  </data>
+  <data name="Settings_Background_Position_Center" xml:space="preserve">
+    <value>中央に表示</value>
+  </data>
+  <data name="Settings_Background_Position_Fill" xml:space="preserve">
+    <value>画面のサイズに合わせる</value>
+  </data>
+  <data name="Settings_Background_Position_Fit" xml:space="preserve">
+    <value>ページ幅に合わせる</value>
+  </data>
+  <data name="Settings_Background_Position_Span" xml:space="preserve">
+    <value>スパン</value>
+  </data>
+  <data name="Settings_Background_Position_Stretch" xml:space="preserve">
+    <value>拡大して表示</value>
+  </data>
+  <data name="Settings_Background_Position_Tile" xml:space="preserve">
+    <value>並べて表示</value>
   </data>
   <data name="Settings_Background_SelectionDialog" xml:space="preserve">
     <value>背景画像フォルダーを選択</value>

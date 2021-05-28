@@ -133,10 +133,31 @@
     <value>Desktop background</value>
   </data>
   <data name="Settings_Background_Note1" xml:space="preserve">
-    <value>Supported image formats: JPEG, PNG, BMP</value>
+    <value>Supported image formats:</value>
   </data>
   <data name="Settings_Background_Note2" xml:space="preserve">
     <value>Note: Please prepare image files with the virtual desktop number as filename (e.g. "1.png", "2.png", ...).</value>
+  </data>
+  <data name="Settings_Background_Position" xml:space="preserve">
+    <value>Choose a default position</value>
+  </data>
+  <data name="Settings_Background_Position_Center" xml:space="preserve">
+    <value>Center</value>
+  </data>
+  <data name="Settings_Background_Position_Fill" xml:space="preserve">
+    <value>Fill</value>
+  </data>
+  <data name="Settings_Background_Position_Fit" xml:space="preserve">
+    <value>Fit</value>
+  </data>
+  <data name="Settings_Background_Position_Span" xml:space="preserve">
+    <value>Span</value>
+  </data>
+  <data name="Settings_Background_Position_Stretch" xml:space="preserve">
+    <value>Stretch</value>
+  </data>
+  <data name="Settings_Background_Position_Tile" xml:space="preserve">
+    <value>Tile</value>
   </data>
   <data name="Settings_Background_SelectionDialog" xml:space="preserve">
     <value>Select Background Images Folder</value>

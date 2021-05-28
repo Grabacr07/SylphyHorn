@@ -103,6 +103,24 @@
 					<Setter Property="Margin"
 							Value="0,8" />
 				</Style>
+				<Style x:Key="SubHeaderStyleKey"
+					   TargetType="{x:Type TextBlock}">
+					<Setter Property="Foreground"
+							Value="{DynamicResource ForegroundBrushKey}" />
+					<Setter Property="FontWeight"
+							Value="SemiBold" />
+					<Setter Property="Margin"
+							Value="8,4,8,4" />
+					<Setter Property="FontSize"
+							Value="13" />
+					<Style.Triggers>
+						<Trigger Property="IsEnabled"
+								 Value="False">
+							<Setter Property="Foreground"
+									Value="{DynamicResource InactiveForegroundBrushKey}" />
+						</Trigger>
+					</Style.Triggers>
+				</Style>
 				<Style x:Key="TabitemStyleKey"
 					   TargetType="{x:Type TextBlock}"
 					   BasedOn="{StaticResource VerticalTabHeaderTextStyleKey}">
@@ -232,9 +250,9 @@
 							<CheckBox IsChecked="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}">
 								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_ChangeBackground}" />
 							</CheckBox>
-							<StackPanel Margin="16,0,0,0">
-								<Grid IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}"
-									  Margin="2">
+							<StackPanel IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}"
+										Margin="16,0,0,0">
+								<Grid Margin="2">
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition MaxWidth="360" />
 										<ColumnDefinition Width="Auto" />
@@ -249,41 +267,63 @@
 															 MethodName="OpenBackgroundPathDialog"
 															 Margin="2" />
 								</Grid>
-								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_Note1}"
-										   TextWrapping="Wrap"
-										   Margin="4,0,0,0" />
+								<TextBlock TextWrapping="Wrap"
+										   Margin="4,0,0,0">
+									<Run Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_Note1, Mode=OneWay}" />
+									<Run Text="{Binding Source={x:Static services:WallpaperService.SupportedFileTypes}, Mode=OneWay, Converter={StaticResource ArrayToStringConverter}}" />
+								</TextBlock>
 								<Border Height="4" />
 								<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_Note2}"
 										   TextWrapping="Wrap"
 										   Margin="4,0,0,0" />
 							</StackPanel>
-							<Border Height="16" />
-							<ItemsControl ItemsSource="{Binding Backgrounds}"
-										  Visibility="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Converter={StaticResource BooleanToVisibilityConverter}}"
-										  Margin="18,0,0,0">
-								<ItemsControl.ItemsPanel>
-									<ItemsPanelTemplate>
-										<WrapPanel Orientation="Horizontal" />
-									</ItemsPanelTemplate>
-								</ItemsControl.ItemsPanel>
-								<ItemsControl.ItemTemplate>
-									<DataTemplate>
-										<DockPanel Margin="2">
-											<Label DockPanel.Dock="Top"
-												   Content="{Binding DesktopMonitorText}"
-												   Background="{DynamicResource ActiveBackgroundBrushKey}"
-												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
-												   HorizontalContentAlignment="Center"
-												   Padding="8,1" />
-											<Image Source="{Binding Filepath, Converter={StaticResource UnlockImageConverter}, IsAsync=True}"
-												   Stretch="Uniform"
-												   VerticalAlignment="Top"
-												   MaxWidth="150" />
-										</DockPanel>
-									</DataTemplate>
-								</ItemsControl.ItemTemplate>
-							</ItemsControl>
 						</StackPanel>
+						<Border Height="12" />
+
+						<TextBlock Text="{Binding Source={x:Static services:ResourceService.Current}, Path=Resources.Settings_Background_Position}"
+								   Style="{DynamicResource SubHeaderStyleKey}"
+								   IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=TwoWay}" />
+						<StackPanel Margin="8,0,0,0">
+							<metro:PromptComboBox ItemsSource="{Binding Positions}"
+												  DisplayMemberPath="Display"
+												  SelectedValuePath="Value"
+												  SelectedValue="{Binding Position, Mode=TwoWay}"
+												  Prompt=""
+												  IsReadOnly="True"
+												  IsEnabled="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Mode=OneWay}"
+												  MinWidth="160"
+												  Margin="1,0,0,0"
+												  HorizontalAlignment="Left" />
+						</StackPanel>
+						<Border Height="24" />
+
+						<ItemsControl ItemsSource="{Binding Backgrounds}"
+									  Visibility="{Binding Source={x:Static serialization:Settings.General}, Path=ChangeBackgroundEachDesktop.Value, Converter={StaticResource BooleanToVisibilityConverter}}"
+									  Margin="8,0,0,0"
+									  IsTabStop="False">
+							<ItemsControl.ItemsPanel>
+								<ItemsPanelTemplate>
+									<WrapPanel Orientation="Horizontal" />
+								</ItemsPanelTemplate>
+							</ItemsControl.ItemsPanel>
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<DockPanel Margin="2">
+										<Label DockPanel.Dock="Top"
+											   Content="{Binding DesktopMonitorText}"
+											   Background="{DynamicResource ActiveBackgroundBrushKey}"
+											   Foreground="{DynamicResource ActiveForegroundBrushKey}"
+											   HorizontalContentAlignment="Center"
+											   Padding="8,1" />
+										<Image Source="{Binding Filepath, Converter={StaticResource UnlockImageConverter}, IsAsync=True}"
+											   Stretch="Uniform"
+											   VerticalAlignment="Top"
+											   Width="160"
+											   ToolTip="{Binding Filepath}" />
+									</DockPanel>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
 						<Border Height="8" />
 					</StackPanel>
 				</ScrollViewer>

@@ -106,7 +106,7 @@ namespace SylphyHorn.Properties {
         }
         
         /// <summary>
-        ///   Supported image formats: JPEG, PNG, BMP に類似しているローカライズされた文字列を検索します。
+        ///   Supported image formats: に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Settings_Background_Note1 {
             get {
@@ -120,6 +120,69 @@ namespace SylphyHorn.Properties {
         public static string Settings_Background_Note2 {
             get {
                 return ResourceManager.GetString("Settings_Background_Note2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Choose a default position に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Settings_Background_Position {
+            get {
+                return ResourceManager.GetString("Settings_Background_Position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Center に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Settings_Background_Position_Center {
+            get {
+                return ResourceManager.GetString("Settings_Background_Position_Center", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Fill に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Settings_Background_Position_Fill {
+            get {
+                return ResourceManager.GetString("Settings_Background_Position_Fill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Fit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Settings_Background_Position_Fit {
+            get {
+                return ResourceManager.GetString("Settings_Background_Position_Fit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Span に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Settings_Background_Position_Span {
+            get {
+                return ResourceManager.GetString("Settings_Background_Position_Span", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Stretch に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Settings_Background_Position_Stretch {
+            get {
+                return ResourceManager.GetString("Settings_Background_Position_Stretch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Tile に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Settings_Background_Position_Tile {
+            get {
+                return ResourceManager.GetString("Settings_Background_Position_Tile", resourceCulture);
             }
         }
         
