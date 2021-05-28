@@ -25,6 +25,44 @@ namespace SylphyHorn.Services
 
 	public sealed class HEIFSupportDetector : ClsidImageFormatSupportDetector
 	{
+		private bool? _isHIFExtensionSupported;
+
+		public bool IsHIFExtensionSupported
+		{
+			get
+			{
+				if (!this._isHIFExtensionSupported.HasValue)
+				{
+					if (Environment.OSVersion.Version.Build >= 21301)
+					{
+						this._isHIFExtensionSupported = true;
+					}
+					else if (Environment.OSVersion.Version.Build >= 19041)
+					{
+						const string targetHootfixId = "KB5003214";
+						const string query = "SELECT HotFixID FROM Win32_QuickFixEngineering";
+
+						bool supported = false;
+						var searcher = new System.Management.ManagementObjectSearcher(query);
+						foreach (var hotfix in searcher.Get())
+						{
+							if (hotfix["HotFixID"].ToString() == targetHootfixId)
+							{
+								supported = true;
+								break;
+							}
+						}
+						this._isHIFExtensionSupported = supported;
+					}
+					else
+					{
+						this._isHIFExtensionSupported = false;
+					}
+				}
+				return this._isHIFExtensionSupported.Value;
+			}
+		}
+
 		private bool? _isHEVCSupported;
 
 		public bool IsHEVCSupported
@@ -83,7 +121,15 @@ namespace SylphyHorn.Services
 		{
 			get
 			{
-				var extensions = new Collection<string> { ".heif", ".heifs", ".avci", ".avcs" };
+				var extensions = new Collection<string>();
+				if (this.IsHIFExtensionSupported)
+				{
+					extensions.Add(".hif");
+				}
+				extensions.Add(".heif");
+				extensions.Add(".heifs");
+				extensions.Add(".avci");
+				extensions.Add(".avcs");
 				if (this.IsHEVCSupported)
 				{
 					extensions.Add(".heic");
