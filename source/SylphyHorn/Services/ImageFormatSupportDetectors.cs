@@ -65,6 +65,20 @@ namespace SylphyHorn.Services
 			}
 		}
 
+		private bool? _isAVIFSupported;
+
+		public bool IsAVIFSupported
+		{
+			get
+			{
+				if (!this._isAVIFSupported.HasValue)
+				{
+					this._isAVIFSupported = Environment.OSVersion.Version.Build >= 18305 && this.IsAV1Supported;
+				}
+				return this._isAVIFSupported.Value;
+			}
+		}
+
 		public override string[] Extensions
 		{
 			get
@@ -75,7 +89,7 @@ namespace SylphyHorn.Services
 					extensions.Add(".heic");
 					extensions.Add(".heics");
 				}
-				if (this.IsAV1Supported)
+				if (this.IsAVIFSupported)
 				{
 					extensions.Add(".avif");
 					extensions.Add(".avifs");
@@ -88,7 +102,7 @@ namespace SylphyHorn.Services
 		{
 			get
 			{
-				return this.IsAV1Supported
+				return this.IsAVIFSupported
 					? this.IsHEVCSupported
 						? "HEIF (AVCI, HEIC, AVIF)"
 						: "HEIF (AVCI, AVIF)"
