@@ -163,13 +163,6 @@
       <HintPath>..\packages\MetroRadiance.Core.2.4.0\lib\net46\MetroRadiance.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MetroTrilithon, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MetroTrilithon.0.3.0\lib\netstandard2.0\MetroTrilithon.dll</HintPath>
-    </Reference>
-    <Reference Include="MetroTrilithon.Desktop, Version=0.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MetroTrilithon.Desktop.0.2.3\lib\net46\MetroTrilithon.Desktop.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.ApplicationInsights, Version=2.7.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.7.2\lib\net46\Microsoft.ApplicationInsights.dll</HintPath>
     </Reference>
@@ -345,12 +338,6 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SylphyHorn.Core\SylphyHorn.Core.csproj">
-      <Project>{9f0eb092-ddfc-492e-9266-ef208c8e4d83}</Project>
-      <Name>SylphyHorn.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include=".assets\tasktray.ico" />
     <Resource Include=".assets\app.white.ico" />
     <Resource Include=".assets\app.green.ico" />
@@ -408,7 +395,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SylphyHorn.Core.old\SylphyHorn.old.Core.csproj">
+      <Project>{8d55830d-9b26-494c-99ac-2d8282fd03cc}</Project>
+      <Name>SylphyHorn.old.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>powershell -ExecutionPolicy RemoteSigned -File "$(ProjectDir).build\post-build.ps1" "$(TargetDir)</PostBuildEvent>

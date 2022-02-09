@@ -1,0 +1,11 @@
+﻿CallNextHookEx
+GetForegroundWindow
+GetKeyState
+GetKeyboardState
+GetKeyboardLayout
+GetModuleHandle
+GetWindowThreadProcessId
+MapVirtualKey
+SetWindowsHookEx
+ToUnicodeEx
+UnhookWindowsHookEx

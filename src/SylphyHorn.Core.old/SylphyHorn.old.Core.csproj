@@ -13,8 +13,4 @@
     <Version>0.3.0</Version>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="MetroTrilithon" Version="0.3.0" />
-  </ItemGroup>
-
 </Project>
